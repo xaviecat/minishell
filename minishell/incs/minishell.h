@@ -1,0 +1,53 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
+/*   Updated: 2023/04/24 11:57:43 by xcharra          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef MINISHELL_H
+# define MINISHELL_H
+
+# include "libft.h"
+
+/* malloc, free, exit, getenv, tcsetattr, tcgetattr, */
+# include <stdlib.h>
+
+/* open */
+# include <fcntl.h>
+
+/* close, read, write, access, dup, dup2, execve, fork, pipe, unlink,
+readline, rl_*, getcwd, chdir, stat, lstat, fstat, isatty, ttyname,ttyslot */
+# include <unistd.h>
+
+/* perror printf*/
+# include <stdio.h>
+
+/* strerror */
+# include <string.h>
+
+/* wait, waitpid, wait3, wait4 */
+# include <sys/wait.h>
+
+/* signal, sigaction, sigemptyset, siggadset, kill */
+# include <signal.h>
+
+/* opendir,readdir, closedir */
+# include <dirent.h>
+
+/* ioctl,  */
+# include <sys/ioctl.h>
+
+/* tgetent, tgetflag, tgetnum, tgetstrr, tgoto, tputs */
+# include <curses.h>
+# include <term.h>
+
+/* errno */
+# include <errno.h>
+
+#endif
