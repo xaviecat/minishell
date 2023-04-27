@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/04/26 14:17:33 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/04/27 16:45:08 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incs/minishell.h"
-
+#include "minishell.h"
 
 void	minishell(char **envp)
 {
@@ -20,11 +19,14 @@ void	minishell(char **envp)
 	(void)envp;
 	while (1)
 	{
-		line = readline("$ ");
+		line = readline("$ >> ");
 		printf("%s\n", line);
-		if (ft_strncmp(line, "exit", 4) == 0)
-			break;
+		if (ft_strncmp(line, "exit", 5) == 0)
+			break ;
+		free(line);
 	}
+	free(line);
+	// rl_clear_history();
 }
 
 int main(int argc, char **argv, char **envp)
