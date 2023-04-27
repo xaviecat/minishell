@@ -1,3 +1,4 @@
+#===========================VARIABLE===============================#
 SRCS			:= minishell.c\
 					\
 					\
@@ -22,8 +23,6 @@ HEAD_D			:=	incs/
 
 NAME			:=	minishell
 
-# BONUS			:=	pipex_bonus
-
 LIB				:=	libft.a
 
 LIB_D			:=	libft/
@@ -32,22 +31,26 @@ LIB_H			:=	$(LIB_D)$(HEAD_D)
 
 LIB_A			:=	$(LIB_D)$(LIB)
 
+#=========================FLAG===============================#
 CC				:=	cc
 
 RM				:=	rm -rf
 
 CFLAGS			:=	-Wall -Wextra -Werror
 
+RDL				:=	-lreadline
+
 # BFLAGS			:=	-DBONUS=bonus
 
 ASAN_F			:=	-g3 ##-fsanitize=address
 
+#========================EXEC===============================#
 all				:	$(NAME)
 
 # bonus			:	$(BONUS)
 
 $(NAME)			:	$(OBJS_D) $(OBJS) $(HEAD_D)$(HEAD)
-				$(CC) $(CFLAGS) $(ASAN_F) -o $(NAME) $(OBJS) $(LIB_A)
+				$(CC) $(CFLAGS) $(ASAN_F) -o $(NAME) $(OBJS) $(LIB_A) $(RDL)
 
 $(OBJS)			:	$(OBJS_D)%.o: $(SRCS_D)%.c $(HEAD_D)$(HEAD) $(LIB_A)
 				$(CC) $(CFLAGS) $(ASAN_F) -I$(HEAD_D) -I$(LIB_H) -c $< -o $@
