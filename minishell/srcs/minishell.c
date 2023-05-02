@@ -26,7 +26,7 @@ void	minishell(char **envp)
 		if (line && *line)
 			add_history(line);
 		arg = parsing_argu(line);
-
+		(void)arg;
 		free(line);
 	}
 	free(line);
