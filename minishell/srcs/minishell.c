@@ -15,14 +15,18 @@
 void	minishell(char **envp)
 {
 	char	*line;
-
+	char 	**arg;
 	(void)envp;
+
 	while (1)
 	{
 		line = readline("$ >> ");
-		printf("%s\n", line);
 		if (ft_strncmp(line, "exit", 5) == 0)
 			break ;
+		if (line && *line)
+			add_history(line);
+		arg = parsing_argu(line);
+
 		free(line);
 	}
 	free(line);

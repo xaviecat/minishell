@@ -53,4 +53,7 @@
 /* errno */
 # include <errno.h>
 
+//Functions
+char	**parsing_argu(char *arg_term);
+
 #endif
