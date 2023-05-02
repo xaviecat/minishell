@@ -30,7 +30,7 @@ void	minishell(char **envp)
 		free(line);
 	}
 	free(line);
-	// rl_clear_history();
+	rl_clear_history();
 }
 
 int main(int argc, char **argv, char **envp)
