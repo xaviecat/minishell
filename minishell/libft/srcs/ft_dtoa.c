@@ -6,7 +6,7 @@
 /*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 13:28:06 by xcharra           #+#    #+#             */
-/*   Updated: 2023/01/30 13:30:05 by xcharra          ###   ########lyon.fr   */
+/*   Updated: 2023/04/28 16:45:31 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ char	*ft_dtoa(double n, size_t precision)
 	len = 0;
 	num = (long)n;
 	len = get_len(n, num, len, precision);
-	str = malloc(sizeof(char) * (len + 1));
+	str = malloc(sizeof(char) * (len + 2));
 	if (str == NULL)
 		return (NULL);
 	i = 0;
