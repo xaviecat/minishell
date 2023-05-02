@@ -1,6 +1,6 @@
 #===========================VARIABLE===============================#
-SRCS			:= minishell.c\
-					\
+SRCS			:=	minishell.c	\
+					parsing.c	\
 					\
 					\
 					\
