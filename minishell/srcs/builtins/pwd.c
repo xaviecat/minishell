@@ -6,12 +6,13 @@
 /*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:00:59 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/03 14:02:56 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/05/03 16:42:40 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/* proteger getcwd */
 void	pwd(void)
 {
 	char	path[256];
