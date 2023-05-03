@@ -25,8 +25,10 @@ void	minishell(char **envp)
 			break ;
 		if (ft_strncmp(line, "pwd", 4) == 0)
 		{
-			getcwd(path, sizeof(path));
-			printf("%s\n", path);
+			if (!getcwd(path, sizeof(path)))
+				printf("i dont know where i am\n");
+			else
+				printf("%s\n", path);
 		}
 		if (line && *line)
 			add_history(line);
