@@ -6,7 +6,7 @@
 /*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/04/27 13:20:42 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/05/03 14:38:58 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,9 @@
 
 //Functions
 char	**parsing_argu(char *arg_term);
+
+/* builtins */
+void	pwd(void);
+void	cd(char *path);
 
 #endif

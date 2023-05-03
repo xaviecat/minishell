@@ -1,7 +1,8 @@
 #===========================VARIABLE===============================#
 SRCS			:=	minishell.c	\
-					    pars.c	\
-					\
+					parsing/pars.c	\
+					builtins/pwd.c\
+					builtins/cd.c\
 					\
 					\
 					\
@@ -49,6 +50,8 @@ $(OBJS)			:	$(OBJS_D)%.o: $(SRCS_D)%.c $(HEAD_D)$(HEAD) $(LIB_A)
 
 $(OBJS_D)		:
 				mkdir -p $(OBJS_D)
+				mkdir -p $(OBJS_D)/parsing
+				mkdir -p $(OBJS_D)/builtins
 
 $(LIB_A)		:	FORCE
 				make -j -C $(LIB_D)
