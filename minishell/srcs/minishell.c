@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/03 12:04:18 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/03 12:55:11 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	minishell(char **envp)
 		if (line && *line)
 			add_history(line);
 		arg = parsing_argu(line);
+		if (ft_strncmp(arg[0], "cd", 3) == 0)
+			chdir(arg[1]);
 		(void)arg;
 		free(line);
 	}
