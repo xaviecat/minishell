@@ -6,7 +6,7 @@
 /*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/03 14:37:41 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/05/03 17:56:21 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	minishell(char **envp)
 {
 	char	*line;
-	char 	**arg;
+	char	**arg;
 	(void)envp;
 
 	while (1)
