@@ -13,12 +13,15 @@
 #include "minishell.h"
 
 /* proteger getcwd */
+//PWD DISPONIBLE DANS ENVP
 void	pwd(void)
 {
-	char	path[256];
+	char	*path;
 
-	if (!getcwd(path, sizeof(path)))
+	path = getcwd(NULL, 0);
+	if (!path)
 		printf("i dont know where i am\n");
 	else
 		printf("%s\n", path);
+	free(path);
 }

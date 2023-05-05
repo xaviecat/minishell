@@ -12,7 +12,26 @@
 
 #include "minishell.h"
 
-void	cd(char *path)
+char	*get_home_from_env(char **envp)
 {
+	int		i;
+
+	i = 0;
+	while (envp[i])
+	{
+		if (ft_strncmp(envp[i], "HOME=", 5) == 0)
+			return (ft_strdup(envp[i] + 5));
+		i++;
+	}
+	return (NULL);
+}
+
+void	cd(char *path, char **envp)
+{
+	//use HOME from env
+	if (path == NULL)
+		path = get_home_from_env(envp);
+		//SECURISER
 	chdir(path);
+	free(path);
 }

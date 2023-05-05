@@ -58,6 +58,6 @@ char	**parsing_argu(char *arg_term);
 
 /* builtins */
 void	pwd(void);
-void	cd(char *path);
+void	cd(char *path, char **envp);
 
 #endif
