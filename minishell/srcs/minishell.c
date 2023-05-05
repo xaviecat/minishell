@@ -29,7 +29,7 @@ void	minishell(char **envp)
 			add_history(line);
 		arg = parsing_argu(line);
 		if (ft_strncmp(arg[0], "cd", 3) == 0)
-			cd(arg[1]);
+			cd(arg[1], envp);
 		(void)arg;
 		free(line);
 	}
