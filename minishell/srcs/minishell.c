@@ -24,7 +24,7 @@ void	minishell(char **envp)
 		if (ft_strncmp(line, "exit", 5) == 0)
 			break ;
 		if (ft_strncmp(line, "pwd", 4) == 0)
-			pwd();
+			pwd(envp);
 		if (line && *line)
 			add_history(line);
 		arg = parsing_argu(line);

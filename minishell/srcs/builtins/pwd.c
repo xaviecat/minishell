@@ -12,15 +12,29 @@
 
 #include "minishell.h"
 
+char	*get_pwd_from_envp(char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		if (ft_strncmp(envp[i], "PWD=", 4) == 0)
+			return (ft_strdup(envp[i] + 4));
+		i++;
+	}
+	return (NULL);
+}
+
 /* proteger getcwd */
 //PWD DISPONIBLE DANS ENVP
-void	pwd(void)
+void	pwd(char **envp)
 {
 	char	*path;
 
 	path = getcwd(NULL, 0);
 	if (!path)
-		printf("i dont know where i am\n");
+		path = get_pwd_from_envp(envp);
 	else
 		printf("%s\n", path);
 	free(path);
