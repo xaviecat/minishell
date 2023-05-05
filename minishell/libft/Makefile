@@ -67,7 +67,7 @@ AR				=	ar
 
 ARFLAGS			=	rcs
 
-CC				=	gcc
+CC				=	cc
 
 RM				=	rm -rf
 
