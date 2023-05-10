@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/03 17:56:21 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/05/10 16:27:55 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	minishell(char **envp)
 	free(line);
 	rl_clear_history();
 }
+
+COUCOU XAVIER LE MEILEUR ET LE PLUS  BO
 
 int	main(int argc, char **argv, char **envp)
 {

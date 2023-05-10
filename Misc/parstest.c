@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:12:35 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/10 12:12:35 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/05/10 17:49:57 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int main(int argc, char *argv[], char *envp[])
 {
 	char	**parsedCmdLine;
-	char	*cmdLine = {"cmd -art | cat -en > outfile"};
+	char	*cmdLine = {"cat << EOF | cat -en | grep \"salut\" >> outfile"};
 	int		i;
 
 	(void) argc;
@@ -28,6 +28,49 @@ int main(int argc, char *argv[], char *envp[])
 		ft_printf("arg[%d] = %s\n", i, parsedCmdLine[i]);
 		i++;
 	}
-	i = 0;
 	ft_free_split(parsedCmdLine);
 }
+/*
+ * &camarche $camarchepas $? $$ > $
+Split |
+Rechercher les $
+Redir : split << >> < > et open mot suivant puis del (detecter redir pour
+ les fds)
+Split ' '
+Remove les quotes "l"''"s" > ls ou "l'"s' > l's
+ dans le sens gauche vers droite
+
+___
+cat -en << EOF | cat -en | grep "salut" >> $USER
+___
+cat -en << EOF
+ cat -en
+ grep "salut" >> $USER
+___
+cat -en << EOF
+ cat -en
+ grep "salut" >> xcharra
+___
+cat -en
+ cat -en
+ grep "salut"
+ ___
+cat
+-en
+
+cat
+-en
+
+grep
+"salut"
+___
+cat
+-en
+
+cat
+-en
+
+grep
+salut
+___
+*/
