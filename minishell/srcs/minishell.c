@@ -16,11 +16,11 @@ void	minishell(char **envp)
 {
 	char	*line;
 	char	**arg;
-	(void)envp;
 
+	(void)envp;
 	while (1)
 	{
-		line = readline("$ >> ");
+		line = readline("TRI_SH $>");
 		if (ft_strncmp(line, "exit", 5) == 0)
 			break ;
 		if (ft_strncmp(line, "pwd", 4) == 0)
@@ -30,16 +30,16 @@ void	minishell(char **envp)
 		arg = parsing_argu(line);
 		if (ft_strncmp(arg[0], "cd", 3) == 0)
 			cd(arg[1], envp);
-		(void)arg;
+		(void) arg;
 		free(line);
 	}
 	free(line);
 	rl_clear_history();
 }
 
-int main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
-	(void)argv;
+	(void) argv;
 	if (argc == 1)
 		minishell(envp);
 	return (1);

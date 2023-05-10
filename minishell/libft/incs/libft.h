@@ -56,6 +56,8 @@ char	*ft_dtoa(double n, size_t precision);
 
 char	**ft_split(char const *s, char c);
 
+void	ft_free_split(char **tab);
+
 char	*ft_strchr(const char *str, int c);
 
 char	*ft_strdup(const char *src);
