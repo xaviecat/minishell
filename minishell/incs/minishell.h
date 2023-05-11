@@ -70,6 +70,7 @@ typedef struct s_minish
 
 /* parsing */
 char	**parsing_argu(char *arg_term);
+t_minish	*parsing_command(char *cmd_line, t_minish *sh);
 void	expand_commands(t_minish **minish);
 
 /* builtins */
@@ -79,4 +80,9 @@ void	cd(char *path, char **envp);
 /* utils */
 char	*ft_strdup_to_x(char *str, char x);
 
+/* list command */
+t_cmd_list	*lst_cmd_new(char *content);
+void	lst_cmd_add_back(t_cmd_list **lst, t_cmd_list *new);
+void	print_list(t_cmd_list *lst);
+void 	lst_clear(t_cmd_list **lst);
 #endif

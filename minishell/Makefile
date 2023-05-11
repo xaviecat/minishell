@@ -5,6 +5,7 @@ SRCS			:=	minishell.c\
 					builtins/cd.c\
 					parsing/expand.c\
 					utils/utils.c\
+					list/lst.c\
 					\
 					\
 					\
@@ -54,6 +55,7 @@ $(OBJS_D)		:
 				mkdir -p $(OBJS_D)/parsing
 				mkdir -p $(OBJS_D)/builtins
 				mkdir -p $(OBJS_D)/utils
+				mkdir -p $(OBJS_D)/list
 
 $(LIB_A)		:	FORCE
 				make -j -C $(LIB_D)
