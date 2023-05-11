@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/11 12:07:51 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/11 13:14:10 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,19 @@
 # include <errno.h>
 
 /* structure */
+typedef struct s_cmd_list
+{
+	char				**cmd;
+	struct s_cmd_list	*next;
+	struct s_cmd_list	*before;
+}				t_cmd_list;
+
 typedef struct s_minish
 {
-	char	**envp;
-	char	**command;
-	int		outfile;
-	int		infile;
+	char		**envp;
+	t_cmd_list	*cmd;
+	int			outfile;
+	int			infile;
 }				t_minish;
 
 /* parsing */
