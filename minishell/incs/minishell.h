@@ -6,14 +6,14 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/11 14:44:33 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/11 17:52:27 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "libft.h"
+# include "../libft/incs/libft.h"
 
 /* malloc, free, exit, getenv, tcsetattr, tcgetattr, */
 # include <stdlib.h>
@@ -66,8 +66,6 @@ typedef struct s_minish
 {
 	char		**envp;
 	t_cmd_list	*cmd;
-	int			outfile;
-	int			infile;
 }				t_minish;
 
 /* parsing */
