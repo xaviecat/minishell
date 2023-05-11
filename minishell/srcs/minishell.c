@@ -37,6 +37,7 @@ void	minishell(char **envp)
 	rl_clear_history();
 }
 
+
 int	main(int argc, char **argv, char **envp)
 {
 	(void) argv;
