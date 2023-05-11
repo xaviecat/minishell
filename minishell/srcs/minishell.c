@@ -37,7 +37,6 @@ void	minishell(char **envp)
 	rl_clear_history();
 }
 
-COUCOU XAVIER LE MEILEUR ET LE PLUS  BO
 
 int	main(int argc, char **argv, char **envp)
 {
