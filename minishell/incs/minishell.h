@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/11 14:44:33 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/11 17:56:47 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-
 
 /* strerror */
 # include <string.h>
@@ -57,6 +56,8 @@
 typedef struct s_cmd_list
 {
 	char				**cmd;
+	int					outfile;
+	int					infile;
 	bool				builtin;
 	struct s_cmd_list	*next;
 	struct s_cmd_list	*previous;
@@ -71,16 +72,16 @@ typedef struct s_minish
 }				t_minish;
 
 /* parsing */
-char	**parsing_argu(char *arg_term);
+char		**parsing_argu(char *arg_term);
 t_minish	*parsing_command(char *cmd_line, t_minish *sh);
 
 /* builtins */
-void	pwd(char **envp);
-void	cd(char *path, char **envp);
+void		pwd(char **envp);
+void		cd(char *path, char **envp);
 
 /* list command */
 t_cmd_list	*lst_cmd_new(char *content);
-void	lst_cmd_add_back(t_cmd_list **lst, t_cmd_list *new);
-void	print_list(t_cmd_list *lst);
-void 	lst_clear(t_cmd_list **lst);
+void		lst_cmd_add_back(t_cmd_list **lst, t_cmd_list *new);
+void		print_list(t_cmd_list *lst);
+void		lst_clear(t_cmd_list **lst);
 #endif
