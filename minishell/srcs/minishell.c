@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/11 14:44:47 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/11 18:21:11 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,18 @@ t_minish	*create_minishell(char **envp)
 
 	sh = malloc(sizeof(t_minish));
 	sh->envp = envp;
-	sh->infile = -1;
-	sh->outfile = -1;
 	return (sh);
 }
 
 void	minishell(char **envp)
 {
-	char	*line;
-	//char	**arg;
+	char		*line;
+	//char		**arg;
 	t_minish	*minish;
 
 	minish = create_minishell(envp);
 	while (1)
 	{
-
 		line = readline("TRI_SH $>");
 		minish = parsing_command(line, minish);
 //		if (ft_strncmp(line, "exit", 5) == 0)
@@ -50,7 +47,6 @@ void	minishell(char **envp)
 	free(line);
 	rl_clear_history();
 }
-
 
 int	main(int argc, char **argv, char **envp)
 {
