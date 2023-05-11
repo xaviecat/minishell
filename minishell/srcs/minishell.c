@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/11 13:43:40 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/11 18:21:11 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ t_minish	*create_minishell(char **envp)
 
 	sh = malloc(sizeof(t_minish));
 	sh->envp = envp;
-	sh->infile = -1;
-	sh->outfile = -1;
 	return (sh);
 }
 
@@ -48,7 +46,6 @@ void	minishell(char **envp)
 	free(line);
 	rl_clear_history();
 }
-
 
 int	main(int argc, char **argv, char **envp)
 {

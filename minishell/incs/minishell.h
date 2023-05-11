@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/11 14:23:06 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/05/11 17:51:42 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,17 +65,18 @@ typedef struct s_cmd_list
 typedef struct s_minish
 {
 	char		**envp;
-	t_cmd_list	*cmd;
-	int			outfile;
-	int			infile;
+	t_cmd_list	*cmds;
 }				t_minish;
 
 /* parsing */
 char	**parsing_argu(char *arg_term);
-char	*expand_env_var(char **envp, char *var);
+void	expand_commands(t_minish **minish);
 
 /* builtins */
 void	pwd(char **envp);
 void	cd(char *path, char **envp);
+
+/* utils */
+char	*ft_strdup_to_x(char *str, char x);
 
 #endif
