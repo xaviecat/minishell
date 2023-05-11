@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/11 13:14:10 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/11 13:24:40 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,9 @@
 typedef struct s_cmd_list
 {
 	char				**cmd;
+	bool				builtin;
 	struct s_cmd_list	*next;
-	struct s_cmd_list	*before;
+	struct s_cmd_list	*previous;
 }				t_cmd_list;
 
 typedef struct s_minish
