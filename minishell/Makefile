@@ -1,8 +1,9 @@
 #===========================VARIABLE===============================#
-SRCS			:=	minishell.c	\
-					parsing/pars.c	\
+SRCS			:=	minishell.c\
+					parsing/pars.c\
 					builtins/pwd.c\
 					builtins/cd.c\
+					parsing/expand.c\
 					\
 					\
 					\

@@ -24,8 +24,8 @@ t_minish	*create_minishell(char **envp)
 
 void	minishell(char **envp)
 {
-	char	*line;
-	char	**arg;
+	char		*line;
+	char		**arg;
 	t_minish	*minish;
 
 	minish = create_minishell(envp);
