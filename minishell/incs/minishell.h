@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/03 17:42:30 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/05/11 12:07:51 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,15 @@
 
 /* errno */
 # include <errno.h>
+
+/* structure */
+typedef struct s_minish
+{
+	char	**envp;
+	char	**command;
+	int		outfile;
+	int		infile;
+}				t_minish;
 
 /* parsing */
 char	**parsing_argu(char *arg_term);
