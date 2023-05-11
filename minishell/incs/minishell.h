@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/11 14:44:33 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/11 17:51:42 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "libft.h"
+# include "../libft/incs/libft.h"
 
 /* malloc, free, exit, getenv, tcsetattr, tcgetattr, */
 # include <stdlib.h>
@@ -65,18 +65,20 @@ typedef struct s_cmd_list
 typedef struct s_minish
 {
 	char		**envp;
-	t_cmd_list	*cmd;
-	int			outfile;
-	int			infile;
+	t_cmd_list	*cmds;
 }				t_minish;
 
 /* parsing */
 char	**parsing_argu(char *arg_term);
 t_minish	*parsing_command(char *cmd_line, t_minish *sh);
+void	expand_commands(t_minish **minish);
 
 /* builtins */
 void	pwd(char **envp);
 void	cd(char *path, char **envp);
+
+/* utils */
+char	*ft_strdup_to_x(char *str, char x);
 
 /* list command */
 t_cmd_list	*lst_cmd_new(char *content);
