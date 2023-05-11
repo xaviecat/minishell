@@ -3,21 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/10 16:27:55 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/05/11 13:43:40 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+t_minish	*create_minishell(char **envp)
+{
+	t_minish	*sh;
+
+	sh = malloc(sizeof(t_minish));
+	sh->envp = envp;
+	sh->infile = -1;
+	sh->outfile = -1;
+	return (sh);
+}
 
 void	minishell(char **envp)
 {
 	char	*line;
 	char	**arg;
+	t_minish	*minish;
 
-	(void)envp;
+	minish = create_minishell(envp);
+	(void)minish;
 	while (1)
 	{
 		line = readline("TRI_SH $>");
