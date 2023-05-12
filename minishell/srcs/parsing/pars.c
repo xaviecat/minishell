@@ -41,15 +41,15 @@ t_minish	*parsing_command(char *cmd_line, t_minish *sh)
 	int		i;
 
 	cmd_splitted = ft_split(cmd_line, '|');
-	sh->cmd = lst_cmd_new(cmd_splitted[0]);
+	sh->cmds = lst_cmd_new(cmd_splitted[0]);
 	i = 1;
 	while (cmd_splitted[i])
 	{
-		lst_cmd_add_back(&sh->cmd, lst_cmd_new(cmd_splitted[i]));
+		lst_cmd_add_back(&sh->cmds, lst_cmd_new(cmd_splitted[i]));
 		i++;
 	}
 	//print_list(sh->cmd);
 	//expand and open file / heredoc
-	split_block_cmd(&sh->cmd);
+	split_block_cmd(&sh->cmds);
 	return (sh);
 }
