@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/12 14:48:03 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/12 15:36:45 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../incs/minishell.h"
 t_minish	*create_minishell(char **envp)
 {
 	t_minish	*sh;
@@ -31,6 +31,9 @@ void	minishell(char **envp)
 	{
 		line = readline("TRI_SH $>");
 		lst = create_char_lst_with_c_inside(line);
+		process_quotes(lst);
+		print_lst(lst);
+
 		//minish = parsing_command(line, minish);
 //		if (ft_strncmp(line, "exit", 5) == 0)
 //			break ;

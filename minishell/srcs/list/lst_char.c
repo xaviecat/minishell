@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_char.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:39:55 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/12 14:57:39 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/12 17:44:40 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ void	print_lst(t_char_lst *lst)
 	first = lst;
 	while (lst)
 	{
-		ft_printf("%c", lst->c);
+		ft_printf("%c -- ", lst->c);
+		ft_printf("sq : %i -- ", lst->quote);
+		ft_printf("dq : %i\n", lst->d_quote);
 		lst = lst->next;
 	}
 	lst = first;

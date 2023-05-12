@@ -6,6 +6,7 @@ SRCS			:=	minishell.c\
 					parsing/expand.c\
 					utils/utils.c\
 					list/lst.c\
+					list/lst_utils.c\
 					list/lst_char.c\
 					\
 					\
