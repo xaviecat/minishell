@@ -80,30 +80,30 @@ typedef struct s_word_lst
 typedef enum e_type
 {
 	space,
-	quote,
-	d_quote,
-	c,
-	c_pipe,
-	dash,
-	a_bracket,
+	quote, // '
+	d_quote, // "
+	charc, // letter ect
+	c_pipe, // |
+	dash, // -
+	a_bracket, // <
 	dollar
 }    t_type;
 
 typedef struct s_char_lst
 {
-	int                    pipe;
-	char                c;
-	t_type                type;
-	bool                quote;
-	bool                d_quote;
-	struct s_char_lst    *prev;
-	struct s_char_lst    *next;
-}    t_char_lst;
+	int					pipe;
+	char				c;
+	t_type				type;
+	bool				quote;
+	bool				d_quote;
+	struct s_char_lst	*prev;
+	struct s_char_lst	*next;
+}				t_char_lst;
 
 /* parsing */
 char		**parsing_argu(char *arg_term);
 t_minish	*parsing_command(char *cmd_line, t_minish *sh);
-void	expand_commands(t_minish **minish);
+void		expand_commands(t_minish **minish);
 
 /* builtins */
 void		pwd(char **envp);
