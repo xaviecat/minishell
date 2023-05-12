@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/11 18:21:11 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/05/12 18:52:01 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,11 @@ void	minishell(char **envp)
 	{
 		line = readline("TRI_SH $>");
 		minish = parsing_command(line, minish);
+//		line = cut_whitespaces(ft_strdup(line));
+//		printf("%s\n", line);
+//		if (line)
+//			free(line);
+//		expand_commands(NULL, envp);
 //		if (ft_strncmp(line, "exit", 5) == 0)
 //			break ;
 //		if (ft_strncmp(line, "pwd", 4) == 0)
@@ -43,7 +48,7 @@ void	minishell(char **envp)
 //		(void) arg;
 		free(line);
 	}
-	lst_clear(minish->cmd);
+	lst_clear(&(minish->cmds));
 	free(line);
 	rl_clear_history();
 }

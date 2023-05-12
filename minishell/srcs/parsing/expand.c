@@ -6,13 +6,11 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:08:17 by nfaust            #+#    #+#             */
-/*   Updated: 2023/05/11 18:12:16 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/05/12 18:52:45 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
-# define UNKNOWN 0
-# define DOUBLE_QUOTE 1
 
 static char	*expand_env_var(char **envp, char *var)
 {
@@ -41,56 +39,66 @@ static char	*expand_env_var(char **envp, char *var)
 		}
 		i++;
 	}
-	return (NULL);
+	return (ft_strdup(""));
 }
 
-static char	*modify_command(char *command, size_t start, char **envp)
+static char *set_expanded_env_var(char *env_var, int double_not_closed, char **envp)
+{
+	char *expanded_env_var;
+
+	expanded_env_var = expand_env_var(envp, env_var);
+	if (double_not_closed < 0)
+		expanded_env_var = cut_whitespaces(expanded_env_var);
+	if (!expanded_env_var)
+		return (free(env_var), NULL);
+	return (expanded_env_var);
+}
+
+static char	*modify_command(char *command, size_t start, char **envp, int double_not_closed)
 {
 	char	*env_var;
 	char	*expanded_env_var;
-	char	*modified_cmd;
+	char	*m_cmd;
 	size_t	i;
 
-	env_var = ft_strdup_to_x(command + start, ' '); // remplacer par un isspace !
+	env_var = ft_strdup_to_charset(command + start, " \"\'\0"); // remplacer par un isspace !
 	if (!env_var)
 		return (NULL);
-	expanded_env_var = expand_env_var(envp, env_var);
+	expanded_env_var = set_expanded_env_var(env_var, double_not_closed, envp);
 	if (!expanded_env_var)
-		return (free(env_var), NULL);
-	modified_cmd = malloc(sizeof(char) * (ft_strlen(command)
+		return (NULL);
+	m_cmd = malloc(sizeof(char) * (ft_strlen(command)
 				+ (ft_strlen(expanded_env_var) - ft_strlen(env_var))));
-	free(env_var);
-	if (!modified_cmd)
-		return (free(expanded_env_var), NULL);
-	i = 0;
-	while (i++ < start)
-		modified_cmd[i - 1] = command[i - 1];
+	if (!m_cmd)
+		return (free(env_var), free(expanded_env_var), NULL);
+	str_cpy_to_x(command, m_cmd, '$');
 	i = 0;
 	while (expanded_env_var[i])
-		modified_cmd[start++] = expanded_env_var[i++];
-	while (command[start++])
-		modified_cmd[start - 1] = command[start - 1];
-	return (modified_cmd[start - 1] = 0, free(command), modified_cmd);
+		m_cmd[start++] = expanded_env_var[i++];
+	i = (start - i) + ft_strlen(env_var);
+	while (command[i])
+		m_cmd[start++] = command[i++];
+	free(expanded_env_var);
+	return (free(env_var), free(command), m_cmd[start] = 0, m_cmd);
 }
 
 static char	*expand_vars(char *command, char **envp)
 {
 	size_t	i;
-	int		quote_type;
+	int		double_not_closed;
 
 	i = 0;
+	double_not_closed = -1;
 	while (command[i])
 	{
-		quote_type = UNKNOWN;
 		if (command[i] == '"')
-		{
-			quote_type = DOUBLE_QUOTE;
-			while (command[i] && command[i] != '$' && command[i] != '"')
+			double_not_closed *= -1;
+		if (command[i] == '\'' && double_not_closed < 0)
+			while (command[i + 1] && command[i + 1] != '\'')
 				i++;
-		}
-		if (quote_type == DOUBLE_QUOTE && command[i] && command[i] == '$')
+		if (command[i] && command[i] == '$')
 		{
-			command = modify_command(command, i, envp);
+			command = modify_command(command, i, envp, double_not_closed);
 			if (!command)
 				return (NULL);
 		}
@@ -100,17 +108,24 @@ static char	*expand_vars(char *command, char **envp)
 	return (command);
 }
 
-void	expand_commands(t_minish **minish)
+void	expand_commands(t_word_lst **w_lst, char **envp)
 {
-	t_cmd_list	*cmd_list;
+	t_word_lst	*w_lst_cpy;
 
-	cmd_list = (*minish)->cmds;
-	while (cmd_list)
+	w_lst_cpy = *w_lst;
+	printf("starting expand\n");
+	while (w_lst_cpy)
 	{
-		cmd_list->cmd[0] = expand_vars(cmd_list->cmd[0], (*minish)->envp);
-		if (!cmd_list->cmd[0])
-			return ; //code d'erreur a ajouter
-		printf("%s\n", cmd_list->cmd[0]);
-		cmd_list = cmd_list->next;
+		w_lst_cpy->word = expand_vars(w_lst_cpy->word, envp);
+		if (!w_lst_cpy->word)
+			return ; // ? code d'erreur a ajouter
+		printf("%s\n", w_lst_cpy->word);
+		w_lst_cpy = w_lst_cpy->next;
 	}
 }
+
+/*
+		TO DO LIST
+- gerer les differences entre "$USER" et $USER (whitespaces a skip pour $USER)
+- envoyer differents caracteres pour les quotes a garder et celles a supprimer
+*/
