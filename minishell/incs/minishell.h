@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/11 14:44:33 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/12 14:17:07 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,19 @@
 /* errno */
 # include <errno.h>
 
+typedef enum e_type
+{
+	space,
+	quote,
+	d_quote,
+	c,
+	c_pipe,
+	dash,
+	a_bracket,
+	dollar
+}	t_type;
+
+
 /* structure */
 typedef struct s_cmd_list
 {
@@ -70,6 +83,16 @@ typedef struct s_minish
 	t_cmd_list	*cmds;
 }				t_minish;
 
+typedef struct s_char_lst
+{
+	int					pipe;
+	char				c;
+	t_type				type;
+	bool				quote;
+	bool				d_quote;
+	struct s_char_lst	*prev;
+	struct s_char_lst	*next;
+}						t_char_lst;
 /* parsing */
 char		**parsing_argu(char *arg_term);
 t_minish	*parsing_command(char *cmd_line, t_minish *sh);
