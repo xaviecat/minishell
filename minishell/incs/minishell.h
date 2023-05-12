@@ -57,6 +57,8 @@
 typedef struct s_cmd_list
 {
 	char				**cmd;
+	int					outfile;
+	int					infile;
 	bool				builtin;
 	struct s_cmd_list	*next;
 	struct s_cmd_list	*previous;
@@ -65,20 +67,24 @@ typedef struct s_cmd_list
 typedef struct s_minish
 {
 	char		**envp;
-	t_cmd_list	*cmd;
+	t_cmd_list	*cmds;
 }				t_minish;
 
 /* parsing */
-char	**parsing_argu(char *arg_term);
+char		**parsing_argu(char *arg_term);
 t_minish	*parsing_command(char *cmd_line, t_minish *sh);
+void	expand_commands(t_minish **minish);
 
 /* builtins */
-void	pwd(char **envp);
-void	cd(char *path, char **envp);
+void		pwd(char **envp);
+void		cd(char *path, char **envp);
+
+/* utils */
+char	*ft_strdup_to_x(char *str, char x);
 
 /* list command */
 t_cmd_list	*lst_cmd_new(char *content);
-void	lst_cmd_add_back(t_cmd_list **lst, t_cmd_list *new);
-void	print_list(t_cmd_list *lst);
-void 	lst_clear(t_cmd_list **lst);
+void		lst_cmd_add_back(t_cmd_list **lst, t_cmd_list *new);
+void		print_list(t_cmd_list *lst);
+void		lst_clear(t_cmd_list **lst);
 #endif
