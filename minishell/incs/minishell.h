@@ -6,6 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
+/*   Updated: 2023/05/12 14:47:18 by syluiset         ###   ########.fr       */
 /*   Updated: 2023/05/12 14:17:07 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -13,7 +14,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "libft.h"
+# include "../libft/incs/libft.h"
 
 /* malloc, free, exit, getenv, tcsetattr, tcgetattr, */
 # include <stdlib.h>
@@ -53,19 +54,6 @@
 /* errno */
 # include <errno.h>
 
-typedef enum e_type
-{
-	space,
-	quote,
-	d_quote,
-	c,
-	c_pipe,
-	dash,
-	a_bracket,
-	dollar
-}	t_type;
-
-
 /* structure */
 typedef struct s_cmd_list
 {
@@ -82,6 +70,25 @@ typedef struct s_minish
 	char		**envp;
 	t_cmd_list	*cmds;
 }				t_minish;
+
+typedef struct s_word_lst
+{
+	char                *word;
+	struct s_word_lst    *next;
+	struct s_word_lst    *prev;
+}        t_word_lst;
+
+typedef enum e_type
+{
+	space,
+	quote,
+	d_quote,
+	c,
+	c_pipe,
+	dash,
+	a_bracket,
+	dollar
+}    t_type;
 
 typedef struct s_char_lst
 {
@@ -105,7 +112,15 @@ void		cd(char *path, char **envp);
 /* utils */
 char	*ft_strdup_to_x(char *str, char x);
 
-/* list command */
+/* list_char function */
+t_char_lst	*char_lst_new(char c);
+t_char_lst	*char_lst_last(t_char_lst *lst);
+void	char_lst_add_back(t_char_lst **lst, t_char_lst *new);
+void	char_lst_add_front(t_char_lst **lst, t_char_lst *new);
+t_char_lst	*create_char_lst_with_c_inside(char *cmd_line);
+void	print_lst(t_char_lst *lst);
+
+/* list command maybe not useful */
 t_cmd_list	*lst_cmd_new(char *content);
 void		lst_cmd_add_back(t_cmd_list **lst, t_cmd_list *new);
 void		print_list(t_cmd_list *lst);
