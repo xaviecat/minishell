@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: nfaust <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 17:01:30 by nfaust            #+#    #+#             */
-/*   Updated: 2023/05/12 18:48:19 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/05/15 18:50:50 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,11 @@ char	*ft_strdup_to_charset(char *str, char *charset)
 	return (new_str[i] = 0, new_str);
 }
 
+/**
+ * @brief check if a char is a whitespace (space, \\t, \\n, \\v, \\f, \\r)
+ * @param c the char to check
+ * @return 1 if the char is a whitespace, \n 0 if not
+ */
 int ft_isspace(char c)
 {
 	if (c == ' ' || (9 <= c && c <= 13))
@@ -54,6 +59,11 @@ int ft_isspace(char c)
 	return (0);
 }
 
+/**
+ * @brief count the number of chars in a string cutted by 'cut_whitespaces'
+ * @param str the source string in wich you want to count chars to keep
+ * @return the number of chars in the final string
+ */
 static size_t	count_chars_to_keep(char *str)
 {
 	size_t	counter;
@@ -100,6 +110,27 @@ char	*cut_whitespaces(char *str)
 	}
 	return (free(trimed_str - trimed_len), str[j] = 0, str);
 }
+
+//char *replace_unexpected_whitespaces(char *cmd)
+//{
+//	size_t	end_index;
+//	size_t	i;
+//	char	*tmp;
+//	char	*result;
+//
+//	i = 0;
+//	end_index = 0;
+//	while (cmd[i])
+//	{
+//		tmp = ft_strdup_to_charset(cmd, "\'\"");
+//		if (!tmp)
+//			return (NULL);
+//		while (cmd[i] != '"' && cmd[i] != '\'')
+//			end_index++;
+//		cmd += end_index;
+//		i = 0;
+//	}
+//}
 
 /**
  * @brief copy src to dest, until x is found in src. DST MUST BE ABLE TO CONTAIN

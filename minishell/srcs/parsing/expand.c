@@ -3,15 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: nfaust <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:08:17 by nfaust            #+#    #+#             */
-/*   Updated: 2023/05/12 18:52:45 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/05/15 19:11:13 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
+/**
+ * @brief collect the content of the environnement variable
+ * @param envp
+ * @param var the environnement variable
+ * @return the content of the environnement variable, \n an allocated string containing "" if the variable is not set
+ */
 static char	*expand_env_var(char **envp, char *var)
 {
 	size_t	i;
@@ -42,6 +48,13 @@ static char	*expand_env_var(char **envp, char *var)
 	return (ft_strdup(""));
 }
 
+/**
+ * @brief collect the content of the environnement variable and cut spaces in it if needed
+ * @param env_var the environnement variable
+ * @param double_not_closed 1 if a double quote is opened, \n 0 if not
+ * @param envp
+ * @return the content of the environnement variable
+ */
 static char *set_expanded_env_var(char *env_var, int double_not_closed, char **envp)
 {
 	char	*expanded_env_var;
@@ -54,6 +67,14 @@ static char *set_expanded_env_var(char *env_var, int double_not_closed, char **e
 	return (expanded_env_var);
 }
 
+/**
+ * @brief modify a command from start to whitespace by replacing env vars by their content and reallocating it
+ * @param command the command that you want to expand
+ * @param start the index of the $ symbol
+ * @param envp
+ * @param double_not_closed 1 if a double quote is opened, \n 0 if not
+ * @return the modified command
+ */
 static char	*modify_command(char *command, size_t start, char **envp, int double_not_closed)
 {
 	char	*env_var;
@@ -61,14 +82,14 @@ static char	*modify_command(char *command, size_t start, char **envp, int double
 	char	*m_cmd;
 	size_t	i;
 
-	env_var = ft_strdup_to_charset(command + start, " \"\'\0"); // ! remplacer par un isspace !
+	env_var = ft_strdup_to_charset(command + start, " \t\n\v\f\r\"\'\0");
 	if (!env_var)
 		return (NULL);
 	if (ft_strncmp(env_var, "$", 2) == 0)
 		return (free(env_var), command);
 	expanded_env_var = set_expanded_env_var(env_var, double_not_closed, envp);
 	if (!expanded_env_var)
-		return (NULL);
+		return (free(env_var), NULL);
 	m_cmd = malloc(sizeof(char) * (ft_strlen(command)
 				+ (ft_strlen(expanded_env_var) - ft_strlen(env_var))));
 	if (!m_cmd)
@@ -80,10 +101,16 @@ static char	*modify_command(char *command, size_t start, char **envp, int double
 	i = (start - i) + ft_strlen(env_var);
 	while (command[i])
 		m_cmd[start++] = command[i++];
-	free(expanded_env_var);
-	return (free(env_var), free(command), m_cmd[start] = 0, m_cmd);
+	m_cmd[start] = 0;
+	return (free(env_var), free(command), free(expanded_env_var), m_cmd);
 }
 
+/**
+ * @brief check whether or not a string should be expanded and expand it
+ * @param command the string to expand
+ * @param envp
+ * @return the modified string
+ */
 static char	*expand_vars(char *command, char **envp)
 {
 	size_t	i;
@@ -110,6 +137,11 @@ static char	*expand_vars(char *command, char **envp)
 	return (command);
 }
 
+/**
+ * @brief expand parts of commands that needs to be expanded
+ * @param w_lst command word list
+ * @param envp
+ */
 void	expand_commands(t_word_lst **w_lst, char **envp)
 {
 	t_word_lst	*w_lst_cpy;
