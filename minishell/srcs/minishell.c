@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/12 18:19:29 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/12 14:48:03 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,14 @@ void	minishell(char **envp)
 	minish = create_minishell(envp);
 	while (1)
 	{
-		line = readline("TRI_SH $>");
+		line = readline("TRI_SH $> ");
         if (!(check_command_is_fine(line)))
             printf("ERROR");
         else
         {
             lst = create_char_lst_with_c_inside(line);
+			process_quotes(lst);
+			print_lst(lst);
         }
 		//minish = parsing_command(line, minish);
 //		if (ft_strncmp(line, "exit", 5) == 0)
