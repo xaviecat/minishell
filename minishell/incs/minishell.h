@@ -88,7 +88,7 @@ typedef enum e_type
 	dash,
 	a_bracket,
 	dollar
-}	t_type;
+}    t_type;
 
 typedef struct s_char_lst
 {
@@ -105,6 +105,7 @@ char		**parsing_argu(char *arg_term);
 t_minish	*parsing_command(char *cmd_line, t_minish *sh);
 void		expand_commands(t_minish **minish);
 void		process_quotes(t_char_lst *lst);
+void		expand_commands(t_minish **minish);
 
 /* builtins */
 void		pwd(char **envp);
@@ -112,9 +113,6 @@ void		cd(char *path, char **envp);
 
 /* utils */
 char		*ft_strdup_to_x(char *str, char x);
-
-
-
 
 /* list_char function */
 t_char_lst	*char_lst_new(char c);
