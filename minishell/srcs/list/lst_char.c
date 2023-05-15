@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:39:55 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/12 17:44:40 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/05/15 13:24:15 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,16 @@
 
 void	print_lst(t_char_lst *lst)
 {
-	t_char_lst *first;
+	t_char_lst	*first;
+
 	first = lst;
 	while (lst)
 	{
-		ft_printf("%c -- ", lst->c);
-		ft_printf("sq : %i -- ", lst->quote);
-		ft_printf("dq : %i\n", lst->d_quote);
+		ft_printf("%c | ", lst->c);
+		ft_printf("sq : %i | ", lst->quote);
+		ft_printf("dq : %i | ", lst->d_quote);
+		ft_printf("type : %i |", lst->type);
+		ft_printf("\n");
 		lst = lst->next;
 	}
 	lst = first;

@@ -3,10 +3,10 @@ SRCS			:=	minishell.c\
 					parsing/pars.c\
 					builtins/pwd.c\
 					builtins/cd.c\
+					parsing/process_quotes.c\
 					parsing/expand.c\
 					utils/utils.c\
 					list/lst.c\
-					list/lst_utils.c\
 					list/lst_char.c\
 					\
 					\

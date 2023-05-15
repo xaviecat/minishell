@@ -29,7 +29,7 @@ void	minishell(char **envp)
 	minish = create_minishell(envp);
 	while (1)
 	{
-		line = readline("TRI_SH $>");
+		line = readline("TRI_SH $> ");
 		lst = create_char_lst_with_c_inside(line);
 		process_quotes(lst);
 		print_lst(lst);
