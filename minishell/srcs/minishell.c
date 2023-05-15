@@ -10,12 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../incs/minishell.h"
 t_minish	*create_minishell(char **envp)
 {
 	t_minish	*sh;
-
-	sh = malloc(sizeof(t_minish));
+    sh = malloc(sizeof(t_minish));
 	sh->envp = envp;
 	return (sh);
 }

@@ -44,7 +44,7 @@ static char	*expand_env_var(char **envp, char *var)
 
 static char *set_expanded_env_var(char *env_var, int double_not_closed, char **envp)
 {
-	char *expanded_env_var;
+	char	*expanded_env_var;
 
 	expanded_env_var = expand_env_var(envp, env_var);
 	if (double_not_closed < 0)
@@ -61,9 +61,11 @@ static char	*modify_command(char *command, size_t start, char **envp, int double
 	char	*m_cmd;
 	size_t	i;
 
-	env_var = ft_strdup_to_charset(command + start, " \"\'\0"); // remplacer par un isspace !
+	env_var = ft_strdup_to_charset(command + start, " \"\'\0"); // ! remplacer par un isspace !
 	if (!env_var)
 		return (NULL);
+	if (ft_strncmp(env_var, "$", 2) == 0)
+		return (free(env_var), command);
 	expanded_env_var = set_expanded_env_var(env_var, double_not_closed, envp);
 	if (!expanded_env_var)
 		return (NULL);
@@ -93,16 +95,16 @@ static char	*expand_vars(char *command, char **envp)
 	{
 		if (command[i] == '"')
 			double_not_closed *= -1;
-		if (command[i] == '\'' && double_not_closed < 0)
-			while (command[i + 1] && command[i + 1] != '\'')
-				i++;
-		if (command[i] && command[i] == '$')
+		if (command[i] == '$')
 		{
 			command = modify_command(command, i, envp, double_not_closed);
 			if (!command)
 				return (NULL);
 		}
-		if (command[i])
+		if (command[i++] == '\'' && double_not_closed < 0)
+			while (command[i] && command[i] != '\'')
+				i++;
+		if (command[i] == '\'')
 			i++;
 	}
 	return (command);
