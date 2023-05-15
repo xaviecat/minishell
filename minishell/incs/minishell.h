@@ -74,6 +74,8 @@ typedef enum e_type
 typedef struct s_cmd_list
 {
 	char				**cmd;
+	int					outfile;
+	int					infile;
 	bool				builtin;
 	struct s_cmd_list	*next;
 	struct s_cmd_list	*previous;
@@ -109,19 +111,29 @@ char		**parsing_argu(char *arg_term);
 t_minish	*parsing_command(char *cmd_line, t_minish *sh);
 void		expand_commands(t_word_lst **w_lst, char **envp);
 char		*cut_whitespaces(char *str);
+void		process_quotes(t_char_lst *lst);
 
 /* builtins */
-void	pwd(char **envp);
-void	cd(char *path, char **envp);
+void		pwd(char **envp);
+void		cd(char *path, char **envp);
 
 /* utils */
 char	*ft_strdup_to_charset(char *str, char *charset);
 int 	ft_isspace(char c);
 char	*str_cpy_to_x(char *src, char *dst, char x);
 
-/* list command */
+/* list_char function */
+t_char_lst	*char_lst_new(char c);
+t_char_lst	*char_lst_last(t_char_lst *lst);
+void		char_lst_add_back(t_char_lst **lst, t_char_lst *new);
+void		char_lst_add_front(t_char_lst **lst, t_char_lst *new);
+t_char_lst	*create_char_lst_with_c_inside(char *cmd_line);
+void		print_lst(t_char_lst *lst);
+
+/* list command maybe not useful */
 t_cmd_list	*lst_cmd_new(char *content);
-void	lst_cmd_add_back(t_cmd_list **lst, t_cmd_list *new);
-void	print_list(t_cmd_list *lst);
-void 	lst_clear(t_cmd_list **lst);
+void		lst_cmd_add_back(t_cmd_list **lst, t_cmd_list *new);
+void		print_list(t_cmd_list *lst);
+void		lst_clear(t_cmd_list **lst);
+
 #endif
