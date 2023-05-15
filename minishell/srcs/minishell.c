@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/12 14:48:03 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/15 17:14:54 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ int check_quote_are_close(char *command, char quote)
 int check_command_is_fine(char *command)
 {
 	int	i;
-	int	j;
+//	int	j;
 
-	j = 0;
+//	j = 0;
 	i = 0;
 	while (command[i])
 	{
@@ -70,14 +70,14 @@ void	minishell(char **envp)
 	while (1)
 	{
 		line = readline("TRI_SH $> ");
-        if (!(check_command_is_fine(line)))
-            printf("ERROR");
-        else
-        {
-            lst = create_char_lst_with_c_inside(line);
+//		if (!(check_command_is_fine(line)))
+//			printf("ERROR");
+//		else
+		{
+			lst = create_char_lst_with_c_inside(line);
 			process_quotes(lst);
 			print_lst(lst);
-        }
+		}
 		//minish = parsing_command(line, minish);
 //		if (ft_strncmp(line, "exit", 5) == 0)
 //			break ;

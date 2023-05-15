@@ -95,8 +95,9 @@ typedef struct s_char_lst
 	int					pipe;
 	char				c;
 	t_type				type;
-	bool				quote;
+	bool				s_quote;
 	bool				d_quote;
+	bool				a_quote;
 	struct s_char_lst	*prev;
 	struct s_char_lst	*next;
 }						t_char_lst;
