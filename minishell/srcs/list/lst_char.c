@@ -6,12 +6,16 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:39:55 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/15 16:57:39 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/05/16 15:14:31 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
+/**
+ * @brief print all link data
+ * @param lst
+ */
 void	print_lst(t_char_lst *lst)
 {
 	t_char_lst	*first;
@@ -28,6 +32,25 @@ void	print_lst(t_char_lst *lst)
 		lst = lst->next;
 	}
 	lst = first;
+}
+
+/**
+ * @brief delete one link in the list
+ * @param lst
+ */
+void	char_lst_delone(t_char_lst **lst)
+{
+	t_char_lst	*prev;
+	t_char_lst	*next;
+
+	prev = (*lst)->prev;
+	next = (*lst)->next;
+	if (prev)
+		prev->next = next;
+	if (next)
+		next->prev = prev;
+	free(*lst);
+	*lst = next;
 }
 
 t_char_lst	*char_lst_new(char c)
