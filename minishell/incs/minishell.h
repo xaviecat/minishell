@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/15 17:40:57 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/05/16 18:42:16 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,6 @@ typedef enum e_type_word
 typedef struct s_cmd_list
 {
 	char				**cmd;
-	int					outfile;
-	int					infile;
 	bool				builtin;
 	struct s_cmd_list	*next;
 	struct s_cmd_list	*previous;
@@ -118,6 +116,8 @@ typedef struct s_char_lst
 
 typedef struct s_minish
 {
+	int			outfile;
+	int			infile;
 	char		**envp;
 	t_cmd_list	*cmds;
 }				t_minish;
@@ -155,9 +155,12 @@ void	char_lst_delone(t_char_lst **lst);
 t_word_lst	*create_word_lst(t_char_lst *old_lst);
 void		print_lst_w(t_word_lst *lst);
 char		*reforme_word(t_char_lst **lst_c);
+int			is_a_bultin(char *word);
+int			get_cat_of_word(char *word);
+void		word_lst_delone(t_word_lst **lst);
 
 /* list command maybe not useful */
-t_cmd_list	*lst_cmd_new(char *content);
+t_cmd_list	*lst_cmd_new(char **content);
 void		lst_cmd_add_back(t_cmd_list **lst, t_cmd_list *new);
 void		print_list(t_cmd_list *lst);
 void		lst_clear(t_cmd_list **lst);

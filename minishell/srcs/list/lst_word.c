@@ -6,21 +6,25 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 12:00:52 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/16 14:27:28 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/16 19:02:43 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-char	*reforme_word(t_char_lst **lst_c)
+/**
+ * @brief count the length of the word, in fact it
+ * count since it find a space type
+ * @param lst_c
+ * @param next
+ * @return the length of the word
+ */
+int	get_number_c_of_word(t_char_lst **lst_c, t_char_lst **next)
 {
-	char		*word;
-	int			nb_c_word;
-	t_char_lst	*prev;
-	t_char_lst	*next;
+	int	nb_c_word;
 
 	nb_c_word = 0;
-	while (*lst_c != NULL && (*lst_c)->type != space)
+	while (*lst_c && (*lst_c)->type != space)
 	{
 		nb_c_word++;
 		if ((*lst_c)->next)
@@ -28,16 +32,33 @@ char	*reforme_word(t_char_lst **lst_c)
 		else
 		{
 			next = NULL;
-			break;
+			break ;
 		}
 	}
+	return (nb_c_word);
+}
+
+/**
+ * @brief create a word with the character of the char list
+ * since we found a space type
+ * @param lst_c
+ * @return the word created
+ */
+char	*reforme_word(t_char_lst **lst_c)
+{
+	char		*word;
+	int			nb_c_word;
+	t_char_lst	*prev;
+	t_char_lst	*next;
+
+	nb_c_word = get_number_c_of_word(lst_c, &next); // PROBLEME AVEC NEXT, TESTER AVEC LE DEBUGGER !
 	word = ft_calloc(nb_c_word + 1, sizeof(char));
 	if (!word)
 		return (NULL); // ! ERROR
 	if (*lst_c && (*lst_c)->type == space && (*lst_c)->prev != NULL)
 	{
 		prev = (*lst_c)->prev;
-	 	char_lst_delone(lst_c);
+		char_lst_delone(lst_c);
 		*lst_c = prev;
 		next = (*lst_c)->next;
 	}
@@ -49,28 +70,14 @@ char	*reforme_word(t_char_lst **lst_c)
 		(*lst_c) = prev;
 	}
 	*lst_c = next;
- 	return (word);
+	return (word);
 }
 
-int	get_cat_of_word(char *word)
-{
-	if (ft_strncmp(word , "<", 2) == 0)
-		return (open_file);
-	if (ft_strncmp(word, "<<", 3) == 0)
-		return (hd);
-	if (ft_strncmp(word, ">", 2) == 0)
-		return (redir);
-	if (ft_strncmp(word, ">>", 3) == 0)
-		return (appnd);
-	if (ft_strncmp(word, "-", 1) == 0)
-		return (param);
-	if (ft_strncmp(word, "|", 1) == 0)
-		return (w_pipe);
-	if (ft_strchr(word, '$') != NULL)
-		return (expand);
-	return (not_define);
-}
-
+/**
+ * @brief create a new link for a word list
+ * @param word
+ * @return the new link created
+ */
 t_word_lst	*word_lst_new(char *word)
 {
 	t_word_lst	*new;
@@ -88,6 +95,11 @@ t_word_lst	*word_lst_new(char *word)
 	return (new);
 }
 
+/**
+ * @brief find the last link in the word list
+ * @param lst
+ * @return the last link
+ */
 t_word_lst	*word_lst_last(t_word_lst *lst)
 {
 	while (lst)
@@ -99,6 +111,29 @@ t_word_lst	*word_lst_last(t_word_lst *lst)
 	return (lst);
 }
 
+/**
+ * @brief delete one link in the word list
+ * @param lst
+ */
+void	word_lst_delone(t_word_lst **lst)
+{
+	t_word_lst	*prev;
+	t_word_lst	*next;
+
+	prev = (*lst)->prev;
+	next = (*lst)->next;
+	if (prev)
+		prev->next = next;
+	if (next)
+		next->prev = prev;
+	free(*lst);
+	*lst = next;
+}
+/**
+ * @brief add the new link at the back of the word list 'lst'
+ * @param lst
+ * @param new
+ */
 void	word_lst_add_back(t_word_lst **lst, t_word_lst *new)
 {
 	t_word_lst	*tmp;
@@ -116,6 +151,11 @@ void	word_lst_add_back(t_word_lst **lst, t_word_lst *new)
 	return ;
 }
 
+/**
+ * @brief add the new link at the front of the word list 'lst'
+ * @param lst
+ * @param new
+ */
 void	word_lst_add_front(t_word_lst **lst, t_word_lst *new)
 {
 	new->next = *lst;
@@ -123,25 +163,10 @@ void	word_lst_add_front(t_word_lst **lst, t_word_lst *new)
 	return ;
 }
 
-int		is_a_bultin(char *word)
-{
-	if (strncmp(word, "exit", 5) == 0)
-		return (builtin);
-	if (strncmp(word, "echo", 5) == 0)
-		return (builtin);
-	if (strncmp(word, "cd", 3) == 0)
-		return (builtin);
-	if (strncmp(word, "pwd", 4) == 0)
-		return (builtin);
-	if (strncmp(word, "export", 7) == 0)
-		return (builtin);
-	if (strncmp(word, "unset", 6) == 0)
-		return (builtin);
-	if (strncmp(word, "env", 4) == 0)
-		return (builtin);
-	return (command);
-}
-
+/**
+ * @brief assign a type to the link pass in parameter
+ * @param lst
+ */
 void	get_other_type_word(t_word_lst **lst)
 {
 	t_word_lst	*first;
@@ -167,6 +192,10 @@ void	get_other_type_word(t_word_lst **lst)
 	*lst = first;
 }
 
+/**
+ * @brief print all the word list pass in parameter
+ * @param lst
+ */
 void	print_lst_w(t_word_lst *lst)
 {
 	t_word_lst	*first;
@@ -180,6 +209,11 @@ void	print_lst_w(t_word_lst *lst)
 	lst = first;
 }
 
+/**
+ * @brief create a word list based on the char list pass in parameter
+ * @param old_lst
+ * @return the word list created
+ */
 t_word_lst	*create_word_lst(t_char_lst *old_lst)
 {
 	t_word_lst	*lst;

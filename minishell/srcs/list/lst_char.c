@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:39:55 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/16 15:14:31 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/16 15:16:42 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	print_lst(t_char_lst *lst)
 }
 
 /**
- * @brief delete one link in the list
+ * @brief delete one link in the char list
  * @param lst
  */
 void	char_lst_delone(t_char_lst **lst)
@@ -52,6 +52,11 @@ void	char_lst_delone(t_char_lst **lst)
 	*lst = next;
 }
 
+/**
+ * @brief create new link for the char list
+ * @param c
+ * @return the new link
+ */
 t_char_lst	*char_lst_new(char c)
 {
 	t_char_lst	*new;
@@ -70,6 +75,11 @@ t_char_lst	*char_lst_new(char c)
 	return (new);
 }
 
+/**
+ * @brief find the last link of the char list
+ * @param lst
+ * @return the last link
+ */
 t_char_lst	*char_lst_last(t_char_lst *lst)
 {
 	while (lst)
@@ -81,6 +91,11 @@ t_char_lst	*char_lst_last(t_char_lst *lst)
 	return (lst);
 }
 
+/**
+ * @brief add the link new at the end of the char list 'lst'
+ * @param lst
+ * @param new
+ */
 void	char_lst_add_back(t_char_lst **lst, t_char_lst *new)
 {
 	t_char_lst	*tmp;
@@ -98,6 +113,11 @@ void	char_lst_add_back(t_char_lst **lst, t_char_lst *new)
 	return ;
 }
 
+/**
+ * @brief add the link new at the begin of the char list 'lst'
+ * @param lst
+ * @param new
+ */
 void	char_lst_add_front(t_char_lst **lst, t_char_lst *new)
 {
 	new->next = *lst;
@@ -105,6 +125,11 @@ void	char_lst_add_front(t_char_lst **lst, t_char_lst *new)
 	return ;
 }
 
+/**
+ * @brief split the command char in a char list
+ * @param cmd_line
+ * @return the char list create
+ */
 t_char_lst	*create_char_lst_with_c_inside(char *cmd_line)
 {
 	int		i;
