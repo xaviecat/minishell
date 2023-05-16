@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_char.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:39:55 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/15 13:24:15 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/05/15 16:39:38 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,26 @@ void	print_lst(t_char_lst *lst)
 	first = lst;
 	while (lst)
 	{
-		ft_printf("%c | ", lst->c);
-		ft_printf("sq : %i | ", lst->quote);
-		ft_printf("dq : %i | ", lst->d_quote);
-		ft_printf("type : %i |", lst->type);
-		ft_printf("\n");
+		ft_printf("%c", lst->c);
+		printf("/%p\n", lst->prev);
 		lst = lst->next;
 	}
 	lst = first;
+}
+
+void	char_lst_delone(t_char_lst **lst)
+{
+	t_char_lst	*prev;
+	t_char_lst	*next;
+
+	prev = (*lst)->prev;
+	next = (*lst)->next;
+	if (prev)
+		prev->next = next;
+	if (next)
+		next->prev = prev;
+	free(*lst);
+	*lst = next;
 }
 
 t_char_lst	*char_lst_new(char c)
