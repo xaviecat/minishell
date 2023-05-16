@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfaust <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
 /*   Updated: 2023/05/16 14:53:20 by nfaust           ###   ########.fr       */
@@ -60,7 +60,7 @@
 typedef enum e_type_char
 {
 	space,
-	quote, // '
+	s_quote, // '
 	d_quote, // "
 	charc, // letter ect
 	c_pipe, // |
@@ -99,19 +99,20 @@ typedef struct s_cmd_list
 
 typedef struct s_word_lst
 {
-	char                *word;
+	char				*word;
 	t_type_word			type;
-	struct s_word_lst    *next;
-	struct s_word_lst    *prev;
-}        t_word_lst;
+	struct s_word_lst	*next;
+	struct s_word_lst	*prev;
+}						t_word_lst;
 
 typedef struct s_char_lst
 {
 	int					pipe;
 	char				c;
-	t_type_char			type;
-	bool				quote;
+	t_type				type;
+	bool				s_quote;
 	bool				d_quote;
+	bool				a_quote;
 	struct s_char_lst	*prev;
 	struct s_char_lst	*next;
 }				t_char_lst;
@@ -123,7 +124,7 @@ typedef struct s_minish
 }				t_minish;
 
 /* checking*/
-int		check_command_is_fine(char *command);
+int			check_command_is_fine(char *command);
 
 /* parsing */
 char		**parsing_argu(char *arg_term);
@@ -148,9 +149,9 @@ t_char_lst	*char_lst_last(t_char_lst *lst);
 void		char_lst_add_back(t_char_lst **lst, t_char_lst *new);
 void		char_lst_add_front(t_char_lst **lst, t_char_lst *new);
 t_char_lst	*create_char_lst_with_c_inside(char *cmd_line);
-void	give_type_in_lst(t_char_lst **lst);
-void	print_lst(t_char_lst *lst);
-void	char_lst_delone(t_char_lst **lst);
+void		give_type_in_lst(t_char_lst **lst);
+void		print_lst(t_char_lst *lst);
+void		char_lst_delone(t_char_lst **lst);
 
 /* lst_word function */
 t_word_lst	*create_word_lst(t_char_lst *old_lst);
