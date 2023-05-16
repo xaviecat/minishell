@@ -3,15 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   lst_char.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:39:55 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/15 13:24:15 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/05/16 15:14:31 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
+/**
+ * @brief print all link data
+ * @param lst
+ */
 void	print_lst(t_char_lst *lst)
 {
 	t_char_lst	*first;
@@ -19,13 +23,20 @@ void	print_lst(t_char_lst *lst)
 	first = lst;
 	while (lst)
 	{
-		ft_printf("%c", lst->c);
-		printf("/%p\n", lst->prev);
+		ft_printf("%c | ", lst->c);
+		ft_printf("sq : %i | ", lst->quote);
+		ft_printf("dq : %i | ", lst->d_quote);
+		ft_printf("type : %i |", lst->type);
+		ft_printf("\n");
 		lst = lst->next;
 	}
 	lst = first;
 }
 
+/**
+ * @brief delete one link in the list
+ * @param lst
+ */
 void	char_lst_delone(t_char_lst **lst)
 {
 	t_char_lst	*prev;
