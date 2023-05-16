@@ -22,7 +22,7 @@ void	print_lst(t_char_lst *lst)
 		ft_printf("%c | ", lst->c);
 		ft_printf("sq : %i | ", lst->quote);
 		ft_printf("dq : %i | ", lst->d_quote);
-		ft_printf("type : %i |", lst->type);
+//		ft_printf("type : %i |", lst->type);
 		ft_printf("\n");
 		lst = lst->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: nfaust <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/15 17:36:39 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/05/16 14:31:57 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ int check_quote_are_close(char *command, char quote)
 int check_command_is_fine(char *command)
 {
 	int	i;
-	int	j;
+//	int	j;
 
-	j = 0;
+//	j = 0;
 	i = 0;
 	while (command[i])
 	{
@@ -68,11 +68,12 @@ void	minishell(char **envp)
 	t_minish	*minish;
 	t_char_lst	*lst;
 	minish = create_minishell(envp);
+
 	while (1)
 	{
 		line = readline("TRI_SH $> ");
         if (!(check_command_is_fine(line)))
-            printf("ERROR");
+            printf("ERROR\n");
         else
         {
             lst = create_char_lst_with_c_inside(line);

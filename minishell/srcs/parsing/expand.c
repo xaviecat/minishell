@@ -6,7 +6,7 @@
 /*   By: nfaust <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:08:17 by nfaust            #+#    #+#             */
-/*   Updated: 2023/05/15 19:11:13 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/05/16 14:14:13 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,16 @@ static char	*expand_env_var(char **envp, char *var)
 	i = 0;
 	while (envp[i])
 	{
-		if (ft_strncmp(envp[i], var_expansion, var_len) == 0)
+		if (ft_strncmp(envp[i++], var_expansion, var_len) == 0)
 		{
 			free(var_expansion);
-			var_expansion = ft_strdup(envp[i] + var_len);
+			var_expansion = ft_strdup(envp[i - 1] + var_len);
 			if (!var_expansion)
 				return (NULL);
 			return (var_expansion);
 		}
-		i++;
 	}
-	return (ft_strdup(""));
+	return (free(var_expansion), ft_strdup(""));
 }
 
 /**
@@ -68,41 +67,41 @@ static char *set_expanded_env_var(char *env_var, int double_not_closed, char **e
 }
 
 /**
- * @brief modify a command from start to whitespace by replacing env vars by their content and reallocating it
- * @param command the command that you want to expand
+ * @brief modify a cmd from start to whitespace by replacing env vars by their content and reallocating it
+ * @param cmd the cmd that you want to expand
  * @param start the index of the $ symbol
  * @param envp
  * @param double_not_closed 1 if a double quote is opened, \n 0 if not
- * @return the modified command
+ * @return the modified cmd
  */
-static char	*modify_command(char *command, size_t start, char **envp, int double_not_closed)
+static char	*modify_command(char *cmd,
+							size_t start, char **envp, int double_not_closed)
 {
 	char	*env_var;
-	char	*expanded_env_var;
+	char	*exp_env_v;
 	char	*m_cmd;
 	size_t	i;
 
-	env_var = ft_strdup_to_charset(command + start, " \t\n\v\f\r\"\'\0");
+	env_var = ft_strdup_to_charset(cmd + start, " \t\n\v\f\r\"\'\0");
 	if (!env_var)
 		return (NULL);
 	if (ft_strncmp(env_var, "$", 2) == 0)
-		return (free(env_var), command);
-	expanded_env_var = set_expanded_env_var(env_var, double_not_closed, envp);
-	if (!expanded_env_var)
+		return (free(env_var), cmd);
+	exp_env_v = set_expanded_env_var(env_var, double_not_closed, envp);
+	if (!exp_env_v)
 		return (free(env_var), NULL);
-	m_cmd = malloc(sizeof(char) * (ft_strlen(command)
-				+ (ft_strlen(expanded_env_var) - ft_strlen(env_var))));
+	m_cmd = malloc(sizeof(char) * (ft_strlen(cmd) + 1
+				+ (ft_strlen(exp_env_v) - ft_strlen(env_var))));
 	if (!m_cmd)
-		return (free(env_var), free(expanded_env_var), NULL);
-	str_cpy_to_x(command, m_cmd, '$');
+		return (free(env_var), free(exp_env_v), NULL);
+	str_cpy_to_x(cmd, m_cmd, '$');
 	i = 0;
-	while (expanded_env_var[i])
-		m_cmd[start++] = expanded_env_var[i++];
+	while (exp_env_v[i])
+		m_cmd[start++] = exp_env_v[i++];
 	i = (start - i) + ft_strlen(env_var);
-	while (command[i])
-		m_cmd[start++] = command[i++];
-	m_cmd[start] = 0;
-	return (free(env_var), free(command), free(expanded_env_var), m_cmd);
+	while (cmd[i])
+		m_cmd[start++] = cmd[i++];
+	return (m_cmd[start] = 0, free(env_var), free(cmd), free(exp_env_v), m_cmd);
 }
 
 /**
