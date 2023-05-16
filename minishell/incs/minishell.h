@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: nfaust <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/15 17:40:57 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/05/16 14:53:20 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ void		cd(char *path, char **envp);
 char	*ft_strdup_to_charset(char *str, char *charset);
 int 	ft_isspace(char c);
 char	*str_cpy_to_x(char *src, char *dst, char x);
+int		is_dollar_alone(char *env_var, char *cmd, size_t start);
 
 /* list_char function */
 t_char_lst	*char_lst_new(char c);
