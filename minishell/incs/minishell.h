@@ -130,6 +130,8 @@ int		check_command_is_fine(char *command);
 char		**parsing_argu(char *arg_term);
 t_minish	*parsing_command(char *cmd_line, t_minish *sh);
 void		expand_commands(t_minish **minish);
+void		process_quotes(t_char_lst *lst);
+void		expand_commands(t_minish **minish);
 
 /* builtins */
 void		pwd(char **envp);
@@ -142,8 +144,8 @@ int		iswhitespace(int c);
 /* list_char function */
 t_char_lst	*char_lst_new(char c);
 t_char_lst	*char_lst_last(t_char_lst *lst);
-void	char_lst_add_back(t_char_lst **lst, t_char_lst *new);
-void	char_lst_add_front(t_char_lst **lst, t_char_lst *new);
+void		char_lst_add_back(t_char_lst **lst, t_char_lst *new);
+void		char_lst_add_front(t_char_lst **lst, t_char_lst *new);
 t_char_lst	*create_char_lst_with_c_inside(char *cmd_line);
 void	give_type_in_lst(t_char_lst **lst);
 void	print_lst(t_char_lst *lst);
@@ -159,4 +161,5 @@ t_cmd_list	*lst_cmd_new(char *content);
 void		lst_cmd_add_back(t_cmd_list **lst, t_cmd_list *new);
 void		print_list(t_cmd_list *lst);
 void		lst_clear(t_cmd_list **lst);
+
 #endif

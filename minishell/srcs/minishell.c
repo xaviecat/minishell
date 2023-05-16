@@ -31,7 +31,7 @@ void	minishell(char **envp)
 	minish = create_minishell(envp);
 	while (1)
 	{
-		line = readline("TRI_SH $>");
+		line = readline("TRI_SH $> ");
         if (!(check_command_is_fine(line)))
             printf("ERROR\n");
         else

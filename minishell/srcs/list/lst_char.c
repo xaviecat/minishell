@@ -14,7 +14,8 @@
 
 void	print_lst(t_char_lst *lst)
 {
-	t_char_lst *first;
+	t_char_lst	*first;
+
 	first = lst;
 	while (lst)
 	{
