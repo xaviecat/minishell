@@ -6,7 +6,11 @@
 /*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/05/15 16:03:57 by syluiset         ###   ########.fr       */
+=======
+/*   Updated: 2023/05/12 14:48:03 by syluiset         ###   ########.fr       */
+>>>>>>> origin/dev
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +35,15 @@ void	minishell(char **envp)
 	minish = create_minishell(envp);
 	while (1)
 	{
-		line = readline("TRI_SH $>");
+		line = readline("TRI_SH $> ");
         if (!(check_command_is_fine(line)))
             printf("ERROR\n");
         else
         {
             lst_c= create_char_lst_with_c_inside(line);
 			give_type_in_lst(&lst_c);
-			//print_lst(lst_c);
-			//(void)lst_w;
+			process_quotes(lst_c);
+			print_lst(lst_c);
 			lst_w = create_word_lst(lst_c);
 			print_lst_w(lst_w);
         }
