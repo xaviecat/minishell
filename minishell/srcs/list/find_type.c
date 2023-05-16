@@ -3,20 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   find_type.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 15:17:00 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/15 14:38:23 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/16 15:03:46 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-
-
+/**
+ * @brief give a type to the character c
+ * @param c
+ * @return type of character
+ */
 int	find_type_of_c(char c)
 {
-	if (iswhitespace(c))
+	if (c == 9 || c == 32)
 		return (space);
 	if (c == '\'')
 		return (quote);
@@ -33,6 +36,10 @@ int	find_type_of_c(char c)
 	return (charc);
 }
 
+/**
+ * @brief find the type to all the list of character
+ * @param lst
+ */
 void	give_type_in_lst(t_char_lst **lst)
 {
 	t_char_lst	*first;
@@ -46,18 +53,11 @@ void	give_type_in_lst(t_char_lst **lst)
 	*lst = first;
 }
 
-int check_quote_are_close(char *command, char quote)
-{
-    int i;
-
-    i = 0;
-    while (command[i] != quote)
-        i++;
-    if (command[i])
-        return (1);
-    return (0);
-}
-
+/**
+ * @brief make sure that the command we got as not a character we don't want
+ * @param command
+ * @return 1 if command is good, 0 if is not
+ */
 int check_command_is_fine(char *command)
 {
     int i;
@@ -69,16 +69,10 @@ int check_command_is_fine(char *command)
             return (0); // ! ERROR
         if (command[i] == ';')
             return (0); // ! ERROR
-        // if (command[i] == '\'')
-        // {
-        //     if (!(check_quote_are_close(command + i, '\'')))
-        //         return (0); // ! ERROR
-        // }
-        // if (command[i] == '\"')
-        // {
-        //     if (!(check_quote_are_close(command + i, '\"')))
-        //         return (0); // ! ERROR
-        // }
+		if (ft_strncmp(command + i, "&&", 2) == 0)
+			return (0); // ! ERROR
+		if (ft_strncmp(command + i, "||", 2) == 0)
+			return (0); // ! ERROR
         i++;
     }
     return (1);

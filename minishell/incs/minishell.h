@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/16 14:39:15 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/15 17:40:57 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -129,7 +128,8 @@ int		check_command_is_fine(char *command);
 /* parsing */
 char		**parsing_argu(char *arg_term);
 t_minish	*parsing_command(char *cmd_line, t_minish *sh);
-void		expand_commands(t_word_lst *lst);
+void		expand_commands(t_word_lst **w_lst, char **envp);
+char		*cut_whitespaces(char *str);
 void		process_quotes(t_char_lst *lst);
 
 /* builtins */
@@ -137,8 +137,9 @@ void		pwd(char **envp);
 void		cd(char *path, char **envp);
 
 /* utils */
-char	*ft_strdup_to_x(char *str, char x);
-int		iswhitespace(int c);
+char	*ft_strdup_to_charset(char *str, char *charset);
+int 	ft_isspace(char c);
+char	*str_cpy_to_x(char *src, char *dst, char x);
 
 /* list_char function */
 t_char_lst	*char_lst_new(char c);

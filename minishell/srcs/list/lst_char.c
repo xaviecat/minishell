@@ -3,15 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   lst_char.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:39:55 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/15 16:39:38 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/16 15:14:31 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
+/**
+ * @brief print all link data
+ * @param lst
+ */
 void	print_lst(t_char_lst *lst)
 {
 	t_char_lst	*first;
@@ -29,6 +33,10 @@ void	print_lst(t_char_lst *lst)
 	lst = first;
 }
 
+/**
+ * @brief delete one link in the list
+ * @param lst
+ */
 void	char_lst_delone(t_char_lst **lst)
 {
 	t_char_lst	*prev;

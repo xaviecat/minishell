@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/15 16:03:57 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/16 15:01:40 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ void	minishell(char **envp)
 			process_quotes(lst_c);
 			print_lst(lst_c);
 			lst_w = create_word_lst(lst_c);
+			print_lst_w(lst_w);
+			expand_commands(&lst_w, envp);
 			print_lst_w(lst_w);
         }
 		//minish = parsing_command(line, minish);
