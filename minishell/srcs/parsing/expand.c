@@ -100,7 +100,7 @@ static char	*expand_vars(char *command, char **envp)
 	return (command);
 }
 
-void	expand_commands(t_minish **minish)
+void	expand_commands(t_word_lst)
 {
 	t_cmd_list	*cmd_list;
 

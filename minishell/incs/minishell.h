@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/16 14:38:31 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/16 14:39:15 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,9 +129,8 @@ int		check_command_is_fine(char *command);
 /* parsing */
 char		**parsing_argu(char *arg_term);
 t_minish	*parsing_command(char *cmd_line, t_minish *sh);
-void		expand_commands(t_minish **minish);
+void		expand_commands(t_word_lst *lst);
 void		process_quotes(t_char_lst *lst);
-void		expand_commands(t_minish **minish);
 
 /* builtins */
 void		pwd(char **envp);
