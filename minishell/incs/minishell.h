@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/15 17:40:57 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/05/16 19:04:44 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ typedef struct s_char_lst
 {
 	int					pipe;
 	char				c;
-	t_type				type;
+	t_type_word			type;
 	bool				s_quote;
 	bool				d_quote;
 	bool				a_quote;
@@ -132,7 +132,7 @@ char		**parsing_argu(char *arg_term);
 t_minish	*parsing_command(char *cmd_line, t_minish *sh);
 void		expand_commands(t_word_lst **w_lst, char **envp);
 char		*cut_whitespaces(char *str);
-void		process_quotes(t_char_lst *lst);
+bool		process_quotes(t_char_lst *lst);
 
 /* builtins */
 void		pwd(char **envp);
