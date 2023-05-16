@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:10:59 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/15 19:02:44 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/05/16 18:31:21 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,71 +44,58 @@ void	process_double_quotes(t_char_lst **tmp)
 	}
 }
 
-void	is_quote_alone(t_char_lst *lst)
+bool	seek_alone_quote(t_char_lst **tmp)
+{
+	while (((*tmp) && (*tmp)->s_quote) || ((*tmp) && (*tmp)->d_quote))
+	{
+		if (((*tmp)->s_quote && (*tmp)->c == '\'')
+			|| ((*tmp)->d_quote && (*tmp)->c == '\"'))
+		{
+			(*tmp)->s_quote = false;
+			(*tmp)->d_quote = false;
+			(*tmp)->a_quote = true;
+			return (true);
+		}
+		(*tmp)->s_quote = false;
+		(*tmp)->d_quote = false;
+		(*tmp) = (*tmp)->prev;
+	}
+	(*tmp)->s_quote = false;
+	(*tmp)->d_quote = false;
+	return (false);
+}
+
+bool	is_quote_alone(t_char_lst *lst)
 {
 	t_char_lst	*tmp;
 
 	tmp = char_lst_last(lst);
 	while (tmp)
 	{
-		if (tmp->s_quote && tmp->c == '\'' && !tmp->prev->s_quote)
+		if ((tmp->s_quote && tmp->c == '\''
+				&& (!tmp->prev || !tmp->prev->s_quote))
+			|| (tmp->d_quote && tmp->c == '\"'
+				&& (!tmp->prev || !tmp->prev->d_quote)))
 		{
 			tmp->s_quote = false;
-			tmp->a_quote = true;
-			return ;
-		}
-		else if (tmp->d_quote && tmp->c == '\"' && !tmp->prev->d_quote)
-		{
 			tmp->d_quote = false;
 			tmp->a_quote = true;
-			return ;
+			return (true);
 		}
-		else if (tmp->s_quote && tmp->c == '\'')
+		else if ((tmp->s_quote && tmp->c != '\'')
+			|| (tmp->d_quote && tmp->c != '\"'))
 		{
-			while (tmp && tmp->s_quote)
-				tmp = tmp->prev;
-		}
-		else if (tmp->d_quote && tmp->c == '\"')
-		{
-			while (tmp && tmp->d_quote)
-				tmp = tmp->prev;
-		}
-		else if (tmp->s_quote && tmp->c != '\'')
-		{
-			while (tmp && tmp->s_quote)
-			{
-				if (tmp->s_quote && tmp->c == '\'')
-				{
-					tmp->s_quote = false;
-					tmp->a_quote = true;
-					return ;
-				}
-				tmp->s_quote = false;
-				tmp = tmp->prev;
-			}
-			tmp->s_quote = false;
-		}
-		else if (tmp->d_quote && tmp->c != '\"')
-		{
-			while (tmp && tmp->d_quote)
-			{
-				if (tmp->d_quote && tmp->c == '\"')
-				{
-					tmp->d_quote = false;
-					tmp->a_quote = true;
-					return ;
-				}
-				tmp->d_quote = false;
-				tmp = tmp->prev;
-			}
-			tmp->d_quote = false;
+			if (seek_alone_quote(&tmp))
+				return (true);
 		}
 		else
-			tmp = tmp->prev;
+			return (false);
 	}
+	return (false);
 }
 
-void	process_quotes(t_char_lst *lst)
+
+bool	process_quotes(t_char_lst *lst)
 {
 	t_char_lst	*tmp;
 
@@ -122,7 +109,7 @@ void	process_quotes(t_char_lst *lst)
 		else
 			tmp = tmp->next;
 	}
-	is_quote_alone(lst);
+	return (is_quote_alone(lst));
 }
 
 /*

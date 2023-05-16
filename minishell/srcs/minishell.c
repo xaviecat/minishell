@@ -6,11 +6,12 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/15 17:14:54 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/05/16 18:39:24 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../incs/minishell.h"
+
 t_minish	*create_minishell(char **envp)
 {
 	t_minish	*sh;
@@ -75,7 +76,8 @@ void	minishell(char **envp)
 //		else
 		{
 			lst = create_char_lst_with_c_inside(line);
-			process_quotes(lst);
+			if (process_quotes(lst))
+				ft_fdprintf(2, "ERROR : QUOTE DON'T CLOSED"); // ! free la chaine;
 			print_lst(lst);
 		}
 		//minish = parsing_command(line, minish);

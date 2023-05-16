@@ -105,7 +105,7 @@ typedef struct s_char_lst
 char		**parsing_argu(char *arg_term);
 t_minish	*parsing_command(char *cmd_line, t_minish *sh);
 void		expand_commands(t_minish **minish);
-void		process_quotes(t_char_lst *lst);
+bool		process_quotes(t_char_lst *lst);
 void		expand_commands(t_minish **minish);
 
 /* builtins */
