@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/15 17:40:57 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/05/16 14:53:20 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,6 @@ typedef struct s_word_lst
 	struct s_word_lst	*prev;
 }						t_word_lst;
 
-
 typedef struct s_char_lst
 {
 	int					pipe;
@@ -139,9 +138,10 @@ void		pwd(char **envp);
 void		cd(char *path, char **envp);
 
 /* utils */
-char		*ft_strdup_to_charset(char *str, char *charset);
-int 		ft_isspace(char c);
-char		*str_cpy_to_x(char *src, char *dst, char x);
+char	*ft_strdup_to_charset(char *str, char *charset);
+int 	ft_isspace(char c);
+char	*str_cpy_to_x(char *src, char *dst, char x);
+int		is_dollar_alone(char *env_var, char *cmd, size_t start);
 
 /* list_char function */
 t_char_lst	*char_lst_new(char c);
