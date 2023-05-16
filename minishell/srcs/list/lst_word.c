@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_word.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 12:00:52 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/15 18:03:26 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/16 14:27:28 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,29 @@ char	*reforme_word(t_char_lst **lst_c)
 	char		*word;
 	int			nb_c_word;
 	t_char_lst	*prev;
+	t_char_lst	*next;
 
 	nb_c_word = 0;
-	while (*lst_c && (*lst_c)->type != space)
+	while (*lst_c != NULL && (*lst_c)->type != space)
 	{
 		nb_c_word++;
-		*lst_c = (*lst_c)->next;
+		if ((*lst_c)->next)
+			*lst_c = (*lst_c)->next;
+		else
+		{
+			next = NULL;
+			break;
+		}
 	}
-
 	word = ft_calloc(nb_c_word + 1, sizeof(char));
 	if (!word)
 		return (NULL); // ! ERROR
-	if ((*lst_c)->type == space && (*lst_c)->prev != NULL)
+	if (*lst_c && (*lst_c)->type == space && (*lst_c)->prev != NULL)
 	{
 		prev = (*lst_c)->prev;
 	 	char_lst_delone(lst_c);
 		*lst_c = prev;
+		next = (*lst_c)->next;
 	}
 	while (*lst_c != NULL && nb_c_word-- >= 0)
 	{
@@ -40,10 +47,9 @@ char	*reforme_word(t_char_lst **lst_c)
 		prev = (*lst_c)->prev;
 		char_lst_delone(lst_c);
 		(*lst_c) = prev;
-		print_lst(*lst_c);
-		printf("\n");
 	}
-	return (word);
+	*lst_c = next;
+ 	return (word);
 }
 
 int	get_cat_of_word(char *word)
@@ -62,7 +68,7 @@ int	get_cat_of_word(char *word)
 		return (w_pipe);
 	if (ft_strchr(word, '$') != NULL)
 		return (expand);
-	return (-1);
+	return (not_define);
 }
 
 t_word_lst	*word_lst_new(char *word)
@@ -143,7 +149,7 @@ void	get_other_type_word(t_word_lst **lst)
 	first = *lst;
 	while (*lst)
 	{
-		if ((*lst)->type == not_define)
+		if ((*lst)->prev && (*lst)->type == not_define)
 		{
 			if ((*lst)->prev->type == redir)
 				(*lst)->type = outfile;
@@ -153,7 +159,7 @@ void	get_other_type_word(t_word_lst **lst)
 				(*lst)->type = outfile;
 			if ((*lst)->prev->type == open_file)
 				(*lst)->type = infile;
-			if (((*lst)->type == not_define))
+			if ((*lst)->prev->type == not_define)
 				is_a_bultin((*lst)->word);
 		}
 		*lst = (*lst)->next;
@@ -168,7 +174,7 @@ void	print_lst_w(t_word_lst *lst)
 	first = lst;
 	while (lst)
 	{
-		printf("%s/%d\n", lst->word, lst->type);
+		printf("%s/%d/%p\n", lst->word, lst->type, lst->next);
 		lst = lst->next;
 	}
 	lst = first;
