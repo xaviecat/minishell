@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_char.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:39:55 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/12 14:57:39 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/15 16:39:38 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,25 @@ void	print_lst(t_char_lst *lst)
 	while (lst)
 	{
 		ft_printf("%c", lst->c);
+		printf("/%p\n", lst->prev);
 		lst = lst->next;
 	}
 	lst = first;
+}
+
+void	char_lst_delone(t_char_lst **lst)
+{
+	t_char_lst	*prev;
+	t_char_lst	*next;
+
+	prev = (*lst)->prev;
+	next = (*lst)->next;
+	if (prev)
+		prev->next = next;
+	if (next)
+		next->prev = prev;
+	free(*lst);
+	*lst = next;
 }
 
 t_char_lst	*char_lst_new(char c)
