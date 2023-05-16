@@ -8,8 +8,8 @@ SRCS			:=	minishell.c\
 					utils/expand_utils.c\
 					list/lst.c\
 					list/lst_char.c\
-					\
-					\
+					list/lst_word.c\
+					list/find_type.c\
 
 SRCS_D			:=	srcs/
 
@@ -40,7 +40,7 @@ CFLAGS			:=	-Wall -Wextra -Werror
 
 RDL				:=	-lreadline
 
-ASAN_F			:=	-g3 ##-fsanitize=address
+ASAN_F			:=	-g3 -fsanitize=address
 
 #========================EXEC===============================#
 all				:	$(NAME)
