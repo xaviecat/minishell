@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 12:00:52 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/16 19:02:43 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/17 10:37:24 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	get_number_c_of_word(t_char_lst **lst_c, t_char_lst **next)
 			*lst_c = (*lst_c)->next;
 		else
 		{
-			next = NULL;
+			*next = NULL;
 			break ;
 		}
 	}
@@ -184,9 +184,9 @@ void	get_other_type_word(t_word_lst **lst)
 				(*lst)->type = outfile;
 			if ((*lst)->prev->type == open_file)
 				(*lst)->type = infile;
-			if ((*lst)->prev->type == not_define)
-				is_a_bultin((*lst)->word);
 		}
+		if ((*lst)->type == not_define)
+			(*lst)->type = is_a_bultin((*lst)->word);
 		*lst = (*lst)->next;
 	}
 	*lst = first;

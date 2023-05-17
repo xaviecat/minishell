@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 15:17:00 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/16 15:03:46 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/17 10:38:20 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 
 int	is_a_bultin(char *word)
 {
-	if (strncmp(word, "exit", 5) == 0)
+	if (ft_strncmp(word, "exit", 5) == 0)
 		return (builtin);
-	if (strncmp(word, "echo", 5) == 0)
+	if (ft_strncmp(word, "echo", 5) == 0)
 		return (builtin);
-	if (strncmp(word, "cd", 3) == 0)
+	if (ft_strncmp(word, "cd", 3) == 0)
 		return (builtin);
-	if (strncmp(word, "pwd", 4) == 0)
+	if (ft_strncmp(word, "pwd", 4) == 0)
 		return (builtin);
-	if (strncmp(word, "export", 7) == 0)
+	if (ft_strncmp(word, "export", 7) == 0)
 		return (builtin);
-	if (strncmp(word, "unset", 6) == 0)
+	if (ft_strncmp(word, "unset", 6) == 0)
 		return (builtin);
-	if (strncmp(word, "env", 4) == 0)
+	if (ft_strncmp(word, "env", 4) == 0)
 		return (builtin);
 	return (command);
 }

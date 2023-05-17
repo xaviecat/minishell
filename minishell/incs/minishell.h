@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/16 18:42:16 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/17 09:53:16 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,9 +160,10 @@ int			get_cat_of_word(char *word);
 void		word_lst_delone(t_word_lst **lst);
 
 /* list command maybe not useful */
-t_cmd_list	*lst_cmd_new(char **content);
+t_cmd_list	*lst_cmd_new(char **content, bool is_a_builtin);
 void		lst_cmd_add_back(t_cmd_list **lst, t_cmd_list *new);
 void		print_list(t_cmd_list *lst);
 void		lst_clear(t_cmd_list **lst);
+t_cmd_list	*create_lst_cmd(t_word_lst **old_lst);
 
 #endif
