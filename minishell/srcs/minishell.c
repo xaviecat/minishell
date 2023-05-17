@@ -6,17 +6,21 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/17 09:53:16 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/17 13:41:35 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../incs/minishell.h"
+
 t_minish	*create_minishell(char **envp)
 {
 	t_minish	*sh;
 
 	sh = malloc(sizeof(t_minish));
 	sh->envp = envp;
+	sh->outfile = STDOUT_FILENO;
+	sh->infile = STDIN_FILENO;
+	sh->cmds = NULL;
 	return (sh);
 }
 
@@ -38,14 +42,19 @@ void	minishell(char **envp)
         {
             lst_c= create_char_lst_with_c_inside(line);
 			give_type_in_lst(&lst_c);
-			process_quotes(lst_c);
-			print_lst(lst_c);
+			if (process_quotes(lst_c))
+				ft_fdprintf(2, "ERROR : QUOTE DON'T CLOSED"); // ! free la chaine;
+			//printf("lst of char :");
+			//print_lst(lst_c);
+			//printf("\n");
 			lst_w = create_word_lst(lst_c);
-			print_lst_w(lst_w);
+			//printf("lst of word :");
+			//print_lst_w(lst_w);
+			//printf("\n");
 			expand_commands(&lst_w, envp);
-			print_lst_w(lst_w);
-			printf("\n");
-            create_lst_cmd(&lst_w);
+			sh_pars(&lst_w, &minish);
+			printf("list of command :");
+			print_list(minish->cmds);
         }
 		//minish = parsing_command(line, minish);
 //		if (ft_strncmp(line, "exit", 5) == 0)

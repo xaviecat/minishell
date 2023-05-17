@@ -5,3 +5,22 @@ NULL et 0 peuvent etre des arguments valides
 retourne le path actuel NULL en cas d'erreur
 
 slpit aux whitspaces
+
+PB pour Nino ::::::>
+
+xcharra@z4r6p3:~$ export a="a            '          salut          '             '        b"
+xcharra@z4r6p3:~$ echo $a
+a ' salut ' ' b
+
+xcharra@z4r6p3:~$ export test="echo bonjour"
+xcharra@z4r6p3:~$ $test
+bonjour
+xcharra@z4r6p3:~$ echo $test
+echo bonjour
+xcharra@z4r6p3:~$ $test
+bonjour
+xcharra@z4r6p3:~$ "$test"
+echo bonjour: command not found
+xcharra@z4r6p3:~$ '$test'
+
+Command '$test' not found,

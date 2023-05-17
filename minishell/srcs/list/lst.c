@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:02:59 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/17 10:17:23 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/17 13:36:50 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	print_list(t_cmd_list *lst)
 			printf("%s\n", lst->cmd[i]);
 			i++;
 		}
+		printf("/%d", lst->builtin);
 		printf("\n");
 		lst = lst->next;
 	}
@@ -87,7 +88,6 @@ void	lst_cmd_add_back(t_cmd_list **lst, t_cmd_list *new)
 	}
 	else
 		*lst = new;
-	return ;
 }
 
 t_cmd_list	*lst_cmd_new(char **content, bool is_a_builtin)
@@ -175,15 +175,12 @@ t_cmd_list	*create_lst_cmd(t_word_lst **old_lst)
 {
 	t_cmd_list	*lst;
 	t_cmd_list	*new;
-	bool		is_a_builtin;
 
-	is_a_builtin = false;
 	lst = NULL;
 	while (*old_lst)
 	{
 		new = lst_cmd_new(get_cmd(old_lst), builtin_or_command(*old_lst));
 		lst_cmd_add_back(&lst, new);
 	}
-	print_list(lst);
 	return (lst);
 }

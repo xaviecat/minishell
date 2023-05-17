@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 15:17:00 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/17 10:38:20 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/17 10:38:44 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	find_type_of_c(char c)
 	if (c == 9 || c == 32)
 		return (space);
 	if (c == '\'')
-		return (quote);
+		return (s_quote);
 	if (c == '\"')
 		return (d_quote);
 	if (c == '|')

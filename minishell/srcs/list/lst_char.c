@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   lst_char.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:39:55 by syluiset          #+#    #+#             */
 /*   Updated: 2023/05/16 15:16:42 by syluiset         ###   ########.fr       */
@@ -23,11 +23,12 @@ void	print_lst(t_char_lst *lst)
 	first = lst;
 	while (lst)
 	{
-		ft_printf("%c | ", lst->c);
-		ft_printf("sq : %i | ", lst->quote);
-		ft_printf("dq : %i | ", lst->d_quote);
-		ft_printf("type : %i |", lst->type);
-		ft_printf("\n");
+		printf("%c | ", lst->c);
+		printf("sq : %i | ", lst->s_quote);
+		printf("dq : %i | ", lst->d_quote);
+		printf("aq : %i | ", lst->a_quote);
+//		ft_printf("type : %i |", lst->type);
+		printf("\n");
 		lst = lst->next;
 	}
 	lst = first;
@@ -70,7 +71,7 @@ t_char_lst	*char_lst_new(char c)
 	new->next = NULL;
 	new->prev = NULL;
 	new->d_quote = false;
-	new->quote = false;
+	new->s_quote = false;
 	new->pipe = 0;
 	return (new);
 }
