@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/17 16:40:49 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/17 18:14:13 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ typedef struct s_char_lst
 {
 	int					pipe;
 	char				c;
-	t_type_char 		type;
+	t_type_char			type;
 	bool				s_quote;
 	bool				d_quote;
 	bool				a_quote;
@@ -150,9 +150,6 @@ typedef struct s_minish
 	t_cmd_list	*cmds;
 }				t_minish;
 
-/* checking*/
-int			check_command_is_fine(char *command);
-
 /* parsing */
 char		**parsing_argu(char *arg_term);
 t_minish	*parsing_command(char *cmd_line, t_minish *sh);
@@ -160,13 +157,17 @@ void		expand_commands(t_word_lst **w_lst, char **envp);
 char		*cut_whitespaces(char *str);
 bool		process_quotes(t_char_lst *lst);
 
+/* error */
+bool		is_forbidden_char(t_char_lst *lst);
+
+
 /* builtins */
 void		pwd(char **envp);
 void		cd(char *path, char **envp);
 
 /* utils */
 char		*ft_strdup_to_charset(char *str, char *charset);
-int 		ft_isspace(char c);
+int			ft_isspace(char c);
 char		*str_cpy_to_x(char *src, char *dst, char x);
 int			is_dollar_alone(char *env_var, char *cmd, size_t start);
 

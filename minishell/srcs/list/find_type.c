@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_type.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 15:17:00 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/17 10:38:44 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/17 17:36:09 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,27 +96,3 @@ void	give_type_in_lst(t_char_lst **lst)
 	*lst = first;
 }
 
-/**
- * @brief make sure that the command we got as not a character we don't want
- * @param command
- * @return 1 if command is good, 0 if is not
- */
-int check_command_is_fine(char *command)
-{
-    int i;
-
-    i = 0;
-    while (command[i])
-    {
-        if (command[i] == '\\')
-            return (0); // ! ERROR
-        if (command[i] == ';')
-            return (0); // ! ERROR
-		if (ft_strncmp(command + i, "&&", 2) == 0)
-			return (0); // ! ERROR
-		if (ft_strncmp(command + i, "||", 2) == 0)
-			return (0); // ! ERROR
-        i++;
-    }
-    return (1);
-}

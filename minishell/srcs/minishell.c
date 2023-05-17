@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/17 16:40:49 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/17 18:27:44 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,31 +29,28 @@ void	minishell(char **envp)
 	//char		**arg;
 	t_minish	*minish;
 	t_char_lst	*lst_c;
-	t_word_lst	*lst_w;
+	// t_word_lst	*lst_w;
 	minish = create_minishell(envp);
 	while (1)
 	{
 		line = readline("TRI_SH $> ");
-        if (!(check_command_is_fine(line)))
-            printf("ERROR\n");
-        else
-        {
-            lst_c= create_char_lst_with_c_inside(line);
-			give_type_in_lst(&lst_c);
-			if (process_quotes(lst_c) == true)
-				ft_fdprintf(2, "ERROR : QUOTE DON'T CLOSED"); // ! free la chaine;
-			//printf("lst of char :");
-			//print_lst(lst_c);
-			//printf("\n");
-			lst_w = create_word_lst(lst_c);
-			//printf("lst of word :");
-			//print_lst_w(lst_w);
-			//printf("\n");
-			expand_commands(&lst_w, envp);
-			sh_pars(&lst_w, &minish);
-			printf("list of command :\n");
-			print_list(minish->cmds);
-        }
+		lst_c = create_char_lst_with_c_inside(line);
+		give_type_in_lst(&lst_c);
+		if (process_quotes(lst_c) == true)
+			ft_fdprintf(2, "ERROR : QUOTE DON'T CLOSED");// ! free
+		printf("lst of char :\n");
+		print_lst(lst_c);
+		printf("\n");
+		if (is_forbidden_char(lst_c))
+			ft_fdprintf(2, "checked\n");
+		// lst_w = create_word_lst(lst_c);
+		//printf("lst of word :");
+		//print_lst_w(lst_w);
+		//printf("\n");
+		// expand_commands(&lst_w, envp);
+		// sh_pars(&lst_w, &minish);
+		// printf("list of command :\n");
+		// print_list(minish->cmds);
 		//minish = parsing_command(line, minish);
 //		if (ft_strncmp(line, "exit", 5) == 0)
 //			break ;
