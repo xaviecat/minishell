@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/17 13:18:26 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/17 16:40:49 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,37 @@ typedef enum e_type_word
 	outfile
 }			t_type_word;
 
+typedef enum e_type_redir
+{
+	in,
+	inin,
+	out,
+	outout
+}			t_type_redir;
+
 	/* list chaine*/
+
+typedef struct s_redir_list
+{
+	t_type_redir		*redir;
+	struct s_redir_list	*next;
+}				t_redir_list;
+
+typedef struct s_fd_list
+{
+	int 				in;
+	int 				out;
+	struct s_fd_list	*next;
+}				t_fd_list;
+
 typedef struct s_cmd_list
 {
 	char				**cmd;
 	bool				builtin;
+	int					outfile;
+	int					infile;
+	struct s_redir_list	*redirs;
+
 	struct s_cmd_list	*next;
 	struct s_cmd_list	*previous;
 }				t_cmd_list;
@@ -117,8 +143,6 @@ typedef struct s_char_lst
 
 typedef struct s_minish
 {
-	int			outfile;
-	int			infile;
 	char		**envp;
 	t_cmd_list	*cmds;
 }				t_minish;
