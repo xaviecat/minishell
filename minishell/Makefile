@@ -11,6 +11,7 @@ SRCS			:=	minishell.c\
 					list/lst_char.c\
 					list/lst_word.c\
 					list/find_type.c\
+					parsing/pars_in_minish.c\
 
 SRCS_D			:=	srcs/
 

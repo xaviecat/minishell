@@ -6,8 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/16 18:39:24 by xcharra          ###   ########.fr       */
-/*   Updated: 2023/05/16 15:01:40 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/17 13:41:35 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +18,9 @@ t_minish	*create_minishell(char **envp)
 
 	sh = malloc(sizeof(t_minish));
 	sh->envp = envp;
+	sh->outfile = STDOUT_FILENO;
+	sh->infile = STDIN_FILENO;
+	sh->cmds = NULL;
 	return (sh);
 }
 
@@ -42,15 +44,18 @@ void	minishell(char **envp)
 			give_type_in_lst(&lst_c);
 			if (process_quotes(lst_c) == true)
 				ft_fdprintf(2, "ERROR : QUOTE DON'T CLOSED"); // ! free la chaine;
-			print_lst(lst_c);
+			//printf("lst of char :");
+			//print_lst(lst_c);
+			//printf("\n");
 			lst_w = create_word_lst(lst_c);
-			print_lst_w(lst_w);
+			//printf("lst of word :");
+			//print_lst_w(lst_w);
+			//printf("\n");
 			expand_commands(&lst_w, envp);
-			print_lst_w(lst_w);
+			sh_pars(&lst_w, &minish);
+			printf("list of command :");
+			print_list(minish->cmds);
         }
-//		if (!(check_command_is_fine(line)))
-//			printf("ERROR");
-//		else
 		//minish = parsing_command(line, minish);
 //		if (ft_strncmp(line, "exit", 5) == 0)
 //			break ;

@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/16 19:04:44 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/05/17 13:18:26 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,6 @@ typedef enum e_type_word
 typedef struct s_cmd_list
 {
 	char				**cmd;
-	int					outfile;
-	int					infile;
 	bool				builtin;
 	struct s_cmd_list	*next;
 	struct s_cmd_list	*previous;
@@ -109,7 +107,7 @@ typedef struct s_char_lst
 {
 	int					pipe;
 	char				c;
-	t_type_word			type;
+	t_type_char 		type;
 	bool				s_quote;
 	bool				d_quote;
 	bool				a_quote;
@@ -119,6 +117,8 @@ typedef struct s_char_lst
 
 typedef struct s_minish
 {
+	int			outfile;
+	int			infile;
 	char		**envp;
 	t_cmd_list	*cmds;
 }				t_minish;
@@ -138,10 +138,10 @@ void		pwd(char **envp);
 void		cd(char *path, char **envp);
 
 /* utils */
-char	*ft_strdup_to_charset(char *str, char *charset);
-int 	ft_isspace(char c);
-char	*str_cpy_to_x(char *src, char *dst, char x);
-int		is_dollar_alone(char *env_var, char *cmd, size_t start);
+char		*ft_strdup_to_charset(char *str, char *charset);
+int 		ft_isspace(char c);
+char		*str_cpy_to_x(char *src, char *dst, char x);
+int			is_dollar_alone(char *env_var, char *cmd, size_t start);
 
 /* list_char function */
 t_char_lst	*char_lst_new(char c);
@@ -157,11 +157,15 @@ void		char_lst_delone(t_char_lst **lst);
 t_word_lst	*create_word_lst(t_char_lst *old_lst);
 void		print_lst_w(t_word_lst *lst);
 char		*reforme_word(t_char_lst **lst_c);
+int			is_a_bultin(char *word);
+int			get_cat_of_word(char *word);
+void		word_lst_delone(t_word_lst **lst);
 
 /* list command maybe not useful */
-t_cmd_list	*lst_cmd_new(char *content);
+t_cmd_list	*lst_cmd_new(char **content, bool is_a_builtin);
 void		lst_cmd_add_back(t_cmd_list **lst, t_cmd_list *new);
 void		print_list(t_cmd_list *lst);
 void		lst_clear(t_cmd_list **lst);
-
+t_cmd_list	*create_lst_cmd(t_word_lst **old_lst);
+void		sh_pars(t_word_lst **old_lst, t_minish **minish);
 #endif

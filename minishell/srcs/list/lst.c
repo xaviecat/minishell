@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:02:59 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/15 14:35:05 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/17 13:36:50 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,19 @@ void 	lst_clear(t_cmd_list **lst)
 void	print_list(t_cmd_list *lst)
 {
 	t_cmd_list	*first;
+	int i;
 
 	first = lst;
 	while (lst)
 	{
-		printf("%s\n", lst->cmd[0]);
+		i = 0;
+		while (lst->cmd[i])
+		{
+			printf("%s\n", lst->cmd[i]);
+			i++;
+		}
+		printf("/%d", lst->builtin);
+		printf("\n");
 		lst = lst->next;
 	}
 	lst = first;
@@ -80,10 +88,9 @@ void	lst_cmd_add_back(t_cmd_list **lst, t_cmd_list *new)
 	}
 	else
 		*lst = new;
-	return ;
 }
 
-t_cmd_list	*lst_cmd_new(char *content)
+t_cmd_list	*lst_cmd_new(char **content, bool is_a_builtin)
 {
 	t_cmd_list	*new;
 
@@ -92,13 +99,88 @@ t_cmd_list	*lst_cmd_new(char *content)
 	new = malloc(sizeof(t_cmd_list));
 	if (!new)
 		return (NULL);
-	new->cmd = malloc(sizeof(char *) * 2);
-	new->cmd[0] = ft_strdup(content);
+	new->cmd = content;
 	if (!new->cmd[0])
 		return (free(new), NULL);
-	new->cmd[1] = NULL;
-	new->builtin = false;
+	new->builtin = is_a_builtin;
 	new->next = NULL;
 	new->previous = NULL;
 	return (new);
+}
+
+/**
+ * @brief count number of arg, in fact the number of string the tab of cmd
+ * should need
+ * @param lst
+ * @param next
+ * @return the number of arg
+ */
+int	get_number_of_arg(t_word_lst **lst, t_word_lst **next)
+{
+	int	nb_arg;
+
+	nb_arg = 0;
+	while (*lst && (*lst)->type != w_pipe)
+	{
+		nb_arg++;
+		if ((*lst)->next)
+			*lst = (*lst)->next;
+		else
+		{
+			*next = NULL;
+			break ;
+		}
+	}
+	return (nb_arg);
+}
+
+char	**get_cmd(t_word_lst **old_lst)
+{
+	char		**cmd;
+	int 		nb_arg;
+	t_word_lst	*prev;
+	t_word_lst	*next;
+
+	nb_arg = get_number_of_arg(old_lst, &next);
+	cmd = NULL;
+	cmd = malloc(sizeof(char *) * (nb_arg + 1));
+	cmd[nb_arg] = NULL;
+    if (*old_lst && (*old_lst)->type == w_pipe && (*old_lst)->prev != NULL)
+	{
+		prev = (*old_lst)->prev;
+		word_lst_delone(old_lst);
+		*old_lst = prev;
+		next = (*old_lst)->next;
+	}
+	while ((*old_lst) && nb_arg > 0)
+	{
+		cmd[nb_arg - 1] = ft_strdup((*old_lst)->word);
+		nb_arg--;
+		prev = (*old_lst)->prev;
+		word_lst_delone(old_lst);
+		*old_lst = prev;
+	}
+	*old_lst = next;
+	return (cmd);
+}
+
+bool	builtin_or_command(t_word_lst *old_lst)
+{
+	if (old_lst->type == builtin)
+		return (true);
+	return (false);
+}
+
+t_cmd_list	*create_lst_cmd(t_word_lst **old_lst)
+{
+	t_cmd_list	*lst;
+	t_cmd_list	*new;
+
+	lst = NULL;
+	while (*old_lst)
+	{
+		new = lst_cmd_new(get_cmd(old_lst), builtin_or_command(*old_lst));
+		lst_cmd_add_back(&lst, new);
+	}
+	return (lst);
 }
