@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 11:50:54 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/17 16:45:16 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/17 18:49:54 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,16 +54,21 @@
 
 void	sh_pars(t_word_lst **old_lst, t_minish **minish)
 {
-	t_word_lst	*first;
+	t_redir_list	*redirs;
+	t_fd_list		*fds;
+	t_cmd_list		*new;
 
-	first = *old_lst;
+	redirs = NULL;
+	fds = NULL;
+	new = NULL;
 	while (*old_lst)
 	{
-		//open_outfile_and_infile(old_lst, minish);
-		if ((*old_lst)->next == NULL)
-            break;
-        *old_lst = (*old_lst)->next;
+		redirs = get_redir(old_lst);
+		fds = create_fds_list(redirs);
+		new = lst_cmd_new(get_cmd(old_lst), fds, redirs);
+		printf("cc%s", new->cmd[0]);
+		new->builtin = builtin_or_command(new->cmd[0]);
+		lst_cmd_add_back(&(*minish)->cmds, new);
+		*old_lst = (*old_lst)->next;
 	}
-	*old_lst = first;
-	(*minish)->cmds = create_lst_cmd(old_lst);
 }

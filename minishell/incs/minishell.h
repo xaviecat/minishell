@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/17 16:40:49 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/17 18:36:35 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,10 @@ typedef enum e_type_redir
 
 	/* list chaine*/
 
-typedef struct s_redir_list
+typedef struct s_redir_list // ? stocker le filename
 {
-	t_type_redir		*redir;
+	t_type_redir		redir;
+	char 				*filename;
 	struct s_redir_list	*next;
 }				t_redir_list;
 
@@ -113,10 +114,8 @@ typedef struct s_cmd_list
 {
 	char				**cmd;
 	bool				builtin;
-	int					outfile;
-	int					infile;
 	struct s_redir_list	*redirs;
-
+	struct s_fd_list	*fds;
 	struct s_cmd_list	*next;
 	struct s_cmd_list	*previous;
 }				t_cmd_list;
@@ -156,6 +155,8 @@ t_minish	*parsing_command(char *cmd_line, t_minish *sh);
 void		expand_commands(t_word_lst **w_lst, char **envp);
 char		*cut_whitespaces(char *str);
 bool		process_quotes(t_char_lst *lst);
+t_redir_list	*get_redir(t_word_lst **lst);
+t_fd_list	*create_fds_list(t_redir_list *redirs);
 
 /* builtins */
 void		pwd(char **envp);
@@ -184,12 +185,15 @@ char		*reforme_word(t_char_lst **lst_c);
 int			is_a_bultin(char *word);
 int			get_cat_of_word(char *word);
 void		word_lst_delone(t_word_lst **lst);
+t_word_lst	*word_lst_first(t_word_lst *lst);
 
 /* list command maybe not useful */
-t_cmd_list	*lst_cmd_new(char **content, bool is_a_builtin);
+t_cmd_list	*lst_cmd_new(char **content, t_fd_list *fds, t_redir_list *redir);
 void		lst_cmd_add_back(t_cmd_list **lst, t_cmd_list *new);
 void		print_list(t_cmd_list *lst);
 void		lst_clear(t_cmd_list **lst);
-t_cmd_list	*create_lst_cmd(t_word_lst **old_lst);
+t_cmd_list	*create_lst_cmd(t_word_lst **old_lst, t_fd_list *fds, t_redir_list *redirs);
 void		sh_pars(t_word_lst **old_lst, t_minish **minish);
+bool		builtin_or_command(char *cmd);
+char		**get_cmd(t_word_lst **old_lst);
 #endif

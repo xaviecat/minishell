@@ -209,6 +209,18 @@ void	print_lst_w(t_word_lst *lst)
 	lst = first;
 }
 
+t_word_lst	*word_lst_first(t_word_lst *lst)
+{
+	if (!lst)
+		return (NULL);
+	while (lst)
+	{
+		if (!lst->prev)
+			return (lst);
+		lst = lst->prev;
+	}
+	return (lst);
+}
 /**
  * @brief create a word list based on the char list pass in parameter
  * @param old_lst

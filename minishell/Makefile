@@ -12,6 +12,8 @@ SRCS			:=	minishell.c\
 					list/lst_word.c\
 					list/find_type.c\
 					parsing/pars_in_minish.c\
+					redir/redir.c\
+					fds/fds.c\
 
 SRCS_D			:=	srcs/
 
@@ -59,6 +61,8 @@ $(OBJS_D)		:
 				mkdir -p $(OBJS_D)/builtins
 				mkdir -p $(OBJS_D)/utils
 				mkdir -p $(OBJS_D)/list
+				mkdir -p $(OBJS_D)/fds
+				mkdir -p $(OBJS_D)/redir
 
 $(LIB_A)		:	FORCE
 				make -j -C $(LIB_D)
