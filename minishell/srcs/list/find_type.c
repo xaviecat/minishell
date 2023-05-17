@@ -22,7 +22,7 @@ int	find_type_of_c(char c)
 	if (c == 9 || c == 32)
 		return (space);
 	if (c == '\'')
-		return (quote);
+		return (s_quote);
 	if (c == '\"')
 		return (d_quote);
 	if (c == '|')
