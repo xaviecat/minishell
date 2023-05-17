@@ -5,6 +5,7 @@ SRCS			:=	minishell.c\
 					builtins/cd.c\
 					parsing/process_quotes.c\
 					parsing/expand.c\
+					parsing/error.c\
 					utils/expand_utils.c\
 					utils/utils.c\
 					list/lst.c\

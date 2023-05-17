@@ -6,12 +6,16 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:10:59 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/16 18:31:21 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/05/17 17:10:57 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @brief Connect the single quotes together
+ * @author xcharra
+ */
 void	process_single_quotes(t_char_lst **tmp)
 {
 	bool		sq;
@@ -28,6 +32,10 @@ void	process_single_quotes(t_char_lst **tmp)
 	}
 }
 
+/**
+ * @brief Connect the double quotes together
+ * @author xcharra
+ */
 void	process_double_quotes(t_char_lst **tmp)
 {
 	bool		dq;
@@ -44,6 +52,14 @@ void	process_double_quotes(t_char_lst **tmp)
 	}
 }
 
+/**
+ * @brief Search for any unclosed quotes if the last characters of the
+ * list isn't a quote
+ * @param tmp
+ * @return true if there are a non closed quote
+ * @return false if all quotes are closed
+ * @author xcharra
+ */
 bool	seek_alone_quote(t_char_lst **tmp)
 {
 	while (((*tmp) && (*tmp)->s_quote) || ((*tmp) && (*tmp)->d_quote))
@@ -65,6 +81,13 @@ bool	seek_alone_quote(t_char_lst **tmp)
 	return (false);
 }
 
+/**
+ * @brief Search for any unclosed quotes
+ * @param lst
+ * @return true if there are a non closed quote
+ * @return false if all quotes are closed
+ * @author xcharra
+ */
 bool	is_quote_alone(t_char_lst *lst)
 {
 	t_char_lst	*tmp;
@@ -94,7 +117,13 @@ bool	is_quote_alone(t_char_lst *lst)
 	return (false);
 }
 
-
+/**
+ * @brief Connect the quotes together and evaluate if any of them is not closed
+ * @param lst Contain the whole command line characters in chained list
+ * @return true if there are a non closed quote
+ * @return false if all quotes are closed
+ * @author xcharra
+ */
 bool	process_quotes(t_char_lst *lst)
 {
 	t_char_lst	*tmp;
@@ -111,9 +140,3 @@ bool	process_quotes(t_char_lst *lst)
 	}
 	return (is_quote_alone(lst));
 }
-
-/*
- * salut 'ca va' "la famille" '"'"
- * salut 'ca va' "la famille" '   ' "" '"'" "'"'
- */
-
