@@ -60,12 +60,12 @@
 typedef enum e_type_char
 {
 	space,
-	s_quote, // '
-	d_quote, // "
-	charc, // letter ect
-	c_pipe, // |
-	dash, // -
-	a_bracket, // <
+	s_quote,
+	d_quote,
+	charc,
+	c_pipe,
+	dash,
+	a_bracket,
 	dollar
 }			t_type_char;
 
@@ -103,6 +103,9 @@ typedef struct s_word_lst
 	struct s_word_lst	*prev;
 }						t_word_lst;
 
+/**
+ * @brief Contain the whole command line characters in chained list
+ */
 typedef struct s_char_lst
 {
 	int					pipe;
