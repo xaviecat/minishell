@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfaust <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 17:01:30 by nfaust            #+#    #+#             */
-/*   Updated: 2023/05/15 18:54:34 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/05/16 18:46:49 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,27 +47,6 @@ char	*ft_strdup_to_charset(char *str, char *charset)
 	return (new_str[i] = 0, new_str);
 }
 
-//char *replace_unexpected_whitespaces(char *cmd)
-//{
-//	size_t	end_index;
-//	size_t	i;
-//	char	*tmp;
-//	char	*result;
-//
-//	i = 0;
-//	end_index = 0;
-//	while (cmd[i])
-//	{
-//		tmp = ft_strdup_to_charset(cmd, "\'\"");
-//		if (!tmp)
-//			return (NULL);
-//		while (cmd[i] != '"' && cmd[i] != '\'')
-//			end_index++;
-//		cmd += end_index;
-//		i = 0;
-//	}
-//}
-
 /**
  * @brief copy src to dest, until x is found in src. DST MUST BE ABLE TO CONTAIN
  * ALL CHARS BEFORE X IN SRC
@@ -89,4 +68,19 @@ char	*str_cpy_to_x(char *src, char *dst, char x)
 		i++;
 	}
 	return (dst);
+}
+
+/**
+ * @brief find out if the env var is a dollar surrounded by no quotes
+ * @param env_var the environment variable
+ * @param cmd the total cmd
+ * @param start the start index ($pos)
+ * @return 1 if the $ sybol is alone \n 0 if not
+ */
+int	is_dollar_alone(char *env_var, char *cmd, size_t start)
+{
+	if (ft_strlen(env_var) == 1 && !(cmd[start + 1]
+			&& (cmd[start + 1] != '"' || cmd[start + 1] != '\'')))
+		return (1);
+	return (0);
 }

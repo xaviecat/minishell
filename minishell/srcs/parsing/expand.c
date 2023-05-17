@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfaust <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:08:17 by nfaust            #+#    #+#             */
-/*   Updated: 2023/05/16 14:14:13 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/05/16 18:37:22 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static char	*modify_command(char *cmd,
 	env_var = ft_strdup_to_charset(cmd + start, " \t\n\v\f\r\"\'\0");
 	if (!env_var)
 		return (NULL);
-	if (ft_strncmp(env_var, "$", 2) == 0)
+	if (is_dollar_alone(env_var, cmd, start))
 		return (free(env_var), cmd);
 	exp_env_v = set_expanded_env_var(env_var, double_not_closed, envp);
 	if (!exp_env_v)
@@ -127,10 +127,10 @@ static char	*expand_vars(char *command, char **envp)
 			if (!command)
 				return (NULL);
 		}
-		if (command[i++] == '\'' && double_not_closed < 0)
+		if (command[i] && command[i++] == '\'' && double_not_closed < 0)
 			while (command[i] && command[i] != '\'')
 				i++;
-		if (command[i] == '\'')
+		if (command[i] && command[i] == '\'')
 			i++;
 	}
 	return (command);
