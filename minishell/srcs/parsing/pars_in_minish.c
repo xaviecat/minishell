@@ -60,8 +60,9 @@ void	sh_pars(t_word_lst **old_lst, t_minish **minish)
 	while (*old_lst)
 	{
 		open_outfile_and_infile(old_lst, minish);
-		if ((*old_lst)->next)
-			*old_lst = (*old_lst)->next;
+		if ((*old_lst)->next == NULL)
+            break;
+        *old_lst = (*old_lst)->next;
 	}
 	*old_lst = first;
 	(*minish)->cmds = create_lst_cmd(old_lst);
