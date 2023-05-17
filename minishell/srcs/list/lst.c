@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:02:59 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/17 13:36:50 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/17 17:23:13 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ t_cmd_list	*lst_cmd_new(char **content, bool is_a_builtin)
 	new->builtin = is_a_builtin;
 	new->next = NULL;
 	new->previous = NULL;
+	new->outfile = STDOUT_FILENO;
+	new->infile = STDIN_FILENO;
 	return (new);
 }
 
@@ -171,10 +173,24 @@ bool	builtin_or_command(t_word_lst *old_lst)
 	return (false);
 }
 
+//t_redir_list	*get_redir(t_word_lst *lst)
+//{
+//	t_redir_list	*redir;
+//
+//	redir = malloc(sizeof(t_redir_list));
+//	while (lst)
+//	{
+//		if (lst->type == redir)
+//
+//		lst = lst->next;
+//	}
+//}
+
 t_cmd_list	*create_lst_cmd(t_word_lst **old_lst)
 {
 	t_cmd_list	*lst;
 	t_cmd_list	*new;
+	//t_redir_list	*redirs;
 
 	lst = NULL;
 	while (*old_lst)

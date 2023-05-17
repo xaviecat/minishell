@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/17 13:41:35 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/17 16:40:49 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ t_minish	*create_minishell(char **envp)
 
 	sh = malloc(sizeof(t_minish));
 	sh->envp = envp;
-	sh->outfile = STDOUT_FILENO;
-	sh->infile = STDIN_FILENO;
 	sh->cmds = NULL;
 	return (sh);
 }
@@ -53,7 +51,7 @@ void	minishell(char **envp)
 			//printf("\n");
 			expand_commands(&lst_w, envp);
 			sh_pars(&lst_w, &minish);
-			printf("list of command :");
+			printf("list of command :\n");
 			print_list(minish->cmds);
         }
 		//minish = parsing_command(line, minish);
