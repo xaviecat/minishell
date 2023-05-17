@@ -42,7 +42,7 @@ void	minishell(char **envp)
         {
             lst_c= create_char_lst_with_c_inside(line);
 			give_type_in_lst(&lst_c);
-			if (process_quotes(lst_c))
+			if (process_quotes(lst_c) == true)
 				ft_fdprintf(2, "ERROR : QUOTE DON'T CLOSED"); // ! free la chaine;
 			//printf("lst of char :");
 			//print_lst(lst_c);
