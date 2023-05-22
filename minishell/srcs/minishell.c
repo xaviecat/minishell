@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/22 17:21:21 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/05/22 17:57:04 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,10 @@ void	minishell(char **envp)
 		give_type_in_lst(&lst_c);
 		if (process_quotes(lst_c) == true)
 			ft_fdprintf(2, "ERROR : QUOTE DON'T CLOSED");// ! free
-		printf("lst of char :\n");
-		print_lst(lst_c);
+		print_lst_char(lst_c);
 		printf("\n");
 		if (is_forbidden_char(lst_c))
-			ft_fdprintf(2, "checked\n");
+			ft_fdprintf(2, "checked\n"); // ! free
 		lst_w = create_word_lst(lst_c);
 		print_lst_word(lst_w);
 		expand_commands(&lst_w, envp);

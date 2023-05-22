@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fds.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 17:45:12 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/22 13:47:31 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/22 19:06:29 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,24 @@ t_fd_list	*new_fds()
 	return (fds);
 }
 
-void    print_fd(t_fd_list *lst)
+void	print_fd(t_fd_list *lst)
 {
-    t_fd_list *first;
+	t_fd_list	*first;
+	int			i;
 
-    first = lst;
-    while (lst)
-    {
-        printf("fd in :%d/ fd out :%d\n", lst->in, lst->out);
-        lst = lst->next;
-    }
-    lst = first;
+	first = lst;
+	i = 0;
+	// printf("lst_fds : ");
+	while (lst)
+	{
+		printf("[%d] ", i);
+		printf("in : %-25d | ", lst->in);
+		printf("out : %-28d | ", lst->out);
+		printf("\n");
+		lst = lst->next;
+		i++;
+	}
+	lst = first;
 }
 
 t_fd_list	*create_fds_list(t_redir_list *redirs)
@@ -84,9 +91,9 @@ t_fd_list	*create_fds_list(t_redir_list *redirs)
 //		if (redirs->redir == inin)
 //			new->in = ;//HEREDOC
 		if (redirs->redir == out)
-			new->out = open(redirs->filename, O_RDWR | O_CREAT | O_TRUNC, 0777);
+			new->out = open(redirs->filename, O_RDWR | O_CREAT | O_TRUNC, 0644);
 		if (redirs->redir == outout)
-			new->out = open(redirs->filename, O_RDWR | O_CREAT, O_APPEND, 0777);
+			new->out = open(redirs->filename, O_RDWR | O_CREAT | O_APPEND, 0644);
 		if (new->in == -1)
 			return (perror(redirs->filename), NULL);
 		if (new->out == -1)

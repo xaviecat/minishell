@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:02:59 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/17 18:49:58 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/22 19:10:28 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void 	free_chunk(t_cmd_list *lst)
 	free(lst);
 }
 
-void 	lst_clear(t_cmd_list **lst)
+void	lst_clear(t_cmd_list **lst)
 {
 	t_cmd_list	*tmp;
 	t_cmd_list	*tmpnext;
@@ -47,22 +47,29 @@ void	print_lst_cmd(t_cmd_list *lst)
 {
 	t_cmd_list	*first;
 	int			i;
+	int			j;
 
 	first = lst;
+	j = 0;
 	printf("lst_cmd :\n");
 	while (lst)
 	{
 		i = 0;
+		printf("node : %d\n", j);
 		while (lst->cmd[i])
 		{
-			printf("%s\n", lst->cmd[i]);
+			printf("[%d] ", i);
+			printf("%-30s | ", lst->cmd[i]);
 			i++;
 		}
-		printf("\n is a builtin : %d\n", lst->builtin);
-        print_redir(lst->redirs);
-        print_fd(lst->fds);
-		printf("\n\n");
+		printf("\n");
+		printf("builtins : %-23d | ", lst->builtin);
+		printf("\n");
+		print_redir(lst->redirs);
+		print_fd(lst->fds);
+		printf("\n");
 		lst = lst->next;
+		j++;
 	}
 	lst = first;
 }
@@ -97,7 +104,7 @@ t_cmd_list	*lst_cmd_new(char **content, t_fd_list *fds, t_redir_list *redir)
 {
 	t_cmd_list	*new;
 
-	printf("new : %s\n", content[0]);
+	//printf("new : %s\n", content[0]);
 	if (!content)
 		return (NULL);
 	new = malloc(sizeof(t_cmd_list));
@@ -143,7 +150,7 @@ int	get_number_of_arg(t_word_lst **lst, t_word_lst **next)
 char	**get_cmd(t_word_lst **old_lst)
 {
 	char		**cmd;
-	int 		nb_arg;
+	int			nb_arg;
 	t_word_lst	*prev;
 	t_word_lst	*next;
 
@@ -151,7 +158,7 @@ char	**get_cmd(t_word_lst **old_lst)
 	cmd = NULL;
 	cmd = malloc(sizeof(char *) * (nb_arg + 1));
 	cmd[nb_arg] = NULL;
-    if (*old_lst && (*old_lst)->type == w_pipe && (*old_lst)->prev != NULL)
+	if (*old_lst && (*old_lst)->type == w_pipe && (*old_lst)->prev != NULL)
 	{
 		prev = (*old_lst)->prev;
 		word_lst_delone(old_lst);
@@ -160,7 +167,7 @@ char	**get_cmd(t_word_lst **old_lst)
 	}
 	while ((*old_lst) && nb_arg > 0)
 	{
-	    printf("%s\n", (*old_lst)->word);
+		// printf("%s\n", (*old_lst)->word);
 		cmd[nb_arg - 1] = ft_strdup((*old_lst)->word);
 		nb_arg--;
 		prev = (*old_lst)->prev;
