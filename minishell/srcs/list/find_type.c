@@ -52,6 +52,10 @@ int	get_cat_of_word(char *word)
 		return (w_pipe);
 	if (ft_strchr(word, '$') != NULL)
 		return (expand);
+	if (ft_strchr(word, '\'') != NULL)
+		return (in_s_quote);
+	if (ft_strchr(word, '\"') != NULL)
+		return (in_d_quote);
 	return (not_define);
 }
 

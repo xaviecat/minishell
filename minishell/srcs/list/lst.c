@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:02:59 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/22 17:23:57 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/05/17 18:49:58 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,10 @@ void	print_lst_cmd(t_cmd_list *lst)
 			printf("%s\n", lst->cmd[i]);
 			i++;
 		}
-		printf("/%d", lst->builtin);
-		// print_redir(lst->redirs);
-		// print_fd(lst->fds);
-		printf("\n");
+		printf("\n is a builtin : %d\n", lst->builtin);
+        print_redir(lst->redirs);
+        print_fd(lst->fds);
+		printf("\n\n");
 		lst = lst->next;
 	}
 	lst = first;
@@ -97,6 +97,7 @@ t_cmd_list	*lst_cmd_new(char **content, t_fd_list *fds, t_redir_list *redir)
 {
 	t_cmd_list	*new;
 
+	printf("new : %s\n", content[0]);
 	if (!content)
 		return (NULL);
 	new = malloc(sizeof(t_cmd_list));
