@@ -146,13 +146,13 @@ void	expand_commands(t_word_lst **w_lst, char **envp)
 	t_word_lst	*w_lst_cpy;
 
 	w_lst_cpy = *w_lst;
-	printf("starting expand\n");
+	//printf("starting expand\n");
 	while (w_lst_cpy)
 	{
 		w_lst_cpy->word = expand_vars(w_lst_cpy->word, envp);
 		if (!w_lst_cpy->word)
 			return ; // ? code d'erreur a ajouter
-		printf("%s\n", w_lst_cpy->word);
+	//	printf("%s\n", w_lst_cpy->word);
 		w_lst_cpy = w_lst_cpy->next;
 	}
 }
