@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/17 18:27:44 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/05/22 14:05:56 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	minishell(char **envp)
 	//char		**arg;
 	t_minish	*minish;
 	t_char_lst	*lst_c;
-	// t_word_lst	*lst_w;
+	 t_word_lst	*lst_w;
 	minish = create_minishell(envp);
 	while (1)
 	{
@@ -43,15 +43,14 @@ void	minishell(char **envp)
 		printf("\n");
 		if (is_forbidden_char(lst_c))
 			ft_fdprintf(2, "checked\n");
-		// lst_w = create_word_lst(lst_c);
+		lst_w = create_word_lst(lst_c);
 		//printf("lst of word :");
 		//print_lst_w(lst_w);
 		//printf("\n");
-		// expand_commands(&lst_w, envp);
-		// sh_pars(&lst_w, &minish);
-		// printf("list of command :\n");
-		// print_list(minish->cmds);
-		//minish = parsing_command(line, minish);
+		expand_commands(&lst_w, envp);
+		sh_pars(&lst_w, &minish);
+		printf("list of command :\n");
+		print_list(minish->cmds);
 //		if (ft_strncmp(line, "exit", 5) == 0)
 //			break ;
 //		if (ft_strncmp(line, "pwd", 4) == 0)

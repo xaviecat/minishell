@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/17 18:36:35 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/22 17:32:24 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,9 @@ typedef enum e_type_word
 	open_file,
 	delimiteur,
 	infile,
-	outfile
+	outfile,
+	in_d_quote,
+	in_s_quote
 }			t_type_word;
 
 typedef enum e_type_redir
@@ -96,7 +98,7 @@ typedef enum e_type_redir
 
 	/* list chaine*/
 
-typedef struct s_redir_list // ? stocker le filename
+typedef struct s_redir_list
 {
 	t_type_redir		redir;
 	char 				*filename;
@@ -110,9 +112,17 @@ typedef struct s_fd_list
 	struct s_fd_list	*next;
 }				t_fd_list;
 
+typedef struct s_w_cmd_list
+{
+    char    *cmd;
+    bool    s_quote;
+    bool    d_quote;
+    struct  s_w_cmd_list *next;
+}               t_w_cmd_list;
+
 typedef struct s_cmd_list
 {
-	char				**cmd;
+	char        		**cmd;
 	bool				builtin;
 	struct s_redir_list	*redirs;
 	struct s_fd_list	*fds;
@@ -122,7 +132,7 @@ typedef struct s_cmd_list
 
 typedef struct s_word_lst
 {
-	char				*word;
+	char                *word;
 	t_type_word			type;
 	struct s_word_lst	*next;
 	struct s_word_lst	*prev;

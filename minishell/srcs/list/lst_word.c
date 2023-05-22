@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 12:00:52 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/17 10:37:24 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/22 15:04:56 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,11 @@ int	get_number_c_of_word(t_char_lst **lst_c, t_char_lst **next)
 	int	nb_c_word;
 
 	nb_c_word = 0;
-	while (*lst_c && (*lst_c)->type != space)
+	while (*lst_c)
 	{
+		if ((*lst_c)->type == space && ((*lst_c)->d_quote == false \
+		&& (*lst_c)->s_quote == false))
+			break;
 		nb_c_word++;
 		if ((*lst_c)->next)
 			*lst_c = (*lst_c)->next;
@@ -51,7 +54,7 @@ char	*reforme_word(t_char_lst **lst_c)
 	t_char_lst	*prev;
 	t_char_lst	*next;
 
-	nb_c_word = get_number_c_of_word(lst_c, &next); // PROBLEME AVEC NEXT, TESTER AVEC LE DEBUGGER !
+	nb_c_word = get_number_c_of_word(lst_c, &next);
 	word = ft_calloc(nb_c_word + 1, sizeof(char));
 	if (!word)
 		return (NULL); // ! ERROR
@@ -127,7 +130,10 @@ void	word_lst_delone(t_word_lst **lst)
 	if (next)
 		next->prev = prev;
 	free(*lst);
-	*lst = next;
+	if (next)
+		*lst = next;
+	else
+		*lst = prev;
 }
 /**
  * @brief add the new link at the back of the word list 'lst'
@@ -236,6 +242,7 @@ t_word_lst	*create_word_lst(t_char_lst *old_lst)
 	lst = NULL;
 	while (old_lst)
 	{
+		printf("%c", old_lst->c);
 		word = reforme_word(&old_lst);
 		new = word_lst_new(word);
 		new->type = get_cat_of_word(new->word);
