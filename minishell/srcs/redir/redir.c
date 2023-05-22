@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 17:21:43 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/17 18:36:35 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/22 14:17:38 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void    print_redir(t_redir_list *lst)
     first = lst;
     while (lst)
     {
-        printf("%s/%d\n", lst->filename, lst->redir);
+        printf("redir : %s/%d\n", lst->filename, lst->redir);
         lst = lst->next;
     }
     lst = first;
@@ -80,16 +80,21 @@ t_redir_list	*get_redir(t_word_lst **lst)
 		if ((*lst)->type == appnd)
 			new = new_redir(outout);
 		if (new)
-        {
+		{
 			word_lst_delone(lst);
 			new->filename = ft_strdup((*lst)->word);
 			word_lst_delone(lst);
 			redir_add_back(&redirs, new);
+			new = NULL;
 		}
-		if (!(*lst)->next)
-		    break;
-		*lst = (*lst)->next;
+		else
+		{
+			if (!(*lst)->next)
+				break;
+			*lst = (*lst)->next;
+		}
 	}
 	*lst = word_lst_first(*lst);
+	printf("finish redir :%s" ,(*lst)->word);
 	return (redirs);
 }

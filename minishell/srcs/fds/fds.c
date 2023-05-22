@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 17:45:12 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/17 18:38:15 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/22 13:47:31 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ t_fd_list	*new_fds()
 	fds = malloc(sizeof(t_fd_list));
 	fds->in = STDIN_FILENO;
 	fds->out = STDOUT_FILENO;
+	fds->next = NULL;
 	return (fds);
 }
 
@@ -57,7 +58,7 @@ void    print_fd(t_fd_list *lst)
     first = lst;
     while (lst)
     {
-        printf("%d/%d", lst->out, lst->in);
+        printf("fd in :%d/ fd out :%d\n", lst->in, lst->out);
         lst = lst->next;
     }
     lst = first;
@@ -69,7 +70,7 @@ t_fd_list	*create_fds_list(t_redir_list *redirs)
 	t_fd_list		*new;
 	t_redir_list	*first;
 
-	fds = NULL;
+	fds = new_fds();
 	first = redirs;
 	while (redirs)
 	{
