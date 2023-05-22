@@ -206,6 +206,7 @@ void	print_lst_w(t_word_lst *lst)
 		printf("%s/%d/%p\n", lst->word, lst->type, lst->next);
 		lst = lst->next;
 	}
+	printf("\n");
 	lst = first;
 }
 

@@ -156,7 +156,9 @@ void		expand_commands(t_word_lst **w_lst, char **envp);
 char		*cut_whitespaces(char *str);
 bool		process_quotes(t_char_lst *lst);
 t_redir_list	*get_redir(t_word_lst **lst);
+void            print_redir(t_redir_list *lst);
 t_fd_list	*create_fds_list(t_redir_list *redirs);
+void    print_fd(t_fd_list *lst);
 
 /* builtins */
 void		pwd(char **envp);

@@ -58,7 +58,8 @@ void	print_list(t_cmd_list *lst)
 			i++;
 		}
 		printf("/%d", lst->builtin);
-
+        print_redir(lst->redirs);
+        print_fd(lst->fds);
 		printf("\n");
 		lst = lst->next;
 	}
@@ -157,20 +158,19 @@ char	**get_cmd(t_word_lst **old_lst)
 	}
 	while ((*old_lst) && nb_arg > 0)
 	{
+	    printf("%s\n", (*old_lst)->word);
 		cmd[nb_arg - 1] = ft_strdup((*old_lst)->word);
 		nb_arg--;
 		prev = (*old_lst)->prev;
 		word_lst_delone(old_lst);
 		*old_lst = prev;
 	}
-	printf("\n%s\n", cmd[0]);
 	*old_lst = next;
 	return (cmd);
 }
 
 bool	builtin_or_command(char *cmd)
 {
-	printf("hello/%s\n", cmd);
 	if (ft_strncmp(cmd, "exit", 5) == 0)
 		return (true);
 	if (ft_strncmp(cmd, "echo", 5) == 0)

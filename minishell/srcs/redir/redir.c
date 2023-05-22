@@ -48,6 +48,19 @@ void	redir_add_back(t_redir_list **lst, t_redir_list *new)
 		*lst = new;
 }
 
+void    print_redir(t_redir_list *lst)
+{
+    t_redir_list *first;
+
+    first = lst;
+    while (lst)
+    {
+        printf("%s/%d\n", lst->filename, lst->redir);
+        lst = lst->next;
+    }
+    lst = first;
+}
+
 t_redir_list	*get_redir(t_word_lst **lst)
 {
 	t_redir_list	*redirs;
@@ -57,6 +70,7 @@ t_redir_list	*get_redir(t_word_lst **lst)
 	new = NULL;
 	while (*lst && (*lst)->type != w_pipe)
 	{
+	    printf("redir : %s\n", (*lst)->word);
 		if ((*lst)->type == open_file)
 			new = new_redir(in);
 		if ((*lst)->type == hd)
@@ -66,12 +80,14 @@ t_redir_list	*get_redir(t_word_lst **lst)
 		if ((*lst)->type == appnd)
 			new = new_redir(outout);
 		if (new)
-		{
+        {
 			word_lst_delone(lst);
 			new->filename = ft_strdup((*lst)->word);
 			word_lst_delone(lst);
 			redir_add_back(&redirs, new);
 		}
+		if (!(*lst)->next)
+		    break;
 		*lst = (*lst)->next;
 	}
 	*lst = word_lst_first(*lst);

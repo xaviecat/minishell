@@ -66,9 +66,7 @@ void	sh_pars(t_word_lst **old_lst, t_minish **minish)
 		redirs = get_redir(old_lst);
 		fds = create_fds_list(redirs);
 		new = lst_cmd_new(get_cmd(old_lst), fds, redirs);
-		printf("cc%s", new->cmd[0]);
-		new->builtin = builtin_or_command(new->cmd[0]);
-		lst_cmd_add_back(&(*minish)->cmds, new);
-		*old_lst = (*old_lst)->next;
+        new->builtin = builtin_or_command(new->cmd[0]);
+        lst_cmd_add_back(&(*minish)->cmds, new);
 	}
 }

@@ -50,6 +50,19 @@ t_fd_list	*new_fds()
 	return (fds);
 }
 
+void    print_fd(t_fd_list *lst)
+{
+    t_fd_list *first;
+
+    first = lst;
+    while (lst)
+    {
+        printf("%d/%d", lst->out, lst->in);
+        lst = lst->next;
+    }
+    lst = first;
+}
+
 t_fd_list	*create_fds_list(t_redir_list *redirs)
 {
 	t_fd_list		*fds;
