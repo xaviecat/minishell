@@ -31,4 +31,3 @@ xcharra@z4r6p3:~$ '$test'
 Command '$test' not found,
 
 
-

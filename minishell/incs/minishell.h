@@ -181,12 +181,12 @@ void		char_lst_add_back(t_char_lst **lst, t_char_lst *new);
 void		char_lst_add_front(t_char_lst **lst, t_char_lst *new);
 t_char_lst	*create_char_lst_with_c_inside(char *cmd_line);
 void		give_type_in_lst(t_char_lst **lst);
-void		print_lst(t_char_lst *lst);
+void		print_lst_char(t_char_lst *lst);
 void		char_lst_delone(t_char_lst **lst);
 
 /* lst_word function */
 t_word_lst	*create_word_lst(t_char_lst *old_lst);
-void		print_lst_w(t_word_lst *lst);
+void		print_lst_word(t_word_lst *lst);
 char		*reforme_word(t_char_lst **lst_c);
 int			is_a_bultin(char *word);
 int			get_cat_of_word(char *word);
@@ -196,7 +196,7 @@ t_word_lst	*word_lst_first(t_word_lst *lst);
 /* list command maybe not useful */
 t_cmd_list	*lst_cmd_new(char **content, t_fd_list *fds, t_redir_list *redir);
 void		lst_cmd_add_back(t_cmd_list **lst, t_cmd_list *new);
-void		print_list(t_cmd_list *lst);
+void		print_lst_cmd(t_cmd_list *lst);
 void		lst_clear(t_cmd_list **lst);
 t_cmd_list	*create_lst_cmd(t_word_lst **old_lst, t_fd_list *fds, t_redir_list *redirs);
 void		sh_pars(t_word_lst **old_lst, t_minish **minish);

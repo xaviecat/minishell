@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:02:59 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/17 18:49:58 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/22 17:23:57 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,13 @@ void 	lst_clear(t_cmd_list **lst)
 	return ;
 }
 
-void	print_list(t_cmd_list *lst)
+void	print_lst_cmd(t_cmd_list *lst)
 {
 	t_cmd_list	*first;
-	int i;
+	int			i;
 
 	first = lst;
+	printf("lst_cmd :\n");
 	while (lst)
 	{
 		i = 0;
@@ -58,8 +59,8 @@ void	print_list(t_cmd_list *lst)
 			i++;
 		}
 		printf("/%d", lst->builtin);
-        print_redir(lst->redirs);
-        print_fd(lst->fds);
+		// print_redir(lst->redirs);
+		// print_fd(lst->fds);
 		printf("\n");
 		lst = lst->next;
 	}
