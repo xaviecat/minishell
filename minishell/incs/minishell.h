@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
 /*   Updated: 2023/05/17 18:36:35 by syluiset         ###   ########.fr       */
@@ -60,12 +60,12 @@
 typedef enum e_type_char
 {
 	space,
-	s_quote, // '
-	d_quote, // "
-	charc, // letter ect
-	c_pipe, // |
-	dash, // -
-	a_bracket, // <
+	s_quote,
+	d_quote,
+	charc,
+	c_pipe,
+	dash,
+	a_bracket,
 	dollar
 }			t_type_char;
 
@@ -128,11 +128,14 @@ typedef struct s_word_lst
 	struct s_word_lst	*prev;
 }						t_word_lst;
 
+/**
+ * @brief Contain the whole command line characters in chained list
+ */
 typedef struct s_char_lst
 {
 	int					pipe;
 	char				c;
-	t_type_char 		type;
+	t_type_char			type;
 	bool				s_quote;
 	bool				d_quote;
 	bool				a_quote;
@@ -146,9 +149,6 @@ typedef struct s_minish
 	t_cmd_list	*cmds;
 }				t_minish;
 
-/* checking*/
-int			check_command_is_fine(char *command);
-
 /* parsing */
 char		**parsing_argu(char *arg_term);
 t_minish	*parsing_command(char *cmd_line, t_minish *sh);
@@ -160,13 +160,17 @@ void            print_redir(t_redir_list *lst);
 t_fd_list	*create_fds_list(t_redir_list *redirs);
 void    print_fd(t_fd_list *lst);
 
+/* error */
+bool		is_forbidden_char(t_char_lst *lst);
+
+
 /* builtins */
 void		pwd(char **envp);
 void		cd(char *path, char **envp);
 
 /* utils */
 char		*ft_strdup_to_charset(char *str, char *charset);
-int 		ft_isspace(char c);
+int			ft_isspace(char c);
 char		*str_cpy_to_x(char *src, char *dst, char x);
 int			is_dollar_alone(char *env_var, char *cmd, size_t start);
 

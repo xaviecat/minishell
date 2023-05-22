@@ -5,3 +5,4 @@
 **.nfs*
 minishell/minishell
 minishell/minishell*
+.clang-format
