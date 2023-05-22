@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:02:59 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/17 17:23:13 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/17 18:49:58 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void	print_list(t_cmd_list *lst)
 			i++;
 		}
 		printf("/%d", lst->builtin);
+        print_redir(lst->redirs);
+        print_fd(lst->fds);
 		printf("\n");
 		lst = lst->next;
 	}
@@ -90,7 +92,7 @@ void	lst_cmd_add_back(t_cmd_list **lst, t_cmd_list *new)
 		*lst = new;
 }
 
-t_cmd_list	*lst_cmd_new(char **content, bool is_a_builtin)
+t_cmd_list	*lst_cmd_new(char **content, t_fd_list *fds, t_redir_list *redir)
 {
 	t_cmd_list	*new;
 
@@ -102,11 +104,11 @@ t_cmd_list	*lst_cmd_new(char **content, bool is_a_builtin)
 	new->cmd = content;
 	if (!new->cmd[0])
 		return (free(new), NULL);
-	new->builtin = is_a_builtin;
+	new->builtin = false;
+	new->redirs = redir;
+	new->fds = fds;
 	new->next = NULL;
 	new->previous = NULL;
-	new->outfile = STDOUT_FILENO;
-	new->infile = STDIN_FILENO;
 	return (new);
 }
 
@@ -156,6 +158,7 @@ char	**get_cmd(t_word_lst **old_lst)
 	}
 	while ((*old_lst) && nb_arg > 0)
 	{
+	    printf("%s\n", (*old_lst)->word);
 		cmd[nb_arg - 1] = ft_strdup((*old_lst)->word);
 		nb_arg--;
 		prev = (*old_lst)->prev;
@@ -166,37 +169,35 @@ char	**get_cmd(t_word_lst **old_lst)
 	return (cmd);
 }
 
-bool	builtin_or_command(t_word_lst *old_lst)
+bool	builtin_or_command(char *cmd)
 {
-	if (old_lst->type == builtin)
+	if (ft_strncmp(cmd, "exit", 5) == 0)
+		return (true);
+	if (ft_strncmp(cmd, "echo", 5) == 0)
+		return (true);
+	if (ft_strncmp(cmd, "cd", 3) == 0)
+		return (true);
+	if (ft_strncmp(cmd, "pwd", 4) == 0)
+		return (true);
+	if (ft_strncmp(cmd, "export", 7) == 0)
+		return (true);
+	if (ft_strncmp(cmd, "unset", 6) == 0)
+		return (true);
+	if (ft_strncmp(cmd, "env", 4) == 0)
 		return (true);
 	return (false);
 }
 
-//t_redir_list	*get_redir(t_word_lst *lst)
+
+//t_cmd_list	*create_lst_cmd(t_word_lst **old_lst, t_fd_list *fds, t_redir_list *redirs)
 //{
-//	t_redir_list	*redir;
+//	t_cmd_list	*lst;
+//	t_cmd_list	*new;
 //
-//	redir = malloc(sizeof(t_redir_list));
-//	while (lst)
+//	lst = NULL;
+//	while (*old_lst && (*old_lst)->type != w_pipe)
 //	{
-//		if (lst->type == redir)
-//
-//		lst = lst->next;
+//		new = lst_cmd_new(get_cmd(old_lst), builtin_or_command(*old_lst));
 //	}
+//	return (lst);
 //}
-
-t_cmd_list	*create_lst_cmd(t_word_lst **old_lst)
-{
-	t_cmd_list	*lst;
-	t_cmd_list	*new;
-	//t_redir_list	*redirs;
-
-	lst = NULL;
-	while (*old_lst)
-	{
-		new = lst_cmd_new(get_cmd(old_lst), builtin_or_command(*old_lst));
-		lst_cmd_add_back(&lst, new);
-	}
-	return (lst);
-}
