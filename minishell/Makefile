@@ -11,10 +11,12 @@ SRCS			:=	minishell.c\
 					list/lst.c\
 					list/lst_char.c\
 					list/lst_word.c\
+					list/lst_w_cmd.c\
 					list/find_type.c\
 					parsing/pars_in_minish.c\
 					redir/redir.c\
 					fds/fds.c\
+
 
 SRCS_D			:=	srcs/
 

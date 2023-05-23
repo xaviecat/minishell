@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fds.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 17:45:12 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/22 19:06:29 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/05/23 10:30:00 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,8 @@ t_fd_list	*create_fds_list(t_redir_list *redirs)
 	t_fd_list		*new;
 	t_redir_list	*first;
 
-	fds = new_fds();
+	if (redirs)
+		fds = new_fds();
 	first = redirs;
 	while (redirs)
 	{

@@ -202,14 +202,15 @@ void			word_lst_delone(t_word_lst **lst);
 t_word_lst		*word_lst_first(t_word_lst *lst);
 
 /* list command maybe not useful */
-t_cmd_list		*lst_cmd_new(char **content,
-					t_fd_list *fds, t_redir_list *redir);
-void			lst_cmd_add_back(t_cmd_list **lst, t_cmd_list *new);
-void			print_lst_cmd(t_cmd_list *lst);
-void			lst_clear(t_cmd_list **lst);
-t_cmd_list		*create_lst_cmd(t_word_lst **old_lst,
-					t_fd_list *fds, t_redir_list *redirs);
-void			sh_pars(t_word_lst **old_lst, t_minish **minish);
-bool			builtin_or_command(char *cmd);
-char			**get_cmd(t_word_lst **old_lst);
+t_cmd_list	*lst_cmd_new(t_w_cmd_list *cmds, t_fd_list *fds, t_redir_list *redir);
+void		lst_cmd_add_back(t_cmd_list **lst, t_cmd_list *new);
+void		print_list(t_cmd_list *lst);
+void		lst_clear(t_cmd_list **lst);
+t_cmd_list	*create_lst_cmd(t_word_lst **old_lst, t_fd_list *fds, t_redir_list *redirs);
+void		sh_pars(t_word_lst **old_lst, t_minish **minish);
+bool		builtin_or_command(char *cmd);
+char		**get_cmd(t_word_lst **old_lst);
+
+/* lst_w_cmd function */
+t_w_cmd_list    *get_cmd_2(t_word_lst **old_lst);
 #endif

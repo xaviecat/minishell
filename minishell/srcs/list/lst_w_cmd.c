@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 17:16:51 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/22 17:36:52 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/23 10:19:11 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,16 +54,25 @@ void	w_cmd_lst_add_back(t_w_cmd_list **lst, t_w_cmd_list *new)
 		*lst = new;
 }
 
-//t_w_cmd_list	*get_cmd_2(t_word_lst **old_lst)
-//{
-//	t_w_cmd_list	*cmds;
-//	t_w_cmd_list	*new;
-//	bool			in_d_quote;
-//	bool			in_s_quote;
-//
-//	while (*old_lst)
-//	{
-//		if
-//		new = new_w_cmd_list((*old_lst)->word, (*old_lst)->)
-//	}
-//}
+t_w_cmd_list	*get_cmd_2(t_word_lst **old_lst)
+{
+	t_w_cmd_list	*cmds;
+	t_w_cmd_list	*new;
+	bool			two_quote;
+	bool			one_quote;
+
+    cmds = NULL;
+    two_quote = false;
+    one_quote = false;
+	while (*old_lst && (*old_lst)->type != w_pipe)
+	{
+		if ((*old_lst)->type == in_d_quote)
+            two_quote = true;
+        if ((*old_lst)->type == in_s_quote)
+            one_quote = true;
+		new = new_w_cmd_list((*old_lst)->word,one_quote, two_quote);
+        w_cmd_lst_add_back(&cmds, new);
+        word_lst_delone(old_lst);
+	}
+	return (cmds);
+}
