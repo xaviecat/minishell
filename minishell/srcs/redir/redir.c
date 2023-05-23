@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 17:21:43 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/22 18:55:23 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/05/23 14:06:15 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,10 @@ void	print_redir(t_redir_list *lst)
 	i = 0;
 	while (lst)
 	{
-		printf("[%d] ",i);
-		printf("filename : %-19s | ", lst->filename);
-		printf("fd : %-29d | ", lst->redir);
+		printf("[%d] ", i);
+		printf("filename : %-15s | ", lst->filename);
+		printf("type : %-7d | ", lst->redir);
+		printf("fd : %-12d | ", lst->redir);
 		printf("\n");
 		lst = lst->next;
 		i++;
@@ -95,7 +96,7 @@ t_redir_list	*get_redir(t_word_lst **lst)
 		else
 		{
 			if (!(*lst)->next)
-				break;
+				break ;
 			*lst = (*lst)->next;
 		}
 	}
