@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_char.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:39:55 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/22 15:18:02 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/05/23 17:34:39 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,15 @@ void	char_lst_delone(t_char_lst **lst)
  * @param c
  * @return the new link
  */
-t_char_lst	*char_lst_new(char c)
+t_char_lst	*char_lst_new(char c, t_minish **sh)
 {
 	t_char_lst	*new;
 
 	if (!c)
 		return (NULL);
-	new = malloc(sizeof(t_char_lst));
+	new = ft_malloc(&(*sh)->garbage, sizeof(t_char_lst), 1);
 	if (!new)
-		return (NULL);
+		return (NULL); // ! ERROR
 	new->c = c;
 	new->next = NULL;
 	new->prev = NULL;
@@ -118,35 +118,28 @@ void	char_lst_add_back(t_char_lst **lst, t_char_lst *new)
 }
 
 /**
- * @brief add the link new at the begin of the char list 'lst'
- * @param lst
- * @param new
- */
-void	char_lst_add_front(t_char_lst **lst, t_char_lst *new)
-{
-	new->next = *lst;
-	*lst = new;
-	return ;
-}
-
-/**
  * @brief split the command char in a char list
  * @param cmd_line
  * @return the char list create
  */
-t_char_lst	*create_char_lst_with_c_inside(char *cmd_line)
+void	create_char_lst_with_c_inside(char *cmd_line, t_minish **sh)
 {
-	int		i;
-	t_char_lst	*lst;
+	int			i;
 	t_char_lst	*new;
 
 	i = 0;
-	lst = NULL;
 	while (cmd_line[i])
 	{
-		new = char_lst_new(cmd_line[i]);
-		char_lst_add_back(&lst, new);
+		new = char_lst_new(cmd_line[i], sh);
+		if (!new)
+			return ;// ! FREE !!!
+		if ((*sh)->lst_c->last_added)
+		{
+			(*sh)->lst_c->last_added->next = new;
+			(*sh)->lst_c->last_added = new;
+		}
+		else
+			(*sh)->lst_c = new;
 		i++;
 	}
-	return (lst);
 }

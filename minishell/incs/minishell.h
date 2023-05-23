@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/22 17:32:24 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/23 17:00:38 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,12 @@ typedef enum e_type_redir
 
 	/* list chaine*/
 
+typedef struct s_garbage_list
+{
+	void 					*content;
+	struct s_garbage_list	*next;
+}				t_garbage_list;
+
 typedef struct s_redir_list
 {
 	t_type_redir		redir;
@@ -121,7 +127,7 @@ typedef struct s_w_cmd_list
 
 typedef struct s_cmd_list
 {
-	char				**cmd;
+	struct s_w_cmd_list	*cmd;
 	bool				builtin;
 	struct s_redir_list	*redirs;
 	struct s_fd_list	*fds;
@@ -150,12 +156,16 @@ typedef struct s_char_lst
 	bool				a_quote;
 	struct s_char_lst	*prev;
 	struct s_char_lst	*next;
+	struct s_char_lst	*last_added;
 }				t_char_lst;
 
 typedef struct s_minish
 {
-	char		**envp;
-	t_cmd_list	*cmds;
+	char			**envp;
+	t_cmd_list		*cmds;
+	t_char_lst		*lst_c;
+	t_word_lst		*lst_w;
+	t_garbage_list	*garbage;
 }				t_minish;
 
 /* parsing */
@@ -175,25 +185,27 @@ bool			is_forbidden_char(t_char_lst *lst);
 /* builtins */
 void			pwd(char **envp);
 void			cd(char *path, char **envp);
+void			b_echo(t_w_cmd_list *content);
 
 /* utils */
 char			*ft_strdup_to_charset(char *str, char *charset);
 int				ft_isspace(char c);
 char			*str_cpy_to_x(char *src, char *dst, char x);
 int				is_dollar_alone(char *env_var, char *cmd, size_t start);
+void			*ft_malloc(t_garbage_list **garbage, int the_size, int number);
 
 /* list_char function */
-t_char_lst		*char_lst_new(char c);
+t_char_lst		*char_lst_new(char c, t_minish **sh);
 t_char_lst		*char_lst_last(t_char_lst *lst);
 void			char_lst_add_back(t_char_lst **lst, t_char_lst *new);
 void			char_lst_add_front(t_char_lst **lst, t_char_lst *new);
-t_char_lst		*create_char_lst_with_c_inside(char *cmd_line);
+void			create_char_lst_with_c_inside(char *cmd_line, t_minish **sh);
 void			give_type_in_lst(t_char_lst **lst);
 void			print_lst_char(t_char_lst *lst);
 void			char_lst_delone(t_char_lst **lst);
 
 /* lst_word function */
-t_word_lst		*create_word_lst(t_char_lst *old_lst);
+void			create_word_lst(t_minish **sh);
 void			print_lst_word(t_word_lst *lst);
 char			*reforme_word(t_char_lst **lst_c);
 int				is_a_bultin(char *word);
@@ -204,7 +216,7 @@ t_word_lst		*word_lst_first(t_word_lst *lst);
 /* list command maybe not useful */
 t_cmd_list	*lst_cmd_new(t_w_cmd_list *cmds, t_fd_list *fds, t_redir_list *redir);
 void		lst_cmd_add_back(t_cmd_list **lst, t_cmd_list *new);
-void		print_list(t_cmd_list *lst);
+void		print_lst_cmd(t_cmd_list *lst);
 void		lst_clear(t_cmd_list **lst);
 t_cmd_list	*create_lst_cmd(t_word_lst **old_lst, t_fd_list *fds, t_redir_list *redirs);
 void		sh_pars(t_word_lst **old_lst, t_minish **minish);

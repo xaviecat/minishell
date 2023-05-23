@@ -237,16 +237,14 @@ t_word_lst	*word_lst_first(t_word_lst *lst)
  * @param old_lst
  * @return the word list created
  */
-t_word_lst	*create_word_lst(t_char_lst *old_lst)
+void	create_word_lst(t_minish **sh)
 {
-	t_word_lst	*lst;
 	t_word_lst	*new;
 	char		*word;
 
-	lst = NULL;
-	while (old_lst)
+	while ((*sh)->lst_c)
 	{
-		word = reforme_word(&old_lst);
+		word = reforme_word(&(*sh)->lst_c);
 		new = word_lst_new(word);
 		new->type = get_cat_of_word(new->word);
 		word_lst_add_back(&lst, new);

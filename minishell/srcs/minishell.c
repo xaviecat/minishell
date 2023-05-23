@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/23 11:58:02 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/23 17:00:38 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,37 +14,42 @@
 
 t_minish	*create_minishell(char **envp)
 {
-	t_minish	*sh;
+	t_minish		*sh;
+	t_garbage_list	*g_lst;
 
-	sh = malloc(sizeof(t_minish));
+	sh = ft_malloc(&g_lst, sizeof(t_minish), 1);
+	if (!sh)
+		exit(EXIT_FAILURE); // ! ERROR
 	sh->envp = envp;
 	sh->cmds = NULL;
+	sh->lst_c = NULL;
+	sh->lst_w = NULL;
+	sh->garbage = g_lst;
 	return (sh);
 }
-
 
 void	minishell(char **envp)
 {
 	char		*line;
-	//char		**arg;
 	t_minish	*minish;
 	t_char_lst	*lst_c;
-	 t_word_lst	*lst_w;
+	t_word_lst	*lst_w;
+
 	minish = create_minishell(envp);
 	while (1)
 	{
 		line = readline("TRI_SH $> ");
 		if (line && *line)
 			add_history(line);
-		lst_c = create_char_lst_with_c_inside(line);
-		give_type_in_lst(&lst_c);
-		if (process_quotes(lst_c) == true)
+		create_char_lst_with_c_inside(line, &minish);
+		give_type_in_lst(&minish->lst_c);
+		if (process_quotes(minish->lst_c) == true)
 			ft_fdprintf(2, "ERROR : QUOTE DON'T CLOSED");// ! free
-		print_lst_char(lst_c);
+		print_lst_char(minish->lst_c);
 		printf("\n");
-		if (is_forbidden_char(lst_c))
+		if (is_forbidden_char(minish->lst_c))
 			ft_fdprintf(2, "checked\n"); // ! free
-		lst_w = create_word_lst(lst_c);
+		lst_w = create_word_lst(&minish);
 		print_lst_word(lst_w);
 		expand_commands(&lst_w, envp);
 		print_lst_word(lst_w);
@@ -70,6 +75,7 @@ void	minishell(char **envp)
 		// if (ft_strncmp(arg[0], "cd", 3) == 0)
 		// 	cd(arg[1], envp);
 		// (void) arg;
+		b_echo(minish->cmds->cmd);
 		free(line);
 	}
 	lst_clear(&minish->cmds);

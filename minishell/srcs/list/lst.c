@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:02:59 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/22 13:52:27 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/23 11:57:53 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void 	free_chunk(t_cmd_list *lst)
 {
 	while (lst->cmd)
 	{
-		free(lst->cmd->cmd);
+		free(lst->cmd);
         lst->cmd = lst->cmd->next;
 	}
 	free(lst);

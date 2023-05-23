@@ -3,6 +3,7 @@ SRCS			:=	minishell.c\
 					parsing/pars.c\
 					builtins/pwd.c\
 					builtins/cd.c\
+					builtins/echo.c\
 					parsing/process_quotes.c\
 					parsing/expand.c\
 					parsing/unhandled_char.c\
@@ -47,7 +48,7 @@ CFLAGS			:=	-Wall -Wextra -Werror
 
 RDL				:=	-lreadline
 
-ASAN_F			:=	-g3 -fsanitize=address
+ASAN_F			:=	-g3 #-fsanitize=address
 
 #========================EXEC===============================#
 all				:	$(NAME)
