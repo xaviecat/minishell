@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fds.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 17:45:12 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/23 10:30:00 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/23 14:24:41 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	print_fd(t_fd_list *lst)
 	while (lst)
 	{
 		printf("[%d] ", i);
-		printf("in : %-25d | ", lst->in);
+		printf("in : %-21d | ", lst->in);
 		printf("out : %-28d | ", lst->out);
 		printf("\n");
 		lst = lst->next;
@@ -89,8 +89,8 @@ t_fd_list	*create_fds_list(t_redir_list *redirs)
 		new = new_fds();
 		if (redirs->redir == in)
 			new->in = open(redirs->filename, O_RDONLY, 0644);
-//		if (redirs->redir == inin)
-//			new->in = ;//HEREDOC
+		// if (redirs->redir == inin)
+			// new->in = inin;//HEREDOC
 		if (redirs->redir == out)
 			new->out = open(redirs->filename, O_RDWR | O_CREAT | O_TRUNC, 0644);
 		if (redirs->redir == outout)

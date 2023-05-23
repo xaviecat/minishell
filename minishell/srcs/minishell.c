@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/23 11:58:02 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/23 13:41:22 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,11 @@ t_minish	*create_minishell(char **envp)
 void	minishell(char **envp)
 {
 	char		*line;
-	//char		**arg;
 	t_minish	*minish;
 	t_char_lst	*lst_c;
-	 t_word_lst	*lst_w;
+	t_word_lst	*lst_w;
+	//char		**arg;
+
 	minish = create_minishell(envp);
 	while (1)
 	{
@@ -49,7 +50,7 @@ void	minishell(char **envp)
 		expand_commands(&lst_w, envp);
 		print_lst_word(lst_w);
 		sh_pars(&lst_w, &minish);
-		printf("list of command :\n");
+		print_lst_cmd(minish->cmds);
 //		if (ft_strncmp(line, "exit", 5) == 0)
 //			break ;
 //		if (ft_strncmp(line, "pwd", 4) == 0)
@@ -58,7 +59,6 @@ void	minishell(char **envp)
 //		if (ft_strncmp(arg[0], "cd", 3) == 0)
 //			cd(arg[1], envp);
 //		(void) arg;
-		print_lst_cmd(minish->cmds);
 		// minish = parsing_command(line, minish);
 		// if (ft_strncmp(line, "exit", 5) == 0)
 		// 	break ;

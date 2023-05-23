@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 12:00:52 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/22 17:18:53 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/05/23 16:42:13 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	get_number_c_of_word(t_char_lst **lst_c, t_char_lst **next)
 	{
 		if ((*lst_c)->type == space && ((*lst_c)->d_quote == false \
 		&& (*lst_c)->s_quote == false))
-			break;
+			break ;
 		nb_c_word++;
 		if ((*lst_c)->next)
 			*lst_c = (*lst_c)->next;
