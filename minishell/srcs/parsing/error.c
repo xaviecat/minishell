@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 17:43:08 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/17 18:41:56 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/05/23 10:07:39 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ bool	is_forbidden_char(t_char_lst *lst)
 	{
 		if (lst->c == '&' && lst->next && lst->next->c == '&'
 			&& !lst->s_quote && !lst->d_quote)
-			return (true), ft_fdprintf(2, "minishell: syntax error near unexpected token '&&'\n");
+			return (ft_fdprintf(2, "minishell: syntax error near unexpected token '&&'\n"), true);
 		if (lst->c == '|' && lst->next && lst->next->c == '|'
 			&& !lst->s_quote && !lst->d_quote)
-			return (true), ft_fdprintf(2, "minishell: syntax error near unexpected token '||'\n");
+			return (ft_fdprintf(2, "minishell: syntax error near unexpected token '||'\n"), true);
 		if (lst->c == ';' && !lst->s_quote && !lst->d_quote)
-			return (true), ft_fdprintf(2, "minishell: syntax error near unexpected token ';'\n");
+			return (ft_fdprintf(2, "minishell: syntax error near unexpected token ';'\n"), true);
 		lst = lst->next;
 	}
 	return (false);

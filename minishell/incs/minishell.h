@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/22 17:32:24 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/23 10:05:12 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ typedef struct s_w_cmd_list
 
 typedef struct s_cmd_list
 {
-	char        		**cmd;
+	t_w_cmd_list     	*cmd;
 	bool				builtin;
 	struct s_redir_list	*redirs;
 	struct s_fd_list	*fds;
@@ -204,7 +204,7 @@ void		word_lst_delone(t_word_lst **lst);
 t_word_lst	*word_lst_first(t_word_lst *lst);
 
 /* list command maybe not useful */
-t_cmd_list	*lst_cmd_new(char **content, t_fd_list *fds, t_redir_list *redir);
+t_cmd_list	*lst_cmd_new(t_w_cmd_list *cmds, t_fd_list *fds, t_redir_list *redir);
 void		lst_cmd_add_back(t_cmd_list **lst, t_cmd_list *new);
 void		print_list(t_cmd_list *lst);
 void		lst_clear(t_cmd_list **lst);
@@ -212,4 +212,7 @@ t_cmd_list	*create_lst_cmd(t_word_lst **old_lst, t_fd_list *fds, t_redir_list *r
 void		sh_pars(t_word_lst **old_lst, t_minish **minish);
 bool		builtin_or_command(char *cmd);
 char		**get_cmd(t_word_lst **old_lst);
+
+/* lst_w_cmd function */
+t_w_cmd_list    *get_cmd_2(t_word_lst **old_lst);
 #endif

@@ -242,7 +242,6 @@ t_word_lst	*create_word_lst(t_char_lst *old_lst)
 	lst = NULL;
 	while (old_lst)
 	{
-		printf("%c", old_lst->c);
 		word = reforme_word(&old_lst);
 		new = word_lst_new(word);
 		new->type = get_cat_of_word(new->word);

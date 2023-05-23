@@ -70,7 +70,6 @@ t_redir_list	*get_redir(t_word_lst **lst)
 	new = NULL;
 	while (*lst && (*lst)->type != w_pipe)
 	{
-	    printf("redir : %s\n", (*lst)->word);
 		if ((*lst)->type == open_file)
 			new = new_redir(in);
 		if ((*lst)->type == hd)
@@ -95,6 +94,5 @@ t_redir_list	*get_redir(t_word_lst **lst)
 		}
 	}
 	*lst = word_lst_first(*lst);
-	printf("finish redir :%s" ,(*lst)->word);
 	return (redirs);
 }

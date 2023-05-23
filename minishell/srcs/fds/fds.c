@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 17:45:12 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/22 13:47:31 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/23 10:30:00 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ t_fd_list	*create_fds_list(t_redir_list *redirs)
 	t_fd_list		*new;
 	t_redir_list	*first;
 
-	fds = new_fds();
+	if (redirs)
+		fds = new_fds();
 	first = redirs;
 	while (redirs)
 	{
@@ -84,9 +85,9 @@ t_fd_list	*create_fds_list(t_redir_list *redirs)
 //		if (redirs->redir == inin)
 //			new->in = ;//HEREDOC
 		if (redirs->redir == out)
-			new->out = open(redirs->filename, O_RDWR | O_CREAT | O_TRUNC, 0777);
+			new->out = open(redirs->filename, O_RDWR | O_CREAT | O_TRUNC, 0644);
 		if (redirs->redir == outout)
-			new->out = open(redirs->filename, O_RDWR | O_CREAT, O_APPEND, 0777);
+			new->out = open(redirs->filename, O_RDWR | O_CREAT | O_APPEND, 0644);
 		if (new->in == -1)
 			return (perror(redirs->filename), NULL);
 		if (new->out == -1)

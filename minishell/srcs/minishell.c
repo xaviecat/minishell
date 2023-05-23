@@ -34,6 +34,8 @@ void	minishell(char **envp)
 	while (1)
 	{
 		line = readline("TRI_SH $> ");
+		if (line && *line)
+			add_history(line);
 		lst_c = create_char_lst_with_c_inside(line);
 		give_type_in_lst(&lst_c);
 		if (process_quotes(lst_c) == true)
@@ -55,8 +57,6 @@ void	minishell(char **envp)
 //			break ;
 //		if (ft_strncmp(line, "pwd", 4) == 0)
 //			pwd(envp);
-//		if (line && *line)
-//			add_history(line);
 //		arg = parsing_argu(line);
 //		if (ft_strncmp(arg[0], "cd", 3) == 0)
 //			cd(arg[1], envp);

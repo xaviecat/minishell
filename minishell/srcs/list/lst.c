@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:02:59 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/22 13:52:27 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/23 11:36:08 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,10 @@
 
 void 	free_chunk(t_cmd_list *lst)
 {
-	int	i;
-
-	i = 0;
-	while (lst->cmd[i])
+	while (lst->cmd)
 	{
-		free(lst->cmd[i]);
-		i++;
+		free(lst->cmd->cmd);
+        lst->cmd = lst->cmd->next;
 	}
 	free(lst);
 }
@@ -45,26 +42,33 @@ void 	lst_clear(t_cmd_list **lst)
 
 void	print_list(t_cmd_list *lst)
 {
-	t_cmd_list	*first;
-	int i;
+	t_cmd_list		*first;
+	t_w_cmd_list	*first_w;
 
 	first = lst;
+	first_w = lst->cmd;
 	while (lst)
 	{
-		i = 0;
-		while (lst->cmd[i])
+		printf("the command :");
+		printf("%s ", lst->cmd->cmd);
+		printf("\n");
+		lst->cmd = lst->cmd->next;
+		while (lst->cmd)
 		{
-			printf("the command :");
-			printf("%s ", lst->cmd[i]);
-			i++;
+			printf("parameters :");
+			printf("%s ", lst->cmd->cmd);
+			printf("\n");
+			lst->cmd = lst->cmd->next;
 		}
+
 		printf("\n is a builtin : %d\n", lst->builtin);
-        print_redir(lst->redirs);
-        print_fd(lst->fds);
+		print_redir(lst->redirs);
+		print_fd(lst->fds);
 		printf("\n\n");
 		lst = lst->next;
 	}
 	lst = first;
+	lst->cmd = first_w;
 }
 
 t_cmd_list	*lst_cmd_last(t_cmd_list *lst)
@@ -93,18 +97,17 @@ void	lst_cmd_add_back(t_cmd_list **lst, t_cmd_list *new)
 		*lst = new;
 }
 
-t_cmd_list	*lst_cmd_new(char **content, t_fd_list *fds, t_redir_list *redir)
+t_cmd_list	*lst_cmd_new(t_w_cmd_list *cmds, t_fd_list *fds, t_redir_list *redir)
 {
 	t_cmd_list	*new;
 
-	printf("new : %s\n", content[0]);
-	if (!content)
+	if (!cmds)
 		return (NULL);
 	new = malloc(sizeof(t_cmd_list));
 	if (!new)
 		return (NULL);
-	new->cmd = content;
-	if (!new->cmd[0])
+	new->cmd = cmds;
+	if (!new->cmd)
 		return (free(new), NULL);
 	new->builtin = false;
 	new->redirs = redir;
