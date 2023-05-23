@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:39:55 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/16 15:16:42 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/22 15:18:02 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,23 @@
  * @brief print all link data
  * @param lst
  */
-void	print_lst(t_char_lst *lst)
+void	print_lst_char(t_char_lst *lst)
 {
 	t_char_lst	*first;
 
 	first = lst;
+	printf("lst_c :\n");
 	while (lst)
 	{
 		printf("%c | ", lst->c);
 		printf("sq : %i | ", lst->s_quote);
 		printf("dq : %i | ", lst->d_quote);
 		printf("aq : %i | ", lst->a_quote);
-//		ft_printf("type : %i |", lst->type);
+		printf("type : %i |", lst->type);
 		printf("\n");
 		lst = lst->next;
 	}
+	printf("\n");
 	lst = first;
 }
 
@@ -72,6 +74,7 @@ t_char_lst	*char_lst_new(char c)
 	new->prev = NULL;
 	new->d_quote = false;
 	new->s_quote = false;
+	new->a_quote = false;
 	new->pipe = 0;
 	return (new);
 }

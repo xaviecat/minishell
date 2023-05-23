@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 17:21:43 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/22 14:17:38 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/22 18:55:23 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,23 @@ void	redir_add_back(t_redir_list **lst, t_redir_list *new)
 		*lst = new;
 }
 
-void    print_redir(t_redir_list *lst)
+void	print_redir(t_redir_list *lst)
 {
-    t_redir_list *first;
+	t_redir_list	*first;
+	int				i;
 
-    first = lst;
-    while (lst)
-    {
-        printf("redir : %s/%d\n", lst->filename, lst->redir);
-        lst = lst->next;
-    }
-    lst = first;
+	first = lst;
+	i = 0;
+	while (lst)
+	{
+		printf("[%d] ",i);
+		printf("filename : %-19s | ", lst->filename);
+		printf("fd : %-29d | ", lst->redir);
+		printf("\n");
+		lst = lst->next;
+		i++;
+	}
+	lst = first;
 }
 
 t_redir_list	*get_redir(t_word_lst **lst)

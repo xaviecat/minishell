@@ -48,7 +48,7 @@
 //		lst_cmd_add_back(&sh->cmds, lst_cmd_new(cmd_splitted[i]));
 //		i++;
 //	}
-//	//print_list(sh->cmd);
+//	//print_lst_cmd(sh->cmd);
 //	//expand and open file / heredoc
 //	split_block_cmd(&sh->cmds);
 //	return (sh);

@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/22 14:05:56 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/23 11:58:02 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,16 @@ void	minishell(char **envp)
 		give_type_in_lst(&lst_c);
 		if (process_quotes(lst_c) == true)
 			ft_fdprintf(2, "ERROR : QUOTE DON'T CLOSED");// ! free
-		printf("lst of char :\n");
-		print_lst(lst_c);
+		print_lst_char(lst_c);
 		printf("\n");
 		if (is_forbidden_char(lst_c))
-			ft_fdprintf(2, "checked\n");
+			ft_fdprintf(2, "checked\n"); // ! free
 		lst_w = create_word_lst(lst_c);
-		//printf("lst of word :");
-		//print_lst_w(lst_w);
-		//printf("\n");
+		print_lst_word(lst_w);
 		expand_commands(&lst_w, envp);
+		print_lst_word(lst_w);
 		sh_pars(&lst_w, &minish);
 		printf("list of command :\n");
-		print_list(minish->cmds);
 //		if (ft_strncmp(line, "exit", 5) == 0)
 //			break ;
 //		if (ft_strncmp(line, "pwd", 4) == 0)
@@ -61,6 +58,18 @@ void	minishell(char **envp)
 //		if (ft_strncmp(arg[0], "cd", 3) == 0)
 //			cd(arg[1], envp);
 //		(void) arg;
+		print_lst_cmd(minish->cmds);
+		// minish = parsing_command(line, minish);
+		// if (ft_strncmp(line, "exit", 5) == 0)
+		// 	break ;
+		// if (ft_strncmp(line, "pwd", 4) == 0)
+		// 	pwd(envp);
+		// if (line && *line)
+		// 	add_history(line);
+		// arg = parsing_argu(line);
+		// if (ft_strncmp(arg[0], "cd", 3) == 0)
+		// 	cd(arg[1], envp);
+		// (void) arg;
 		free(line);
 	}
 	lst_clear(&minish->cmds);

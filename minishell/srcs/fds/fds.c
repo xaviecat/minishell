@@ -51,17 +51,24 @@ t_fd_list	*new_fds()
 	return (fds);
 }
 
-void    print_fd(t_fd_list *lst)
+void	print_fd(t_fd_list *lst)
 {
-    t_fd_list *first;
+	t_fd_list	*first;
+	int			i;
 
-    first = lst;
-    while (lst)
-    {
-        printf("fd in :%d/ fd out :%d\n", lst->in, lst->out);
-        lst = lst->next;
-    }
-    lst = first;
+	first = lst;
+	i = 0;
+	// printf("lst_fds : ");
+	while (lst)
+	{
+		printf("[%d] ", i);
+		printf("in : %-25d | ", lst->in);
+		printf("out : %-28d | ", lst->out);
+		printf("\n");
+		lst = lst->next;
+		i++;
+	}
+	lst = first;
 }
 
 t_fd_list	*create_fds_list(t_redir_list *redirs)

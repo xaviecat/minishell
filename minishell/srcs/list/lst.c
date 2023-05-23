@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:02:59 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/23 11:36:08 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/22 13:52:27 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void 	free_chunk(t_cmd_list *lst)
 	free(lst);
 }
 
-void 	lst_clear(t_cmd_list **lst)
+void	lst_clear(t_cmd_list **lst)
 {
 	t_cmd_list	*tmp;
 	t_cmd_list	*tmpnext;
@@ -40,7 +40,7 @@ void 	lst_clear(t_cmd_list **lst)
 	return ;
 }
 
-void	print_list(t_cmd_list *lst)
+void	print_lst_cmd(t_cmd_list *lst)
 {
 	t_cmd_list		*first;
 	t_w_cmd_list	*first_w;
@@ -146,7 +146,7 @@ int	get_number_of_arg(t_word_lst **lst, t_word_lst **next)
 char	**get_cmd(t_word_lst **old_lst)
 {
 	char		**cmd;
-	int 		nb_arg;
+	int			nb_arg;
 	t_word_lst	*prev;
 	t_word_lst	*next;
 

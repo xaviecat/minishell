@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_word.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 12:00:52 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/22 15:04:56 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/22 17:18:53 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,14 +202,18 @@ void	get_other_type_word(t_word_lst **lst)
  * @brief print all the word list pass in parameter
  * @param lst
  */
-void	print_lst_w(t_word_lst *lst)
+void	print_lst_word(t_word_lst *lst)
 {
 	t_word_lst	*first;
 
 	first = lst;
+	printf("lst_w:\n");
 	while (lst)
 	{
-		printf("%s/%d/%p\n", lst->word, lst->type, lst->next);
+		printf("%-10s | ", lst->word);
+		printf("type : %-2d | ", lst->type);
+		// printf("next : %p |", lst->next);
+		printf("\n");
 		lst = lst->next;
 	}
 	printf("\n");
