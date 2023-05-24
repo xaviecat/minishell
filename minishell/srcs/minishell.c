@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/23 13:41:22 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/05/24 18:49:47 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	minishell(char **envp)
 	minish = create_minishell(envp);
 	while (1)
 	{
-		line = readline("TRI_SH $> ");
+        line = readline(GREPROMPT);
 		if (line && *line)
 			add_history(line);
 		lst_c = create_char_lst_with_c_inside(line);
@@ -79,7 +79,9 @@ void	minishell(char **envp)
 
 int	main(int argc, char **argv, char **envp)
 {
-	(void) argv;
+//	(void) argv;
+	(void) envp;
+//	(void) argc;
 	if (argc == 1)
 		minishell(envp);
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/23 13:37:29 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/05/24 17:48:29 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include "../libft/incs/libft.h"
+# include "colors.h"
 
 /* malloc, free, exit, getenv, tcsetattr, tcgetattr, */
 # include <stdlib.h>
@@ -52,6 +53,9 @@
 /* errno */
 # include <errno.h>
 
+# define REDPROMPT " \x1b[4;91mTRI_SH $>\x1b[0m "
+# define GREPROMPT " \x1b[4;92mTRI_SH $>\x1b[0m "
+# define YELPROMPT " \x1b[4;93mTRI_SH $>\x1b[0m "
 /* structure */
 
 	/* enum */
