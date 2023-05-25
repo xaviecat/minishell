@@ -143,37 +143,6 @@ int	get_number_of_arg(t_word_lst **lst, t_word_lst **next)
 	return (nb_arg);
 }
 
-char	**get_cmd(t_word_lst **old_lst)
-{
-	char		**cmd;
-	int			nb_arg;
-	t_word_lst	*prev;
-	t_word_lst	*next;
-
-	nb_arg = get_number_of_arg(old_lst, &next);
-	cmd = NULL;
-	cmd = malloc(sizeof(char *) * (nb_arg + 1));
-	cmd[nb_arg] = NULL;
-    if (*old_lst && (*old_lst)->type == w_pipe && (*old_lst)->prev != NULL)
-	{
-		prev = (*old_lst)->prev;
-		word_lst_delone(old_lst);
-		*old_lst = prev;
-		next = (*old_lst)->next;
-	}
-	while ((*old_lst) && nb_arg > 0)
-	{
-	    printf("%s\n", (*old_lst)->word);
-		cmd[nb_arg - 1] = ft_strdup((*old_lst)->word);
-		nb_arg--;
-		prev = (*old_lst)->prev;
-		word_lst_delone(old_lst);
-		*old_lst = prev;
-	}
-	*old_lst = next;
-	return (cmd);
-}
-
 bool	builtin_or_command(char *cmd)
 {
 	if (ft_strncmp(cmd, "exit", 5) == 0)

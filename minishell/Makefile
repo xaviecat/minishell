@@ -17,6 +17,8 @@ SRCS			:=	minishell.c\
 					parsing/pars_in_minish.c\
 					redir/redir.c\
 					fds/fds.c\
+					garbage/ft_free.c\
+					garbage/ft_malloc.c\
 
 
 SRCS_D			:=	srcs/
@@ -67,6 +69,7 @@ $(OBJS_D)		:
 				mkdir -p $(OBJS_D)/list
 				mkdir -p $(OBJS_D)/fds
 				mkdir -p $(OBJS_D)/redir
+				mkdir -p $(OBJS_D)/garbage
 
 $(LIB_A)		:	FORCE
 				make -j -C $(LIB_D)

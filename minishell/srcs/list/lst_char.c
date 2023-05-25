@@ -40,7 +40,7 @@ void	print_lst_char(t_char_lst *lst)
  * @brief delete one link in the char list
  * @param lst
  */
-void	char_lst_delone(t_char_lst **lst)
+void	char_lst_delone(t_char_lst **lst, t_garbage_list **gb)
 {
 	t_char_lst	*prev;
 	t_char_lst	*next;
@@ -51,7 +51,7 @@ void	char_lst_delone(t_char_lst **lst)
 		prev->next = next;
 	if (next)
 		next->prev = prev;
-	free(*lst);
+	ft_free(gb, lst);
 	*lst = next;
 }
 
@@ -76,6 +76,7 @@ t_char_lst	*char_lst_new(char c, t_minish **sh)
 	new->s_quote = false;
 	new->a_quote = false;
 	new->pipe = 0;
+	new->last_added = NULL;
 	return (new);
 }
 
@@ -130,16 +131,20 @@ void	create_char_lst_with_c_inside(char *cmd_line, t_minish **sh)
 	i = 0;
 	while (cmd_line[i])
 	{
+	    printf("%c", cmd_line[i]);
 		new = char_lst_new(cmd_line[i], sh);
 		if (!new)
 			return ;// ! FREE !!!
-		if ((*sh)->lst_c->last_added)
+		if ((*sh)->lst_c)
 		{
-			(*sh)->lst_c->last_added->next = new;
-			(*sh)->lst_c->last_added = new;
-		}
+		    new->prev = (*sh)->lst_c->last_added;
+            (*sh)->lst_c->last_added->next = new;
+        }
 		else
 			(*sh)->lst_c = new;
+        (*sh)->lst_c->last_added = new;
+
 		i++;
 	}
+	free(cmd_line);
 }

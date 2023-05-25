@@ -19,15 +19,10 @@ t_garbage_list	*new_garbage(void *content)
 	new = malloc(sizeof(t_garbage_list));
 	new->content = content;
 	new->next = NULL;
+	new->last_added = NULL;
 	return (new);
 }
 
-void	garbage_lst_delone(t_garbage_list **lst)
-{
-	t_garbage_list	*prev;
-
-	prev =
-}
 
 t_garbage_list	*garbage_last(t_garbage_list *lst)
 {
@@ -64,6 +59,16 @@ void	*ft_malloc(t_garbage_list **garbage, int the_size, int number)
 	if (!content)
 		return (NULL);
 	new = new_garbage(content);
-	garbage_add_back(garbage, new);
+	if (!(*garbage)->content)
+	    *garbage = new;
+    else
+    {
+        if ((*garbage)->last_added)
+            (*garbage)->last_added->next = new;
+        else
+            (*garbage) = new;
+        (*garbage)->last_added = new;
+    }
+	//garbage_add_back(garbage, new);
 	return (content);
 }

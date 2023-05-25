@@ -12,11 +12,13 @@
 
 #include "../../incs/minishell.h"
 
-t_redir_list	*new_redir(t_type_redir type_red)
+t_redir_list	*new_redir(t_type_redir type_red, t_garbage_list **gb)
 {
 	t_redir_list	*red;
 
-	red = malloc(sizeof(t_redir_list));
+	red = ft_malloc(gb, sizeof(t_redir_list), 1);
+	if (!red)
+	    return (NULL); // ! ERROR maybe free direct ici
 	red->redir = type_red;
 	red->next = NULL;
 	return (red);
@@ -67,7 +69,7 @@ void	print_redir(t_redir_list *lst)
 	lst = first;
 }
 
-t_redir_list	*get_redir(t_word_lst **lst)
+t_redir_list	*get_redir(t_word_lst **lst, t_garbage_list **gb)
 {
 	t_redir_list	*redirs;
 	t_redir_list	*new;
@@ -76,20 +78,21 @@ t_redir_list	*get_redir(t_word_lst **lst)
 	new = NULL;
 	while (*lst && (*lst)->type != w_pipe)
 	{
+	// ! ERROR DE MALLOC A REFLECHIR
 		if ((*lst)->type == open_file)
-			new = new_redir(in);
+			new = new_redir(in, gb);
 		if ((*lst)->type == hd)
-			new = new_redir(inin);
+			new = new_redir(inin, gb);
 		if ((*lst)->type == redir)
-			new = new_redir(out);
+			new = new_redir(out, gb);
 		if ((*lst)->type == appnd)
-			new = new_redir(outout);
+			new = new_redir(outout, gb);
 		if (new)
 		{
-			word_lst_delone(lst);
+			word_lst_delone(lst, gb);
 			new->filename = ft_strdup((*lst)->word);
-			word_lst_delone(lst);
-			redir_add_back(&redirs, new);
+			word_lst_delone(lst, gb);
+			redir_add_back(&redirs, new); // ? A voir si il faut le changer
 			new = NULL;
 		}
 		else

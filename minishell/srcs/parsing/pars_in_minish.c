@@ -17,7 +17,7 @@
  * @param old_lst
  * @param minish
  */
-void	sh_pars(t_word_lst **old_lst, t_minish **minish)
+void	sh_pars(t_minish **sh)
 {
 	t_redir_list	*redirs;
 	t_fd_list		*fds;
@@ -26,14 +26,22 @@ void	sh_pars(t_word_lst **old_lst, t_minish **minish)
 	redirs = NULL;
 	fds = NULL;
 	new = NULL;
-	while (*old_lst)
+	while ((*sh)->lst_w)
 	{
-		redirs = get_redir(old_lst);
-		fds = create_fds_list(redirs);
-		new = lst_cmd_new(get_cmd_2(old_lst), fds, redirs);
+		redirs = get_redir(&(*sh)->lst_w, &(*sh)->garbage);
+		fds = create_fds_list(redirs, &(*sh)->garbage);
+		new = lst_cmd_new(get_cmd_2(&(*sh)->lst_w, &(*sh)->garbage), fds, redirs);
 		new->builtin = builtin_or_command(new->cmd->cmd);
-		lst_cmd_add_back(&(*minish)->cmds, new);
-		if (*old_lst && (*old_lst)->type == w_pipe)
-			word_lst_delone(old_lst);
+		if ((*sh)->cmds)
+        {
+            new->previous = (*sh)->cmds->last_added;
+            (*sh)->cmds->last_added->next = new;
+        }
+        else
+            (*sh)->cmds = new;
+        (*sh)->cmds->last_added = new;
+		//lst_cmd_add_back(&(*minish)->cmds, new);
+		if ((*sh)->lst_w && (*sh)->lst_w->type == w_pipe)
+			word_lst_delone(&(*sh)->lst_w, &(*sh)->garbage);
 	}
 }

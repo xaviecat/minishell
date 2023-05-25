@@ -12,11 +12,11 @@
 
 #include "../../incs/minishell.h"
 
-t_w_cmd_list	*new_w_cmd_list(char *content, bool s_quote, bool d_quote)
+t_w_cmd_list	*new_w_cmd_list(char *content, bool s_quote, bool d_quote, t_garbage_list **gb)
 {
 	t_w_cmd_list	*new;
 
-	new = malloc(sizeof(t_w_cmd_list));
+	new = ft_malloc(gb, sizeof(t_w_cmd_list), 1);
 	if (!new)
 		return (NULL); //! ERROR
 	new->cmd = ft_strdup(content);
@@ -54,7 +54,7 @@ void	w_cmd_lst_add_back(t_w_cmd_list **lst, t_w_cmd_list *new)
 		*lst = new;
 }
 
-t_w_cmd_list	*get_cmd_2(t_word_lst **old_lst)
+t_w_cmd_list	*get_cmd_2(t_word_lst **old_lst, t_garbage_list **gb)
 {
 	t_w_cmd_list	*cmds;
 	t_w_cmd_list	*new;
@@ -70,9 +70,14 @@ t_w_cmd_list	*get_cmd_2(t_word_lst **old_lst)
             two_quote = true;
         if ((*old_lst)->type == in_s_quote)
             one_quote = true;
-		new = new_w_cmd_list((*old_lst)->word,one_quote, two_quote);
-        w_cmd_lst_add_back(&cmds, new);
-        word_lst_delone(old_lst);
+		new = new_w_cmd_list((*old_lst)->word,one_quote, two_quote, gb);
+        if (cmds)
+            cmds->last_added->next = new;
+        else
+            cmds = new;
+        cmds->last_added = new;
+        //w_cmd_lst_add_back(&cmds, new);
+        word_lst_delone(old_lst, gb);
 	}
 	return (cmds);
 }

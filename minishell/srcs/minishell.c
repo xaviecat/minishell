@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/23 17:00:38 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/24 11:47:10 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,23 @@
 t_minish	*create_minishell(char **envp)
 {
 	t_minish		*sh;
-	t_garbage_list	*g_lst;
+    t_garbage_list  *gb;
 
-	sh = ft_malloc(&g_lst, sizeof(t_minish), 1);
+    gb = malloc(sizeof(t_garbage_list));
+    gb->content = NULL;
+    gb->last_added = NULL;
+    gb->next = NULL;
+	sh = ft_malloc(&gb, sizeof(t_minish), 1);
 	if (!sh)
+    {
+        free(gb);
 		exit(EXIT_FAILURE); // ! ERROR
+    }
 	sh->envp = envp;
 	sh->cmds = NULL;
 	sh->lst_c = NULL;
 	sh->lst_w = NULL;
-	sh->garbage = g_lst;
+	sh->garbage = gb;
 	return (sh);
 }
 
@@ -32,12 +39,10 @@ void	minishell(char **envp)
 {
 	char		*line;
 	t_minish	*minish;
-	t_char_lst	*lst_c;
-	t_word_lst	*lst_w;
 
-	minish = create_minishell(envp);
 	while (1)
 	{
+	    minish = create_minishell(envp);
 		line = readline("TRI_SH $> ");
 		if (line && *line)
 			add_history(line);
@@ -49,11 +54,11 @@ void	minishell(char **envp)
 		printf("\n");
 		if (is_forbidden_char(minish->lst_c))
 			ft_fdprintf(2, "checked\n"); // ! free
-		lst_w = create_word_lst(&minish);
-		print_lst_word(lst_w);
-		expand_commands(&lst_w, envp);
-		print_lst_word(lst_w);
-		sh_pars(&lst_w, &minish);
+		create_word_lst(&minish);
+		print_lst_word(minish->lst_w);
+		expand_commands(&minish->lst_w, envp);
+		print_lst_word(minish->lst_w);
+		sh_pars(&minish);
 		printf("list of command :\n");
 //		if (ft_strncmp(line, "exit", 5) == 0)
 //			break ;
@@ -75,8 +80,9 @@ void	minishell(char **envp)
 		// if (ft_strncmp(arg[0], "cd", 3) == 0)
 		// 	cd(arg[1], envp);
 		// (void) arg;
-		b_echo(minish->cmds->cmd);
-		free(line);
+	//	b_echo(minish->cmds->cmd);
+		ft_free_all(minish->garbage);
+		free(minish);
 	}
 	lst_clear(&minish->cmds);
 	free(line);
