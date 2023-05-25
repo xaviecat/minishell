@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:08:17 by nfaust            #+#    #+#             */
-/*   Updated: 2023/05/16 18:37:22 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/05/25 16:11:07 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
  * @brief collect the content of the environnement variable
  * @param envp
  * @param var the environnement variable
- * @return the content of the environnement variable, \n an allocated string containing "" if the variable is not set
+ * @return the content of the environnement variable, \n\n
+ * an allocated string containing "" if the variable is not set
  */
 static char	*expand_env_var(char **envp, char *var)
 {
@@ -48,13 +49,15 @@ static char	*expand_env_var(char **envp, char *var)
 }
 
 /**
- * @brief collect the content of the environnement variable and cut spaces in it if needed
+ * @brief collect the content of the environnement
+ * variable and cut spaces in it if needed
  * @param env_var the environnement variable
  * @param double_not_closed 1 if a double quote is opened, \n 0 if not
  * @param envp
  * @return the content of the environnement variable
  */
-static char *set_expanded_env_var(char *env_var, int double_not_closed, char **envp)
+static char	*set_expanded_env_var(char *env_var,
+									int double_not_closed, char **envp)
 {
 	char	*expanded_env_var;
 
@@ -67,7 +70,8 @@ static char *set_expanded_env_var(char *env_var, int double_not_closed, char **e
 }
 
 /**
- * @brief modify a cmd from start to whitespace by replacing env vars by their content and reallocating it
+ * @brief modify a cmd from start to whitespace by replacing
+ * env vars by their content and reallocating it
  * @param cmd the cmd that you want to expand
  * @param start the index of the $ symbol
  * @param envp
@@ -156,9 +160,3 @@ void	expand_commands(t_word_lst **w_lst, char **envp)
 		w_lst_cpy = w_lst_cpy->next;
 	}
 }
-
-/*
-		TO DO LIST
-- gerer les differences entre "$USER" et $USER (whitespaces a skip pour $USER)
-- envoyer differents caracteres pour les quotes a garder et celles a supprimer
-*/
