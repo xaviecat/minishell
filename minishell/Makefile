@@ -7,14 +7,15 @@ SRCS			:=	minishell.c\
 					parsing/process_quotes.c\
 					parsing/expand.c\
 					parsing/unhandled_char.c\
+					parsing/pars_in_minish.c\
 					utils/expand_utils.c\
 					utils/utils.c\
+					utils/libftgarbage.c\
 					list/lst.c\
 					list/lst_char.c\
 					list/lst_word.c\
 					list/lst_w_cmd.c\
 					list/find_type.c\
-					parsing/pars_in_minish.c\
 					redir/redir.c\
 					fds/fds.c\
 					garbage/ft_free.c\
