@@ -3,6 +3,7 @@ SRCS			:=	minishell.c\
 					parsing/pars.c\
 					builtins/pwd.c\
 					builtins/cd.c\
+					builtins/echo.c\
 					parsing/process_quotes.c\
 					parsing/expand.c\
 					parsing/unhandled_char.c\
@@ -16,6 +17,9 @@ SRCS			:=	minishell.c\
 					parsing/pars_in_minish.c\
 					redir/redir.c\
 					fds/fds.c\
+					garbage/ft_free.c\
+					garbage/ft_malloc.c\
+					utils/ft_gb_strdup.c\
 
 
 SRCS_D			:=	srcs/
@@ -47,7 +51,7 @@ CFLAGS			:=	-Wall -Wextra -Werror
 
 RDL				:=	-lreadline
 
-ASAN_F			:=	-g3 -fsanitize=address
+ASAN_F			:=	-g3 #-fsanitize=address
 
 #========================EXEC===============================#
 all				:	$(NAME)
@@ -66,6 +70,7 @@ $(OBJS_D)		:
 				mkdir -p $(OBJS_D)/list
 				mkdir -p $(OBJS_D)/fds
 				mkdir -p $(OBJS_D)/redir
+				mkdir -p $(OBJS_D)/garbage
 
 $(LIB_A)		:	FORCE
 				make -j -C $(LIB_D)

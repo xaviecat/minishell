@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/26 15:31:50 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/05/26 15:41:44 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,46 +14,53 @@
 
 t_minish	*create_minishell(char **envp)
 {
-	t_minish	*sh;
+	t_minish		*sh;
 
 	sh = malloc(sizeof(t_minish));
+	if (!sh)
+    {
+       //free(gb);
+		exit(EXIT_FAILURE); // ! ERROR
+    }
 	sh->envp = envp;
 	sh->cmds = NULL;
+	sh->lst_c = NULL;
+	sh->lst_w = NULL;
+	sh->garbage = NULL;
+	sh->garbage = create_garbage_container();
+	if (!sh->garbage)
+	{
+		free(sh);
+		exit(EXIT_FAILURE);
+	}
 	return (sh);
 }
-
 
 void	minishell(char **envp)
 {
 	char		*line;
 	t_minish	*minish;
-	t_char_lst	*lst_c;
-	t_word_lst	*lst_w;
-	//char		**arg;
 
-	minish = create_minishell(envp);
 	while (1)
 	{
-		line = readline(" "GREEN UNDERLINE"TRI_SH $>"RESET RESET" ");
+		line = readline("TRI_SH $> ");
 		if (line && *line)
 			add_history(line);
-		lst_c = create_char_lst_with_c_inside(line);
-		give_type_in_lst(&lst_c);
-		print_lst_char(lst_c);
+		minish = create_minishell(envp);
+		create_char_lst_with_c_inside(line, &minish);
+		give_type_in_lst(&minish->lst_c);
+		if (process_quotes(minish->lst_c) == true)
+			ft_fdprintf(2, "ERROR : QUOTE DON'T CLOSED");// ! free
+		print_lst_char(minish->lst_c);
 		printf("\n");
-		if (process_quotes(lst_c) == true)
-			ft_fdprintf(2, RED"ERROR : QUOTE DON'T CLOSED"RESET);// ! free
-		if (is_forbidden_char(lst_c))
-			ft_fdprintf(2, RED"ERRROR FORBIDDEN CHAR\n"RESET); // ! free
-		if (is_bad_redir(lst_c))
-			ft_fdprintf(2, RED"ERRROR BAD REDIR\n"RESET); // ! free
-
-		lst_w = create_word_lst(lst_c);
-		print_lst_word(lst_w);
-		expand_commands(&lst_w, envp);
-		print_lst_word(lst_w);
-		sh_pars(&lst_w, &minish);
-		print_lst_cmd(minish->cmds);
+		if (is_forbidden_char(minish->lst_c))
+			ft_fdprintf(2, "checked\n"); // ! free
+		create_word_lst(&minish);
+		print_lst_word(minish->lst_w);
+		expand_commands(&minish->lst_w, envp);
+		print_lst_word(minish->lst_w);
+		sh_pars(&minish);
+		printf("list of command :\n");
 //		if (ft_strncmp(line, "exit", 5) == 0)
 //			break ;
 //		if (ft_strncmp(line, "pwd", 4) == 0)
@@ -62,6 +69,7 @@ void	minishell(char **envp)
 //		if (ft_strncmp(arg[0], "cd", 3) == 0)
 //			cd(arg[1], envp);
 //		(void) arg;
+		print_lst_cmd(minish->cmds);
 		// minish = parsing_command(line, minish);
 		// if (ft_strncmp(line, "exit", 5) == 0)
 		// 	break ;
@@ -73,7 +81,9 @@ void	minishell(char **envp)
 		// if (ft_strncmp(arg[0], "cd", 3) == 0)
 		// 	cd(arg[1], envp);
 		// (void) arg;
-		free(line);
+	//	b_echo(minish->cmds->cmd);
+		ft_free_all(&minish->garbage);
+		free(minish);
 	}
 	lst_clear(&minish->cmds);
 	free(line);

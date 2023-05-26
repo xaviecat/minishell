@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:02:59 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/23 13:52:48 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/05/23 11:57:53 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void 	free_chunk(t_cmd_list *lst)
 {
 	while (lst->cmd)
 	{
-		free(lst->cmd);
-		lst->cmd = lst->cmd->next;
+		free(lst->cmd->cmd);
+        lst->cmd = lst->cmd->next;
 	}
 	free(lst);
 }
@@ -99,13 +99,13 @@ void	lst_cmd_add_back(t_cmd_list **lst, t_cmd_list *new)
 		*lst = new;
 }
 
-t_cmd_list	*lst_cmd_new(t_w_cmd_list *cmds, t_fd_list *fds, t_redir_list *redir)
+t_cmd_list	*lst_cmd_new(t_w_cmd_list *cmds, t_fd_list *fds, t_redir_list *redir, t_garbage **gb)
 {
 	t_cmd_list	*new;
 
 	if (!cmds)
 		return (NULL);
-	new = malloc(sizeof(t_cmd_list));
+	new = ft_malloc(gb, sizeof(t_cmd_list), 1);
 	if (!new)
 		return (NULL);
 	new->cmd = cmds;
@@ -143,37 +143,6 @@ int	get_number_of_arg(t_word_lst **lst, t_word_lst **next)
 		}
 	}
 	return (nb_arg);
-}
-
-char	**get_cmd(t_word_lst **old_lst)
-{
-	char		**cmd;
-	int			nb_arg;
-	t_word_lst	*prev;
-	t_word_lst	*next;
-
-	nb_arg = get_number_of_arg(old_lst, &next);
-	cmd = NULL;
-	cmd = malloc(sizeof(char *) * (nb_arg + 1));
-	cmd[nb_arg] = NULL;
-    if (*old_lst && (*old_lst)->type == w_pipe && (*old_lst)->prev != NULL)
-	{
-		prev = (*old_lst)->prev;
-		word_lst_delone(old_lst);
-		*old_lst = prev;
-		next = (*old_lst)->next;
-	}
-	while ((*old_lst) && nb_arg > 0)
-	{
-	    printf("%s\n", (*old_lst)->word);
-		cmd[nb_arg - 1] = ft_strdup((*old_lst)->word);
-		nb_arg--;
-		prev = (*old_lst)->prev;
-		word_lst_delone(old_lst);
-		*old_lst = prev;
-	}
-	*old_lst = next;
-	return (cmd);
 }
 
 bool	builtin_or_command(char *cmd)

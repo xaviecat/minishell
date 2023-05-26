@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fds.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 17:45:12 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/23 14:24:41 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/05/23 10:30:00 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,27 +27,30 @@ t_fd_list	*fd_last(t_fd_list *lst)
 
 void	fds_add_back(t_fd_list **lst, t_fd_list *new)
 {
-	t_fd_list	*tmp;
+	//t_fd_list	*tmp;
 
 	if (!lst)
 		return ;
-	if (*lst)
+	if ((*lst)->last_added)
 	{
-		tmp = fd_last(*lst);
-		tmp->next = new;
+        (*lst)->last_added->next = new;
 	}
 	else
 		*lst = new;
+    (*lst)->last_added = new;
 }
 
-t_fd_list	*new_fds()
+t_fd_list	*new_fds(t_garbage **gb)
 {
 	t_fd_list	*fds;
 
-	fds = malloc(sizeof(t_fd_list));
+	fds = ft_malloc(gb, sizeof(t_fd_list), 1);
+	if (!fds)
+	    return (NULL);
 	fds->in = STDIN_FILENO;
 	fds->out = STDOUT_FILENO;
 	fds->next = NULL;
+	fds->last_added = NULL;
 	return (fds);
 }
 
@@ -71,38 +74,39 @@ void	print_fd(t_fd_list *lst)
 	lst = first;
 }
 
-t_fd_list	*create_fds_list(t_redir_list *redirs)
+t_fd_list	*create_fds_list(t_redir_list *redirs, t_garbage **gb)
 {
 	t_fd_list		*fds;
 	t_fd_list		*new;
 	t_redir_list	*first;
 
-	fds = NULL;
+    fds = NULL;
 	if (redirs)
-		fds = new_fds();
-	first = redirs;
-	while (redirs)
 	{
-		if (fds->in != STDIN_FILENO)
-			close(fds->in);
-		if (fds->out != STDOUT_FILENO)
-			close(fds->out);
-		new = new_fds();
-		if (redirs->redir == in)
-			new->in = open(redirs->filename, O_RDONLY, 0644);
-		// if (redirs->redir == inin)
-			// new->in = inin;//HEREDOC
-		if (redirs->redir == out)
-			new->out = open(redirs->filename, O_RDWR | O_CREAT | O_TRUNC, 0644);
-		if (redirs->redir == outout)
-			new->out = open(redirs->filename, O_RDWR | O_CREAT | O_APPEND, 0644);
-		if (new->in == -1)
-			return (perror(redirs->filename), NULL);
-		if (new->out == -1)
-			return (perror(redirs->filename), NULL);
-		fds_add_back(&fds, new);
-		redirs = redirs->next;
-	}
-	redirs = first;
+        fds = new_fds(gb);
+        first = redirs;
+        while (redirs) {
+            if (fds->in != STDIN_FILENO)
+                close(fds->in);
+            if (fds->out != STDOUT_FILENO)
+                close(fds->out);
+            new = new_fds(gb);
+            if (redirs->redir == in)
+                new->in = open(redirs->filename, O_RDONLY, 0644);
+//		if (redirs->redir == inin)
+//			new->in = ;//HEREDOC
+            if (redirs->redir == out)
+                new->out = open(redirs->filename, O_RDWR | O_CREAT | O_TRUNC, 0644);
+            if (redirs->redir == outout)
+                new->out = open(redirs->filename, O_RDWR | O_CREAT | O_APPEND, 0644);
+            if (new->in == -1)
+                return (perror(redirs->filename), NULL);
+            if (new->out == -1)
+                return (perror(redirs->filename), NULL);
+            fds_add_back(&fds, new); // ? A voir si il faut le changer
+            redirs = redirs->next;
+        }
+        redirs = first;
+    }
 	return (fds);
 }
