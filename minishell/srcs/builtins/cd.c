@@ -33,5 +33,5 @@ void	cd(char *path, char **envp)
 		path = get_home_from_env(envp);
 		//SECURISER
 	chdir(path);
-	free(path);
+	 //free(path);
 }

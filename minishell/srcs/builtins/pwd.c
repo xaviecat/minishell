@@ -37,5 +37,5 @@ void	pwd(char **envp)
 		path = get_pwd_from_envp(envp);
 	else
 		printf("%s\n", path);
-	free(path);
+	//free(path);
 }
