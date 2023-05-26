@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 17:21:43 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/22 18:55:23 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/05/26 15:45:53 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-t_redir_list	*new_redir(t_type_redir type_red, t_garbage_list **gb)
+t_redir_list	*new_redir(t_type_redir type_red, t_garbage **gb)
 {
 	t_redir_list	*red;
 
@@ -69,7 +69,7 @@ void	print_redir(t_redir_list *lst)
 	lst = first;
 }
 
-t_redir_list	*get_redir(t_word_lst **lst, t_garbage_list **gb)
+t_redir_list	*get_redir(t_word_lst **lst, t_garbage **gb)
 {
 	t_redir_list	*redirs;
 	t_redir_list	*new;
@@ -90,7 +90,8 @@ t_redir_list	*get_redir(t_word_lst **lst, t_garbage_list **gb)
 		if (new)
 		{
 			word_lst_delone(lst, gb);
-			new->filename = ft_strdup((*lst)->word);
+			dprintf(2,"%s", (*lst)->word);
+			new->filename = ft_gb_strdup((*lst)->word, gb);
 			word_lst_delone(lst, gb);
 			redir_add_back(&redirs, new); // ? A voir si il faut le changer
 			new = NULL;
