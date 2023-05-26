@@ -6,20 +6,34 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 13:57:31 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/23 14:27:04 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/26 16:11:24 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
+
+t_garbage	*create_garbage_container()
+{
+	t_garbage	*gb_c;
+
+	gb_c = malloc(sizeof(t_garbage));
+	if (!gb_c)
+		return (NULL);
+	gb_c->first = NULL;
+	gb_c->last = NULL;
+	return (gb_c);
+}
 
 t_garbage_list	*new_garbage(void *content)
 {
 	t_garbage_list	*new;
 
 	new = malloc(sizeof(t_garbage_list));
+	if (!new)
+		return (NULL);
 	new->content = content;
 	new->next = NULL;
-	new->last_added = NULL;
+	new->prev = NULL;
 	return (new);
 }
 
@@ -50,7 +64,7 @@ void	garbage_add_back(t_garbage_list **lst, t_garbage_list *new)
 		*lst = new;
 }
 
-void	*ft_malloc(t_garbage_list **garbage, int the_size, int number)
+void	*ft_malloc(t_garbage **garbage, int the_size, int number)
 {
 	t_garbage_list	*new;
 	void			*content;
@@ -59,16 +73,18 @@ void	*ft_malloc(t_garbage_list **garbage, int the_size, int number)
 	if (!content)
 		return (NULL);
 	new = new_garbage(content);
-	if (!(*garbage)->content)
-	    *garbage = new;
+	if (!new)
+		return (NULL);// ! ERROR
+	if (!(*garbage)->first)
+	{
+		(*garbage)->first = new;
+		(*garbage)->last = new;
+	}
     else
-    {
-        if ((*garbage)->last_added)
-            (*garbage)->last_added->next = new;
-        else
-            (*garbage) = new;
-        (*garbage)->last_added = new;
-    }
-	//garbage_add_back(garbage, new);
+	{
+		new->prev = (*garbage)->last;
+		(*garbage)->last->next = new;
+		(*garbage)->last = new;
+	}
 	return (content);
 }

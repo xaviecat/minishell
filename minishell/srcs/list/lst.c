@@ -97,13 +97,13 @@ void	lst_cmd_add_back(t_cmd_list **lst, t_cmd_list *new)
 		*lst = new;
 }
 
-t_cmd_list	*lst_cmd_new(t_w_cmd_list *cmds, t_fd_list *fds, t_redir_list *redir)
+t_cmd_list	*lst_cmd_new(t_w_cmd_list *cmds, t_fd_list *fds, t_redir_list *redir, t_garbage **gb)
 {
 	t_cmd_list	*new;
 
 	if (!cmds)
 		return (NULL);
-	new = malloc(sizeof(t_cmd_list));
+	new = ft_malloc(gb, sizeof(t_cmd_list), 1);
 	if (!new)
 		return (NULL);
 	new->cmd = cmds;

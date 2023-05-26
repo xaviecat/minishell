@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/24 11:47:10 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/26 15:41:44 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,24 @@
 t_minish	*create_minishell(char **envp)
 {
 	t_minish		*sh;
-    t_garbage_list  *gb;
 
-    gb = malloc(sizeof(t_garbage_list));
-    gb->content = NULL;
-    gb->last_added = NULL;
-    gb->next = NULL;
-	sh = ft_malloc(&gb, sizeof(t_minish), 1);
+	sh = malloc(sizeof(t_minish));
 	if (!sh)
     {
-        free(gb);
+       //free(gb);
 		exit(EXIT_FAILURE); // ! ERROR
     }
 	sh->envp = envp;
 	sh->cmds = NULL;
 	sh->lst_c = NULL;
 	sh->lst_w = NULL;
-	sh->garbage = gb;
+	sh->garbage = NULL;
+	sh->garbage = create_garbage_container();
+	if (!sh->garbage)
+	{
+		free(sh);
+		exit(EXIT_FAILURE);
+	}
 	return (sh);
 }
 
@@ -42,10 +43,10 @@ void	minishell(char **envp)
 
 	while (1)
 	{
-	    minish = create_minishell(envp);
 		line = readline("TRI_SH $> ");
 		if (line && *line)
 			add_history(line);
+		minish = create_minishell(envp);
 		create_char_lst_with_c_inside(line, &minish);
 		give_type_in_lst(&minish->lst_c);
 		if (process_quotes(minish->lst_c) == true)
@@ -81,7 +82,7 @@ void	minishell(char **envp)
 		// 	cd(arg[1], envp);
 		// (void) arg;
 	//	b_echo(minish->cmds->cmd);
-		ft_free_all(minish->garbage);
+		ft_free_all(&minish->garbage);
 		free(minish);
 	}
 	lst_clear(&minish->cmds);

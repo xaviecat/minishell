@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 17:45:12 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/23 10:30:00 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/26 15:45:42 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	fds_add_back(t_fd_list **lst, t_fd_list *new)
     (*lst)->last_added = new;
 }
 
-t_fd_list	*new_fds(t_garbage_list **gb)
+t_fd_list	*new_fds(t_garbage **gb)
 {
 	t_fd_list	*fds;
 
@@ -50,6 +50,7 @@ t_fd_list	*new_fds(t_garbage_list **gb)
 	fds->in = STDIN_FILENO;
 	fds->out = STDOUT_FILENO;
 	fds->next = NULL;
+	fds->last_added = NULL;
 	return (fds);
 }
 
@@ -73,7 +74,7 @@ void	print_fd(t_fd_list *lst)
 	lst = first;
 }
 
-t_fd_list	*create_fds_list(t_redir_list *redirs, t_garbage_list **gb)
+t_fd_list	*create_fds_list(t_redir_list *redirs, t_garbage **gb)
 {
 	t_fd_list		*fds;
 	t_fd_list		*new;

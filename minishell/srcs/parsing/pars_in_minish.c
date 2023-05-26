@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 11:50:54 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/22 13:53:58 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/26 15:46:20 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	sh_pars(t_minish **sh)
 	{
 		redirs = get_redir(&(*sh)->lst_w, &(*sh)->garbage);
 		fds = create_fds_list(redirs, &(*sh)->garbage);
-		new = lst_cmd_new(get_cmd_2(&(*sh)->lst_w, &(*sh)->garbage), fds, redirs);
+		new = lst_cmd_new(get_cmd_2(&(*sh)->lst_w, &(*sh)->garbage), fds, redirs, &((*sh)->garbage));
 		new->builtin = builtin_or_command(new->cmd->cmd);
 		if ((*sh)->cmds)
         {

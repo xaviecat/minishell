@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/23 17:00:38 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/26 17:02:34 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,14 @@ typedef struct s_garbage_list
 {
 	void 					*content;
 	struct s_garbage_list	*next;
-	struct s_garbage_list   *last_added;
+	struct s_garbage_list	*prev;
 }				t_garbage_list;
+
+typedef struct s_garbage
+{
+	t_garbage_list	*first;
+	t_garbage_list	*last;
+}				t_garbage;
 
 typedef struct s_redir_list
 {
@@ -171,7 +177,7 @@ typedef struct s_minish
 	t_cmd_list		*cmds;
 	t_char_lst		*lst_c;
 	t_word_lst		*lst_w;
-	t_garbage_list	*garbage;
+	t_garbage		*garbage;
 }				t_minish;
 
 /* parsing */
@@ -180,9 +186,9 @@ t_minish		*parsing_command(char *cmd_line, t_minish *sh);
 void			expand_commands(t_word_lst **w_lst, char **envp);
 char			*cut_whitespaces(char *str);
 bool			process_quotes(t_char_lst *lst);
-t_redir_list	*get_redir(t_word_lst **lst, t_garbage_list **gb);
+t_redir_list	*get_redir(t_word_lst **lst, t_garbage **gb);
 void			print_redir(t_redir_list *lst);
-t_fd_list		*create_fds_list(t_redir_list *redirs, t_garbage_list **gb);
+t_fd_list		*create_fds_list(t_redir_list *redirs, t_garbage **gb);
 void			print_fd(t_fd_list *lst);
 
 /* error */
@@ -198,9 +204,13 @@ char			*ft_strdup_to_charset(char *str, char *charset);
 int				ft_isspace(char c);
 char			*str_cpy_to_x(char *src, char *dst, char x);
 int				is_dollar_alone(char *env_var, char *cmd, size_t start);
-void			*ft_malloc(t_garbage_list **garbage, int the_size, int number);
-void            ft_free_all(t_garbage_list *lst);
-void            ft_free(t_garbage_list **lst, void *content);
+void			*ft_malloc(t_garbage **garbage, int the_size, int number);
+void            ft_free_all(t_garbage **lst);
+void            ft_free(t_garbage **lst, void *content);
+t_garbage_list	*new_garbage(void *content);
+t_garbage		*create_garbage_container();
+void			garbage_add_back(t_garbage_list **lst, t_garbage_list *new);
+char			*ft_gb_strdup(const char *src, t_garbage **gb);
 
 /* list_char function */
 t_char_lst		*char_lst_new(char c, t_minish **sh);
@@ -210,18 +220,18 @@ void			char_lst_add_front(t_char_lst **lst, t_char_lst *new);
 void			create_char_lst_with_c_inside(char *cmd_line, t_minish **sh);
 void			give_type_in_lst(t_char_lst **lst);
 void			print_lst_char(t_char_lst *lst);
-void			char_lst_delone(t_char_lst **lst, t_garbage_list **gb);
+void			char_lst_delone(t_char_lst **lst, t_garbage **gb);
 
 /* lst_word function */
 void			create_word_lst(t_minish **sh);
 void			print_lst_word(t_word_lst *lst);
 int				is_a_bultin(char *word);
 int				get_cat_of_word(char *word);
-void			word_lst_delone(t_word_lst **lst, t_garbage_list **gb);
+void			word_lst_delone(t_word_lst **lst, t_garbage **gb);
 t_word_lst		*word_lst_first(t_word_lst *lst);
 
 /* list command maybe not useful */
-t_cmd_list	*lst_cmd_new(t_w_cmd_list *cmds, t_fd_list *fds, t_redir_list *redir);
+t_cmd_list	*lst_cmd_new(t_w_cmd_list *cmds, t_fd_list *fds, t_redir_list *redir, t_garbage **gb);
 void		lst_cmd_add_back(t_cmd_list **lst, t_cmd_list *new);
 void		print_lst_cmd(t_cmd_list *lst);
 void		lst_clear(t_cmd_list **lst);
@@ -230,5 +240,5 @@ void		sh_pars(t_minish **minish);
 bool		builtin_or_command(char *cmd);
 
 /* lst_w_cmd function */
-t_w_cmd_list    *get_cmd_2(t_word_lst **old_lst, t_garbage_list **gb);
+t_w_cmd_list    *get_cmd_2(t_word_lst **old_lst, t_garbage **gb);
 #endif

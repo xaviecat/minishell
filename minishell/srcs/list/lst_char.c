@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:39:55 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/23 17:34:39 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/25 13:31:24 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	print_lst_char(t_char_lst *lst)
  * @brief delete one link in the char list
  * @param lst
  */
-void	char_lst_delone(t_char_lst **lst, t_garbage_list **gb)
+void	char_lst_delone(t_char_lst **lst, t_garbage **gb)
 {
 	t_char_lst	*prev;
 	t_char_lst	*next;
@@ -51,7 +51,7 @@ void	char_lst_delone(t_char_lst **lst, t_garbage_list **gb)
 		prev->next = next;
 	if (next)
 		next->prev = prev;
-	ft_free(gb, lst);
+	ft_free(gb, *lst);
 	*lst = next;
 }
 
