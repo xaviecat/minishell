@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/23 13:37:29 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/05/24 17:48:29 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include "../libft/incs/libft.h"
+# include "colors.h"
 
 /* malloc, free, exit, getenv, tcsetattr, tcgetattr, */
 # include <stdlib.h>
@@ -51,6 +52,7 @@
 
 /* errno */
 # include <errno.h>
+
 
 /* structure */
 
@@ -171,6 +173,7 @@ void			print_fd(t_fd_list *lst);
 
 /* error */
 bool			is_forbidden_char(t_char_lst *lst);
+bool			is_bad_redir(t_char_lst *lst);
 
 /* builtins */
 void			pwd(char **envp);

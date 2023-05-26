@@ -77,6 +77,7 @@ t_fd_list	*create_fds_list(t_redir_list *redirs)
 	t_fd_list		*new;
 	t_redir_list	*first;
 
+	fds = NULL;
 	if (redirs)
 		fds = new_fds();
 	first = redirs;
