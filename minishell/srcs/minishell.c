@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/24 18:49:47 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/05/26 15:31:50 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,20 @@ void	minishell(char **envp)
 	minish = create_minishell(envp);
 	while (1)
 	{
-        line = readline(GREPROMPT);
+		line = readline(" "GREEN UNDERLINE"TRI_SH $>"RESET RESET" ");
 		if (line && *line)
 			add_history(line);
 		lst_c = create_char_lst_with_c_inside(line);
 		give_type_in_lst(&lst_c);
-		if (process_quotes(lst_c) == true)
-			ft_fdprintf(2, "ERROR : QUOTE DON'T CLOSED");// ! free
 		print_lst_char(lst_c);
 		printf("\n");
+		if (process_quotes(lst_c) == true)
+			ft_fdprintf(2, RED"ERROR : QUOTE DON'T CLOSED"RESET);// ! free
 		if (is_forbidden_char(lst_c))
-			ft_fdprintf(2, "checked\n"); // ! free
+			ft_fdprintf(2, RED"ERRROR FORBIDDEN CHAR\n"RESET); // ! free
+		if (is_bad_redir(lst_c))
+			ft_fdprintf(2, RED"ERRROR BAD REDIR\n"RESET); // ! free
+
 		lst_w = create_word_lst(lst_c);
 		print_lst_word(lst_w);
 		expand_commands(&lst_w, envp);
@@ -79,8 +82,8 @@ void	minishell(char **envp)
 
 int	main(int argc, char **argv, char **envp)
 {
-//	(void) argv;
-	(void) envp;
+	(void) argv;
+// 	(void) envp;
 //	(void) argc;
 	if (argc == 1)
 		minishell(envp);

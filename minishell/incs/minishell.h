@@ -53,9 +53,7 @@
 /* errno */
 # include <errno.h>
 
-# define REDPROMPT " \x1b[4;91mTRI_SH $>\x1b[0m "
-# define GREPROMPT " \x1b[4;92mTRI_SH $>\x1b[0m "
-# define YELPROMPT " \x1b[4;93mTRI_SH $>\x1b[0m "
+
 /* structure */
 
 	/* enum */
@@ -175,6 +173,7 @@ void			print_fd(t_fd_list *lst);
 
 /* error */
 bool			is_forbidden_char(t_char_lst *lst);
+bool			is_bad_redir(t_char_lst *lst);
 
 /* builtins */
 void			pwd(char **envp);
