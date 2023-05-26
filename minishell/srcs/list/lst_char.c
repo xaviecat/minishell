@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_char.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:39:55 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/25 13:31:24 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/26 18:16:25 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	print_lst_char(t_char_lst *lst)
 	t_char_lst	*first;
 
 	first = lst;
-	printf("lst_c :\n");
+	printf(BLUE"lst_c :\n");
 	while (lst)
 	{
 		printf("%c | ", lst->c);
@@ -32,7 +32,7 @@ void	print_lst_char(t_char_lst *lst)
 		printf("\n");
 		lst = lst->next;
 	}
-	printf("\n");
+	printf("\n"RESET);
 	lst = first;
 }
 
@@ -131,18 +131,17 @@ void	create_char_lst_with_c_inside(char *cmd_line, t_minish **sh)
 	i = 0;
 	while (cmd_line[i])
 	{
-	    printf("%c", cmd_line[i]);
 		new = char_lst_new(cmd_line[i], sh);
 		if (!new)
 			return ;// ! FREE !!!
 		if ((*sh)->lst_c)
 		{
-		    new->prev = (*sh)->lst_c->last_added;
-            (*sh)->lst_c->last_added->next = new;
-        }
+			new->prev = (*sh)->lst_c->last_added;
+			(*sh)->lst_c->last_added->next = new;
+		}
 		else
 			(*sh)->lst_c = new;
-        (*sh)->lst_c->last_added = new;
+		(*sh)->lst_c->last_added = new;
 
 		i++;
 	}

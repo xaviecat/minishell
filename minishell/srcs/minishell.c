@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/26 15:41:44 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/26 18:24:42 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,24 +43,25 @@ void	minishell(char **envp)
 
 	while (1)
 	{
-		line = readline("TRI_SH $> ");
+		line = readline(GREEN UNDERLINE"TRI_SH $>"RESET" ");
 		if (line && *line)
 			add_history(line);
 		minish = create_minishell(envp);
 		create_char_lst_with_c_inside(line, &minish);
 		give_type_in_lst(&minish->lst_c);
-		if (process_quotes(minish->lst_c) == true)
-			ft_fdprintf(2, "ERROR : QUOTE DON'T CLOSED");// ! free
 		print_lst_char(minish->lst_c);
-		printf("\n");
+		if (process_quotes(minish->lst_c) == true)
+			ft_fdprintf(2, RED"ERROR : QUOTE DON'T CLOSED"RESET);// ! free
 		if (is_forbidden_char(minish->lst_c))
-			ft_fdprintf(2, "checked\n"); // ! free
+			ft_fdprintf(2, RED"checked\n"RESET); // ! free
+		if (is_bad_redir(minish->lst_c))
+			ft_fdprintf(2, RED"ERRROR BAD REDIR\n"RESET); // ! free
 		create_word_lst(&minish);
 		print_lst_word(minish->lst_w);
 		expand_commands(&minish->lst_w, envp);
 		print_lst_word(minish->lst_w);
 		sh_pars(&minish);
-		printf("list of command :\n");
+		print_lst_cmd(minish->cmds);
 //		if (ft_strncmp(line, "exit", 5) == 0)
 //			break ;
 //		if (ft_strncmp(line, "pwd", 4) == 0)
@@ -69,7 +70,6 @@ void	minishell(char **envp)
 //		if (ft_strncmp(arg[0], "cd", 3) == 0)
 //			cd(arg[1], envp);
 //		(void) arg;
-		print_lst_cmd(minish->cmds);
 		// minish = parsing_command(line, minish);
 		// if (ft_strncmp(line, "exit", 5) == 0)
 		// 	break ;

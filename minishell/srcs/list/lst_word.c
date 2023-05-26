@@ -204,7 +204,7 @@ void	print_lst_word(t_word_lst *lst)
 	t_word_lst	*first;
 
 	first = lst;
-	printf("lst_w:\n");
+	printf(LBLUE"lst_w:\n");
 	while (lst)
 	{
 		printf("%-10s | ", lst->word);
@@ -213,7 +213,7 @@ void	print_lst_word(t_word_lst *lst)
 		printf("\n");
 		lst = lst->next;
 	}
-	printf("\n");
+	printf("\n"RESET);
 	lst = first;
 }
 
