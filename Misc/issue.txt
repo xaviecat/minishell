@@ -30,7 +30,7 @@ echo bonjour: command not found
 xcharra@z4r6p3:~$ '$test'
 Command '$test' not found,
 
-"builtins : 0"
-"
 
-"
+fix porbleme ">salurt" >> pas de redir
+in find type
+in redir (get_redir)

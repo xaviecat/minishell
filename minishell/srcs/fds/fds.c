@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 17:45:12 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/26 15:45:42 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/23 10:30:00 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	print_fd(t_fd_list *lst)
 	while (lst)
 	{
 		printf("[%d] ", i);
-		printf("in : %-25d | ", lst->in);
+		printf("in : %-21d | ", lst->in);
 		printf("out : %-28d | ", lst->out);
 		printf("\n");
 		lst = lst->next;

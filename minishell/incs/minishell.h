@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include "../libft/incs/libft.h"
+# include "colors.h"
 
 /* malloc, free, exit, getenv, tcsetattr, tcgetattr, */
 # include <stdlib.h>
@@ -51,6 +52,7 @@
 
 /* errno */
 # include <errno.h>
+
 
 /* structure */
 
@@ -137,7 +139,7 @@ typedef struct s_w_cmd_list
 
 typedef struct s_cmd_list
 {
-	struct s_w_cmd_list	*cmd;
+	t_w_cmd_list		*cmd;
 	bool				builtin;
 	struct s_redir_list	*redirs;
 	struct s_fd_list	*fds;
@@ -193,6 +195,7 @@ void			print_fd(t_fd_list *lst);
 
 /* error */
 bool			is_forbidden_char(t_char_lst *lst);
+bool			is_bad_redir(t_char_lst *lst);
 
 /* builtins */
 void			pwd(char **envp);

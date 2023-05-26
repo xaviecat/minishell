@@ -59,9 +59,10 @@ void	print_redir(t_redir_list *lst)
 	i = 0;
 	while (lst)
 	{
-		printf("[%d] ",i);
-		printf("filename : %-19s | ", lst->filename);
-		printf("fd : %-29d | ", lst->redir);
+		printf("[%d] ", i);
+		printf("filename : %-15s | ", lst->filename);
+		printf("type : %-7d | ", lst->redir);
+		printf("fd : %-12d | ", lst->redir);
 		printf("\n");
 		lst = lst->next;
 		i++;
@@ -99,7 +100,7 @@ t_redir_list	*get_redir(t_word_lst **lst, t_garbage **gb)
 		else
 		{
 			if (!(*lst)->next)
-				break;
+				break ;
 			*lst = (*lst)->next;
 		}
 	}

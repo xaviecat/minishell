@@ -16,7 +16,7 @@ void 	free_chunk(t_cmd_list *lst)
 {
 	while (lst->cmd)
 	{
-		free(lst->cmd);
+		free(lst->cmd->cmd);
         lst->cmd = lst->cmd->next;
 	}
 	free(lst);
@@ -44,28 +44,30 @@ void	print_lst_cmd(t_cmd_list *lst)
 {
 	t_cmd_list		*first;
 	t_w_cmd_list	*first_w;
+	int				i;
 
 	first = lst;
 	first_w = lst->cmd;
+	i = 0;
+	printf("lst_cmd:\n");
 	while (lst)
 	{
-		printf("the command :");
-		printf("%s ", lst->cmd->cmd);
-		printf("\n");
+		printf("node : %d\n", i);
+		printf("builtin : %d\n", lst->builtin);
+		printf("cmd :                          | params :\n");
+		printf("%-30s | ", lst->cmd->cmd);
 		lst->cmd = lst->cmd->next;
 		while (lst->cmd)
 		{
-			printf("parameters :");
-			printf("%s ", lst->cmd->cmd);
-			printf("\n");
+			printf("[%s] ", lst->cmd->cmd);
 			lst->cmd = lst->cmd->next;
 		}
-
-		printf("\n is a builtin : %d\n", lst->builtin);
-		print_redir(lst->redirs);
+		printf("\n");
 		print_fd(lst->fds);
-		printf("\n\n");
+		print_redir(lst->redirs);
+		printf("\n");
 		lst = lst->next;
+		i++;
 	}
 	lst = first;
 	lst->cmd = first_w;
