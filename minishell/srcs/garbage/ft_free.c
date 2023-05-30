@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:17:09 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/30 14:51:00 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/30 14:52:18 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	ft_free(t_garbage **lst, void *content)
 	t_garbage_list	*first;
 	t_garbage_list	*prev;
 	t_garbage_list	*next;
+	t_garbage_list	*last;
 
 	prev = NULL;
 	next = NULL;
@@ -27,6 +28,15 @@ void	ft_free(t_garbage **lst, void *content)
 			first->prev = NULL;
 		free((*lst)->first->content);
 		free((*lst)->first);
+	}
+	if (content == (*lst)->last->content)
+	{
+		last = (*lst)->last->prev;
+		if (last)
+			last->next = NULL;
+		free((*lst)->last->content);
+		free((*lst)->last);
+		return ;
 	}
 	else
 	{

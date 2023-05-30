@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 11:50:54 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/26 15:46:20 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/30 16:44:11 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,5 @@ int	sh_pars(t_minish **sh)
 		if ((*sh)->lst_w && (*sh)->lst_w->type == w_pipe)
 			word_lst_delone(&(*sh)->lst_w, &(*sh)->garbage);
 	}
+	return (1);
 }
