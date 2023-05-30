@@ -28,7 +28,7 @@ char	*get_pwd_from_envp(char **envp)
 
 /* proteger getcwd */
 //PWD DISPONIBLE DANS ENVP
-void	pwd(char **envp)
+void	b_pwd(char **envp)
 {
 	char	*path;
 

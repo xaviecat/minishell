@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/30 16:50:22 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/30 17:08:19 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,8 +201,8 @@ void			free_error_redir(t_garbage **gb, t_redir_list **lst);
 void			free_error_word_lst(t_garbage **gb, t_word_lst **lst);
 
 /* builtins */
-void			pwd(char **envp);
-void			cd(char *path, char **envp);
+void			b_pwd(char **envp);
+void			b_cd(char *path, char **envp);
 void			b_echo(t_w_cmd_list *content);
 void    		b_exit(t_minish *minish);
 
@@ -220,7 +220,7 @@ void			garbage_add_back(t_garbage_list **lst, t_garbage_list *new);
 char			*ft_gb_strdup(const char *src, t_garbage **gb);
 
 /* list_char function */
-t_char_lst		*char_lst_new(char c, t_minish **sh);
+t_char_lst		*char_lst_new(char c, t_garbage **gb);
 t_char_lst		*char_lst_last(t_char_lst *lst);
 void			char_lst_add_back(t_char_lst **lst, t_char_lst *new);
 void			char_lst_add_front(t_char_lst **lst, t_char_lst *new);

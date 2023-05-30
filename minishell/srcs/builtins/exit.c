@@ -14,5 +14,6 @@
 
 void    b_exit(t_minish *minish)
 {
+	(void)minish;
 	exit(EXIT_SUCCESS);
 }

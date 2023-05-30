@@ -4,6 +4,7 @@ SRCS			:=	minishell.c\
 					builtins/pwd.c\
 					builtins/cd.c\
 					builtins/echo.c\
+					builtins/exit.c\
 					parsing/process_quotes.c\
 					parsing/expand.c\
 					parsing/unhandled_char.c\
@@ -21,6 +22,7 @@ SRCS			:=	minishell.c\
 					garbage/ft_free.c\
 					garbage/ft_malloc.c\
 					utils/ft_gb_strdup.c\
+					exec/builtin.c\
 
 
 SRCS_D			:=	srcs/
@@ -72,6 +74,7 @@ $(OBJS_D)		:
 				mkdir -p $(OBJS_D)/fds
 				mkdir -p $(OBJS_D)/redir
 				mkdir -p $(OBJS_D)/garbage
+				mkdir -p $(OBJS_D)/exec
 
 $(LIB_A)		:	FORCE
 				make -j -C $(LIB_D)
