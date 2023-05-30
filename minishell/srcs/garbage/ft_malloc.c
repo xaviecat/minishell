@@ -12,7 +12,7 @@
 
 #include "../../incs/minishell.h"
 
-t_garbage	*create_garbage_container()
+t_garbage	*create_garbage_container(void)
 {
 	t_garbage	*gb_c;
 

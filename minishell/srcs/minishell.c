@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/26 18:24:42 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/05/30 12:08:37 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,15 @@ void	minishell(char **envp)
 		minish = create_minishell(envp);
 		create_char_lst_with_c_inside(line, &minish);
 		give_type_in_lst(&minish->lst_c);
-		print_lst_char(minish->lst_c);
 		if (process_quotes(minish->lst_c) == true)
 			ft_fdprintf(2, RED"ERROR : QUOTE DON'T CLOSED"RESET);// ! free
 		if (is_forbidden_char(minish->lst_c))
 			ft_fdprintf(2, RED"checked\n"RESET); // ! free
 		if (is_bad_redir(minish->lst_c))
 			ft_fdprintf(2, RED"ERRROR BAD REDIR\n"RESET); // ! free
+		print_lst_char(minish->lst_c);
+		harmonize_spaces(minish->lst_c, &(minish->garbage));
+		print_lst_char(minish->lst_c);
 		create_word_lst(&minish);
 		print_lst_word(minish->lst_w);
 		expand_commands(&minish->lst_w, envp);
