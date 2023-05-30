@@ -27,17 +27,13 @@ t_fd_list	*fd_last(t_fd_list *lst)
 
 void	fds_add_back(t_fd_list **lst, t_fd_list *new)
 {
-	//t_fd_list	*tmp;
-
 	if (!lst)
 		return ;
 	if ((*lst)->last_added)
-	{
-        (*lst)->last_added->next = new;
-	}
+		(*lst)->last_added->next = new;
 	else
 		*lst = new;
-    (*lst)->last_added = new;
+	(*lst)->last_added = new;
 }
 
 t_fd_list	*new_fds(t_garbage **gb)
@@ -74,23 +70,41 @@ void	print_fd(t_fd_list *lst)
 	lst = first;
 }
 
+void	free_error_fds(t_garbage **gb, t_fd_list **lst)
+{
+	t_fd_list	*next;
+
+	next = NULL;
+	while (*lst)
+	{
+		if ((*lst)->next)
+			next = (*lst)->next;
+		else
+			next = NULL;
+		ft_free(gb, *lst);
+		*lst = next;
+	}
+}
+
 t_fd_list	*create_fds_list(t_redir_list *redirs, t_garbage **gb)
 {
 	t_fd_list		*fds;
 	t_fd_list		*new;
-	t_redir_list	*first;
 
     fds = NULL;
 	if (redirs)
 	{
         fds = new_fds(gb);
-        first = redirs;
+		if (!fds)
+			return (NULL);
         while (redirs) {
             if (fds->in != STDIN_FILENO)
                 close(fds->in);
             if (fds->out != STDOUT_FILENO)
                 close(fds->out);
             new = new_fds(gb);
+			if (!new)
+				return (free_error_fds(gb, &fds), NULL);
             if (redirs->redir == in)
                 new->in = open(redirs->filename, O_RDONLY, 0644);
 //		if (redirs->redir == inin)
@@ -106,7 +120,6 @@ t_fd_list	*create_fds_list(t_redir_list *redirs, t_garbage **gb)
             fds_add_back(&fds, new); // ? A voir si il faut le changer
             redirs = redirs->next;
         }
-        redirs = first;
     }
 	return (fds);
 }

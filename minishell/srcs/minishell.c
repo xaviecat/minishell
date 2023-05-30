@@ -18,10 +18,7 @@ t_minish	*create_minishell(char **envp)
 
 	sh = malloc(sizeof(t_minish));
 	if (!sh)
-    {
-       //free(gb);
-		exit(EXIT_FAILURE); // ! ERROR
-    }
+		return (NULL); // ! ERROR
 	sh->envp = envp;
 	sh->cmds = NULL;
 	sh->lst_c = NULL;
@@ -31,7 +28,7 @@ t_minish	*create_minishell(char **envp)
 	if (!sh->garbage)
 	{
 		free(sh);
-		exit(EXIT_FAILURE);
+		return (NULL);
 	}
 	return (sh);
 }
@@ -47,7 +44,15 @@ void	minishell(char **envp)
 		if (line && *line)
 			add_history(line);
 		minish = create_minishell(envp);
-		create_char_lst_with_c_inside(line, &minish);
+        if (!minish)
+            return ; // ! ERROR
+		if (!(create_char_lst_with_c_inside(line, &minish)))
+		{
+			free(line);
+			free(minish->garbage);
+			free(minish);
+			return ;
+		}
 		give_type_in_lst(&minish->lst_c);
 		print_lst_char(minish->lst_c);
 		if (process_quotes(minish->lst_c) == true)
@@ -56,10 +61,14 @@ void	minishell(char **envp)
 			ft_fdprintf(2, RED"checked\n"RESET); // ! free
 		if (is_bad_redir(minish->lst_c))
 			ft_fdprintf(2, RED"ERRROR BAD REDIR\n"RESET); // ! free
-		create_word_lst(&minish);
+		if (!(create_word_lst(&minish)))
+		{
+			free(minish->garbage);
+			free(minish);
+			return ;
+		}
 		print_lst_word(minish->lst_w);
 		expand_commands(minish);
-		printf("pas ma faute\n");
 //		print_lst_word(minish->lst_w);
 		sh_pars(&minish);
 //		print_lst_cmd(minish->cmds);
