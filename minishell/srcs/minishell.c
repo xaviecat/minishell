@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/26 18:24:42 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/05/30 14:00:07 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,7 @@ t_minish	*create_minishell(char **envp)
 
 	sh = malloc(sizeof(t_minish));
 	if (!sh)
-    {
-       //free(gb);
-		exit(EXIT_FAILURE); // ! ERROR
-    }
+		return (NULL); // ! ERROR
 	sh->envp = envp;
 	sh->cmds = NULL;
 	sh->lst_c = NULL;
@@ -31,7 +28,7 @@ t_minish	*create_minishell(char **envp)
 	if (!sh->garbage)
 	{
 		free(sh);
-		exit(EXIT_FAILURE);
+		return (NULL);
 	}
 	return (sh);
 }
@@ -47,7 +44,15 @@ void	minishell(char **envp)
 		if (line && *line)
 			add_history(line);
 		minish = create_minishell(envp);
-		create_char_lst_with_c_inside(line, &minish);
+        if (!minish)
+            return ; // ! ERROR
+		if (!(create_char_lst_with_c_inside(line, &minish)))
+		{
+			free(line);
+			free(minish->garbage);
+			free(minish);
+			return ;
+		}
 		give_type_in_lst(&minish->lst_c);
 		print_lst_char(minish->lst_c);
 		if (process_quotes(minish->lst_c) == true)
@@ -56,7 +61,12 @@ void	minishell(char **envp)
 			ft_fdprintf(2, RED"checked\n"RESET); // ! free
 		if (is_bad_redir(minish->lst_c))
 			ft_fdprintf(2, RED"ERRROR BAD REDIR\n"RESET); // ! free
-		create_word_lst(&minish);
+		if (!(create_word_lst(&minish)))
+		{
+			free(minish->garbage);
+			free(minish);
+			return ;
+		}
 		print_lst_word(minish->lst_w);
 		expand_commands(&minish->lst_w, envp);
 		print_lst_word(minish->lst_w);

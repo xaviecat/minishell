@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_char.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:39:55 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/26 18:16:25 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/05/30 14:42:01 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ t_char_lst	*char_lst_new(char c, t_minish **sh)
 	t_char_lst	*new;
 
 	if (!c)
-		return (NULL);
+		return (NULL); // ! ERROR
 	new = ft_malloc(&(*sh)->garbage, sizeof(t_char_lst), 1);
 	if (!new)
 		return (NULL); // ! ERROR
@@ -118,12 +118,27 @@ void	char_lst_add_back(t_char_lst **lst, t_char_lst *new)
 	return ;
 }
 
+void	free_error_char_lst(t_garbage **gb, t_char_lst **lst_c)
+{
+	t_char_lst	*next;
+
+	next = NULL;
+	while (*lst_c)
+	{
+		if ((*lst_c)->next)
+			next = (*lst_c)->next;
+		else
+			next = NULL;
+		ft_free(gb, *lst_c);
+		*lst_c = next;
+	}
+}
 /**
  * @brief split the command char in a char list
  * @param cmd_line
  * @return the char list create
  */
-void	create_char_lst_with_c_inside(char *cmd_line, t_minish **sh)
+int	create_char_lst_with_c_inside(char *cmd_line, t_minish **sh)
 {
 	int			i;
 	t_char_lst	*new;
@@ -133,7 +148,10 @@ void	create_char_lst_with_c_inside(char *cmd_line, t_minish **sh)
 	{
 		new = char_lst_new(cmd_line[i], sh);
 		if (!new)
-			return ;// ! FREE !!!
+		{
+			free_error_char_lst(&((*sh)->garbage), &((*sh)->lst_c));
+			return (0);
+		}
 		if ((*sh)->lst_c)
 		{
 			new->prev = (*sh)->lst_c->last_added;
@@ -142,8 +160,8 @@ void	create_char_lst_with_c_inside(char *cmd_line, t_minish **sh)
 		else
 			(*sh)->lst_c = new;
 		(*sh)->lst_c->last_added = new;
-
 		i++;
 	}
 	free(cmd_line);
+	return (1);
 }
