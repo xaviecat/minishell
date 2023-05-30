@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:17:09 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/26 17:45:31 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/30 14:52:18 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,26 @@ void	ft_free(t_garbage **lst, void *content)
 	t_garbage_list	*first;
 	t_garbage_list	*prev;
 	t_garbage_list	*next;
+	t_garbage_list	*last;
 
+	prev = NULL;
+	next = NULL;
 	if (content == (*lst)->first->content)
 	{
 		first = (*lst)->first->next;
-		first->prev = NULL;
+		if (first)
+			first->prev = NULL;
 		free((*lst)->first->content);
 		free((*lst)->first);
+	}
+	if (content == (*lst)->last->content)
+	{
+		last = (*lst)->last->prev;
+		if (last)
+			last->next = NULL;
+		free((*lst)->last->content);
+		free((*lst)->last);
+		return ;
 	}
 	else
 	{
@@ -37,8 +50,10 @@ void	ft_free(t_garbage **lst, void *content)
 				next = (*lst)->first->next;
 				free((*lst)->first->content);
 				free((*lst)->first);
-				next->prev = prev;
-				prev->next = next;
+				if (next)
+					next->prev = prev;
+				if (prev)
+					prev->next = next;
 				break ;
 			}
 			(*lst)->first = (*lst)->first->next;
