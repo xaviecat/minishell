@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/26 18:24:42 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/05/30 14:27:33 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,11 @@ void	minishell(char **envp)
 			ft_fdprintf(2, RED"ERRROR BAD REDIR\n"RESET); // ! free
 		create_word_lst(&minish);
 		print_lst_word(minish->lst_w);
-		expand_commands(&minish->lst_w, envp);
-		print_lst_word(minish->lst_w);
+		expand_commands(minish);
+		printf("pas ma faute\n");
+//		print_lst_word(minish->lst_w);
 		sh_pars(&minish);
-		print_lst_cmd(minish->cmds);
+//		print_lst_cmd(minish->cmds);
 //		if (ft_strncmp(line, "exit", 5) == 0)
 //			break ;
 //		if (ft_strncmp(line, "pwd", 4) == 0)

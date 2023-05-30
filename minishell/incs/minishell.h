@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/26 17:02:34 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/30 14:40:04 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ typedef struct s_redir_list
 	t_type_redir		redir;
 	char				*filename;
 	struct s_redir_list	*next;
-	struct s_redir_list *last_added;
+	struct s_redir_list	*last_added;
 }				t_redir_list;
 
 typedef struct s_fd_list
@@ -124,7 +124,7 @@ typedef struct s_fd_list
 	int					in;
 	int					out;
 	struct s_fd_list	*next;
-	struct s_fd_list    *last_added;
+	struct s_fd_list	*last_added;
 }				t_fd_list;
 
 typedef struct s_w_cmd_list
@@ -133,7 +133,7 @@ typedef struct s_w_cmd_list
 	bool				s_quote;
 	bool				d_quote;
 	struct s_w_cmd_list	*next;
-	struct s_w_cmd_list *last_added;
+	struct s_w_cmd_list	*last_added;
 }				t_w_cmd_list;
 
 typedef struct s_cmd_list
@@ -144,7 +144,7 @@ typedef struct s_cmd_list
 	struct s_fd_list	*fds;
 	struct s_cmd_list	*next;
 	struct s_cmd_list	*previous;
-	struct s_cmd_list   *last_added;
+	struct s_cmd_list	*last_added;
 }				t_cmd_list;
 
 typedef struct s_word_lst
@@ -153,7 +153,7 @@ typedef struct s_word_lst
 	t_type_word			type;
 	struct s_word_lst	*next;
 	struct s_word_lst	*prev;
-	struct s_word_lst   *last_added;
+	struct s_word_lst	*last_added;
 }						t_word_lst;
 
 /**
@@ -184,7 +184,7 @@ typedef struct s_minish
 /* parsing */
 char			**parsing_argu(char *arg_term);
 t_minish		*parsing_command(char *cmd_line, t_minish *sh);
-void			expand_commands(t_word_lst **w_lst, char **envp);
+void			expand_commands(t_minish *minish);
 char			*cut_whitespaces(char *str);
 bool			process_quotes(t_char_lst *lst);
 t_redir_list	*get_redir(t_word_lst **lst, t_garbage **gb);
@@ -207,12 +207,17 @@ int				ft_isspace(char c);
 char			*str_cpy_to_x(char *src, char *dst, char x);
 int				is_dollar_alone(char *env_var, char *cmd, size_t start);
 void			*ft_malloc(t_garbage **garbage, int the_size, int number);
-void            ft_free_all(t_garbage **lst);
-void            ft_free(t_garbage **lst, void *content);
+void			ft_free_all(t_garbage **lst);
+void			ft_free(t_garbage **lst, void *content);
 t_garbage_list	*new_garbage(void *content);
-t_garbage		*create_garbage_container();
+t_garbage		*create_garbage_container(void);
 void			garbage_add_back(t_garbage_list **lst, t_garbage_list *new);
 char			*ft_gb_strdup(const char *src, t_garbage **gb);
+char			*ft_gbstrjoin(char const *s1, char const *s2, t_garbage **gb);
+void			ft_free_mcmd(char *env_var, char *cmd,
+					char *exp_env_var, t_garbage **gb);
+char			*fill_mdcmd(char *cmd, size_t start,
+					char *exp_env_v, char *env_var);
 
 /* list_char function */
 t_char_lst		*char_lst_new(char c, t_minish **sh);
@@ -233,14 +238,16 @@ void			word_lst_delone(t_word_lst **lst, t_garbage **gb);
 t_word_lst		*word_lst_first(t_word_lst *lst);
 
 /* list command maybe not useful */
-t_cmd_list	*lst_cmd_new(t_w_cmd_list *cmds, t_fd_list *fds, t_redir_list *redir, t_garbage **gb);
-void		lst_cmd_add_back(t_cmd_list **lst, t_cmd_list *new);
-void		print_lst_cmd(t_cmd_list *lst);
-void		lst_clear(t_cmd_list **lst);
-t_cmd_list	*create_lst_cmd(t_word_lst **old_lst, t_fd_list *fds, t_redir_list *redirs);
-void		sh_pars(t_minish **minish);
-bool		builtin_or_command(char *cmd);
+t_cmd_list		*lst_cmd_new(t_w_cmd_list *cmds, t_fd_list *fds,
+					t_redir_list *redir, t_garbage **gb);
+void			lst_cmd_add_back(t_cmd_list **lst, t_cmd_list *new);
+void			print_lst_cmd(t_cmd_list *lst);
+void			lst_clear(t_cmd_list **lst);
+t_cmd_list		*create_lst_cmd(t_word_lst **old_lst, t_fd_list *fds,
+					t_redir_list *redirs);
+void			sh_pars(t_minish **minish);
+bool			builtin_or_command(char *cmd);
 
 /* lst_w_cmd function */
-t_w_cmd_list    *get_cmd_2(t_word_lst **old_lst, t_garbage **gb);
+t_w_cmd_list	*get_cmd_2(t_word_lst **old_lst, t_garbage **gb);
 #endif
