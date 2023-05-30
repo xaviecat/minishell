@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/26 17:02:34 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/30 16:50:22 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,11 +196,15 @@ void			print_fd(t_fd_list *lst);
 /* error */
 bool			is_forbidden_char(t_char_lst *lst);
 bool			is_bad_redir(t_char_lst *lst);
+void			free_error_fds(t_garbage **gb, t_fd_list **lst);
+void			free_error_redir(t_garbage **gb, t_redir_list **lst);
+void			free_error_word_lst(t_garbage **gb, t_word_lst **lst);
 
 /* builtins */
 void			pwd(char **envp);
 void			cd(char *path, char **envp);
 void			b_echo(t_w_cmd_list *content);
+void    		b_exit(t_minish *minish);
 
 /* utils */
 char			*ft_strdup_to_charset(char *str, char *charset);
@@ -220,18 +224,19 @@ t_char_lst		*char_lst_new(char c, t_minish **sh);
 t_char_lst		*char_lst_last(t_char_lst *lst);
 void			char_lst_add_back(t_char_lst **lst, t_char_lst *new);
 void			char_lst_add_front(t_char_lst **lst, t_char_lst *new);
-void			create_char_lst_with_c_inside(char *cmd_line, t_minish **sh);
+int				create_char_lst_with_c_inside(char *cmd_line, t_minish **sh);
 void			give_type_in_lst(t_char_lst **lst);
 void			print_lst_char(t_char_lst *lst);
 void			char_lst_delone(t_char_lst **lst, t_garbage **gb);
 
 /* lst_word function */
-void			create_word_lst(t_minish **sh);
+int				create_word_lst(t_minish **sh);
 void			print_lst_word(t_word_lst *lst);
 int				is_a_bultin(char *word);
 int				get_cat_of_word(char *word);
 void			word_lst_delone(t_word_lst **lst, t_garbage **gb);
 t_word_lst		*word_lst_first(t_word_lst *lst);
+
 
 /* list command maybe not useful */
 t_cmd_list	*lst_cmd_new(t_w_cmd_list *cmds, t_fd_list *fds, t_redir_list *redir, t_garbage **gb);
@@ -239,7 +244,7 @@ void		lst_cmd_add_back(t_cmd_list **lst, t_cmd_list *new);
 void		print_lst_cmd(t_cmd_list *lst);
 void		lst_clear(t_cmd_list **lst);
 t_cmd_list	*create_lst_cmd(t_word_lst **old_lst, t_fd_list *fds, t_redir_list *redirs);
-void		sh_pars(t_minish **minish);
+int 		sh_pars(t_minish **minish);
 bool		builtin_or_command(char *cmd);
 
 /* lst_w_cmd function */

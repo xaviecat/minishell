@@ -70,6 +70,22 @@ void	print_redir(t_redir_list *lst)
 	lst = first;
 }
 
+void	free_error_redir(t_garbage **gb, t_redir_list **lst)
+{
+	t_redir_list	*next;
+
+	next = NULL;
+	while (*lst)
+	{
+		if ((*lst)->next)
+			next = (*lst)->next;
+		else
+			next = NULL;
+		ft_free(gb, *lst);
+		*lst = next;
+	}
+}
+
 t_redir_list	*get_redir(t_word_lst **lst, t_garbage **gb)
 {
 	t_redir_list	*redirs;
@@ -91,7 +107,6 @@ t_redir_list	*get_redir(t_word_lst **lst, t_garbage **gb)
 		if (new)
 		{
 			word_lst_delone(lst, gb);
-			// dprintf(2,"%s", (*lst)->word);
 			new->filename = ft_gb_strdup((*lst)->word, gb);
 			word_lst_delone(lst, gb);
 			redir_add_back(&redirs, new); // ? A voir si il faut le changer
@@ -99,6 +114,11 @@ t_redir_list	*get_redir(t_word_lst **lst, t_garbage **gb)
 		}
 		else
 		{
+			if (errno == ENOMEM)
+			{
+				free_error_redir(gb, &redirs);
+				return (NULL);
+			}
 			if (!(*lst)->next)
 				break ;
 			*lst = (*lst)->next;

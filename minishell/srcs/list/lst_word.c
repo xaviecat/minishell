@@ -229,12 +229,29 @@ t_word_lst	*word_lst_first(t_word_lst *lst)
 	}
 	return (lst);
 }
+
+void	free_error_word_lst(t_garbage **gb, t_word_lst **lst)
+{
+	t_word_lst	*next;
+
+	next = NULL;
+	while (*lst)
+	{
+		if ((*lst)->next)
+			next = (*lst)->next;
+		else
+			next = NULL;
+		ft_free(gb, *lst);
+		*lst = next;
+	}
+}
+
 /**
  * @brief create a word list based on the char list pass in parameter
  * @param old_lst
  * @return the word list created
  */
-void	create_word_lst(t_minish **sh)
+int	create_word_lst(t_minish **sh)
 {
 	t_word_lst	*new;
 	char		*word;
@@ -245,7 +262,10 @@ void	create_word_lst(t_minish **sh)
 		word = reforme_word(sh , &((*sh)->garbage));
 		new = word_lst_new(word, &((*sh)->garbage));
 		if (!new)
-			return ; // ! ERROR
+		{
+			free_error_word_lst(&((*sh)->garbage), &((*sh)->lst_w));
+			return (0);
+		}
 		new->type = get_cat_of_word(new->word);
 		if ((*sh)->lst_w)
 		{
@@ -255,7 +275,7 @@ void	create_word_lst(t_minish **sh)
         else
             (*sh)->lst_w = new;
         (*sh)->lst_w->last_added = new;
-		//word_lst_add_back(&lst, new);
 	}
 	get_other_type_word(&(*sh)->lst_w);
+	return (1);
 }
