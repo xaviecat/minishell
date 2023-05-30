@@ -152,12 +152,6 @@ typedef struct s_char_lst
 	struct s_char_lst	*next;
 }				t_char_lst;
 
-typedef struct s_minish
-{
-	char		**envp;
-	t_cmd_list	*cmds;
-}				t_minish;
-
 /* parsing */
 char			**parsing_argu(char *arg_term);
 t_minish		*parsing_command(char *cmd_line, t_minish *sh);
