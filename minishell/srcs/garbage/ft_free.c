@@ -6,55 +6,62 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:17:09 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/23 16:12:35 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/26 17:45:31 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-void	ft_free(t_garbage_list **lst, void *content)
+void	ft_free(t_garbage **lst, void *content)
 {
 	t_garbage_list	*first;
 	t_garbage_list	*prev;
 	t_garbage_list	*next;
 
-    dprintf(2,"%p", content);
-	if (content == (*lst)->content)
+	if (content == (*lst)->first->content)
 	{
-		first = (*lst)->next;
-		free((*lst)->content);
-		free(*lst);
+		first = (*lst)->first->next;
+		first->prev = NULL;
+		free((*lst)->first->content);
+		free((*lst)->first);
 	}
 	else
 	{
-		first = *lst;
-        while ((*lst)->content != content)
-        {
-            if ((*lst)->next->content == content)
-            {
-                prev = *lst;
-                *lst = (*lst)->next;
-                next = (*lst)->next;
-                free((*lst)->content);
-                free(*lst);
-                prev->next = next;
-                break ;
-            }
-            *lst = (*lst)->next;
-        }
+		first = (*lst)->first;
+		while ((*lst)->first && (*lst)->first->content != content)
+		{
+			if ((*lst)->first->next && (*lst)->first->next->content == content)
+			{
+				prev = (*lst)->first;
+				(*lst)->first = (*lst)->first->next;
+				next = (*lst)->first->next;
+				free((*lst)->first->content);
+				free((*lst)->first);
+				next->prev = prev;
+				prev->next = next;
+				break ;
+			}
+			(*lst)->first = (*lst)->first->next;
+		}
 	}
-	*lst = first;
+	(*lst)->first = first;
 }
 
-void    ft_free_all(t_garbage_list *lst)
+void    ft_free_all(t_garbage **lst)
 {
-    t_garbage_list  *next;
+	t_garbage_list	*next;
 
-    while (lst)
-    {
-        next = lst->next;
-        free(lst->content);
-        free(lst);
-        lst = next;
-    }
+	next = NULL;
+	while ((*lst)->first)
+	{
+		if ((*lst)->first->next)
+			next = (*lst)->first->next;
+		else
+			next = NULL;
+		free((*lst)->first->content);
+		free((*lst)->first);
+		if (next)
+			next->prev = NULL;
+		(*lst)->first = next;
+	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_word.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 12:00:52 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/23 16:42:13 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/05/26 17:39:16 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +19,26 @@
  * @param next
  * @return the length of the word
  */
-int	get_number_c_of_word(t_char_lst **lst_c, t_char_lst **next)
+int	get_number_c_of_word(t_char_lst **lst_c)
 {
 	int	nb_c_word;
+	//int	i;
 
+//	i = 0;
 	nb_c_word = 0;
 	while (*lst_c)
 	{
-		if ((*lst_c)->type == space && ((*lst_c)->d_quote == false \
-		&& (*lst_c)->s_quote == false))
-			break ;
+		if ((*lst_c)->next && (*lst_c)->type == space \
+		&& ((*lst_c)->d_quote == false && (*lst_c)->s_quote == false))
+			break;
 		nb_c_word++;
 		if ((*lst_c)->next)
 			*lst_c = (*lst_c)->next;
 		else
-		{
-			*next = NULL;
 			break ;
-		}
 	}
+	while ((*lst_c)->prev)
+        *lst_c = (*lst_c)->prev;
 	return (nb_c_word);
 }
 
@@ -47,32 +48,29 @@ int	get_number_c_of_word(t_char_lst **lst_c, t_char_lst **next)
  * @param lst_c
  * @return the word created
  */
-char	*reforme_word(t_char_lst **lst_c)
+char	*reforme_word(t_minish **sh, t_garbage **gb)
 {
 	char		*word;
 	int			nb_c_word;
-	t_char_lst	*prev;
-	t_char_lst	*next;
+	int			i;
 
-	nb_c_word = get_number_c_of_word(lst_c, &next);
-	word = ft_calloc(nb_c_word + 1, sizeof(char));
+	i = 0;
+	nb_c_word = get_number_c_of_word(&(*sh)->lst_c);
+	word = ft_malloc(gb, 1 ,nb_c_word + 1);
 	if (!word)
 		return (NULL); // ! ERROR
-	if (*lst_c && (*lst_c)->type == space && (*lst_c)->prev != NULL)
+	while ((*sh)->lst_c != NULL && i < nb_c_word)
 	{
-		prev = (*lst_c)->prev;
-		char_lst_delone(lst_c);
-		*lst_c = prev;
-		next = (*lst_c)->next;
+	    //dprintf(2, "%c/", (*sh)->lst_c->c);
+		word[i] = (*sh)->lst_c->c;
+		//dprintf(2,"%p/", (*sh)->lst_c);
+		char_lst_delone(&(*sh)->lst_c, gb);
+		//(*sh)->lst_c = (*sh)->lst_c->next;
+		i++;
 	}
-	while (*lst_c != NULL && nb_c_word-- >= 0)
-	{
-		word[nb_c_word] = (*lst_c)->c;
-		prev = (*lst_c)->prev;
-		char_lst_delone(lst_c);
-		(*lst_c) = prev;
-	}
-	*lst_c = next;
+	word[i] = '\0';
+	if ((*sh)->lst_c && (*sh)->lst_c->type == space) // ? voir si on doit verifier que next n'est pas null
+		char_lst_delone(&(*sh)->lst_c, gb);
 	return (word);
 }
 
@@ -81,17 +79,16 @@ char	*reforme_word(t_char_lst **lst_c)
  * @param word
  * @return the new link created
  */
-t_word_lst	*word_lst_new(char *word)
+t_word_lst	*word_lst_new(char *word, t_garbage **gb)
 {
 	t_word_lst	*new;
 
 	if (!word)
 		return (NULL);
-	new = malloc(sizeof(t_word_lst));
+	new = ft_malloc(gb, sizeof(t_word_lst), 1);
 	if (!new)
 		return (NULL);
-	new->word = ft_strdup(word);
-	free(word);
+	new->word = ft_gb_strdup(word, gb);
 	new->type = not_define;
 	new->next = NULL;
 	new->prev = NULL;
@@ -118,7 +115,7 @@ t_word_lst	*word_lst_last(t_word_lst *lst)
  * @brief delete one link in the word list
  * @param lst
  */
-void	word_lst_delone(t_word_lst **lst)
+void	word_lst_delone(t_word_lst **lst, t_garbage **gb)
 {
 	t_word_lst	*prev;
 	t_word_lst	*next;
@@ -129,7 +126,7 @@ void	word_lst_delone(t_word_lst **lst)
 		prev->next = next;
 	if (next)
 		next->prev = prev;
-	free(*lst);
+	ft_free(gb, *lst);
 	if (next)
 		*lst = next;
 	else
@@ -207,7 +204,7 @@ void	print_lst_word(t_word_lst *lst)
 	t_word_lst	*first;
 
 	first = lst;
-	printf("lst_w:\n");
+	printf(LBLUE"lst_w:\n");
 	while (lst)
 	{
 		printf("%-10s | ", lst->word);
@@ -216,7 +213,7 @@ void	print_lst_word(t_word_lst *lst)
 		printf("\n");
 		lst = lst->next;
 	}
-	printf("\n");
+	printf("\n"RESET);
 	lst = first;
 }
 
@@ -237,20 +234,28 @@ t_word_lst	*word_lst_first(t_word_lst *lst)
  * @param old_lst
  * @return the word list created
  */
-t_word_lst	*create_word_lst(t_char_lst *old_lst)
+void	create_word_lst(t_minish **sh)
 {
-	t_word_lst	*lst;
 	t_word_lst	*new;
 	char		*word;
 
-	lst = NULL;
-	while (old_lst)
+	while ((*sh)->lst_c)
 	{
-		word = reforme_word(&old_lst);
-		new = word_lst_new(word);
+		word = NULL;
+		word = reforme_word(sh , &((*sh)->garbage));
+		new = word_lst_new(word, &((*sh)->garbage));
+		if (!new)
+			return ; // ! ERROR
 		new->type = get_cat_of_word(new->word);
-		word_lst_add_back(&lst, new);
+		if ((*sh)->lst_w)
+		{
+		    new->prev = (*sh)->lst_w->last_added;
+            (*sh)->lst_w->last_added->next = new;
+        }
+        else
+            (*sh)->lst_w = new;
+        (*sh)->lst_w->last_added = new;
+		//word_lst_add_back(&lst, new);
 	}
-	get_other_type_word(&lst);
-	return (lst);
+	get_other_type_word(&(*sh)->lst_w);
 }
