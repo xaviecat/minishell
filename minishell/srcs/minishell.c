@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/26 18:24:42 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/05/30 17:55:41 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void	minishell(char **envp)
 			ft_fdprintf(2, RED"checked\n"RESET); // ! free
 		if (is_bad_redir(minish->lst_c))
 			ft_fdprintf(2, RED"ERRROR BAD REDIR\n"RESET); // ! free
-		print_lst_char(minish->lst_c);
 		harmonize_spaces(minish->lst_c, &(minish->garbage));
 		print_lst_char(minish->lst_c);
 		if (!(create_word_lst(&minish)))

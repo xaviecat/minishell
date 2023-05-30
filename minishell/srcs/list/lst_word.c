@@ -126,6 +126,7 @@ void	word_lst_delone(t_word_lst **lst, t_garbage **gb)
 		prev->next = next;
 	if (next)
 		next->prev = prev;
+	ft_free(gb, (*lst)->word);
 	ft_free(gb, *lst);
 	if (next)
 		*lst = next;
