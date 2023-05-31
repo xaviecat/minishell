@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/30 16:50:22 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/31 21:34:28 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,7 +191,7 @@ typedef struct s_minish
 char			**parsing_argu(char *arg_term);
 t_minish		*parsing_command(char *cmd_line, t_minish *sh);
 void			expand_commands(t_minish *minish);
-char			*cut_whitespaces(char *str);
+char *cut_whitespaces(char *str, t_garbage **gb);
 bool			process_quotes(t_char_lst *lst);
 t_redir_list	*get_redir(t_word_lst **lst, t_garbage **gb);
 void			print_redir(t_redir_list *lst);
@@ -213,7 +213,8 @@ void			b_echo(t_w_cmd_list *content);
 void    		b_exit(t_minish *minish);
 
 /* utils */
-char			*ft_strdup_to_charset(char *str, char *charset);
+char			*ft_gbstrdup_to_charset(char *str, char *charset,
+					t_garbage **gb);
 int				ft_isspace(char c);
 char			*str_cpy_to_x(char *src, char *dst, char x);
 int				is_dollar_alone(char *env_var, char *cmd, size_t start);
@@ -230,6 +231,8 @@ void			ft_free_mcmd(char *env_var, char *cmd,
 					char *exp_env_var, t_garbage **gb);
 char			*fill_mdcmd(char *cmd, size_t start,
 					char *exp_env_v, char *env_var);
+void			*ft_gbcalloc(size_t count, size_t size, t_garbage **gb);
+char			*ft_gbstrtrim(char const *s1, char const *set, t_garbage **gb);
 
 /* list_char function */
 t_char_lst		*char_lst_new(char c, t_garbage **gb);
