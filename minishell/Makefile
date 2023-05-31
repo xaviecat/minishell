@@ -23,7 +23,7 @@ SRCS			:=	minishell.c\
 					garbage/ft_free.c\
 					garbage/ft_malloc.c\
 					utils/ft_gb_strdup.c\
-					utils/ft_gbstrjoin.c
+					utils/ft_gbstrjoin.c\
 					exec/builtin.c\
 
 
