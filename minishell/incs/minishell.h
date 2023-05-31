@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/30 14:40:04 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/05/30 16:50:22 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,12 @@
 
 	/* enum */
 
+typedef enum e_position
+{
+	prev,
+	next,
+}	t_position;
+
 typedef enum e_type_char
 {
 	space,
@@ -100,7 +106,7 @@ typedef enum e_type_redir
 
 typedef struct s_garbage_list
 {
-	void 					*content;
+	void					*content;
 	struct s_garbage_list	*next;
 	struct s_garbage_list	*prev;
 }				t_garbage_list;
@@ -191,6 +197,7 @@ t_redir_list	*get_redir(t_word_lst **lst, t_garbage **gb);
 void			print_redir(t_redir_list *lst);
 t_fd_list		*create_fds_list(t_redir_list *redirs, t_garbage **gb);
 void			print_fd(t_fd_list *lst);
+void			harmonize_spaces(t_char_lst *lst, t_garbage **gb);
 
 /* error */
 bool			is_forbidden_char(t_char_lst *lst);
@@ -200,8 +207,8 @@ void			free_error_redir(t_garbage **gb, t_redir_list **lst);
 void			free_error_word_lst(t_garbage **gb, t_word_lst **lst);
 
 /* builtins */
-void			pwd(char **envp);
-void			cd(char *path, char **envp);
+void			b_pwd(char **envp);
+void			b_cd(char *path, char **envp);
 void			b_echo(t_w_cmd_list *content);
 void    		b_exit(t_minish *minish);
 
@@ -217,6 +224,7 @@ t_garbage_list	*new_garbage(void *content);
 t_garbage		*create_garbage_container(void);
 void			garbage_add_back(t_garbage_list **lst, t_garbage_list *new);
 char			*ft_gb_strdup(const char *src, t_garbage **gb);
+void			get_first_garbage(t_garbage **lst);
 char			*ft_gbstrjoin(char const *s1, char const *s2, t_garbage **gb);
 void			ft_free_mcmd(char *env_var, char *cmd,
 					char *exp_env_var, t_garbage **gb);
@@ -224,7 +232,7 @@ char			*fill_mdcmd(char *cmd, size_t start,
 					char *exp_env_v, char *env_var);
 
 /* list_char function */
-t_char_lst		*char_lst_new(char c, t_minish **sh);
+t_char_lst		*char_lst_new(char c, t_garbage **gb);
 t_char_lst		*char_lst_last(t_char_lst *lst);
 void			char_lst_add_back(t_char_lst **lst, t_char_lst *new);
 void			char_lst_add_front(t_char_lst **lst, t_char_lst *new);
@@ -242,14 +250,40 @@ void			word_lst_delone(t_word_lst **lst, t_garbage **gb);
 t_word_lst		*word_lst_first(t_word_lst *lst);
 
 /* list command maybe not useful */
-t_cmd_list	*lst_cmd_new(t_w_cmd_list *cmds, t_fd_list *fds, t_redir_list *redir, t_garbage **gb);
-void		lst_cmd_add_back(t_cmd_list **lst, t_cmd_list *new);
-void		print_lst_cmd(t_cmd_list *lst);
-void		lst_clear(t_cmd_list **lst);
-t_cmd_list	*create_lst_cmd(t_word_lst **old_lst, t_fd_list *fds, t_redir_list *redirs);
-int 		sh_pars(t_minish **minish);
-bool		builtin_or_command(char *cmd);
+t_cmd_list		*lst_cmd_new(t_w_cmd_list *cmds,
+					t_fd_list *fds, t_redir_list *redir, t_garbage **gb);
+void			lst_cmd_add_back(t_cmd_list **lst, t_cmd_list *new);
+void			print_lst_cmd(t_cmd_list *lst);
+void			lst_clear(t_cmd_list **lst);
+t_cmd_list		*create_lst_cmd(t_word_lst **old_lst,
+					t_fd_list *fds, t_redir_list *redirs);
+int				sh_pars(t_minish **minish);
+bool			builtin_or_command(char *cmd);
 
 /* lst_w_cmd function */
+t_w_cmd_list	*get_cmd_2(t_word_lst **old_lst, t_garbage **gb);
+/*
+ * @brief get_cmd_2 le retour
+ * [Musique dramatique jouant en arrière-plan]
+ * Dans un monde où les lignes de code règnent en maîtres...
+ * [Plans rapides montrant des écrans d'ordinateur remplis de code binaire et de commandes]
+ * Un hacker légendaire est de retour pour la mission la plus épique de sa vie !
+ * [Plans de notre héros assis devant son ordinateur, concentré et tapant sur son clavier avec une vitesse incroyable]
+ * get_cmd_2 le retour !
+ * [Plans montrant notre héros se levant de son siège et enfilant une veste de cuir noir]
+ * Il était parti, mais le monde a besoin de lui une fois de plus.
+ * [Plans montrant des images de chaos et de destruction]
+ * Les systèmes sont corrompus, les virus se multiplient, et seuls les talents de notre héros peuvent les arrêter.
+ * [Plans montrant notre héros se faufilant dans des bâtiments, évitant des lasers de sécurité et piratant des systèmes complexes]
+ * Il est rapide, il est intelligent, il est le cauchemar des cybercriminels !
+ * [Plans montrant des explosions spectaculaires et des combats au ralenti]
+ * Préparez-vous pour une aventure numérique à couper le souffle, remplie d'action, de suspense et de lignes de code mortelles !
+ * [Plans montrant notre héros lançant des lignes de code enflammées sur un écran d'ordinateur]
+ * get_cmd_2 le retour - Un film qui vous fera crier "compilez-vous !" et frissonner devant chaque "if" et "else".
+ * [Plans montrant le titre du film apparaissant à l'écran avec une musique dramatique finale]
+ * Le hacker le plus redoutable est de retour, et il est prêt à sauver le monde... une fois de plus !
+ * [Musique dramatique atteignant son apogée, suivi d'un fondu au noir]
+ *
+ */
 t_w_cmd_list	*get_cmd_2(t_word_lst **old_lst, t_garbage **gb);
 #endif

@@ -26,7 +26,7 @@ char	*get_home_from_env(char **envp)
 	return (NULL);
 }
 
-void	cd(char *path, char **envp)
+void	b_cd(char *path, char **envp)
 {
 	//use HOME from env
 	if (path == NULL)

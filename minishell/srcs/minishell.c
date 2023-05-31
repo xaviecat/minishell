@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/30 14:27:33 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/05/30 14:00:07 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,23 @@ void	minishell(char **envp)
 	char		*line;
 	t_minish	*minish;
 
+	printf(LBLUE TRISHBANNER0"\n");
+	printf(TRISHBANNER1"\n");
+	printf(TRISHBANNER2"\n");
+	printf(TRISHBANNER3"\n");
+	printf(TRISHBANNER4"\n");
+	printf(TRISHBANNER5"\n");
+	printf(TRISHBANNER6"\n");
+	printf(TRISHBANNER7"\n");
+	printf(BOLD TRISHBANNER8"\n" RESET);
 	while (1)
 	{
 		line = readline(GREEN UNDERLINE"TRI_SH $>"RESET" ");
 		if (line && *line)
 			add_history(line);
 		minish = create_minishell(envp);
-        if (!minish)
-            return ; // ! ERROR
+		if (!minish)
+			return ; // ! ERROR
 		if (!(create_char_lst_with_c_inside(line, &minish)))
 		{
 			free(line);
@@ -61,6 +70,8 @@ void	minishell(char **envp)
 			ft_fdprintf(2, RED"checked\n"RESET); // ! free
 		if (is_bad_redir(minish->lst_c))
 			ft_fdprintf(2, RED"ERRROR BAD REDIR\n"RESET); // ! free
+		harmonize_spaces(minish->lst_c, &(minish->garbage));
+		print_lst_char(minish->lst_c);
 		if (!(create_word_lst(&minish)))
 		{
 			free(minish->garbage);

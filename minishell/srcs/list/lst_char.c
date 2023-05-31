@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:39:55 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/30 14:42:01 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/30 17:48:36 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,13 @@ void	char_lst_delone(t_char_lst **lst, t_garbage **gb)
  * @param c
  * @return the new link
  */
-t_char_lst	*char_lst_new(char c, t_minish **sh)
+t_char_lst	*char_lst_new(char c, t_garbage **gb)
 {
 	t_char_lst	*new;
 
 	if (!c)
 		return (NULL); // ! ERROR
-	new = ft_malloc(&(*sh)->garbage, sizeof(t_char_lst), 1);
+	new = ft_malloc(gb, sizeof(t_char_lst), 1);
 	if (!new)
 		return (NULL); // ! ERROR
 	new->c = c;
@@ -146,7 +146,7 @@ int	create_char_lst_with_c_inside(char *cmd_line, t_minish **sh)
 	i = 0;
 	while (cmd_line[i])
 	{
-		new = char_lst_new(cmd_line[i], sh);
+		new = char_lst_new(cmd_line[i], &((*sh)->garbage));
 		if (!new)
 		{
 			free_error_char_lst(&((*sh)->garbage), &((*sh)->lst_c));

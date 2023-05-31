@@ -61,23 +61,23 @@ t_w_cmd_list	*get_cmd_2(t_word_lst **old_lst, t_garbage **gb)
 	bool			two_quote;
 	bool			one_quote;
 
-    cmds = NULL;
-    two_quote = false;
-    one_quote = false;
+	cmds = NULL;
+	two_quote = false;
+	one_quote = false;
 	while (*old_lst && (*old_lst)->type != w_pipe)
 	{
 		if ((*old_lst)->type == in_d_quote)
-            two_quote = true;
-        if ((*old_lst)->type == in_s_quote)
-            one_quote = true;
+			two_quote = true;
+		if ((*old_lst)->type == in_s_quote)
+			one_quote = true;
 		new = new_w_cmd_list((*old_lst)->word,one_quote, two_quote, gb);
-        if (cmds)
-            cmds->last_added->next = new;
-        else
-            cmds = new;
-        cmds->last_added = new;
-        //w_cmd_lst_add_back(&cmds, new);
-        word_lst_delone(old_lst, gb);
+		if (cmds)
+			cmds->last_added->next = new;
+		else
+			cmds = new;
+		cmds->last_added = new;
+		//w_cmd_lst_add_back(&cmds, new);
+		word_lst_delone(old_lst, gb);
 	}
 	return (cmds);
 }

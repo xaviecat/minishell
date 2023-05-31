@@ -1,14 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/26 16:18:54 by nfaust            #+#    #+#             */
-/*   Updated: 2023/05/26 16:20:23 by nfaust           ###   ########.fr       */
+/*   Created: 2023/05/23 13:05:10 by syluiset          #+#    #+#             */
+/*   Updated: 2023/05/23 13:06:05 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
+void    b_exit(t_minish *minish)
+{
+	(void)minish;
+	exit(EXIT_SUCCESS);
+}
