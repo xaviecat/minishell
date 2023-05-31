@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/30 17:48:48 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/05/30 16:50:22 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@
 
 /* errno */
 # include <errno.h>
-
 
 /* structure */
 
@@ -191,7 +190,7 @@ typedef struct s_minish
 /* parsing */
 char			**parsing_argu(char *arg_term);
 t_minish		*parsing_command(char *cmd_line, t_minish *sh);
-void			expand_commands(t_word_lst **w_lst, char **envp);
+void			expand_commands(t_minish *minish);
 char			*cut_whitespaces(char *str);
 bool			process_quotes(t_char_lst *lst);
 t_redir_list	*get_redir(t_word_lst **lst, t_garbage **gb);
@@ -226,6 +225,11 @@ t_garbage		*create_garbage_container(void);
 void			garbage_add_back(t_garbage_list **lst, t_garbage_list *new);
 char			*ft_gb_strdup(const char *src, t_garbage **gb);
 void			get_first_garbage(t_garbage **lst);
+char			*ft_gbstrjoin(char const *s1, char const *s2, t_garbage **gb);
+void			ft_free_mcmd(char *env_var, char *cmd,
+					char *exp_env_var, t_garbage **gb);
+char			*fill_mdcmd(char *cmd, size_t start,
+					char *exp_env_v, char *env_var);
 
 /* list_char function */
 t_char_lst		*char_lst_new(char c, t_garbage **gb);
@@ -257,6 +261,7 @@ int				sh_pars(t_minish **minish);
 bool			builtin_or_command(char *cmd);
 
 /* lst_w_cmd function */
+t_w_cmd_list	*get_cmd_2(t_word_lst **old_lst, t_garbage **gb);
 /*
  * @brief get_cmd_2 le retour
  * [Musique dramatique jouant en arrière-plan]

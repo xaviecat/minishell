@@ -140,4 +140,6 @@ int		ft_fdprintf(int fd, const char *str, ...);
 
 int		ft_printf(const char *str, ...);
 
+char	**ft_dbtab_dup(char **dbtab);
+
 #endif

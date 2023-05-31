@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/31 12:03:51 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/05/30 14:00:07 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,10 @@ void	minishell(char **envp)
 			return ;
 		}
 		print_lst_word(minish->lst_w);
-		expand_commands(&minish->lst_w, envp);
-		print_lst_word(minish->lst_w);
+		expand_commands(minish);
+//		print_lst_word(minish->lst_w);
 		sh_pars(&minish);
-		print_lst_cmd(minish->cmds);
+//		print_lst_cmd(minish->cmds);
 //		if (ft_strncmp(line, "exit", 5) == 0)
 //			break ;
 //		if (ft_strncmp(line, "pwd", 4) == 0)
