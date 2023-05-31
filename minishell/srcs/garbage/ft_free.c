@@ -6,60 +6,76 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:17:09 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/30 14:52:18 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/31 12:31:13 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-void	ft_free(t_garbage **lst, void *content)
+void	ft_free_first(t_garbage **lst)
 {
 	t_garbage_list	*first;
-	t_garbage_list	*prev;
-	t_garbage_list	*next;
+
+	first = NULL;
+	first = (*lst)->first->next;
+	if (first)
+		first->prev = NULL;
+	free((*lst)->first->content);
+	free((*lst)->first);
+	(*lst)->first = first;
+}
+
+void	ft_free_last(t_garbage **lst)
+{
 	t_garbage_list	*last;
 
-	prev = NULL;
-	next = NULL;
-	if (content == (*lst)->first->content)
+	last = NULL;
+	last = (*lst)->last->prev;
+	if (last)
+		last->next = NULL;
+	free((*lst)->last->content);
+	free((*lst)->last);
+}
+
+void	ft_free_other(t_garbage **lst, void *content)
+{
+	t_garbage_list	*prev;
+	t_garbage_list	*next;
+
+	while ((*lst)->first)
 	{
-		first = (*lst)->first->next;
-		if (first)
-			first->prev = NULL;
-		free((*lst)->first->content);
-		free((*lst)->first);
-	}
-	if (content == (*lst)->last->content)
-	{
-		last = (*lst)->last->prev;
-		if (last)
-			last->next = NULL;
-		free((*lst)->last->content);
-		free((*lst)->last);
-		return ;
-	}
-	else
-	{
-		first = (*lst)->first;
-		while ((*lst)->first && (*lst)->first->content != content)
+		if ((*lst)->first->content == content)
 		{
-			if ((*lst)->first->next && (*lst)->first->next->content == content)
-			{
-				prev = (*lst)->first;
-				(*lst)->first = (*lst)->first->next;
-				next = (*lst)->first->next;
-				free((*lst)->first->content);
-				free((*lst)->first);
-				if (next)
-					next->prev = prev;
-				if (prev)
-					prev->next = next;
-				break ;
-			}
-			(*lst)->first = (*lst)->first->next;
+			prev = (*lst)->first->prev;
+			next = (*lst)->first->next;
+			if (prev)
+				prev->next = next;
+			if (next)
+				next->prev = prev;
+			free((*lst)->first->content);
+			free((*lst)->first);
+			if (prev)
+				(*lst)->first = prev;
+			else if (next)
+				(*lst)->first = next;
+			else
+				(*lst)->first = NULL;
+			break ;
 		}
+		if ((*lst)->first->next)
+			(*lst)->first = (*lst)->first->next;
 	}
-	(*lst)->first = first;
+	get_first_garbage(lst);
+}
+
+void	ft_free(t_garbage **lst, void *content)
+{
+	if (content == (*lst)->first->content)
+		return (ft_free_first(lst));
+	if (content == (*lst)->last->content)
+		return (ft_free_last(lst));
+	else
+		return (ft_free_other(lst, content));
 }
 
 void    ft_free_all(t_garbage **lst)

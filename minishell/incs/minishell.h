@@ -218,6 +218,7 @@ t_garbage_list	*new_garbage(void *content);
 t_garbage		*create_garbage_container();
 void			garbage_add_back(t_garbage_list **lst, t_garbage_list *new);
 char			*ft_gb_strdup(const char *src, t_garbage **gb);
+void			get_first_garbage(t_garbage **lst);
 
 /* list_char function */
 t_char_lst		*char_lst_new(char c, t_garbage **gb);
