@@ -90,4 +90,5 @@ int	sh_pars(t_minish **sh)
 		if ((*sh)->lst_w && (*sh)->lst_w->type == w_pipe)
 			word_lst_delone(&(*sh)->lst_w, &(*sh)->garbage);
 	}
+	return (1);
 }
