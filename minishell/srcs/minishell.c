@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/31 12:03:51 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/05/31 19:57:56 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,11 @@ void	minishell(char **envp)
 			free(minish);
 			return ;
 		}
+		//! gerer quand metacractere en fin de ligne
 		print_lst_word(minish->lst_w);
 		expand_commands(&minish->lst_w, envp);
 		print_lst_word(minish->lst_w);
-		sh_pars(&minish);
+		sh_pars(&minish); //! getsion sortie d'erreur
 		print_lst_cmd(minish->cmds);
 //		if (ft_strncmp(line, "exit", 5) == 0)
 //			break ;
