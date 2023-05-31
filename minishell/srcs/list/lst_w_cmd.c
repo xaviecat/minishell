@@ -54,7 +54,7 @@ void	w_cmd_lst_add_back(t_w_cmd_list **lst, t_w_cmd_list *new)
 		*lst = new;
 }
 
-t_w_cmd_list	*get_cmd_2(t_word_lst **old_lst, t_garbage **gb)
+t_w_cmd_list	*get_cmd(t_word_lst **old_lst, t_garbage **gb)
 {
 	t_w_cmd_list	*cmds;
 	t_w_cmd_list	*new;
