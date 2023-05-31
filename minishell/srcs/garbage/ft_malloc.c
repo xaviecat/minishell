@@ -6,13 +6,19 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 13:57:31 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/26 16:11:24 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/31 12:10:08 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-t_garbage	*create_garbage_container(void)
+void	get_first_garbage(t_garbage **lst)
+{
+	while ((*lst)->first->prev)
+		(*lst)->first = (*lst)->first->prev;
+}
+
+t_garbage	*create_garbage_container()
 {
 	t_garbage	*gb_c;
 
@@ -69,6 +75,8 @@ void	*ft_malloc(t_garbage **garbage, int the_size, int number)
 	t_garbage_list	*new;
 	void			*content;
 
+	new = NULL;
+	content = NULL;
 	content = malloc(the_size * number);
 	if (!content)
 		return (NULL);
