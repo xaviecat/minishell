@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/30 17:55:41 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/05/31 12:03:51 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,23 @@ void	minishell(char **envp)
 	char		*line;
 	t_minish	*minish;
 
+	printf(LBLUE TRISHBANNER0"\n");
+	printf(TRISHBANNER1"\n");
+	printf(TRISHBANNER2"\n");
+	printf(TRISHBANNER3"\n");
+	printf(TRISHBANNER4"\n");
+	printf(TRISHBANNER5"\n");
+	printf(TRISHBANNER6"\n");
+	printf(TRISHBANNER7"\n");
+	printf(BOLD TRISHBANNER8"\n" RESET);
 	while (1)
 	{
 		line = readline(GREEN UNDERLINE"TRI_SH $>"RESET" ");
 		if (line && *line)
 			add_history(line);
 		minish = create_minishell(envp);
-        if (!minish)
-            return ; // ! ERROR
+		if (!minish)
+			return ; // ! ERROR
 		if (!(create_char_lst_with_c_inside(line, &minish)))
 		{
 			free(line);

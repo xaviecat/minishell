@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 11:20:59 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/30 18:51:39 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/05/31 11:11:04 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,12 @@ void	add_some_spaces(t_char_lst *lst, t_garbage **gb)
 	{
 		while (lst && (lst->s_quote || lst->d_quote))
 			lst = lst->next;
-		if (lst->c == '|' && lst->prev->c != ' ')
+		if (lst && lst->prev && lst->c == '|' && lst->prev->c != ' ')
 			char_lst_add_in(&lst, prev, char_lst_new(' ', gb));
-		if (lst->c == '|' && lst->next->c != ' ')
+		if (lst && lst->next && lst->c == '|' && lst->next->c != ' ')
 			char_lst_add_in(&lst, next, char_lst_new(' ', gb));
-		lst = lst->next;
+		if (lst)
+			lst = lst->next;
 	}
 }
 
@@ -90,4 +91,5 @@ void	harmonize_spaces(t_char_lst *lst, t_garbage **gb)
  *
  *
  * echo hello world > salut| cat salut    |   echo "                  salut                   "
+ * echo hello world > salut| cat -en |cat salut|echo "|sal|ut| |"
  */

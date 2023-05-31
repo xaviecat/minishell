@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_word.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 12:00:52 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/26 17:39:16 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/31 11:17:30 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,7 +208,7 @@ void	print_lst_word(t_word_lst *lst)
 	printf(LBLUE"lst_w:\n");
 	while (lst)
 	{
-		printf("%-10s | ", lst->word);
+		printf("%-30s | ", lst->word);
 		printf("type : %-2d | ", lst->type);
 		// printf("next : %p |", lst->next);
 		printf("\n");
