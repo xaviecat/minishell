@@ -9,6 +9,7 @@ SRCS			:=	minishell.c\
 					parsing/expand.c\
 					parsing/unhandled_char.c\
 					parsing/pars_in_minish.c\
+					parsing/hormonize_spaces.c\
 					utils/expand_utils.c\
 					utils/utils.c\
 					utils/libftgarbage.c\
@@ -58,7 +59,15 @@ ASAN_F			:=	-g3 #-fsanitize=address
 
 #========================EXEC===============================#
 all				:	$(NAME)
-
+				@echo
+				@echo -e '\x1B[34m.___________..______       __  .__   __.  __       _______. __    __   _______  __       __      \x1B[0m'
+				@echo -e '\x1B[34m|           ||   _  \     |  | |  \ |  | |  |     /       ||  |  |  | |   ____||  |     |  |     \x1B[0m'
+				@echo -e '\x1B[34m`---|  |----`|  |_)  |    |  | |   \|  | |  |    |   (----`|  |__|  | |  |__   |  |     |  |     \x1B[0m'
+				@echo -e '\x1B[34m    |  |     |      /     |  | |  . `  | |  |     \   \    |   __   | |   __|  |  |     |  |     \x1B[0m'
+				@echo -e '\x1B[34m    |  |     |  |\  \----.|  | |  |\   | |  | .----)   |   |  |  |  | |  |____ |  `----.|  `----.\x1B[0m'
+				@echo -e '\x1B[34m    |__|     | _| `._____||__| |__| \__| |__| |_______/    |__|  |__| |_______||_______||_______|\x1B[0m'
+				@echo -e '\x1B[34m                                                                                                 \x1B[0m'
+				@echo -e '\x1B[1;34m                                                                    by nfaust, syluiset & xcharra\x1B[0m'
 $(NAME)			:	$(OBJS_D) $(OBJS) $(HEAD_D)$(HEAD)
 				$(CC) $(CFLAGS) $(ASAN_F) -o $(NAME) $(OBJS) $(LIB_A) $(RDL)
 
