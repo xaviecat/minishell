@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/30 16:50:22 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/31 19:54:50 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,6 +211,10 @@ void			b_pwd(char **envp);
 void			b_cd(char *path, char **envp);
 void			b_echo(t_w_cmd_list *content);
 void    		b_exit(t_minish *minish);
+void			find_builtin(t_minish *sh);
+
+/* exec */
+void			exec_all(t_minish *minish);
 
 /* utils */
 char			*ft_strdup_to_charset(char *str, char *charset);
@@ -285,5 +289,5 @@ t_w_cmd_list	*get_cmd_2(t_word_lst **old_lst, t_garbage **gb);
  * [Musique dramatique atteignant son apogée, suivi d'un fondu au noir]
  *
  */
-t_w_cmd_list	*get_cmd_2(t_word_lst **old_lst, t_garbage **gb);
+t_w_cmd_list    *get_cmd(t_word_lst **old_lst, t_garbage **gb);
 #endif
