@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:17:09 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/31 12:31:13 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/31 19:15:23 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,34 +37,25 @@ void	ft_free_last(t_garbage **lst)
 	free((*lst)->last);
 }
 
-void	ft_free_other(t_garbage **lst, void *content)
+void	ft_free_other(t_garbage **lst)
 {
 	t_garbage_list	*prev;
 	t_garbage_list	*next;
 
-	while ((*lst)->first)
-	{
-		if ((*lst)->first->content == content)
-		{
-			prev = (*lst)->first->prev;
-			next = (*lst)->first->next;
-			if (prev)
-				prev->next = next;
-			if (next)
-				next->prev = prev;
-			free((*lst)->first->content);
-			free((*lst)->first);
-			if (prev)
-				(*lst)->first = prev;
-			else if (next)
-				(*lst)->first = next;
-			else
-				(*lst)->first = NULL;
-			break ;
-		}
-		if ((*lst)->first->next)
-			(*lst)->first = (*lst)->first->next;
-	}
+	prev = (*lst)->first->prev;
+	next = (*lst)->first->next;
+	if (prev)
+		prev->next = next;
+	if (next)
+		next->prev = prev;
+	free((*lst)->first->content);
+	free((*lst)->first);
+	if (prev)
+		(*lst)->first = prev;
+	else if (next)
+		(*lst)->first = next;
+	else
+		(*lst)->first = NULL;
 	get_first_garbage(lst);
 }
 
@@ -75,7 +66,17 @@ void	ft_free(t_garbage **lst, void *content)
 	if (content == (*lst)->last->content)
 		return (ft_free_last(lst));
 	else
-		return (ft_free_other(lst, content));
+	{
+		while ((*lst)->first)
+		{
+			if ((*lst)->first->content == content)
+				return (ft_free_other(lst));
+			if ((*lst)->first->next)
+				(*lst)->first = (*lst)->first->next;
+			else
+				break ;
+		}
+	}
 }
 
 void    ft_free_all(t_garbage **lst)

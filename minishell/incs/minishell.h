@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
 /*   Updated: 2023/05/31 21:34:28 by nfaust           ###   ########.fr       */
@@ -191,7 +191,7 @@ typedef struct s_minish
 char			**parsing_argu(char *arg_term);
 t_minish		*parsing_command(char *cmd_line, t_minish *sh);
 void			expand_commands(t_minish *minish);
-char *cut_whitespaces(char *str, t_garbage **gb);
+char			*cut_whitespaces(char *str, t_garbage **gb);
 bool			process_quotes(t_char_lst *lst);
 t_redir_list	*get_redir(t_word_lst **lst, t_garbage **gb);
 void			print_redir(t_redir_list *lst);
@@ -211,6 +211,10 @@ void			b_pwd(char **envp);
 void			b_cd(char *path, char **envp);
 void			b_echo(t_w_cmd_list *content);
 void    		b_exit(t_minish *minish);
+void			find_builtin(t_minish *sh);
+
+/* exec */
+void			exec_all(t_minish *minish);
 
 /* utils */
 char			*ft_gbstrdup_to_charset(char *str, char *charset,
@@ -288,5 +292,5 @@ t_w_cmd_list	*get_cmd_2(t_word_lst **old_lst, t_garbage **gb);
  * [Musique dramatique atteignant son apogée, suivi d'un fondu au noir]
  *
  */
-t_w_cmd_list	*get_cmd_2(t_word_lst **old_lst, t_garbage **gb);
+t_w_cmd_list    *get_cmd(t_word_lst **old_lst, t_garbage **gb);
 #endif
