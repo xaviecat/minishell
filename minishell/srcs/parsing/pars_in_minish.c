@@ -58,6 +58,8 @@ int	sh_pars(t_minish **sh)
 	redirs = NULL;
 	fds = NULL;
 	new = NULL;
+	if (!(*sh)->lst_w)
+		return (0);
 	while ((*sh)->lst_w)
 	{
 		redirs = get_redir(&((*sh)->lst_w), &((*sh)->garbage));

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_word.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 12:00:52 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/31 11:17:30 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/01 14:45:49 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,10 +257,12 @@ int	create_word_lst(t_minish **sh)
 	t_word_lst	*new;
 	char		*word;
 
+	if (!(*sh)->lst_c)
+		return (0);
 	while ((*sh)->lst_c)
 	{
 		word = NULL;
-		word = reforme_word(sh , &((*sh)->garbage));
+		word = reforme_word(sh, &((*sh)->garbage));
 		new = word_lst_new(word, &((*sh)->garbage));
 		if (!new)
 		{
@@ -270,12 +272,12 @@ int	create_word_lst(t_minish **sh)
 		new->type = get_cat_of_word(new->word);
 		if ((*sh)->lst_w)
 		{
-		    new->prev = (*sh)->lst_w->last_added;
-            (*sh)->lst_w->last_added->next = new;
-        }
-        else
-            (*sh)->lst_w = new;
-        (*sh)->lst_w->last_added = new;
+			new->prev = (*sh)->lst_w->last_added;
+			(*sh)->lst_w->last_added->next = new;
+		}
+		else
+			(*sh)->lst_w = new;
+		(*sh)->lst_w->last_added = new;
 	}
 	get_other_type_word(&(*sh)->lst_w);
 	return (1);
