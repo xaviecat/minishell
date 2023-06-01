@@ -26,7 +26,7 @@ SRCS			:=	minishell.c\
 					utils/ft_gbstrjoin.c\
 					exec/builtin.c\
 					utils/ft_gbstrtrim.c\
-					utils/ft_gbcalloc.c
+					utils/ft_gbcalloc.c\
 					exec/exec.c\
 
 

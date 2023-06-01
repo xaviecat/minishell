@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:08:17 by nfaust            #+#    #+#             */
-/*   Updated: 2023/05/30 15:34:25 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/01 12:43:47 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static char	*set_expanded_env_var(char *env_var, t_minish *msh,
 
 	expanded_env_var = expand_env_var(&(msh->garbage), msh->envp, env_var);
 	if (double_not_closed < 0)
-		expanded_env_var = cut_whitespaces(expanded_env_var);
+		expanded_env_var = cut_whitespaces(expanded_env_var, &((*msh).garbage));
 	if (!expanded_env_var)
 		return (ft_free(&(msh->garbage), env_var), NULL);
 	return (expanded_env_var);
@@ -85,7 +85,7 @@ static char	*modify_command(char *cmd, t_minish *msh,
 	char	*exp_env_v;
 	char	*m_cmd;
 
-	env_var = ft_strdup_to_charset(cmd + start, " \t\n\v\f\r\"\'\0");
+	env_var = ft_gbstrdup_to_charset(cmd + start, " \t\n\v\f\r\"\'\0", &(msh->garbage));
 	if (!env_var)
 		return (NULL);
 	if (is_dollar_alone(env_var, cmd, start))

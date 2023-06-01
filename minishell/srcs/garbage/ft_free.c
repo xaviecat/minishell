@@ -35,6 +35,7 @@ void	ft_free_last(t_garbage **lst)
 		last->next = NULL;
 	free((*lst)->last->content);
 	free((*lst)->last);
+	(*lst)->last = last;
 }
 
 void	ft_free_other(t_garbage **lst)
