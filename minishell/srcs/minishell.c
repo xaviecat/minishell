@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/31 19:25:48 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/01 12:08:45 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	minishell(char **envp)
 			return ;
 		}
 		print_lst_word(minish->lst_w);
-		expand_commands(&minish->lst_w, envp);
+		expand_commands(minish);
 		print_lst_word(minish->lst_w);
 		if (!(sh_pars(&minish)))
 		{
