@@ -53,10 +53,15 @@
 /* errno */
 # include <errno.h>
 
-
 /* structure */
 
 	/* enum */
+
+typedef enum e_position
+{
+	prev,
+	next,
+}	t_position;
 
 typedef enum e_type_char
 {
@@ -101,7 +106,7 @@ typedef enum e_type_redir
 
 typedef struct s_garbage_list
 {
-	void 					*content;
+	void					*content;
 	struct s_garbage_list	*next;
 	struct s_garbage_list	*prev;
 }				t_garbage_list;
@@ -117,7 +122,7 @@ typedef struct s_redir_list
 	t_type_redir		redir;
 	char				*filename;
 	struct s_redir_list	*next;
-	struct s_redir_list *last_added;
+	struct s_redir_list	*last_added;
 }				t_redir_list;
 
 typedef struct s_fd_list
@@ -125,7 +130,7 @@ typedef struct s_fd_list
 	int					in;
 	int					out;
 	struct s_fd_list	*next;
-	struct s_fd_list    *last_added;
+	struct s_fd_list	*last_added;
 }				t_fd_list;
 
 typedef struct s_w_cmd_list
@@ -134,7 +139,7 @@ typedef struct s_w_cmd_list
 	bool				s_quote;
 	bool				d_quote;
 	struct s_w_cmd_list	*next;
-	struct s_w_cmd_list *last_added;
+	struct s_w_cmd_list	*last_added;
 }				t_w_cmd_list;
 
 typedef struct s_cmd_list
@@ -145,7 +150,7 @@ typedef struct s_cmd_list
 	struct s_fd_list	*fds;
 	struct s_cmd_list	*next;
 	struct s_cmd_list	*previous;
-	struct s_cmd_list   *last_added;
+	struct s_cmd_list	*last_added;
 }				t_cmd_list;
 
 typedef struct s_word_lst
@@ -154,7 +159,7 @@ typedef struct s_word_lst
 	t_type_word			type;
 	struct s_word_lst	*next;
 	struct s_word_lst	*prev;
-	struct s_word_lst   *last_added;
+	struct s_word_lst	*last_added;
 }						t_word_lst;
 
 /**
@@ -185,13 +190,14 @@ typedef struct s_minish
 /* parsing */
 char			**parsing_argu(char *arg_term);
 t_minish		*parsing_command(char *cmd_line, t_minish *sh);
-void			expand_commands(t_word_lst **w_lst, char **envp);
+void			expand_commands(t_minish *minish);
 char			*cut_whitespaces(char *str);
 bool			process_quotes(t_char_lst *lst);
 t_redir_list	*get_redir(t_word_lst **lst, t_garbage **gb);
 void			print_redir(t_redir_list *lst);
 t_fd_list		*create_fds_list(t_redir_list *redirs, t_garbage **gb);
 void			print_fd(t_fd_list *lst);
+void			harmonize_spaces(t_char_lst *lst, t_garbage **gb);
 
 /* error */
 bool			is_forbidden_char(t_char_lst *lst);
@@ -216,13 +222,18 @@ int				ft_isspace(char c);
 char			*str_cpy_to_x(char *src, char *dst, char x);
 int				is_dollar_alone(char *env_var, char *cmd, size_t start);
 void			*ft_malloc(t_garbage **garbage, int the_size, int number);
-void            ft_free_all(t_garbage **lst);
-void            ft_free(t_garbage **lst, void *content);
+void			ft_free_all(t_garbage **lst);
+void			ft_free(t_garbage **lst, void *content);
 t_garbage_list	*new_garbage(void *content);
-t_garbage		*create_garbage_container();
+t_garbage		*create_garbage_container(void);
 void			garbage_add_back(t_garbage_list **lst, t_garbage_list *new);
 char			*ft_gb_strdup(const char *src, t_garbage **gb);
 void			get_first_garbage(t_garbage **lst);
+char			*ft_gbstrjoin(char const *s1, char const *s2, t_garbage **gb);
+void			ft_free_mcmd(char *env_var, char *cmd,
+					char *exp_env_var, t_garbage **gb);
+char			*fill_mdcmd(char *cmd, size_t start,
+					char *exp_env_v, char *env_var);
 
 /* list_char function */
 t_char_lst		*char_lst_new(char c, t_garbage **gb);
@@ -242,16 +253,41 @@ int				get_cat_of_word(char *word);
 void			word_lst_delone(t_word_lst **lst, t_garbage **gb);
 t_word_lst		*word_lst_first(t_word_lst *lst);
 
-
 /* list command maybe not useful */
-t_cmd_list	*lst_cmd_new(t_w_cmd_list *cmds, t_fd_list *fds, t_redir_list *redir, t_garbage **gb);
-void		lst_cmd_add_back(t_cmd_list **lst, t_cmd_list *new);
-void		print_lst_cmd(t_cmd_list *lst);
-void		lst_clear(t_cmd_list **lst);
-t_cmd_list	*create_lst_cmd(t_word_lst **old_lst, t_fd_list *fds, t_redir_list *redirs);
-int 		sh_pars(t_minish **minish);
-bool		builtin_or_command(char *cmd);
+t_cmd_list		*lst_cmd_new(t_w_cmd_list *cmds,
+					t_fd_list *fds, t_redir_list *redir, t_garbage **gb);
+void			lst_cmd_add_back(t_cmd_list **lst, t_cmd_list *new);
+void			print_lst_cmd(t_cmd_list *lst);
+void			lst_clear(t_cmd_list **lst);
+t_cmd_list		*create_lst_cmd(t_word_lst **old_lst,
+					t_fd_list *fds, t_redir_list *redirs);
+int				sh_pars(t_minish **minish);
+bool			builtin_or_command(char *cmd);
 
 /* lst_w_cmd function */
+t_w_cmd_list	*get_cmd_2(t_word_lst **old_lst, t_garbage **gb);
+/*
+ * @brief get_cmd_2 le retour
+ * [Musique dramatique jouant en arrière-plan]
+ * Dans un monde où les lignes de code règnent en maîtres...
+ * [Plans rapides montrant des écrans d'ordinateur remplis de code binaire et de commandes]
+ * Un hacker légendaire est de retour pour la mission la plus épique de sa vie !
+ * [Plans de notre héros assis devant son ordinateur, concentré et tapant sur son clavier avec une vitesse incroyable]
+ * get_cmd_2 le retour !
+ * [Plans montrant notre héros se levant de son siège et enfilant une veste de cuir noir]
+ * Il était parti, mais le monde a besoin de lui une fois de plus.
+ * [Plans montrant des images de chaos et de destruction]
+ * Les systèmes sont corrompus, les virus se multiplient, et seuls les talents de notre héros peuvent les arrêter.
+ * [Plans montrant notre héros se faufilant dans des bâtiments, évitant des lasers de sécurité et piratant des systèmes complexes]
+ * Il est rapide, il est intelligent, il est le cauchemar des cybercriminels !
+ * [Plans montrant des explosions spectaculaires et des combats au ralenti]
+ * Préparez-vous pour une aventure numérique à couper le souffle, remplie d'action, de suspense et de lignes de code mortelles !
+ * [Plans montrant notre héros lançant des lignes de code enflammées sur un écran d'ordinateur]
+ * get_cmd_2 le retour - Un film qui vous fera crier "compilez-vous !" et frissonner devant chaque "if" et "else".
+ * [Plans montrant le titre du film apparaissant à l'écran avec une musique dramatique finale]
+ * Le hacker le plus redoutable est de retour, et il est prêt à sauver le monde... une fois de plus !
+ * [Musique dramatique atteignant son apogée, suivi d'un fondu au noir]
+ *
+ */
 t_w_cmd_list    *get_cmd(t_word_lst **old_lst, t_garbage **gb);
 #endif
