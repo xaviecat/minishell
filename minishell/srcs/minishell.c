@@ -79,7 +79,7 @@ void	minishell(char **envp)
 			return ;
 		}
 		print_lst_word(minish->lst_w);
-		expand_commands(&minish->lst_w, envp);
+		expand_commands(minish);
 		print_lst_word(minish->lst_w);
 		if (!(sh_pars(&minish)))
 		{
