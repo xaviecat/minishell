@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/31 19:25:48 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/05/31 12:03:51 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ void	minishell(char **envp)
 			free(minish);
 			return ;
 		}
+		//! gerer redir in redir >< "bash: syntax error near unexpected token `<'"
+		//! gerer quand chevron ou pipe en fin de ligne
 		print_lst_word(minish->lst_w);
 		expand_commands(minish);
 		print_lst_word(minish->lst_w);
