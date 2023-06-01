@@ -81,7 +81,7 @@ void	minishell(char **envp)
 		//! gerer redir in redir >< "bash: syntax error near unexpected token `<'"
 		//! gerer quand chevron ou pipe en fin de ligne
 		print_lst_word(minish->lst_w);
-		expand_commands(&minish->lst_w, envp);
+		expand_commands(minish);
 		print_lst_word(minish->lst_w);
 		if (!(sh_pars(&minish)))
 		{

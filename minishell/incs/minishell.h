@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/31 21:34:28 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/01 12:42:28 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,29 +268,5 @@ int				sh_pars(t_minish **minish);
 bool			builtin_or_command(char *cmd);
 
 /* lst_w_cmd function */
-t_w_cmd_list	*get_cmd_2(t_word_lst **old_lst, t_garbage **gb);
-/*
- * @brief get_cmd_2 le retour
- * [Musique dramatique jouant en arrière-plan]
- * Dans un monde où les lignes de code règnent en maîtres...
- * [Plans rapides montrant des écrans d'ordinateur remplis de code binaire et de commandes]
- * Un hacker légendaire est de retour pour la mission la plus épique de sa vie !
- * [Plans de notre héros assis devant son ordinateur, concentré et tapant sur son clavier avec une vitesse incroyable]
- * get_cmd_2 le retour !
- * [Plans montrant notre héros se levant de son siège et enfilant une veste de cuir noir]
- * Il était parti, mais le monde a besoin de lui une fois de plus.
- * [Plans montrant des images de chaos et de destruction]
- * Les systèmes sont corrompus, les virus se multiplient, et seuls les talents de notre héros peuvent les arrêter.
- * [Plans montrant notre héros se faufilant dans des bâtiments, évitant des lasers de sécurité et piratant des systèmes complexes]
- * Il est rapide, il est intelligent, il est le cauchemar des cybercriminels !
- * [Plans montrant des explosions spectaculaires et des combats au ralenti]
- * Préparez-vous pour une aventure numérique à couper le souffle, remplie d'action, de suspense et de lignes de code mortelles !
- * [Plans montrant notre héros lançant des lignes de code enflammées sur un écran d'ordinateur]
- * get_cmd_2 le retour - Un film qui vous fera crier "compilez-vous !" et frissonner devant chaque "if" et "else".
- * [Plans montrant le titre du film apparaissant à l'écran avec une musique dramatique finale]
- * Le hacker le plus redoutable est de retour, et il est prêt à sauver le monde... une fois de plus !
- * [Musique dramatique atteignant son apogée, suivi d'un fondu au noir]
- *
- */
 t_w_cmd_list    *get_cmd(t_word_lst **old_lst, t_garbage **gb);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:08:17 by nfaust            #+#    #+#             */
-/*   Updated: 2023/05/31 21:27:24 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/01 12:43:47 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static char	*set_expanded_env_var(char *env_var, t_minish *msh,
 
 	expanded_env_var = expand_env_var(&(msh->garbage), msh->envp, env_var);
 	if (double_not_closed < 0)
-		expanded_env_var = cut_whitespaces(expanded_env_var, NULL);
+		expanded_env_var = cut_whitespaces(expanded_env_var, &((*msh).garbage));
 	if (!expanded_env_var)
 		return (ft_free(&(msh->garbage), env_var), NULL);
 	return (expanded_env_var);
@@ -138,19 +138,14 @@ static char	*expand_vars(char *command, t_minish *msh)
 void	expand_commands(t_minish *minish)
 {
 	t_word_lst	*w_lst_cpy;
-	char		*command;
 
 	w_lst_cpy = minish->lst_w;
 	printf(GREEN"starting expand\n");
 	while (w_lst_cpy)
 	{
-		command = expand_vars(w_lst_cpy->word, minish);
-		if (!command)
-			return ; // ? code d'erreur a ajouter
-		w_lst_cpy->word = ft_gb_strdup(command, &(minish->garbage));
-		free(command);
+		w_lst_cpy->word = expand_vars(w_lst_cpy->word, minish);
 		if (!w_lst_cpy->word)
-			return ;
+			return ; // ? code d'erreur a ajouter
 		printf("%s\n", w_lst_cpy->word);
 		w_lst_cpy = w_lst_cpy->next;
 	}
