@@ -28,6 +28,7 @@ SRCS			:=	minishell.c\
 					utils/ft_gbstrtrim.c\
 					utils/ft_gbcalloc.c\
 					exec/exec.c\
+					builtins/export.c
 
 
 SRCS_D			:=	srcs/

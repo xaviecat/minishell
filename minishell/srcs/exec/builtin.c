@@ -25,6 +25,8 @@ void	find_builtin(t_minish *sh)
 		b_cd(cp_cmd, sh->envp);
 	if (ft_strncmp(cp_cmd, "pwd", 4) == 0)
 		b_pwd(sh->envp);
+	if (ft_strncmp(cp_cmd, "export", 7) == 0)
+		b_export(sh, sh->cmds->cmd);
 	//if (ft_strncmp(cp_cmd, "export", 7) == 0)
 		//
 	//if (ft_strncmp(cp_cmd, "unset", 6) == 0)
