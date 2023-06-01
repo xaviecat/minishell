@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:08:17 by nfaust            #+#    #+#             */
-/*   Updated: 2023/05/30 15:34:25 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/05/31 21:27:24 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static char	*set_expanded_env_var(char *env_var, t_minish *msh,
 
 	expanded_env_var = expand_env_var(&(msh->garbage), msh->envp, env_var);
 	if (double_not_closed < 0)
-		expanded_env_var = cut_whitespaces(expanded_env_var);
+		expanded_env_var = cut_whitespaces(expanded_env_var, NULL);
 	if (!expanded_env_var)
 		return (ft_free(&(msh->garbage), env_var), NULL);
 	return (expanded_env_var);
@@ -85,7 +85,7 @@ static char	*modify_command(char *cmd, t_minish *msh,
 	char	*exp_env_v;
 	char	*m_cmd;
 
-	env_var = ft_strdup_to_charset(cmd + start, " \t\n\v\f\r\"\'\0");
+	env_var = ft_gbstrdup_to_charset(cmd + start, " \t\n\v\f\r\"\'\0", &(msh->garbage));
 	if (!env_var)
 		return (NULL);
 	if (is_dollar_alone(env_var, cmd, start))
@@ -138,14 +138,19 @@ static char	*expand_vars(char *command, t_minish *msh)
 void	expand_commands(t_minish *minish)
 {
 	t_word_lst	*w_lst_cpy;
+	char		*command;
 
 	w_lst_cpy = minish->lst_w;
 	printf(GREEN"starting expand\n");
 	while (w_lst_cpy)
 	{
-		w_lst_cpy->word = expand_vars(w_lst_cpy->word, minish);
-		if (!w_lst_cpy->word)
+		command = expand_vars(w_lst_cpy->word, minish);
+		if (!command)
 			return ; // ? code d'erreur a ajouter
+		w_lst_cpy->word = ft_gb_strdup(command, &(minish->garbage));
+		free(command);
+		if (!w_lst_cpy->word)
+			return ;
 		printf("%s\n", w_lst_cpy->word);
 		w_lst_cpy = w_lst_cpy->next;
 	}

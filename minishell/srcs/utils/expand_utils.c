@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 17:01:30 by nfaust            #+#    #+#             */
-/*   Updated: 2023/05/30 15:25:11 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/05/31 16:58:38 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
  * @param charset the charset of delimiters
  * @return the duplicated string
  */
-char	*ft_strdup_to_charset(char *str, char *charset)
+char *ft_gbstrdup_to_charset(char *str, char *charset, t_garbage **gb)
 {
 	size_t	new_str_len;
 	size_t	i;
@@ -35,7 +35,7 @@ char	*ft_strdup_to_charset(char *str, char *charset)
 				char_not_found = 0;
 		new_str_len++;
 	}
-	new_str = malloc(sizeof(char) * (new_str_len + char_not_found));
+	new_str = ft_malloc(gb, sizeof(char), new_str_len + char_not_found);
 	if (!new_str)
 		return (NULL);
 	i = 0;
