@@ -148,6 +148,7 @@ void	expand_commands(t_minish *minish)
 			return ; // ? code d'erreur a ajouter
 		printf("%s\n", w_lst_cpy->word);
 		w_lst_cpy = w_lst_cpy->next;
+
 	}
 	printf("expand end\n\n"RESET);
 }

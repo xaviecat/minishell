@@ -10,6 +10,7 @@ SRCS			:=	minishell.c\
 					parsing/unhandled_char.c\
 					parsing/pars_in_minish.c\
 					parsing/hormonize_spaces.c\
+					parsing/redir_is_valid.c\
 					utils/expand_utils.c\
 					utils/utils.c\
 					utils/libftgarbage.c\
@@ -59,7 +60,7 @@ CFLAGS			:=	-Wall -Wextra -Werror
 
 RDL				:=	-lreadline
 
-ASAN_F			:=	-g3 -fsanitize=address
+ASAN_F			:=	-g3 #-fsanitize=address
 
 #========================EXEC===============================#
 all				:	$(NAME)
