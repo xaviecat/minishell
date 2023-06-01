@@ -269,5 +269,6 @@ int				sh_pars(t_minish **minish);
 bool			builtin_or_command(char *cmd);
 
 /* lst_w_cmd function */
-t_w_cmd_list    *get_cmd(t_word_lst **old_lst, t_garbage **gb);
+
+t_w_cmd_list	*get_cmd(t_word_lst **old_lst, t_garbage **gb);
 #endif

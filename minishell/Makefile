@@ -9,7 +9,7 @@ SRCS			:=	minishell.c\
 					parsing/expand.c\
 					parsing/unhandled_char.c\
 					parsing/pars_in_minish.c\
-					parsing/hormonize_spaces.c\
+					parsing/harmonize_spaces.c\
 					parsing/redir_is_valid.c\
 					utils/expand_utils.c\
 					utils/utils.c\
