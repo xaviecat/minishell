@@ -17,23 +17,16 @@ void	char_lst_add_in(t_char_lst **lst, t_position pos, t_char_lst	*new) //! secu
 	t_char_lst	*new_prev;
 	t_char_lst	*new_next;
 
+	new->type = space;
 	if (pos == prev && *lst)
 	{
 		new_prev = (*lst)->prev;
 		new_next = *lst;
-		// new->prev = (*lst)->prev;
-		// new->next = *lst;
-		// (*lst)->prev = new;
-		// (*lst)->prev->next = new;
 	}
 	else if (pos == next && *lst)
 	{
 		new_prev = *lst;
 		new_next = (*lst)->next;
-		// new->prev = (*lst);
-		// new->next = (*lst)->next;
-		// (*lst)->next = new;
-		// (*lst)->next->prev = new;
 	}
 	new->next = new_next;
 	new->prev = new_prev;

@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/31 12:03:51 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/01 16:41:27 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	minishell(char **envp)
 			return ;
 		}
 		give_type_in_lst(&minish->lst_c);
-		print_lst_char(minish->lst_c);
+		// print_lst_char(minish->lst_c);
 		if (process_quotes(minish->lst_c) == true)
 			ft_fdprintf(2, RED"ERROR : QUOTE DON'T CLOSED"RESET);// ! free
 		if (is_forbidden_char(minish->lst_c))
@@ -80,7 +80,7 @@ void	minishell(char **envp)
 		}
 		//! gerer redir in redir >< "bash: syntax error near unexpected token `<'"
 		//! gerer quand chevron ou pipe en fin de ligne
-		print_lst_word(minish->lst_w);
+		// print_lst_word(minish->lst_w);
 		expand_commands(minish);
 		print_lst_word(minish->lst_w);
 		if (!(sh_pars(&minish)))
