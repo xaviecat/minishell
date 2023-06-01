@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   harmonize_spaces.c                                 :+:      :+:    :+:   */
+/*   hormonize_spaces.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 11:20:59 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/01 17:53:42 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/05/31 11:11:04 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	remove_extra_spaces(t_char_lst *lst, t_garbage **gb)
 
 void	add_some_space_near_pipes(t_char_lst *lst, t_garbage **gb)
 {
-
 	while (lst)
 	{
 		while (lst && (lst->s_quote || lst->d_quote))
