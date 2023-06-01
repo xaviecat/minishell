@@ -1,0 +1,184 @@
+echo hello world > salut| cat -en |cat salut|echo "|sal|ut| |"
+lst_c :
+e | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+c | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+h | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+o | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+  | sq : 0 | dq : 0 | aq : 0 | type : 0 |
+h | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+e | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+l | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+l | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+o | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+  | sq : 0 | dq : 0 | aq : 0 | type : 0 |
+w | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+o | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+r | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+l | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+d | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+  | sq : 0 | dq : 0 | aq : 0 | type : 0 |
+> | sq : 0 | dq : 0 | aq : 0 | type : 6 |
+  | sq : 0 | dq : 0 | aq : 0 | type : 0 |
+s | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+a | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+l | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+u | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+t | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+| | sq : 0 | dq : 0 | aq : 0 | type : 4 |
+  | sq : 0 | dq : 0 | aq : 0 | type : 0 |
+c | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+a | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+t | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+  | sq : 0 | dq : 0 | aq : 0 | type : 0 |
+- | sq : 0 | dq : 0 | aq : 0 | type : 5 |
+e | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+n | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+  | sq : 0 | dq : 0 | aq : 0 | type : 0 |
+| | sq : 0 | dq : 0 | aq : 0 | type : 4 |
+c | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+a | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+t | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+  | sq : 0 | dq : 0 | aq : 0 | type : 0 |
+s | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+a | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+l | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+u | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+t | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+| | sq : 0 | dq : 0 | aq : 0 | type : 4 |
+e | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+c | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+h | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+o | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+  | sq : 0 | dq : 0 | aq : 0 | type : 0 |
+" | sq : 0 | dq : 0 | aq : 0 | type : 2 |
+| | sq : 0 | dq : 0 | aq : 0 | type : 4 |
+s | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+a | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+l | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+| | sq : 0 | dq : 0 | aq : 0 | type : 4 |
+u | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+t | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+| | sq : 0 | dq : 0 | aq : 0 | type : 4 |
+  | sq : 0 | dq : 0 | aq : 0 | type : 0 |
+| | sq : 0 | dq : 0 | aq : 0 | type : 4 |
+" | sq : 0 | dq : 0 | aq : 0 | type : 2 |
+
+lst_c :
+e | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+c | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+h | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+o | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+  | sq : 0 | dq : 0 | aq : 0 | type : 0 |
+h | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+e | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+l | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+l | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+o | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+  | sq : 0 | dq : 0 | aq : 0 | type : 0 |
+w | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+o | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+r | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+l | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+d | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+  | sq : 0 | dq : 0 | aq : 0 | type : 0 |
+> | sq : 0 | dq : 0 | aq : 0 | type : 6 |
+  | sq : 0 | dq : 0 | aq : 0 | type : 0 |
+s | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+a | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+l | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+u | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+t | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+  | sq : 0 | dq : 0 | aq : 0 | type : 0 |
+| | sq : 0 | dq : 0 | aq : 0 | type : 4 |
+  | sq : 0 | dq : 0 | aq : 0 | type : 0 |
+c | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+a | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+t | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+  | sq : 0 | dq : 0 | aq : 0 | type : 0 |
+- | sq : 0 | dq : 0 | aq : 0 | type : 5 |
+e | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+n | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+  | sq : 0 | dq : 0 | aq : 0 | type : 0 |
+| | sq : 0 | dq : 0 | aq : 0 | type : 4 |
+  | sq : 0 | dq : 0 | aq : 0 | type : 0 |
+c | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+a | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+t | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+  | sq : 0 | dq : 0 | aq : 0 | type : 0 |
+s | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+a | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+l | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+u | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+t | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+  | sq : 0 | dq : 0 | aq : 0 | type : 0 |
+| | sq : 0 | dq : 0 | aq : 0 | type : 4 |
+  | sq : 0 | dq : 0 | aq : 0 | type : 0 |
+e | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+c | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+h | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+o | sq : 0 | dq : 0 | aq : 0 | type : 3 |
+  | sq : 0 | dq : 0 | aq : 0 | type : 0 |
+" | sq : 0 | dq : 1 | aq : 0 | type : 2 |
+| | sq : 0 | dq : 1 | aq : 0 | type : 4 |
+s | sq : 0 | dq : 1 | aq : 0 | type : 3 |
+a | sq : 0 | dq : 1 | aq : 0 | type : 3 |
+l | sq : 0 | dq : 1 | aq : 0 | type : 3 |
+| | sq : 0 | dq : 1 | aq : 0 | type : 4 |
+u | sq : 0 | dq : 1 | aq : 0 | type : 3 |
+t | sq : 0 | dq : 1 | aq : 0 | type : 3 |
+| | sq : 0 | dq : 1 | aq : 0 | type : 4 |
+  | sq : 0 | dq : 1 | aq : 0 | type : 0 |
+| | sq : 0 | dq : 1 | aq : 0 | type : 4 |
+" | sq : 0 | dq : 1 | aq : 0 | type : 2 |
+
+lst_w:
+echo                           | type : 2  |
+hello                          | type : 1  |
+world                          | type : 1  |
+>                              | type : 4  |
+salut                          | type : 12 |
+|                              | type : 7  |
+cat                            | type : 1  |
+-en                            | type : 3  |
+|                              | type : 7  |
+cat                            | type : 1  |
+salut                          | type : 1  |
+|                              | type : 7  |
+echo                           | type : 2  |
+"|sal|ut| |"                   | type : 13 |
+
+lst_w:
+echo                           | type : 2  |
+hello                          | type : 1  |
+world                          | type : 1  |
+>                              | type : 4  |
+salut                          | type : 12 |
+|                              | type : 7  |
+cat                            | type : 1  |
+-en                            | type : 3  |
+|                              | type : 7  |
+cat                            | type : 1  |
+salut                          | type : 1  |
+|                              | type : 7  |
+echo                           | type : 2  |
+"|sal|ut| |"                   | type : 13 |
+
+lst_cmd:
+node : 0
+builtin : 1
+cmd :                          | params :
+echo                           | [hello] [world]
+[0] in : 0                     | out : 3                            |
+[0] filename : salut           | type : 2       | fd : 2            |
+node : 1
+builtin : 0
+cmd :                          | params :
+cat                            | [-en]
+node : 2
+builtin : 0
+cmd :                          | params :
+cat                            | [salut]
+node : 3
+builtin : 1
+cmd :                          | params :
+echo                           | ["|sal|ut| |"]

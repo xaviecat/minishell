@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 17:43:08 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/26 12:07:19 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/05/31 19:25:59 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ bool	is_bad_redir(t_char_lst *lst)
 		if ((lst->c == '<' && is_smaller_bracket_error(&lst))
 			|| (lst->c == '>' && is_greater_bracket_error(&lst)))
 			return (true);
+		if (lst)
 		lst = lst->next;
 	}
 	return (false);
