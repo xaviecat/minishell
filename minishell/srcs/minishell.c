@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/01 12:24:02 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/05/31 12:03:51 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,28 +83,14 @@ void	minishell(char **envp)
 		print_lst_word(minish->lst_w);
 		expand_commands(&minish->lst_w, envp);
 		print_lst_word(minish->lst_w);
-		sh_pars(&minish); //! getsion sortie d'erreur
+		if (!(sh_pars(&minish)))
+		{
+			free(minish->garbage);
+			free(minish);
+			return ;
+		}
 		print_lst_cmd(minish->cmds);
-//		if (ft_strncmp(line, "exit", 5) == 0)
-//			break ;
-//		if (ft_strncmp(line, "pwd", 4) == 0)
-//			pwd(envp);
-//		arg = parsing_argu(line);
-//		if (ft_strncmp(arg[0], "cd", 3) == 0)
-//			cd(arg[1], envp);
-//		(void) arg;
-		// minish = parsing_command(line, minish);
-		// if (ft_strncmp(line, "exit", 5) == 0)
-		// 	break ;
-		// if (ft_strncmp(line, "pwd", 4) == 0)
-		// 	pwd(envp);
-		// if (line && *line)
-		// 	add_history(line);
-		// arg = parsing_argu(line);
-		// if (ft_strncmp(arg[0], "cd", 3) == 0)
-		// 	cd(arg[1], envp);
-		// (void) arg;
-	//	b_echo(minish->cmds->cmd);
+		exec_all(minish);
 		ft_free_all(&minish->garbage);
 		free(minish);
 	}

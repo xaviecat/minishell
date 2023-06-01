@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   ft_gbcalloc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/23 13:05:10 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/23 13:06:05 by syluiset         ###   ########.fr       */
+/*   Created: 2023/05/31 21:42:51 by nfaust            #+#    #+#             */
+/*   Updated: 2023/05/31 21:43:31 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-void    b_exit(t_minish *minish)
+void	*ft_gbcalloc(size_t count, size_t size, t_garbage **gb)
 {
-	ft_free_all(&minish->garbage);
-	free(minish);
-	exit(EXIT_SUCCESS);
+	void	*mem;
+
+	if (size && count >= 4294967295 / size)
+		return (0);
+	mem = ft_malloc(gb, size, count);
+	if (!mem)
+		return (NULL);
+	ft_bzero(mem, count * size);
+	return (mem);
 }

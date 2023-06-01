@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 17:01:30 by nfaust            #+#    #+#             */
-/*   Updated: 2023/05/16 18:46:49 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/05/31 16:58:38 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
  * @param charset the charset of delimiters
  * @return the duplicated string
  */
-char	*ft_strdup_to_charset(char *str, char *charset)
+char *ft_gbstrdup_to_charset(char *str, char *charset, t_garbage **gb)
 {
 	size_t	new_str_len;
 	size_t	i;
@@ -35,7 +35,7 @@ char	*ft_strdup_to_charset(char *str, char *charset)
 				char_not_found = 0;
 		new_str_len++;
 	}
-	new_str = malloc(sizeof(char) * (new_str_len + char_not_found));
+	new_str = ft_malloc(gb, sizeof(char), new_str_len + char_not_found);
 	if (!new_str)
 		return (NULL);
 	i = 0;
@@ -83,4 +83,40 @@ int	is_dollar_alone(char *env_var, char *cmd, size_t start)
 			&& (cmd[start + 1] != '"' || cmd[start + 1] != '\'')))
 		return (1);
 	return (0);
+}
+
+void ft_free_mcmd(char *env_var, char *cmd, char *exp_env_var, t_garbage **gb)
+{
+	ft_free(gb, env_var);
+	ft_free(gb, cmd);
+	ft_free(gb, exp_env_var);
+}
+
+/**
+ * @brief allocate modified command (expanded) and fill it with
+ * corresponding char
+ * @param cmd all parameters are inherited from modify command
+ * @param start
+ * @param exp_env_v
+ * @param env_var
+ * @return the modified command
+ */
+char *fill_mdcmd(char *cmd, size_t start, char *exp_env_v, char *env_var)
+{
+	size_t	i;
+	char	*m_cmd;
+
+	m_cmd = malloc(sizeof(char) * (ft_strlen(cmd) + 1
+				+ (ft_strlen(exp_env_v) - ft_strlen(env_var))));
+	if (!m_cmd)
+		return (NULL);
+	str_cpy_to_x(cmd, m_cmd, '$');
+	i = 0;
+	while (exp_env_v[i])
+		m_cmd[start++] = exp_env_v[i++];
+	i = (start - i) + ft_strlen(env_var);
+	while (cmd[i])
+		m_cmd[start++] = cmd[i++];
+	m_cmd[start] = 0;
+	return (m_cmd);
 }

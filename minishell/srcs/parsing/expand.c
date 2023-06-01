@@ -6,11 +6,11 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:08:17 by nfaust            #+#    #+#             */
-/*   Updated: 2023/05/25 16:11:07 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/05/31 21:27:24 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incs/minishell.h"
+#include "minishell.h"
 
 /**
  * @brief collect the content of the environnement variable
@@ -19,7 +19,7 @@
  * @return the content of the environnement variable, \n\n
  * an allocated string containing "" if the variable is not set
  */
-static char	*expand_env_var(char **envp, char *var)
+static char	*expand_env_var(t_garbage **gb, char **envp, char *var)
 {
 	size_t	i;
 	size_t	var_len;
@@ -30,7 +30,7 @@ static char	*expand_env_var(char **envp, char *var)
 	var_len = ft_strlen(var);
 	if (var_len == 0)
 		return (NULL);
-	var_expansion = ft_strjoin(var + 1, "=");
+	var_expansion = ft_gbstrjoin(var + 1, "=", gb);
 	if (!var_expansion)
 		return (NULL);
 	i = 0;
@@ -38,14 +38,14 @@ static char	*expand_env_var(char **envp, char *var)
 	{
 		if (ft_strncmp(envp[i++], var_expansion, var_len) == 0)
 		{
-			free(var_expansion);
-			var_expansion = ft_strdup(envp[i - 1] + var_len);
+			ft_free(gb, var_expansion);
+			var_expansion = ft_gb_strdup(envp[i - 1] + var_len, gb);
 			if (!var_expansion)
 				return (NULL);
 			return (var_expansion);
 		}
 	}
-	return (free(var_expansion), ft_strdup(""));
+	return (ft_free(gb, var_expansion), ft_gb_strdup("", gb));
 }
 
 /**
@@ -56,16 +56,16 @@ static char	*expand_env_var(char **envp, char *var)
  * @param envp
  * @return the content of the environnement variable
  */
-static char	*set_expanded_env_var(char *env_var,
-									int double_not_closed, char **envp)
+static char	*set_expanded_env_var(char *env_var, t_minish *msh,
+									int double_not_closed)
 {
 	char	*expanded_env_var;
 
-	expanded_env_var = expand_env_var(envp, env_var);
+	expanded_env_var = expand_env_var(&(msh->garbage), msh->envp, env_var);
 	if (double_not_closed < 0)
-		expanded_env_var = cut_whitespaces(expanded_env_var);
+		expanded_env_var = cut_whitespaces(expanded_env_var, NULL);
 	if (!expanded_env_var)
-		return (free(env_var), NULL);
+		return (ft_free(&(msh->garbage), env_var), NULL);
 	return (expanded_env_var);
 }
 
@@ -78,34 +78,24 @@ static char	*set_expanded_env_var(char *env_var,
  * @param double_not_closed 1 if a double quote is opened, \n 0 if not
  * @return the modified cmd
  */
-static char	*modify_command(char *cmd,
-							size_t start, char **envp, int double_not_closed)
+static char	*modify_command(char *cmd, t_minish *msh,
+							size_t start, int double_not_closed)
 {
 	char	*env_var;
 	char	*exp_env_v;
 	char	*m_cmd;
-	size_t	i;
 
-	env_var = ft_strdup_to_charset(cmd + start, " \t\n\v\f\r\"\'\0");
+	env_var = ft_gbstrdup_to_charset(cmd + start, " \t\n\v\f\r\"\'\0", &(msh->garbage));
 	if (!env_var)
 		return (NULL);
 	if (is_dollar_alone(env_var, cmd, start))
-		return (free(env_var), cmd);
-	exp_env_v = set_expanded_env_var(env_var, double_not_closed, envp);
+		return (ft_free(&(msh->garbage), env_var), cmd);
+	exp_env_v = set_expanded_env_var(env_var, msh, double_not_closed);
 	if (!exp_env_v)
-		return (free(env_var), NULL);
-	m_cmd = malloc(sizeof(char) * (ft_strlen(cmd) + 1
-				+ (ft_strlen(exp_env_v) - ft_strlen(env_var))));
-	if (!m_cmd)
-		return (free(env_var), free(exp_env_v), NULL);
-	str_cpy_to_x(cmd, m_cmd, '$');
-	i = 0;
-	while (exp_env_v[i])
-		m_cmd[start++] = exp_env_v[i++];
-	i = (start - i) + ft_strlen(env_var);
-	while (cmd[i])
-		m_cmd[start++] = cmd[i++];
-	return (m_cmd[start] = 0, free(env_var), free(cmd), free(exp_env_v), m_cmd);
+		return (ft_free(&(msh->garbage), env_var),
+			ft_free(&(msh->garbage), cmd), NULL);
+	m_cmd = fill_mdcmd(cmd, start, exp_env_v, env_var);
+	return (ft_free_mcmd(env_var, cmd, exp_env_v, &(msh->garbage)), m_cmd);
 }
 
 /**
@@ -114,7 +104,7 @@ static char	*modify_command(char *cmd,
  * @param envp
  * @return the modified string
  */
-static char	*expand_vars(char *command, char **envp)
+static char	*expand_vars(char *command, t_minish *msh)
 {
 	size_t	i;
 	int		double_not_closed;
@@ -127,7 +117,7 @@ static char	*expand_vars(char *command, char **envp)
 			double_not_closed *= -1;
 		if (command[i] == '$')
 		{
-			command = modify_command(command, i, envp, double_not_closed);
+			command = modify_command(command, msh, i, double_not_closed);
 			if (!command)
 				return (NULL);
 		}
@@ -145,18 +135,24 @@ static char	*expand_vars(char *command, char **envp)
  * @param w_lst command word list
  * @param envp
  */
-void	expand_commands(t_word_lst **w_lst, char **envp)
+void	expand_commands(t_minish *minish)
 {
 	t_word_lst	*w_lst_cpy;
+	char		*command;
 
-	w_lst_cpy = *w_lst;
-	//printf("starting expand\n");
+	w_lst_cpy = minish->lst_w;
+	printf(GREEN"starting expand\n");
 	while (w_lst_cpy)
 	{
-		w_lst_cpy->word = expand_vars(w_lst_cpy->word, envp);
-		if (!w_lst_cpy->word)
+		command = expand_vars(w_lst_cpy->word, minish);
+		if (!command)
 			return ; // ? code d'erreur a ajouter
-	//	printf("%s\n", w_lst_cpy->word);
+		w_lst_cpy->word = ft_gb_strdup(command, &(minish->garbage));
+		free(command);
+		if (!w_lst_cpy->word)
+			return ;
+		printf("%s\n", w_lst_cpy->word);
 		w_lst_cpy = w_lst_cpy->next;
 	}
+	printf("expand end\n\n"RESET);
 }
