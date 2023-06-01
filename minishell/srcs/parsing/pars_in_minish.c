@@ -72,7 +72,7 @@ int	sh_pars(t_minish **sh)
 			free_error_word_lst(&((*sh)->garbage), &((*sh)->lst_w));
 			return (0);
 		}
-		new = lst_cmd_new(get_cmd_2(&(*sh)->lst_w, &(*sh)->garbage), fds, redirs, &((*sh)->garbage));
+		new = lst_cmd_new(get_cmd(&(*sh)->lst_w, &(*sh)->garbage), fds, redirs, &((*sh)->garbage));
 		if (!new)
 		{
 			free_error_cmd(&((*sh)->garbage), &((*sh)->cmds));
