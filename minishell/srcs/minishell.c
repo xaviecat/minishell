@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/31 19:57:56 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/01 12:24:02 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ void	minishell(char **envp)
 			free(minish);
 			return ;
 		}
-		//! gerer quand metacractere en fin de ligne
+		//! gerer redir in redir >< "bash: syntax error near unexpected token `<'"
+		//! gerer quand chevron ou pipe en fin de ligne
 		print_lst_word(minish->lst_w);
 		expand_commands(&minish->lst_w, envp);
 		print_lst_word(minish->lst_w);
