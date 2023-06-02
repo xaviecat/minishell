@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/02 14:04:08 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/02 14:21:49 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	free_and_exit_minish(t_minish *minish, char ***envp_sh)
 
 void	cp_envp_to_envp_sh(char ***envp_sh, char **envp_in_minish)
 {
-	if (envp_sh)
+	if (*envp_sh)
 		free_char_tab(*envp_sh);
 	*envp_sh = ft_dbtab_dup(envp_in_minish);
 }
@@ -112,12 +112,6 @@ void	minishell(char **envp)
 		print_lst_cmd(minish->cmds);
 		exec_all(minish);
 		cp_envp_to_envp_sh(&envp_sh, minish->envp);
-		int i = 0;
-		while (envp_sh[i])
-		{
-			printf("%s", envp_sh[i]);
-			i++;
-		}
 		ft_free_all(&minish->garbage);
 		free(minish);
 	}

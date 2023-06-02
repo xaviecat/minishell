@@ -62,6 +62,8 @@ CFLAGS			:=	-Wall -Wextra -Werror
 
 RDL				:=	-lreadline
 
+TLI				:=	-ltinfo
+
 ASAN_F			:=	-g3 #-fsanitize=address
 
 #========================EXEC===============================#
@@ -76,7 +78,7 @@ all				:	$(NAME)
 				@echo -e '\x1B[34m                                                                                                 \x1B[0m'
 				@echo -e '\x1B[1;34m                                                                    by nfaust, syluiset & xcharra\x1B[0m'
 $(NAME)			:	$(OBJS_D) $(OBJS) $(HEAD_D)$(HEAD)
-				$(CC) $(CFLAGS) $(ASAN_F) -o $(NAME) $(OBJS) $(LIB_A) $(RDL)
+				$(CC) $(CFLAGS) $(ASAN_F) -o $(NAME) $(OBJS) $(LIB_A) $(RDL) $(TLI)
 
 $(OBJS)			:	$(OBJS_D)%.o: $(SRCS_D)%.c $(HEAD_D)$(HEAD) $(LIB_A)
 				$(CC) $(CFLAGS) $(ASAN_F) -I$(HEAD_D) -I$(LIB_H) -c $< -o $@
