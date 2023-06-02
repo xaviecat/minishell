@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 17:43:08 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/01 17:34:56 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/02 11:26:53 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,17 @@ bool	is_bad_redir(t_char_lst *lst)
 {
 	while (lst)
 	{
-		if ((lst->c == '<' && is_smaller_bracket_error(&lst))
-			|| (lst->c == '>' && is_greater_bracket_error(&lst))) //Segfault si line = < ou <<
-			return (true);
-		if (lst)
+		if (lst->c == '<')
+		{
+			if (is_smaller_bracket_error(&lst))
+				return (true);
+		}
+		else if (lst->c == '>')
+		{
+			if (is_greater_bracket_error(&lst))
+				return (true);
+		}
+		else if (lst)
 			lst = lst->next;
 	}
 	return (false);
