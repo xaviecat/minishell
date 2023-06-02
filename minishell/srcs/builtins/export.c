@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:46:20 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/02 13:44:21 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/02 14:36:05 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	b_export(t_minish *msh, t_w_cmd_list *cmd)
 {
 	size_t	i;
 	char	**save_envp;
+	char 	**modified_envp;
 
 	save_envp = msh->envp;
 	if (!ft_alloc_envp(msh, cmd))
@@ -68,14 +69,15 @@ int	b_export(t_minish *msh, t_w_cmd_list *cmd)
 	while (cmd)
 	{
 		if (ft_strchr(cmd->cmd, '='))
-		{
-			(msh->envp)[i] = ft_gb_strdup(cmd->cmd, &(msh->garbage));
-			i++;
-		}
+			(msh->envp)[i++] = ft_gb_strdup(cmd->cmd, &(msh->garbage));
 		cmd = cmd->next;
 	}
+	msh->envp[i] = NULL;
+	modified_envp = ft_gb_dbtab_join(save_envp, msh->envp, &(msh->garbage));
+	if (!modified_envp && errno == ENOMEM)
+		return (0);
 	i = 0;
-	while ((msh->envp)[i])
+	while (modified_envp[i])
 	{
 		printf("%s\n", (msh->envp)[i++]);
 	}

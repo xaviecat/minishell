@@ -28,7 +28,9 @@ SRCS			:=	minishell.c\
 					utils/ft_gbstrtrim.c\
 					utils/ft_gbcalloc.c\
 					exec/exec.c\
-					builtins/export.c
+					builtins/export.c\
+					utils/ft_gb_dbtab_join.c\
+					utils/ft_gb_free_split.c
 
 
 SRCS_D			:=	srcs/
@@ -60,7 +62,7 @@ CFLAGS			:=	-Wall -Wextra -Werror
 
 RDL				:=	-lreadline
 
-ASAN_F			:=	-g3 #-fsanitize=address
+ASAN_F			:=	-g3 -fsanitize=address
 
 #========================EXEC===============================#
 all				:	$(NAME)
