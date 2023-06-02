@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/01 12:42:28 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/02 13:33:33 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,6 +200,7 @@ void			print_fd(t_fd_list *lst);
 void			harmonize_spaces(t_char_lst *lst, t_garbage **gb);
 int				redir_is_valid(t_word_lst **lst, t_garbage **gb);
 
+
 /* error */
 bool			is_forbidden_char(t_char_lst *lst);
 bool			is_bad_redir(t_char_lst *lst);
@@ -238,6 +239,9 @@ char			*fill_mdcmd(char *cmd, size_t start,
 					char *exp_env_v, char *env_var);
 void			*ft_gbcalloc(size_t count, size_t size, t_garbage **gb);
 char			*ft_gbstrtrim(char const *s1, char const *set, t_garbage **gb);
+char	        **ft_dbtab_dup_gb(char **dbtab, t_garbage **gb);
+void			free_char_tab(char **c_tab);
+void			free_char_tab_gb(char **c_tab, t_garbage **gb);
 
 /* list_char function */
 t_char_lst		*char_lst_new(char c, t_garbage **gb);
