@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:46:20 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/01 17:35:58 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/02 13:44:21 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,15 @@ size_t	get_arg_count(t_w_cmd_list *curr)
 	return (size);
 }
 
-void	ft_alloc_envp(t_minish *msh, t_w_cmd_list *curr)
+int	ft_alloc_envp(t_minish *msh, t_w_cmd_list *curr)
 {
 	size_t	size_count;
 	size_t	i;
 	size_t	j;
 
 	msh->envp = ft_malloc(&(msh->garbage), sizeof(char *), get_arg_count(curr));
+	if (!(msh->envp))
+		return (0);
 	curr = curr->next;
 	j = 0;
 	while (curr)
@@ -45,21 +47,22 @@ void	ft_alloc_envp(t_minish *msh, t_w_cmd_list *curr)
 				size_count++;
 			i++;
 		}
-		printf(RED"%li : %li\n"RESET, j, size_count);
 		if (size_count)
-		{
-			(msh->envp)[j] = ft_malloc(&(msh->garbage), sizeof(char), size_count);
-			j++;
-		}
+			(msh->envp)[j++] = ft_malloc(&(msh->garbage),
+					sizeof(char), size_count);
 		curr = curr->next;
 	}
+	return (1);
 }
 
-void	b_export(t_minish *msh, t_w_cmd_list *cmd)
+int	b_export(t_minish *msh, t_w_cmd_list *cmd)
 {
 	size_t	i;
+	char	**save_envp;
 
-	ft_alloc_envp(msh, cmd);
+	save_envp = msh->envp;
+	if (!ft_alloc_envp(msh, cmd))
+		return (0);
 	cmd = cmd->next;
 	i = 0;
 	while (cmd)
@@ -76,4 +79,5 @@ void	b_export(t_minish *msh, t_w_cmd_list *cmd)
 	{
 		printf("%s\n", (msh->envp)[i++]);
 	}
+	return (1);
 }
