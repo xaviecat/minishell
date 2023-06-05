@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/05 13:29:15 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/05 16:24:55 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	minishell(char **envp)
 			add_history(line);
 		minish = create_minishell(envp, envp_sh);
 		if (!minish)
-			return ; // ! ERROR
+			return ;
 		if (!(create_char_lst_with_c_inside(line, &minish)))
 		{
 			free(line);
@@ -90,17 +90,7 @@ void	minishell(char **envp)
 		}
 		give_type_in_lst(&minish->lst_c);
 		print_lst_char(minish->lst_c);
-		if (process_quotes(minish->lst_c) == true)
-		{
-			ft_free_all(&minish->garbage);
-			continue ;
-		}
-		if (is_forbidden_char(minish->lst_c))
-		{
-			ft_free_all(&minish->garbage);
-			continue ;
-		}
-		if (is_bad_redir(minish->lst_c))
+		if (unhandled_char(minish->lst_c))
 		{
 			ft_free_all(&minish->garbage);
 			continue ;
@@ -109,7 +99,7 @@ void	minishell(char **envp)
 		print_lst_char(minish->lst_c);
 		if (!(create_word_lst(&minish)))
 			free_and_exit_minish(minish, &envp_sh);
-		if ((!redir_is_valid(&(minish->lst_w), &(minish->garbage))))
+		if ((!check_pipe_and_redir(&(minish->garbage), &(minish->lst_w))))
 			continue ;
 		//! gerer redir in redir >< "bash: syntax error near unexpected token `<'"
 		//! gerer quand chevron ou pipe en fin de ligne
