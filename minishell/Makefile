@@ -33,7 +33,8 @@ SRCS			:=	minishell.c\
 					exec/exec.c\
 					builtins/export.c\
 					utils/ft_gb_dbtab_join.c\
-					utils/ft_gb_free_split.c
+					utils/ft_gb_free_split.c\
+					utils/export_utils.c
 
 
 SRCS_D			:=	srcs/
