@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:02:59 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/26 18:23:04 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/05 13:26:39 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,14 @@ void	lst_clear(t_cmd_list **lst)
 
 void	print_lst_cmd(t_cmd_list *lst)
 {
-	t_cmd_list		*first;
 	t_w_cmd_list	*first_w;
 	int				i;
 
-	first = lst;
-	first_w = lst->cmd;
 	i = 0;
 	printf(CYAN"lst_cmd:\n");
 	while (lst)
 	{
+		first_w = lst->cmd;
 		printf(UNDERLINE"node : %d\n"RESET, i);
 		printf(CYAN"builtin : %d\n", lst->builtin);
 		printf("cmd :                          | params :\n");
@@ -62,6 +60,7 @@ void	print_lst_cmd(t_cmd_list *lst)
 			printf("[%s] ", lst->cmd->cmd);
 			lst->cmd = lst->cmd->next;
 		}
+		lst->cmd = first_w;
 		printf("\n");
 		print_fd(lst->fds);
 		print_redir(lst->redirs);
@@ -69,8 +68,6 @@ void	print_lst_cmd(t_cmd_list *lst)
 		i++;
 	}
 	printf("\n"RESET);
-	lst = first;
-	lst->cmd = first_w;
 }
 
 t_cmd_list	*lst_cmd_last(t_cmd_list *lst)

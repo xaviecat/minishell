@@ -17,6 +17,7 @@ char	**ft_dbtab_dup(char **dbtab)
 	int		i;
 	char	**new_dbtab;
 
+	new_dbtab = NULL;
 	if (!dbtab)
 		return (NULL);
 	i = 0;
