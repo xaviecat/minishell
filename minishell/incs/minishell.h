@@ -239,6 +239,9 @@ char			*fill_mdcmd(char *cmd, size_t start,
 					char *exp_env_v, char *env_var);
 void			*ft_gbcalloc(size_t count, size_t size, t_garbage **gb);
 char			*ft_gbstrtrim(char const *s1, char const *set, t_garbage **gb);
+char	        **ft_dbtab_dup_gb(char **dbtab, t_garbage **gb);
+void			free_char_tab(char **c_tab);
+void			free_char_tab_gb(char **c_tab, t_garbage **gb);
 char			**ft_gb_dbtab_join(char **tab1, char **tab2, t_garbage **gb);
 void			ft_gb_free_split(char **tab_to_free, t_garbage **gb);
 
