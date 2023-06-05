@@ -198,6 +198,7 @@ void			print_redir(t_redir_list *lst);
 t_fd_list		*create_fds_list(t_redir_list *redirs, t_garbage **gb);
 void			print_fd(t_fd_list *lst);
 void			harmonize_spaces(t_char_lst *lst, t_garbage **gb);
+int				redir_is_valid(t_word_lst **lst, t_garbage **gb);
 
 /* error */
 bool			is_forbidden_char(t_char_lst *lst);
@@ -271,5 +272,6 @@ int				sh_pars(t_minish **minish);
 bool			builtin_or_command(char *cmd);
 
 /* lst_w_cmd function */
-t_w_cmd_list    *get_cmd(t_word_lst **old_lst, t_garbage **gb);
+
+t_w_cmd_list	*get_cmd(t_word_lst **old_lst, t_garbage **gb);
 #endif

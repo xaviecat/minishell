@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hormonize_spaces.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 11:20:59 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/31 16:57:50 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/01 18:28:33 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	remove_extra_spaces(t_char_lst *lst, t_garbage **gb)
 	{
 		while (lst && (lst->s_quote || lst->d_quote))
 			lst = lst->next;
-		while (lst && lst->c == ' ' && lst->next->c == ' ')
+		while (lst && lst->next && lst->c == ' ' && lst->next->c == ' ')
 			char_lst_delone(&lst, gb);
 		if (lst)
 			lst = lst->next;

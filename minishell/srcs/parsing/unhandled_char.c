@@ -85,10 +85,10 @@ bool	is_bad_redir(t_char_lst *lst)
 	while (lst)
 	{
 		if ((lst->c == '<' && is_smaller_bracket_error(&lst))
-			|| (lst->c == '>' && is_greater_bracket_error(&lst)))
+			|| (lst->c == '>' && is_greater_bracket_error(&lst))) //Segfault si line = < ou <<
 			return (true);
 		if (lst)
-		lst = lst->next;
+			lst = lst->next;
 	}
 	return (false);
 }

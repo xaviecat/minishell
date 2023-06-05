@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/31 12:03:51 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/01 18:08:21 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,13 @@ t_minish	*create_minishell(char **envp)
 	return (sh);
 }
 
+void	free_and_exit_minish(t_minish *minish)
+{
+	free(minish->garbage);
+	free(minish);
+	exit(EXIT_FAILURE);
+}
+
 void	minishell(char **envp)
 {
 	char		*line;
@@ -50,6 +57,11 @@ void	minishell(char **envp)
 	while (1)
 	{
 		line = readline(GREEN UNDERLINE"TRI_SH $>"RESET" ");
+		if (*line == '\0')
+		{
+			free(line);
+			continue;
+		}
 		if (line && *line)
 			add_history(line);
 		minish = create_minishell(envp);
@@ -58,9 +70,7 @@ void	minishell(char **envp)
 		if (!(create_char_lst_with_c_inside(line, &minish)))
 		{
 			free(line);
-			free(minish->garbage);
-			free(minish);
-			return ;
+			free_and_exit_minish(minish);
 		}
 		give_type_in_lst(&minish->lst_c);
 		print_lst_char(minish->lst_c);
@@ -73,22 +83,16 @@ void	minishell(char **envp)
 		harmonize_spaces(minish->lst_c, &(minish->garbage));
 		print_lst_char(minish->lst_c);
 		if (!(create_word_lst(&minish)))
-		{
-			free(minish->garbage);
-			free(minish);
-			return ;
-		}
+			free_and_exit_minish(minish);
+		if ((!redir_is_valid(&(minish->lst_w), &(minish->garbage))))
+			continue ;
 		//! gerer redir in redir >< "bash: syntax error near unexpected token `<'"
 		//! gerer quand chevron ou pipe en fin de ligne
 		print_lst_word(minish->lst_w);
 		expand_commands(minish);
 		print_lst_word(minish->lst_w);
 		if (!(sh_pars(&minish)))
-		{
-			free(minish->garbage);
-			free(minish);
-			return ;
-		}
+			free_and_exit_minish(minish);
 		print_lst_cmd(minish->cmds);
 		exec_all(minish);
 		ft_free_all(&minish->garbage);
