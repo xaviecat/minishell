@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 17:44:16 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/31 12:01:52 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/02 14:09:39 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,60 +30,61 @@ _/    |__|  |__| |_______||_______||_______|"
 # define TRISHBANNER7	"                                                      \
                                            "
 # define TRISHBANNER8	"                                                      \
-              by nfaust, syluiset & xcharra"
+         🍦    by nfaust, syluiset & xcharra\001\033[0m\002"
+
+# define DELLINE	"\001\033[2K\r\002"
+
+# define RESET		"\001\033[0m\002"
+# define BOLD		"\001\033[1m\002"
+# define FAINT		"\001\033[2m\002"
+# define ITALIC		"\001\033[3m\002"
+# define UNDERLINE	"\001\033[4m\002"
+# define SBLINK		"\001\033[5m\002"
+# define FBLINK		"\001\033[6m\002"
+# define REVERSE	"\001\033[7m\002"
+# define HIDE		"\001\033[8m\002"
+# define STRIKE		"\001\033[9m\002"
+
+# define BLACK		"\001\033[30m\002"
+# define RED		"\001\033[31m\002"
+# define GREEN		"\001\033[32m\002"
+# define YELLOW		"\001\033[33m\002"
+# define BLUE		"\001\033[34m\002"
+# define PURPLE		"\001\033[35m\002"
+# define CYAN		"\001\033[36m\002"
+# define GREY		"\001\033[37m\002"
+
+# define LBLACK		"\001\033[90m\002"
+# define LRED		"\001\033[91m\002"
+# define LGREEN		"\001\033[92m\002"
+# define LYELLOW	"\001\033[93m\002"
+# define LBLUE		"\001\033[94m\002"
+# define LPURPLE	"\001\033[95m\002"
+# define LCYAN		"\001\033[96m\002"
+# define LWHITE		"\001\033[97m\002"
 
 
-# define RESET		"\x1B[0m"
-# define BOLD		"\x1B[1m"
-# define FAINT		"\x1B[2m"
-# define ITALIC		"\x1B[3m"
-# define UNDERLINE	"\x1B[4m"
-# define SBLINK		"\x1B[5m"
-# define FBLINK		"\x1B[6m"
-# define REVERSE	"\x1B[7m"
-# define HIDE		"\x1B[8m"
-# define STRIKE		"\x1B[9m"
+# define BGBLACK	"\001\033[40m\002"
+# define BGRED		"\001\033[41m\002"
+# define BGGREEN	"\001\033[42m\002"
+# define BGYELLOW	"\001\033[43m\002"
+# define BGBLUE		"\001\033[44m\002"
+# define BGPURPLE	"\001\033[45m\002"
+# define BGCYAN		"\001\033[46m\002"
+# define BGGREY		"\001\033[47m\002"
 
-# define BLACK		"\x1B[30m"
-# define RED		"\x1B[31m"
-# define GREEN		"\x1B[32m"
-# define YELLOW		"\x1B[33m"
-# define BLUE		"\x1B[34m"
-# define PURPLE		"\x1B[35m"
-# define CYAN		"\x1B[36m"
-# define GREY		"\x1B[37m"
+# define LBGBLACK	"\001\033[100m\002"
+# define LBGRED		"\001\033[101m\002"
+# define LBGGREEN	"\001\033[102m\002"
+# define LBGYELLOW	"\001\033[103m\002"
+# define LBGBLUE	"\001\033[104m\002"
+# define LBGPURPLE	"\001\033[105m\002"
+# define LBGCYAN	"\001\033[106m\002"
+# define LBGGREY	"\001\033[107m\002"
 
-# define LBLACK		"\x1B[90m"
-# define LRED		"\x1B[91m"
-# define LGREEN		"\x1B[92m"
-# define LYELLOW	"\x1B[93m"
-# define LBLUE		"\x1B[94m"
-# define LPURPLE	"\x1B[95m"
-# define LCYAN		"\x1B[96m"
-# define LWHITE		"\x1B[97m"
-
-
-# define BGBLACK	"\x1B[40m"
-# define BGRED		"\x1B[41m"
-# define BGGREEN	"\x1B[42m"
-# define BGYELLOW	"\x1B[43m"
-# define BGBLUE		"\x1B[44m"
-# define BGPURPLE	"\x1B[45m"
-# define BGCYAN		"\x1B[46m"
-# define BGGREY		"\x1B[47m"
-
-# define LBGBLACK	"\x1B[100m"
-# define LBGRED		"\x1B[101m"
-# define LBGGREEN	"\x1B[102m"
-# define LBGYELLOW	"\x1B[103m"
-# define LBGBLUE	"\x1B[104m"
-# define LBGPURPLE	"\x1B[105m"
-# define LBGCYAN	"\x1B[106m"
-# define LBGGREY	"\x1B[107m"
-
-# define REDPROMPT	" \x1b[4;91mTRI_SH $>\x1b[0m "
-# define GREPROMPT	" \x1b[4;92mTRI_SH $>\x1b[0m "
-# define YELPROMPT	" \x1b[4;93mTRI_SH $>\x1b[0m "
+# define REDPROMPT	" \001\033[4;91m\002TRI_SH $>\001\033[0m\002 "
+# define GREPROMPT	" \001\033[4;92m\002TRI_SH $>\001\033[0m\002 "
+# define YELPROMPT	" \001\033[4;93m\002TRI_SH $>\001\033[0m\002 "
 /*
 	printf(BOLD     "Salut\n" RESET);
 	printf(FAINT    "Salut\n" RESET);
