@@ -43,6 +43,7 @@ OBJS_D			:=	objs/
 OBJS			:=	$(SRCS:%.c=$(OBJS_D)%.o)
 
 HEAD			:=	minishell.h\
+					error_msgs.h\
 					colors.h
 
 HEAD_D			:=	incs/

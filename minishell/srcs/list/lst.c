@@ -17,7 +17,7 @@ void 	free_chunk(t_cmd_list *lst)
 	while (lst->cmd)
 	{
 		free(lst->cmd->cmd);
-        lst->cmd = lst->cmd->next;
+		lst->cmd = lst->cmd->next;
 	}
 	free(lst);
 }

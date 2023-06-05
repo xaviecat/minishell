@@ -19,7 +19,7 @@ int pipe_is_valid(t_word_lst **lst, t_garbage **gb)
 		if ((*lst)->type == w_pipe)
 		{
 			if (!(*lst)->next)
-				ft_fdprintf(2, "syntax error near unexpected token `|'\n");
+				ft_fdprintf(2, RED PIPE_TKN RESET);
 			free_error_word_lst(gb, lst);
 			return (0);
 		}
@@ -49,7 +49,7 @@ int	redir_is_valid(t_word_lst **lst, t_garbage **gb)
 				|| ft_is_redir((*lst)->next->type))
 			{
 				if (!(*lst)->next)
-					ft_fdprintf(2, "syntax error near unexpected token `newline'\n");
+					ft_fdprintf(2, RED NL_TKN RESET);
 				else
 					ft_fdprintf(2, "syntax error near unexpected token `%s'\n", (*lst)->next->word);
 				free_error_word_lst(gb, lst);
