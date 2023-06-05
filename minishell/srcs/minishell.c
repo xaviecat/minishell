@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/05 16:24:55 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/05 13:29:15 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	minishell(char **envp)
 			add_history(line);
 		minish = create_minishell(envp, envp_sh);
 		if (!minish)
-			return ;
+			return ; // ! ERROR free line
 		if (!(create_char_lst_with_c_inside(line, &minish)))
 		{
 			free(line);
