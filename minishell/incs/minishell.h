@@ -15,6 +15,7 @@
 
 # include "../libft/incs/libft.h"
 # include "colors.h"
+# include "error_msgs.h"
 
 /* malloc, free, exit, getenv, tcsetattr, tcgetattr, */
 # include <stdlib.h>
