@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_is_valid.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:14:27 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/01 15:03:48 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/05 13:53:51 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ int	redir_is_valid(t_word_lst **lst, t_garbage **gb)
 			if (!(*lst)->next || (*lst)->next->type == w_pipe)
 			{
 				if (!(*lst)->next)
-					ft_fdprintf(2, "syntax error near unexpected token `newline'\n");
+					ft_fdprintf(2, RED NL_TKN RESET);
 				else
-					ft_fdprintf(2, "syntax error near unexpected token `|'\n");
+					ft_fdprintf(2, RED PIPE_TKN RESET);
 				free_error_word_lst(gb, lst);
 				return (0);
 			}
