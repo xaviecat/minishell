@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/01 18:08:21 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/05 11:41:42 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	minishell(char **envp)
 	t_minish	*minish;
 	char		**envp_sh;
 
-    envp_sh = NULL;
+	envp_sh = NULL;
 	printf(LBLUE TRISHBANNER0"\n");
 	printf(TRISHBANNER1"\n");
 	printf(TRISHBANNER2"\n");
@@ -132,7 +132,7 @@ void	minishell(char **envp)
 int	main(int argc, char **argv, char **envp)
 {
 	(void) argv;
-// 	(void) envp;
+//	(void) envp;
 //	(void) argc;
 	if (argc == 1)
 		minishell(envp);

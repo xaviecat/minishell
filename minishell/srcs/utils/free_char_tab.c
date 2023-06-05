@@ -17,7 +17,7 @@ void	free_char_tab_gb(char **c_tab, t_garbage **gb)
 	int i;
 
 	i = 0;
-	while (tab[i])
+	while (c_tab[i])
 	{
 		ft_free(gb, c_tab[i]);
 		i++;
@@ -30,7 +30,7 @@ void	free_char_tab(char **c_tab)
 	int	i;
 
 	i = 0;
-	while (tab[i])
+	while (c_tab[i])
 	{
 		free(c_tab[i]);
 		i++;
