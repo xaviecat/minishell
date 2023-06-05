@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/05 11:41:42 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/05 13:52:31 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_minish	*create_minishell(char **envp, char **envp_sh)
 		return (NULL);
 	}
 	if (envp_sh)
-		sh->envp = envp_sh;
+		sh->envp = ft_dbtab_dup_gb(envp_sh, &(sh->garbage));
 	else
 		sh->envp = ft_dbtab_dup_gb(envp, &(sh->garbage));
 	return (sh);
@@ -38,7 +38,7 @@ t_minish	*create_minishell(char **envp, char **envp_sh)
 
 void	free_and_exit_minish(t_minish *minish, char ***envp_sh)
 {
-	if (envp_sh)
+	if (*envp_sh)
 		free_char_tab_gb(*envp_sh, &(minish->garbage));
 	envp_sh = NULL;
 	free(minish->garbage);
