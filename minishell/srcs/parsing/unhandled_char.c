@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 17:43:08 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/31 19:25:59 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/05 14:05:00 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,17 @@ bool	is_forbidden_char(t_char_lst *lst)
 		if (lst->c == '&' && !lst->s_quote && !lst->d_quote)
 		{
 			if (lst->next && lst->next->c == '&')
-				return (ft_fdprintf(2,
-						"minishell: feature not handled: '&&'\n"), true);
-			return (ft_fdprintf(2,
-					"minishell: feature not handled: '&'\n"), true);
+				return (ft_fdprintf(2, RED D_AMP RESET), true);
+			return (ft_fdprintf(2, RED S_AMP RESET), true);
 		}
 		if (lst->c == '|' && lst->next && lst->next->c == '|'
 			&& !lst->s_quote && !lst->d_quote)
 			return (ft_fdprintf(2,
-					"minishell: feature not handled: '||'\n"), true);
+					RED D_PIPE RESET), true);
 		if (lst->c == ';' && !lst->s_quote && !lst->d_quote)
-			return (ft_fdprintf(2,
-					"minishell: feature not handled: ';'\n"), true);
+			return (ft_fdprintf(2, RED SEMICOLON RESET), true);
+		if (lst->c == '\\' && !lst->s_quote && !lst->d_quote)
+			return (ft_fdprintf(2, RED BACKSLASH RESET), true);
 		lst = lst->next;
 	}
 	return (false);
@@ -53,11 +52,9 @@ bool	is_smaller_bracket_error(t_char_lst **lst)
 		i++;
 	}
 	if (i == 3)
-		return (printf("minishell: syntax error near unexpected token `<'\n"),
-			true);
+		return (printf(RED S_SM_A_BRA RESET), true);
 	else if (i > 3)
-		return (printf("minishell: syntax error near unexpected token `<<'\n"),
-			true);
+		return (printf(RED D_SM_A_BRA RESET), true);
 	return (false);
 }
 
@@ -72,10 +69,10 @@ bool	is_greater_bracket_error(t_char_lst **lst)
 		i++;
 	}
 	if (i == 3)
-		return (printf("minishell: syntax error near unexpected token `>'\n"),
+		return (printf(RED S_GR_A_BRA RESET),
 			true);
 	else if (i > 3)
-		return (printf("minishell: syntax error near unexpected token `>>'\n"),
+		return (printf(RED D_GR_A_BRA RESET),
 			true);
 	return (false);
 }
@@ -84,10 +81,17 @@ bool	is_bad_redir(t_char_lst *lst)
 {
 	while (lst)
 	{
-		if ((lst->c == '<' && is_smaller_bracket_error(&lst))
-			|| (lst->c == '>' && is_greater_bracket_error(&lst))) //Segfault si line = < ou <<
-			return (true);
-		if (lst)
+		if (lst->c == '<')
+		{
+			if (is_smaller_bracket_error(&lst))
+				return (true);
+		}
+		else if (lst->c == '>')
+		{
+			if (is_greater_bracket_error(&lst))
+				return (true);
+		}
+		else if (lst)
 			lst = lst->next;
 	}
 	return (false);

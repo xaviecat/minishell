@@ -43,9 +43,13 @@ OBJS_D			:=	objs/
 
 OBJS			:=	$(SRCS:%.c=$(OBJS_D)%.o)
 
-HEAD			:=	minishell.h
+HEAD			:=	minishell.h\
+					error_msgs.h\
+					colors.h
 
 HEAD_D			:=	incs/
+
+HEAD_A			:=	$(addprefix $(HEAD_D), $(HEAD))
 
 NAME			:=	minishell
 
@@ -66,25 +70,23 @@ CFLAGS			:=	-Wall -Wextra -Werror
 
 RDL				:=	-lreadline
 
-TLI				:=	-ltinfo
-
-ASAN_F			:=	-g3 -fsanitize=address
+ASAN_F			:=	-g3 #-fsanitize=address
 
 #========================EXEC===============================#
 all				:	$(NAME)
 				@echo
-				@echo -e '\x1B[34m.___________..______       __  .__   __.  __       _______. __    __   _______  __       __      \x1B[0m'
-				@echo -e '\x1B[34m|           ||   _  \     |  | |  \ |  | |  |     /       ||  |  |  | |   ____||  |     |  |     \x1B[0m'
-				@echo -e '\x1B[34m`---|  |----`|  |_)  |    |  | |   \|  | |  |    |   (----`|  |__|  | |  |__   |  |     |  |     \x1B[0m'
-				@echo -e '\x1B[34m    |  |     |      /     |  | |  . `  | |  |     \   \    |   __   | |   __|  |  |     |  |     \x1B[0m'
-				@echo -e '\x1B[34m    |  |     |  |\  \----.|  | |  |\   | |  | .----)   |   |  |  |  | |  |____ |  `----.|  `----.\x1B[0m'
-				@echo -e '\x1B[34m    |__|     | _| `._____||__| |__| \__| |__| |_______/    |__|  |__| |_______||_______||_______|\x1B[0m'
-				@echo -e '\x1B[34m                                                                                                 \x1B[0m'
-				@echo -e '\x1B[1;34m                                                                    by nfaust, syluiset & xcharra\x1B[0m'
-$(NAME)			:	$(OBJS_D) $(OBJS) $(HEAD_D)$(HEAD)
-				$(CC) $(CFLAGS) $(ASAN_F) -o $(NAME) $(OBJS) $(LIB_A) $(RDL) $(TLI)
+				@echo -e '\001\033[34m\002.___________..______       __  .__   __.  __       _______. __    __   _______  __       __      \001\033[0m\002'
+				@echo -e '\001\033[34m\002|           ||   _  \     |  | |  \ |  | |  |     /       ||  |  |  | |   ____||  |     |  |     \001\033[0m\002'
+				@echo -e '\001\033[34m\002`---|  |----`|  |_)  |    |  | |   \|  | |  |    |   (----`|  |__|  | |  |__   |  |     |  |     \001\033[0m\002'
+				@echo -e '\001\033[34m\002    |  |     |      /     |  | |  . `  | |  |     \   \    |   __   | |   __|  |  |     |  |     \001\033[0m\002'
+				@echo -e '\001\033[34m\002    |  |     |  |\  \----.|  | |  |\   | |  | .----)   |   |  |  |  | |  |____ |  `----.|  `----.\001\033[0m\002'
+				@echo -e '\001\033[34m\002    |__|     | _| `._____||__| |__| \__| |__| |_______/    |__|  |__| |_______||_______||_______|\001\033[0m\002'
+				@echo -e '\001\033[34m\002                                                                                                 \001\033[0m\002'
+				@echo -e '\001\033[1;34m\002                                                               🍦    by nfaust, syluiset & xcharra\001\033[0m\002'
+$(NAME)			:	$(OBJS_D) $(OBJS)
+				$(CC) $(CFLAGS) $(ASAN_F) -o $(NAME) $(OBJS) $(LIB_A) $(RDL)
 
-$(OBJS)			:	$(OBJS_D)%.o: $(SRCS_D)%.c $(HEAD_D)$(HEAD) $(LIB_A)
+$(OBJS)			:	$(OBJS_D)%.o: $(SRCS_D)%.c $(HEAD_A) $(LIB_A)
 				$(CC) $(CFLAGS) $(ASAN_F) -I$(HEAD_D) -I$(LIB_H) -c $< -o $@
 
 $(OBJS_D)		:

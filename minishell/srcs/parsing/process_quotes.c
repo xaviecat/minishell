@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:10:59 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/17 17:10:57 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/05 13:37:25 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,5 +138,11 @@ bool	process_quotes(t_char_lst *lst)
 		else
 			tmp = tmp->next;
 	}
-	return (is_quote_alone(lst));
+	if (is_quote_alone(lst))
+	{
+		ft_fdprintf(2, RED UN_QUOTE RESET);
+		return (true);
+	}
+	else
+		return (false);
 }
