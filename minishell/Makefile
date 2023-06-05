@@ -14,6 +14,8 @@ SRCS			:=	minishell.c\
 					utils/expand_utils.c\
 					utils/utils.c\
 					utils/libftgarbage.c\
+					utils/ft_dbtab_dup_gb.c\
+					utils/free_char_tab.c\
 					list/lst.c\
 					list/lst_char.c\
 					list/lst_word.c\
@@ -64,7 +66,7 @@ CFLAGS			:=	-Wall -Wextra -Werror
 RDL				:=	-lreadline
 
 ASAN_F			:=	-g3 #-fsanitize=address
-#
+
 #========================EXEC===============================#
 all				:	$(NAME)
 				@echo

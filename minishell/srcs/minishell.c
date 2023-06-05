@@ -3,23 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/05 11:12:32 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/01 18:08:21 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-t_minish	*create_minishell(char **envp)
+t_minish	*create_minishell(char **envp, char **envp_sh)
 {
 	t_minish		*sh;
 
 	sh = malloc(sizeof(t_minish));
 	if (!sh)
 		return (NULL); // ! ERROR
-	sh->envp = envp;
 	sh->cmds = NULL;
 	sh->lst_c = NULL;
 	sh->lst_w = NULL;
@@ -30,21 +29,38 @@ t_minish	*create_minishell(char **envp)
 		free(sh);
 		return (NULL);
 	}
+	if (envp_sh)
+		sh->envp = envp_sh;
+	else
+		sh->envp = ft_dbtab_dup_gb(envp, &(sh->garbage));
 	return (sh);
 }
 
-void	free_and_exit_minish(t_minish *minish)
+void	free_and_exit_minish(t_minish *minish, char ***envp_sh)
 {
+	if (envp_sh)
+		free_char_tab_gb(*envp_sh, &(minish->garbage));
+	envp_sh = NULL;
 	free(minish->garbage);
 	free(minish);
+    rl_clear_history();
 	exit(EXIT_FAILURE);
+}
+
+void	cp_envp_to_envp_sh(char ***envp_sh, char **envp_in_minish)
+{
+	if (*envp_sh)
+		free_char_tab(*envp_sh);
+	*envp_sh = ft_dbtab_dup(envp_in_minish);
 }
 
 void	minishell(char **envp)
 {
 	char		*line;
 	t_minish	*minish;
+	char		**envp_sh;
 
+    envp_sh = NULL;
 	printf(LBLUE TRISHBANNER0"\n");
 	printf(TRISHBANNER1"\n");
 	printf(TRISHBANNER2"\n");
@@ -64,13 +80,13 @@ void	minishell(char **envp)
 		}
 		if (line && *line)
 			add_history(line);
-		minish = create_minishell(envp);
+		minish = create_minishell(envp, envp_sh);
 		if (!minish)
 			return ; // ! ERROR
 		if (!(create_char_lst_with_c_inside(line, &minish)))
 		{
 			free(line);
-			free_and_exit_minish(minish);
+			free_and_exit_minish(minish, &envp_sh);
 		}
 		give_type_in_lst(&minish->lst_c);
 		print_lst_char(minish->lst_c);
@@ -78,7 +94,7 @@ void	minishell(char **envp)
 		{
 			ft_free_all(&minish->garbage);
 			continue ;
-			// ft_fdprintf(2, RED"ERROR : QUOTE DON'T CLOSED"RESET);// ! free
+			// ft_fdprintf(2, RED"ERROR : QUOTE DON'T CLOSED\n"RESET);// ! free
 		}
 		if (is_forbidden_char(minish->lst_c))
 		{
@@ -95,7 +111,7 @@ void	minishell(char **envp)
 		harmonize_spaces(minish->lst_c, &(minish->garbage));
 		print_lst_char(minish->lst_c);
 		if (!(create_word_lst(&minish)))
-			free_and_exit_minish(minish);
+			free_and_exit_minish(minish, &envp_sh);
 		if ((!redir_is_valid(&(minish->lst_w), &(minish->garbage))))
 			continue ;
 		//! gerer redir in redir >< "bash: syntax error near unexpected token `<'"
@@ -104,15 +120,13 @@ void	minishell(char **envp)
 		expand_commands(minish);
 		print_lst_word(minish->lst_w);
 		if (!(sh_pars(&minish)))
-			free_and_exit_minish(minish);
+			free_and_exit_minish(minish, &envp_sh);
 		print_lst_cmd(minish->cmds);
 		exec_all(minish);
+		cp_envp_to_envp_sh(&envp_sh, minish->envp);
 		ft_free_all(&minish->garbage);
 		free(minish);
 	}
-	lst_clear(&minish->cmds);
-	free(line);
-	rl_clear_history();
 }
 
 int	main(int argc, char **argv, char **envp)

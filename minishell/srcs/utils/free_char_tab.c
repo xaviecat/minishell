@@ -1,43 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_dbtab_dup.c                                     :+:      :+:    :+:   */
+/*   free_char_tab.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/26 15:39:14 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/02 14:01:15 by syluiset         ###   ########.fr       */
+/*   Created: 2023/06/02 13:45:29 by syluiset          #+#    #+#             */
+/*   Updated: 2023/06/02 13:45:29 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incs/libft.h"
+#include "../../incs/minishell.h"
 
-char	**ft_dbtab_dup(char **dbtab)
+void	free_char_tab_gb(char **c_tab, t_garbage **gb)
 {
-	int		i;
-	char	**new_dbtab;
+	int i;
 
-	if (!dbtab)
-		return (NULL);
 	i = 0;
-	while (dbtab[i])
-		i++;
-	new_dbtab = malloc(sizeof(char *) * (i + 1));
-	if (!new_dbtab)
-		return (NULL);
-	i = 0;
-	while (dbtab[i])
+	while (tab[i])
 	{
-		new_dbtab[i] = ft_strdup(dbtab[i]);
-		if (!new_dbtab[i])
-		{
-			while (--i >= 0)
-				free(new_dbtab[i]);
-			free(new_dbtab);
-			return (NULL);
-		}
+		ft_free(gb, c_tab[i]);
 		i++;
 	}
-	new_dbtab[i] = NULL;
-	return (new_dbtab);
+	ft_free(gb, c_tab);
+}
+
+void	free_char_tab(char **c_tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		free(c_tab[i]);
+		i++;
+	}
+	free(c_tab);
 }
