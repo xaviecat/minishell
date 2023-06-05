@@ -6,13 +6,13 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:46:20 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/05 11:35:03 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/05 15:50:35 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-size_t	get_arg_count(t_w_cmd_list *curr)
+size_t	get_arg_count(t_w_cmd_list *curr, char **envp)
 {
 	size_t	size;
 
@@ -20,8 +20,9 @@ size_t	get_arg_count(t_w_cmd_list *curr)
 	curr = curr->next;
 	while (curr)
 	{
+		if (not_in_env(curr->cmd, envp))
+			size += 1;
 		curr = curr->next;
-		size += 1;
 	}
 	return (size);
 }
@@ -32,10 +33,11 @@ int	ft_alloc_envp(t_minish *msh, t_w_cmd_list *curr)
 	size_t	i;
 	size_t	j;
 
-	msh->envp = ft_malloc(&(msh->garbage), sizeof(char *), get_arg_count(curr) + 1);
-	printf("%li\n", get_arg_count(curr));
+	printf("[%li]\n", get_arg_count(curr, msh->envp));
+	msh->envp = ft_malloc(&(msh->garbage), sizeof(char *), get_arg_count(curr, msh->envp) + 1);
 	if (!(msh->envp))
-		return (0);
+		return (printf("malloc 1\n"), 0);
+	printf("ca passe\n");
 	curr = curr->next;
 	j = 0;
 	while (curr)
@@ -56,12 +58,20 @@ int	ft_alloc_envp(t_minish *msh, t_w_cmd_list *curr)
 	return (1);
 }
 
+int	export_print(t_minish *msh)
+{
+	printf("export print %s\n", msh->envp[0]);
+	return (1);
+}
+
 int	b_export(t_minish *msh, t_w_cmd_list *cmd)
 {
 	size_t	i;
 	char	**save_envp;
-	char 	**modified_envp;
+	char	**modified_envp;
 
+	if (!cmd->next)
+		return (export_print(msh));
 	save_envp = msh->envp;
 	if (!ft_alloc_envp(msh, cmd))
 		return (0);
@@ -69,8 +79,15 @@ int	b_export(t_minish *msh, t_w_cmd_list *cmd)
 	i = 0;
 	while (cmd)
 	{
-		if (ft_strchr(cmd->cmd, '='))
+		if (not_in_env(cmd->cmd, save_envp))
+		{
 			(msh->envp)[i++] = ft_gb_strdup(cmd->cmd, &(msh->garbage));
+			if (!(msh->envp[i]))
+				return (0);
+		}
+		else
+			if (!modify_envp(cmd->cmd, save_envp, &(msh->garbage)))
+				return (0);
 		cmd = cmd->next;
 	}
 	msh->envp[i] = NULL;
