@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 16:44:20 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/30 17:04:21 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/05 11:41:56 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void	find_builtin(t_minish *sh)
 		b_cd(cp_cmd, sh->envp);
 	if (ft_strncmp(cp_cmd, "pwd", 4) == 0)
 		b_pwd(sh->envp);
+	if (ft_strncmp(cp_cmd, "export", 7) == 0)
+		b_export(sh, sh->cmds->cmd);
 	//if (ft_strncmp(cp_cmd, "export", 7) == 0)
 		//
 	//if (ft_strncmp(cp_cmd, "unset", 6) == 0)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:08:17 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/01 17:01:34 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/01 20:37:44 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,6 @@ void	expand_commands(t_minish *minish)
 			return ; // ? code d'erreur a ajouter
 		// printf("%s\n", w_lst_cpy->word);
 		w_lst_cpy = w_lst_cpy->next;
-
 	}
 	// printf("expand end\n\n"RESET);
 }

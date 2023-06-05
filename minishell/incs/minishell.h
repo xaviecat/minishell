@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/02 13:33:33 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/02 14:36:05 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,7 +200,6 @@ void			print_fd(t_fd_list *lst);
 void			harmonize_spaces(t_char_lst *lst, t_garbage **gb);
 int				redir_is_valid(t_word_lst **lst, t_garbage **gb);
 
-
 /* error */
 bool			is_forbidden_char(t_char_lst *lst);
 bool			is_bad_redir(t_char_lst *lst);
@@ -212,7 +211,8 @@ void			free_error_word_lst(t_garbage **gb, t_word_lst **lst);
 void			b_pwd(char **envp);
 void			b_cd(char *path, char **envp);
 void			b_echo(t_w_cmd_list *content);
-void    		b_exit(t_minish *minish);
+void			b_exit(t_minish *minish);
+int				b_export(t_minish *msh, t_w_cmd_list *cmds);
 void			find_builtin(t_minish *sh);
 
 /* exec */
@@ -242,6 +242,8 @@ char			*ft_gbstrtrim(char const *s1, char const *set, t_garbage **gb);
 char	        **ft_dbtab_dup_gb(char **dbtab, t_garbage **gb);
 void			free_char_tab(char **c_tab);
 void			free_char_tab_gb(char **c_tab, t_garbage **gb);
+char			**ft_gb_dbtab_join(char **tab1, char **tab2, t_garbage **gb);
+void			ft_gb_free_split(char **tab_to_free, t_garbage **gb);
 
 /* list_char function */
 t_char_lst		*char_lst_new(char c, t_garbage **gb);
