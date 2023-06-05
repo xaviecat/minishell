@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/02 14:21:49 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/05 15:44:28 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	minishell(char **envp)
 			free_and_exit_minish(minish, &envp_sh);
 		}
 		give_type_in_lst(&minish->lst_c);
-		print_lst_char(minish->lst_c);
+//		print_lst_char(minish->lst_c);
 		if (process_quotes(minish->lst_c) == true)
 			ft_fdprintf(2, RED"ERROR : QUOTE DON'T CLOSED\n"RESET);// ! free
 		if (is_forbidden_char(minish->lst_c))
@@ -97,19 +97,19 @@ void	minishell(char **envp)
 		if (is_bad_redir(minish->lst_c))
 			ft_fdprintf(2, RED"ERRROR BAD REDIR\n"RESET); // ! free
 		harmonize_spaces(minish->lst_c, &(minish->garbage));
-		print_lst_char(minish->lst_c);
+//		print_lst_char(minish->lst_c);
 		if (!(create_word_lst(&minish)))
 			free_and_exit_minish(minish, &envp_sh);
 		if ((!redir_is_valid(&(minish->lst_w), &(minish->garbage))))
 			continue ;
 		//! gerer redir in redir >< "bash: syntax error near unexpected token `<'"
 		//! gerer quand chevron ou pipe en fin de ligne
-		print_lst_word(minish->lst_w);
+//		print_lst_word(minish->lst_w);
 		expand_commands(minish);
-		print_lst_word(minish->lst_w);
+//		print_lst_word(minish->lst_w);
 		if (!(sh_pars(&minish)))
 			free_and_exit_minish(minish, &envp_sh);
-		print_lst_cmd(minish->cmds);
+//		print_lst_cmd(minish->cmds);
 		exec_all(minish);
 		cp_envp_to_envp_sh(&envp_sh, minish->envp);
 		ft_free_all(&minish->garbage);
