@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_msgs.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 13:34:42 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/05 14:05:00 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/05 17:32:58 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,13 @@
 # define BACKSLASH	"minishell: feature not handled: '\\'\n"
 
 /* bash errors*/
-# define S_SM_A_BRA	"minishell: syntax error near unexpected token `<'\n"
-# define D_SM_A_BRA	"minishell: syntax error near unexpected token `<<'\n"
-# define S_GR_A_BRA	"minishell: syntax error near unexpected token `>'\n"
-# define D_GR_A_BRA	"minishell: syntax error near unexpected token `>>'\n"
-# define NL_TKN		"minishell: syntax error near unexpected token `newline'\n"
-# define PIPE_TKN	"minishell: syntax error near unexpected token `|'\n"
+# define S_SM_A_BRA	"minishell: syntax error near unexpected token '<'\n"
+# define D_SM_A_BRA	"minishell: syntax error near unexpected token '<<'\n"
+# define S_GR_A_BRA	"minishell: syntax error near unexpected token '>'\n"
+# define D_GR_A_BRA	"minishell: syntax error near unexpected token '>>'\n"
+# define NL_TKN		"minishell: syntax error near unexpected token 'newline'\n"
+# define PIPE_TKN	"minishell: syntax error near unexpected token '|'\n"
 
-
-
-
-
+# define UN_TKN(x)	"minishell: syntax error near unexpected token '" #x "'\n"
+# define IS_A_DIR(x) "minishell: '" #x "' Is a directory\n"
 #endif
