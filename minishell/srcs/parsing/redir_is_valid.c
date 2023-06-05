@@ -40,7 +40,7 @@ int is_a_dir(t_word_lst **lst, t_garbage **gb)
 		if ((ft_strncmp((*lst)->word, "/", 1) == 0
 				|| (ft_strncmp((*lst)->word, ".", 1) == 0)) && !(*lst)->prev)
 		{
-			ft_fdprintf(2, RED IS_A_DIR(\%s) RESET, (*lst)->word);
+			ft_fdprintf(2, RED IS_DIR(\%s) RESET, (*lst)->word);
 			free_error_word_lst(gb, lst);
 			return (0);
 		}

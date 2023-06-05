@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 17:44:16 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/02 14:09:39 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/05 18:04:01 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ _/    |__|  |__| |_______||_______||_______|"
 # define TRISHBANNER7	"                                                      \
                                            "
 # define TRISHBANNER8	"                                                      \
-         🍦    by nfaust, syluiset & xcharra\001\033[0m\002"
+         🍦    by nfaust, syluiset & xcharra"
 
 # define DELLINE	"\001\033[2K\r\002"
 
