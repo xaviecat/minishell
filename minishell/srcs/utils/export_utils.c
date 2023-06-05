@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 13:17:59 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/05 14:20:42 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/05 14:23:37 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ size_t	modify_envp(char *cmd, char **envp, t_garbage **gb)
 		if (!ft_strncmp(cmd, envp[i++], var_name_len))
 			break ;
 	i--;
-	printf("\n\n%s\n\n", envp[i]);
+//	printf("\n\n%s\n\n", envp[i]);
 	ft_free(gb, envp[i]);
 	envp[i] = ft_gb_strdup(cmd, gb);
 	if (!envp[i])

@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 13:51:11 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/05 11:20:57 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/05 16:40:26 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	allocate_inside(char **dst_tab, char **tab1, char **tab2, t_garbage **gb)
 	while (tab1[i])
 	{
 		dst_tab[j] = ft_malloc(gb, sizeof(char), ft_strlen(tab1[i++]) + 1);
-		printf("%li : %li\n", j, ft_strlen(tab1[i - 1]));
+//		printf("%li : %li\n", j, ft_strlen(tab1[i - 1]));
 		if (!dst_tab[j++])
 			return (ft_gb_free_split(dst_tab, gb), 0);
 	}
@@ -64,7 +64,7 @@ void	fill_tab(char **dst, char **tab1, char **tab2)
 		k = 0;
 		while (tab1[j][k++])
 			dst[i][k - 1] = tab1[j][k - 1];
-		printf("%li : %li\n", j, k - 1);
+//		printf("%li : %li\n", j, k - 1);
 		dst[i++][k - 1] = 0;
 		j++;
 	}

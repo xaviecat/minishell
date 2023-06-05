@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:46:20 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/05 15:50:35 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/05 16:39:34 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,32 +29,31 @@ size_t	get_arg_count(t_w_cmd_list *curr, char **envp)
 
 int	ft_alloc_envp(t_minish *msh, t_w_cmd_list *curr)
 {
-	size_t	size_count;
-	size_t	i;
-	size_t	j;
+//	size_t	size_count;
+//	size_t	i;
+//	size_t	j;
 
-	printf("[%li]\n", get_arg_count(curr, msh->envp));
+//	printf("[%li]\n", get_arg_count(curr, msh->envp));
 	msh->envp = ft_malloc(&(msh->garbage), sizeof(char *), get_arg_count(curr, msh->envp) + 1);
 	if (!(msh->envp))
-		return (printf("malloc 1\n"), 0);
-	printf("ca passe\n");
-	curr = curr->next;
-	j = 0;
-	while (curr)
-	{
-		size_count = 0;
-		i = 0;
-		while ((curr->cmd)[i])
-		{
-			if (size_count || (i && (curr->cmd)[i - 1] == '='))
-				size_count++;
-			i++;
-		}
-		if (size_count)
-			(msh->envp)[j++] = ft_malloc(&(msh->garbage),
-					sizeof(char), size_count);
-		curr = curr->next;
-	}
+		return (0);
+//	curr = curr->next;
+//	j = 0;
+//	while (curr)
+//	{
+//		size_count = 0;
+//		i = 0;
+//		while ((curr->cmd)[i])
+//		{
+//			if (size_count || (i && (curr->cmd)[i - 1] == '='))
+//				size_count++;
+//			i++;
+//		}
+//		if (size_count)
+//			(msh->envp)[j++] = ft_malloc(&(msh->garbage),
+//					sizeof(char), size_count);
+//		curr = curr->next;
+//	}
 	return (1);
 }
 
@@ -81,8 +80,8 @@ int	b_export(t_minish *msh, t_w_cmd_list *cmd)
 	{
 		if (not_in_env(cmd->cmd, save_envp))
 		{
-			(msh->envp)[i++] = ft_gb_strdup(cmd->cmd, &(msh->garbage));
-			if (!(msh->envp[i]))
+			(msh->envp)[i] = ft_gb_strdup(cmd->cmd, &(msh->garbage));
+			if (!(msh->envp[i++]))
 				return (0);
 		}
 		else
