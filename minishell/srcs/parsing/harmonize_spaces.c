@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hormonize_spaces.c                                 :+:      :+:    :+:   */
+/*   harmonize_spaces.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 11:20:59 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/31 11:11:04 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/05 16:04:11 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,11 @@ void	add_some_space_near_a_brackets(t_char_lst *lst, t_garbage **gb, char c)
 	{
 		while (lst && (lst->s_quote || lst->d_quote))
 			lst = lst->next;
-		if (lst && lst->prev && lst->c == c && lst->prev->c != c && lst->prev->c != ' ')
+		if (lst && lst->prev && lst->c == c
+			&& lst->prev->c != c && lst->prev->c != ' ')
 			char_lst_add_in(&lst, prev, char_lst_new(' ', gb));
-		if (lst && lst->next && lst->c == c && lst->next->c != c && lst->next->c != ' ')
+		if (lst && lst->next && lst->c == c
+			&& lst->next->c != c && lst->next->c != ' ')
 			char_lst_add_in(&lst, next, char_lst_new(' ', gb));
 		if (lst)
 			lst = lst->next;
