@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:46:20 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/02 14:36:05 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/05 11:35:03 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int	ft_alloc_envp(t_minish *msh, t_w_cmd_list *curr)
 	size_t	i;
 	size_t	j;
 
-	msh->envp = ft_malloc(&(msh->garbage), sizeof(char *), get_arg_count(curr));
+	msh->envp = ft_malloc(&(msh->garbage), sizeof(char *), get_arg_count(curr) + 1);
+	printf("%li\n", get_arg_count(curr));
 	if (!(msh->envp))
 		return (0);
 	curr = curr->next;
@@ -75,11 +76,11 @@ int	b_export(t_minish *msh, t_w_cmd_list *cmd)
 	msh->envp[i] = NULL;
 	modified_envp = ft_gb_dbtab_join(save_envp, msh->envp, &(msh->garbage));
 	if (!modified_envp && errno == ENOMEM)
-		return (0);
+		return (ft_free(&(msh->garbage), msh->envp), 0);
+	ft_free(&(msh->garbage), msh->envp);
+	msh->envp = modified_envp;
 	i = 0;
-	while (modified_envp[i])
-	{
-		printf("%s\n", (msh->envp)[i++]);
-	}
-	return (1);
+	while(modified_envp[i])
+		printf("%s\n", modified_envp[i++]);
+	return (ft_free(&(msh->garbage), save_envp), 1);
 }
