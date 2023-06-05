@@ -80,7 +80,7 @@ void	ft_free(t_garbage **lst, void *content)
 	}
 }
 
-void    ft_free_all(t_garbage **lst)
+void	ft_free_all(t_garbage **lst)
 {
 	t_garbage_list	*next;
 

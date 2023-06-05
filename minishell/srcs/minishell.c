@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/02 14:46:22 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/05 11:12:32 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,23 @@ void	minishell(char **envp)
 		give_type_in_lst(&minish->lst_c);
 		print_lst_char(minish->lst_c);
 		if (process_quotes(minish->lst_c) == true)
-			ft_fdprintf(2, RED"ERROR : QUOTE DON'T CLOSED"RESET);// ! free
+		{
+			ft_free_all(&minish->garbage);
+			continue ;
+			// ft_fdprintf(2, RED"ERROR : QUOTE DON'T CLOSED"RESET);// ! free
+		}
 		if (is_forbidden_char(minish->lst_c))
-			ft_fdprintf(2, RED"checked\n"RESET); // ! free
+		{
+			ft_free_all(&minish->garbage);
+			continue ;
+			// ft_fdprintf(2, RED"checked\n"RESET); // ! free
+		}
 		if (is_bad_redir(minish->lst_c))
-			ft_fdprintf(2, RED"ERRROR BAD REDIR\n"RESET); // ! free
+		{
+			ft_free_all(&minish->garbage);
+			continue ;
+			// ft_fdprintf(2, RED"ERRROR BAD REDIR\n"RESET); // ! free
+		}
 		harmonize_spaces(minish->lst_c, &(minish->garbage));
 		print_lst_char(minish->lst_c);
 		if (!(create_word_lst(&minish)))

@@ -12,7 +12,7 @@
 
 #include "../../incs/minishell.h"
 
-void    b_exit(t_minish *minish)
+void	b_exit(t_minish *minish)
 {
 	ft_free_all(&minish->garbage);
 	free(minish);
