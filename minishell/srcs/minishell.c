@@ -89,7 +89,6 @@ void	minishell(char **envp)
 			free_and_exit_minish(minish, &envp_sh);
 		}
 		give_type_in_lst(&minish->lst_c);
-		print_lst_char(minish->lst_c);
 		if (unhandled_char(minish->lst_c))
 		{
 			ft_free_all(&minish->garbage);
@@ -101,9 +100,7 @@ void	minishell(char **envp)
 			free_and_exit_minish(minish, &envp_sh);
 		if ((!check_pipe_and_redir(&(minish->garbage), &(minish->lst_w))))
 			continue ;
-		//! gerer redir in redir >< "bash: syntax error near unexpected token `<'"
-		//! gerer quand chevron ou pipe en fin de ligne
-		print_lst_word(minish->lst_w);
+		//! gerer quand chevron avec epace
 		expand_commands(minish);
 		print_lst_word(minish->lst_w);
 		if (!(sh_pars(&minish)))

@@ -30,5 +30,5 @@
 # define PIPE_TKN	"minishell: syntax error near unexpected token '|'\n"
 
 # define UN_TKN(x)	"minishell: syntax error near unexpected token '" #x "'\n"
-# define IS_A_DIR(x) "minishell: '" #x "' Is a directory\n"
+# define IS_DIR(x)	"minishell: '" #x "' Is a directory\n"
 #endif
