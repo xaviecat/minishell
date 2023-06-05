@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/02 14:21:49 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/05 11:41:42 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	minishell(char **envp)
 	t_minish	*minish;
 	char		**envp_sh;
 
-    envp_sh = NULL;
+	envp_sh = NULL;
 	printf(LBLUE TRISHBANNER0"\n");
 	printf(TRISHBANNER1"\n");
 	printf(TRISHBANNER2"\n");
@@ -76,7 +76,7 @@ void	minishell(char **envp)
 		if (*line == '\0')
 		{
 			free(line);
-			continue;
+			continue ;
 		}
 		if (line && *line)
 			add_history(line);
@@ -91,11 +91,23 @@ void	minishell(char **envp)
 		give_type_in_lst(&minish->lst_c);
 		print_lst_char(minish->lst_c);
 		if (process_quotes(minish->lst_c) == true)
-			ft_fdprintf(2, RED"ERROR : QUOTE DON'T CLOSED\n"RESET);// ! free
+		{
+			ft_free_all(&minish->garbage);
+			continue ;
+			// ft_fdprintf(2, RED"ERROR : QUOTE DON'T CLOSED\n"RESET);// ! free
+		}
 		if (is_forbidden_char(minish->lst_c))
-			ft_fdprintf(2, RED"checked\n"RESET); // ! free
+		{
+			ft_free_all(&minish->garbage);
+			continue ;
+			// ft_fdprintf(2, RED"checked\n"RESET); // ! free
+		}
 		if (is_bad_redir(minish->lst_c))
-			ft_fdprintf(2, RED"ERRROR BAD REDIR\n"RESET); // ! free
+		{
+			ft_free_all(&minish->garbage);
+			continue ;
+			// ft_fdprintf(2, RED"ERRROR BAD REDIR\n"RESET); // ! free
+		}
 		harmonize_spaces(minish->lst_c, &(minish->garbage));
 		print_lst_char(minish->lst_c);
 		if (!(create_word_lst(&minish)))
@@ -120,7 +132,7 @@ void	minishell(char **envp)
 int	main(int argc, char **argv, char **envp)
 {
 	(void) argv;
-// 	(void) envp;
+//	(void) envp;
 //	(void) argc;
 	if (argc == 1)
 		minishell(envp);

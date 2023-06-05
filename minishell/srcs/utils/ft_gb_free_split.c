@@ -1,20 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   ft_gb_free_split.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/23 13:05:10 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/23 13:06:05 by syluiset         ###   ########.fr       */
+/*   Created: 2023/06/02 14:36:24 by nfaust            #+#    #+#             */
+/*   Updated: 2023/06/02 14:41:22 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-void	b_exit(t_minish *minish)
+void	ft_gb_free_split(char **tab_to_free, t_garbage **gb)
 {
-	ft_free_all(&minish->garbage);
-	free(minish);
-	exit(EXIT_SUCCESS);
+	size_t	i;
+
+	i = 0;
+	while (tab_to_free[i])
+		ft_free(gb, tab_to_free[i++]);
+	ft_free(gb, tab_to_free);
 }
