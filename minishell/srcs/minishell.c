@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/05 13:29:15 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/07 13:32:08 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,17 @@ t_minish	*create_minishell(char **envp, char **envp_sh)
 	sh->lst_w = NULL;
 	sh->garbage = NULL;
 	sh->garbage = create_garbage_container();
+	(void)envp;
+	(void)envp_sh;
 	if (!sh->garbage)
 	{
 		free(sh);
 		return (NULL);
 	}
-	if (envp_sh)
-		sh->envp = ft_dbtab_dup_gb(envp_sh, &(sh->garbage));
-	else
-		sh->envp = ft_dbtab_dup_gb(envp, &(sh->garbage));
+//	if (envp_sh)
+//		sh->envp = ft_dbtab_dup_gb(envp_sh, &(sh->garbage));
+//	else
+//		sh->envp = ft_dbtab_dup_gb(envp, &(sh->garbage));
 	return (sh);
 }
 
@@ -94,7 +96,7 @@ void	minishell(char **envp)
 			ft_free_all(&minish->garbage);
 			continue ;
 		}
-		harmonize_spaces(minish->lst_c, &(minish->garbage));
+		harmonize_spaces(&(minish->lst_c), &(minish->garbage));
 		print_lst_char(minish->lst_c);
 		if (!(create_word_lst(&minish)))
 			free_and_exit_minish(minish, &envp_sh);
