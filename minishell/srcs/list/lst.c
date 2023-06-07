@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:02:59 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/07 14:49:33 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/07 16:07:58 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ void	print_lst_cmd(t_cmd_list *lst)
 		printf(UNDERLINE"node : %d\n"RESET, i);
 		printf(CYAN"builtin : %d\n", lst->builtin);
 		printf("cmd :                          | params :\n");
-		if (lst->cmd) {
+		if (lst->cmd)
+		{
 			printf("%-30s | ", lst->cmd->cmd);
 			lst->cmd = lst->cmd->next;
 		}
@@ -65,7 +66,7 @@ void	print_lst_cmd(t_cmd_list *lst)
 			lst->cmd = lst->cmd->next;
 		}
 		lst->cmd = first_w;
-		printf("\n");
+		printf("\n"RESET);
 		print_fd(lst->fds);
 		print_redir(lst->redirs);
 		lst = lst->next;

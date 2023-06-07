@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:46:20 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/07 12:13:53 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/07 15:57:00 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ int	export_print(t_minish *msh)
 	size_t	i;
 	size_t	j;
 
+	if (!msh->envp)
+		printf("NULL\n");
 	envp_cpy = ft_dbtab_dup_gb(msh->envp, &(msh->garbage));
 	ft_sort_str_arr(envp_cpy);
 	i = 0;
@@ -49,11 +51,11 @@ int	export_print(t_minish *msh)
 		ft_printf("declare -x ");
 		j = 0;
 		while (envp_cpy[i][j] && envp_cpy[i][j] != '=')
-			ft_printf("%c", envp_cpy[i][j++]);
+			printf("%c", envp_cpy[i][j++]);
 		if (envp_cpy[i][j++])
-			ft_printf("=\"%s\"\n", envp_cpy[i] + j);
+			printf("=\"%s\"\n", envp_cpy[i] + j);
 		else
-			ft_printf("\n");
+			printf("\n");
 		i++;
 	}
 	return (1);

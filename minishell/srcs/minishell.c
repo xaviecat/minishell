@@ -31,10 +31,10 @@ t_minish	*create_minishell(char **envp, char **envp_sh)
 		free(sh);
 		return (NULL);
 	}
-//	if (envp_sh)
-//		sh->envp = ft_dbtab_dup_gb(envp_sh, &(sh->garbage));
-//	else
-//		sh->envp = ft_dbtab_dup_gb(envp, &(sh->garbage));
+	if (envp_sh)
+		sh->envp = ft_dbtab_dup_gb(envp_sh, &(sh->garbage));
+	else
+		sh->envp = ft_dbtab_dup_gb(envp, &(sh->garbage));
 	return (sh);
 }
 
