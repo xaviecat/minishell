@@ -85,7 +85,7 @@ static char	*modify_command(char *cmd, t_minish *msh,
 	char	*exp_env_v;
 	char	*m_cmd;
 
-	env_var = ft_gbstrdup_to_charset(cmd + start, " $%=\t\n\v\f\r\"\'\0", &(msh->garbage));
+	env_var = ft_gbstrdup_to_charset(cmd + start, "$%= \t\n\v\f\r\"\'\0", &(msh->garbage));
 	printf("env_var : %s\n", env_var);
 	if (!env_var)
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 17:01:30 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/05 21:37:52 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/07 13:34:02 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,24 +23,28 @@ char	*ft_gbstrdup_to_charset(char *str, char *charset, t_garbage **gb)
 	size_t	new_str_len;
 	size_t	i;
 	char	*new_str;
-	int		char_not_found;
+//	int		char_not_found;
 
+	(void) charset;
+//	char_not_found = 1;
+//	while (str[new_str_len] && char_not_found)
+//	{
+//		char_not_found = 1;
+//		i = 0;
+//		while (charset[i++])
+//			if (str[new_str_len] == charset[i - 1]
+//				&& !(charset[i - 1] == '$' && !new_str_len))
+//				char_not_found = 0;
+//		new_str_len++;
+//	}
 	new_str_len = 0;
-	char_not_found = 1;
-	while (str[new_str_len] && char_not_found)
-	{
-		i = 0;
-		while (charset[i++])
-			if (str[new_str_len] == charset[i - 1]
-				&& !(charset[i - 1] == '$' && !(i - 1)) && printf("%c, %c\n", charset[i - 1], str[new_str_len]))
-				char_not_found = 0;
+	while (str[new_str_len] && (ft_isalnum(str[new_str_len]) || (str[new_str_len] == '$' && !new_str_len)))
 		new_str_len++;
-	}
-	new_str = ft_malloc(gb, sizeof(char), new_str_len + char_not_found);
+	new_str = ft_malloc(gb, sizeof(char), new_str_len);
 	if (!new_str)
 		return (NULL);
 	i = 0;
-	while (i++ < new_str_len + char_not_found - 1)
+	while (i++ < new_str_len)
 		new_str[i - 1] = str[i - 1];
 	return (new_str[i - 1] = 0, new_str);
 }

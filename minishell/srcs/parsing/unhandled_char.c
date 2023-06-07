@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unhandled_char.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 17:43:08 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/05 14:05:00 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/07 14:07:38 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,10 @@ bool	is_forbidden_char(t_char_lst *lst)
 			return (ft_fdprintf(2, RED SEMICOLON RESET), true);
 		if (lst->c == '\\' && !lst->s_quote && !lst->d_quote)
 			return (ft_fdprintf(2, RED BACKSLASH RESET), true);
+		if (lst->c == '$' && lst->next && lst->next->c == '$' && !lst->s_quote)
+			return (ft_fdprintf(2, RED D_DOLLAR RESET), true);
+		if (lst->c == '$' && lst->next && ft_isdigit(lst->next->c) && !lst->s_quote)
+			return (ft_fdprintf(2, RED S_DOLLAR(\%c) RESET, lst->next->c), true);
 		lst = lst->next;
 	}
 	return (false);

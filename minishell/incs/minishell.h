@@ -247,6 +247,9 @@ char			**ft_gb_dbtab_join(char **tab1, char **tab2, t_garbage **gb);
 void			ft_gb_free_split(char **tab_to_free, t_garbage **gb);
 int				not_in_env(char *cmd, char **envp);
 size_t			modify_envp(char *cmd, char **envp, t_garbage **gb);
+void			ft_sort_str_arr(char **str_arr);
+
+
 
 /* list_char function */
 t_char_lst		*char_lst_new(char c, t_garbage **gb);
