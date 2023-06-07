@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/07 13:32:08 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/07 13:32:12 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ t_minish	*create_minishell(char **envp, char **envp_sh)
 		free(sh);
 		return (NULL);
 	}
-//	if (envp_sh)
-//		sh->envp = ft_dbtab_dup_gb(envp_sh, &(sh->garbage));
-//	else
-//		sh->envp = ft_dbtab_dup_gb(envp, &(sh->garbage));
+	if (envp_sh)
+		sh->envp = ft_dbtab_dup_gb(envp_sh, &(sh->garbage));
+	else
+		sh->envp = ft_dbtab_dup_gb(envp, &(sh->garbage));
 	return (sh);
 }
 
