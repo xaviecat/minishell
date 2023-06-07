@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:08:17 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/01 20:37:44 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/05 21:28:04 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,8 @@ static char	*modify_command(char *cmd, t_minish *msh,
 	char	*exp_env_v;
 	char	*m_cmd;
 
-	env_var = ft_gbstrdup_to_charset(cmd + start, " \t\n\v\f\r\"\'\0", &(msh->garbage));
+	env_var = ft_gbstrdup_to_charset(cmd + start, "$%= \t\n\v\f\r\"\'\0", &(msh->garbage));
+	printf("env_var : %s\n", env_var);
 	if (!env_var)
 		return (NULL);
 	if (is_dollar_alone(env_var, cmd, start))
@@ -140,14 +141,14 @@ void	expand_commands(t_minish *minish)
 	t_word_lst	*w_lst_cpy;
 
 	w_lst_cpy = minish->lst_w;
-	// printf(GREEN"expand :\n"RESET);
+	printf(GREEN"expand :\n"RESET);
 	while (w_lst_cpy)
 	{
 		w_lst_cpy->word = expand_vars(w_lst_cpy->word, minish);
 		if (!w_lst_cpy->word)
 			return ; // ? code d'erreur a ajouter
-		// printf("%s\n", w_lst_cpy->word);
+		printf("%s\n", w_lst_cpy->word);
 		w_lst_cpy = w_lst_cpy->next;
 	}
-	// printf("expand end\n\n"RESET);
+	printf("expand end\n\n"RESET);
 }

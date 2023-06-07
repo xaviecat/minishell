@@ -36,6 +36,10 @@ bool	is_forbidden_char(t_char_lst *lst)
 			return (ft_fdprintf(2, RED SEMICOLON RESET), true);
 		if (lst->c == '\\' && !lst->s_quote && !lst->d_quote)
 			return (ft_fdprintf(2, RED BACKSLASH RESET), true);
+		if (lst->c == '$' && lst->next && lst->next->c == '$' && !lst->s_quote)
+			return (ft_fdprintf(2, RED D_DOLLAR RESET), true);
+		if (lst->c == '$' && lst->next && ft_isdigit(lst->next->c) && !lst->s_quote)
+			return (ft_fdprintf(2, RED S_DOLLAR(\%c) RESET, lst->next->c), true);
 		if (lst->c == '!' && !lst->s_quote && !lst->d_quote)
 			return (true);
 		if (lst->c == ':' && !lst->s_quote && !lst->d_quote)

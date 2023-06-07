@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 17:01:30 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/01 12:46:22 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/07 13:34:02 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,33 +18,35 @@
  * @param charset the charset of delimiters
  * @return the duplicated string
  */
-char *ft_gbstrdup_to_charset(char *str, char *charset, t_garbage **gb)
+char	*ft_gbstrdup_to_charset(char *str, char *charset, t_garbage **gb)
 {
 	size_t	new_str_len;
 	size_t	i;
 	char	*new_str;
-	int		char_not_found;
+//	int		char_not_found;
 
+	(void) charset;
+//	char_not_found = 1;
+//	while (str[new_str_len] && char_not_found)
+//	{
+//		char_not_found = 1;
+//		i = 0;
+//		while (charset[i++])
+//			if (str[new_str_len] == charset[i - 1]
+//				&& !(charset[i - 1] == '$' && !new_str_len))
+//				char_not_found = 0;
+//		new_str_len++;
+//	}
 	new_str_len = 0;
-	char_not_found = 1;
-	while (str[new_str_len] && char_not_found)
-	{
-		i = 0;
-		while (charset[i])
-			if (str[new_str_len] == charset[i++])
-				char_not_found = 0;
+	while (str[new_str_len] && (ft_isalnum(str[new_str_len]) || (str[new_str_len] == '$' && !new_str_len)))
 		new_str_len++;
-	}
-	new_str = ft_malloc(gb, sizeof(char), new_str_len + char_not_found);
+	new_str = ft_malloc(gb, sizeof(char), new_str_len);
 	if (!new_str)
 		return (NULL);
 	i = 0;
-	while (i < new_str_len + char_not_found - 1)
-	{
-		new_str[i] = str[i];
-		i++;
-	}
-	return (new_str[i] = 0, new_str);
+	while (i++ < new_str_len)
+		new_str[i - 1] = str[i - 1];
+	return (new_str[i - 1] = 0, new_str);
 }
 
 /**
@@ -85,7 +87,8 @@ int	is_dollar_alone(char *env_var, char *cmd, size_t start)
 	return (0);
 }
 
-void ft_free_mcmd(char *env_var, char *cmd, char *exp_env_var, t_garbage **gb)
+void	ft_free_mcmd(char *env_var, char *cmd,
+					char *exp_env_var, t_garbage **gb)
 {
 	ft_free(gb, env_var);
 	ft_free(gb, cmd);
@@ -101,7 +104,7 @@ void ft_free_mcmd(char *env_var, char *cmd, char *exp_env_var, t_garbage **gb)
  * @param env_var
  * @return the modified command
  */
-char *fill_mdcmd(char *cmd, size_t start, char *exp_env_v, char *env_var)
+char	*fill_mdcmd(char *cmd, size_t start, char *exp_env_v, char *env_var)
 {
 	size_t	i;
 	char	*m_cmd;
