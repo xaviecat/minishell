@@ -199,7 +199,7 @@ t_redir_list	*get_redir(t_word_lst **lst, t_garbage **gb);
 void			print_redir(t_redir_list *lst);
 t_fd_list		*create_fds_list(t_redir_list *redirs, t_garbage **gb);
 void			print_fd(t_fd_list *lst);
-void			harmonize_spaces(t_char_lst *lst, t_garbage **gb);
+void			harmonize_spaces(t_char_lst **lst, t_garbage **gb);
 int				redir_is_valid(t_word_lst **lst, t_garbage **gb);
 int				check_pipe_and_redir(t_garbage **gb, t_word_lst **lst);
 
@@ -209,7 +209,7 @@ bool			unhandled_char(t_char_lst *lst);
 bool			is_bad_redir(t_char_lst *lst);
 void			free_error_fds(t_garbage **gb, t_fd_list **lst);
 void			free_error_redir(t_garbage **gb, t_redir_list **lst);
-void			free_error_word_lst(t_garbage **gb, t_word_lst **lst);
+void			free_error_word_lst(t_garbage  **gb, t_word_lst **lst);
 
 /* builtins */
 void			b_pwd(char **envp);
@@ -250,6 +250,9 @@ char			**ft_gb_dbtab_join(char **tab1, char **tab2, t_garbage **gb);
 void			ft_gb_free_split(char **tab_to_free, t_garbage **gb);
 int				not_in_env(char *cmd, char **envp);
 size_t			modify_envp(char *cmd, char **envp, t_garbage **gb);
+void			ft_sort_str_arr(char **str_arr);
+
+
 
 /* list_char function */
 t_char_lst		*char_lst_new(char c, t_garbage **gb);
