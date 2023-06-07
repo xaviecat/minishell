@@ -62,7 +62,6 @@ void	print_redir(t_redir_list *lst)
 		printf("[%d] ", i);
 		printf("filename : %-15s | ", lst->filename);
 		printf("type : %-7d | ", lst->redir);
-		printf("fd : %-12d | ", lst->redir);
 		printf("\n");
 		lst = lst->next;
 		i++;

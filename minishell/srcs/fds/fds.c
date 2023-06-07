@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 17:45:12 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/07 15:03:39 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/07 17:35:29 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,18 +107,18 @@ t_fd_list	*create_fds_list(t_redir_list *redirs, t_garbage **gb)
 			if (!new)
 				return (free_error_fds(gb, &fds), NULL);
 			if (redirs->redir == in)
-				new->in = open(redirs->filename, O_RDONLY, 0644);
+				new->in = open(redirs->filename, O_RDONLY, 0444);
 		//		if (redirs->redir == inin)
 		//			new->in = ;//HEREDOC
 			if (redirs->redir == out)
 				new->out = open(redirs->filename, O_RDWR | O_CREAT | O_TRUNC, 0644);
 			if (redirs->redir == outout)
 				new->out = open(redirs->filename, O_RDWR | O_CREAT | O_APPEND, 0644);
+			fds_add_back(&fds, new);
 			if (new->in == -1)
-				return (perror(redirs->filename), NULL);
+				return (perror(redirs->filename), fds);
 			if (new->out == -1)
-				return (perror(redirs->filename), NULL);
-			fds_add_back(&fds, new); // ? A voir si il faut le changer
+				return (perror(redirs->filename), fds);
 			redirs = redirs->next;
 		}
 	}
