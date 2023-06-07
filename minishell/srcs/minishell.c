@@ -103,7 +103,9 @@ void	minishell(char **envp)
 		if ((!check_pipe_and_redir(&(minish->garbage), &(minish->lst_w))))
 			continue ;
 		//! gerer quand chevron avec epace
-		expand_commands(minish);
+		if (!expand_commands(minish))
+			return (ft_free_all(&(minish->garbage)),
+				free_and_exit_minish(minish, &envp_sh), (void) 0);
 		print_lst_word(minish->lst_w);
 		if (!(sh_pars(&minish)))
 			free_and_exit_minish(minish, &envp_sh);

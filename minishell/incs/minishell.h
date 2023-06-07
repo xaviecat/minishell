@@ -192,7 +192,7 @@ typedef struct s_minish
 /* parsing */
 char			**parsing_argu(char *arg_term);
 t_minish		*parsing_command(char *cmd_line, t_minish *sh);
-void			expand_commands(t_minish *minish);
+int expand_commands(t_minish *minish);
 char			*cut_whitespaces(char *str, t_garbage **gb);
 bool			process_quotes(t_char_lst *lst);
 t_redir_list	*get_redir(t_word_lst **lst, t_garbage **gb);
@@ -223,8 +223,7 @@ void			find_builtin(t_minish *sh);
 void			exec_all(t_minish *minish);
 
 /* utils */
-char			*ft_gbstrdup_to_charset(char *str, char *charset,
-					t_garbage **gb);
+char *ft_cut_var(char *str, t_garbage **gb);
 int				ft_isspace(char c);
 char			*str_cpy_to_x(char *src, char *dst, char x);
 int				is_dollar_alone(char *env_var, char *cmd, size_t start);
