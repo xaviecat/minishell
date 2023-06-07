@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 11:50:54 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/30 16:44:11 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/07 14:47:49 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,13 @@ int	sh_pars(t_minish **sh)
 			return (0);
 		}
 		new = lst_cmd_new(get_cmd(&(*sh)->lst_w, &(*sh)->garbage), fds, redirs, &((*sh)->garbage));
-		if (!new)
+		if (!new && errno == ENOMEM)
 		{
 			free_error_cmd(&((*sh)->garbage), &((*sh)->cmds));
 			return (0);
 		}
-		new->builtin = builtin_or_command(new->cmd->cmd);
+		if (new->cmd)
+			new->builtin = builtin_or_command(new->cmd->cmd);
 		if ((*sh)->cmds)
 		{
 			new->previous = (*sh)->cmds->last_added;

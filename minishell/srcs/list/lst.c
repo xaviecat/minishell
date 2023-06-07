@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:02:59 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/05 13:26:39 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/07 14:49:33 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,12 @@ void	print_lst_cmd(t_cmd_list *lst)
 		printf(UNDERLINE"node : %d\n"RESET, i);
 		printf(CYAN"builtin : %d\n", lst->builtin);
 		printf("cmd :                          | params :\n");
-		printf("%-30s | ", lst->cmd->cmd);
-		lst->cmd = lst->cmd->next;
+		if (lst->cmd) {
+			printf("%-30s | ", lst->cmd->cmd);
+			lst->cmd = lst->cmd->next;
+		}
+		else
+			printf("(NULL)");
 		while (lst->cmd)
 		{
 			printf("[%s] ", lst->cmd->cmd);
@@ -100,13 +104,11 @@ t_cmd_list	*lst_cmd_new(t_w_cmd_list *cmds, t_fd_list *fds, t_redir_list *redir,
 {
 	t_cmd_list	*new;
 
-	if (!cmds)
-		return (NULL);
 	new = ft_malloc(gb, sizeof(t_cmd_list), 1);
 	if (!new)
 		return (NULL);
 	new->cmd = cmds;
-	if (!new->cmd)
+	if (!new->cmd && errno == ENOMEM)
 		return (free(new), NULL);
 	new->builtin = false;
 	new->redirs = redir;

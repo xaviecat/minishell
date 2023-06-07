@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:39:55 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/30 17:48:36 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/07 13:09:54 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,8 +142,11 @@ int	create_char_lst_with_c_inside(char *cmd_line, t_minish **sh)
 {
 	int			i;
 	t_char_lst	*new;
+	size_t		taille;
 
 	i = 0;
+	taille = ft_strlen(cmd_line);
+	(void)taille;
 	while (cmd_line[i])
 	{
 		new = char_lst_new(cmd_line[i], &((*sh)->garbage));

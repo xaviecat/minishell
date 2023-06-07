@@ -19,9 +19,11 @@ int pipe_is_valid(t_word_lst **lst, t_garbage **gb)
 		if ((*lst)->type == w_pipe)
 		{
 			if (!(*lst)->next || !(*lst)->prev)
+			{
 				ft_fdprintf(2, RED PIPE_TKN RESET);
-			free_error_word_lst(gb, lst);
-			return (0);
+				free_error_word_lst(gb, lst);
+				return (0);
+			}
 		}
 		if ((*lst)->next)
 			*lst = (*lst)->next;
