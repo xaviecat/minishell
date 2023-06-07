@@ -62,8 +62,6 @@ static char	*set_expanded_env_var(char *env_var, t_minish *msh,
 	char	*expanded_env_var;
 
 	expanded_env_var = expand_env_var(&(msh->garbage), msh->envp, env_var);
-	ft_free(&(msh->garbage), expanded_env_var);
-	expanded_env_var = NULL;
 	if (double_not_closed < 0)
 		expanded_env_var = cut_whitespaces(expanded_env_var, &((*msh).garbage));
 	if (!expanded_env_var)

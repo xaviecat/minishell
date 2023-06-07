@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unhandled_char.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 17:43:08 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/05 16:39:39 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/07 18:31:50 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ bool	is_forbidden_char(t_char_lst *lst)
 		if (lst->c == '|' && lst->next && lst->next->c == '|'
 			&& !lst->s_quote && !lst->d_quote)
 			return (ft_fdprintf(2,
-					RED D_PIPE RESET), true);
+								RED D_PIPE RESET), true);
 		if (lst->c == ';' && !lst->s_quote && !lst->d_quote)
 			return (ft_fdprintf(2, RED SEMICOLON RESET), true);
 		if (lst->c == '\\' && !lst->s_quote && !lst->d_quote)

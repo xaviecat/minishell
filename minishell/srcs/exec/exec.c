@@ -16,7 +16,7 @@ void	exec_all(t_minish *minish)
 {
 	while (minish->cmds)
 	{
-       // if (minish->cmds->redirs)
+		// if (minish->cmds->redirs)
 
 		if (minish->cmds->builtin == true)
 			find_builtin(minish);

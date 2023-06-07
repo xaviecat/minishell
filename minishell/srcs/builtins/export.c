@@ -29,7 +29,8 @@ size_t	get_arg_count(t_w_cmd_list *curr, char **envp)
 
 int	ft_alloc_envp(t_minish *msh, t_w_cmd_list *curr)
 {
-	msh->envp = ft_malloc(&(msh->garbage), sizeof(char *), get_arg_count(curr, msh->envp) + 1);
+	msh->envp = ft_malloc(&(msh->garbage), sizeof(char *),
+			get_arg_count(curr, msh->envp) + 1);
 	if (!(msh->envp))
 		return (0);
 	return (1);
@@ -94,7 +95,7 @@ int	b_export(t_minish *msh, t_w_cmd_list *cmd)
 	ft_free(&(msh->garbage), msh->envp);
 	msh->envp = modified_envp;
 	i = 0;
-	while(modified_envp[i])
+	while (modified_envp[i])
 		printf("%s\n", modified_envp[i++]);
 	return (ft_free(&(msh->garbage), save_envp), 1);
 }
