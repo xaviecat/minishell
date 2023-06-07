@@ -19,7 +19,7 @@ t_w_cmd_list	*new_w_cmd_list(char *content, bool s_quote, bool d_quote, t_garbag
 	new = ft_malloc(gb, sizeof(t_w_cmd_list), 1);
 	if (!new)
 		return (NULL); //! ERROR
-	new->cmd = ft_gb_strdup(content, gb);
+	new->cmd = ft_gbstrtrim(content, " ", gb);
 	if (!new->cmd)
 		return (NULL);
 	new->s_quote = s_quote;

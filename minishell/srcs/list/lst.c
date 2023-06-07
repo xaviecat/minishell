@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:02:59 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/07 16:07:58 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/07 15:19:46 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,8 @@ t_cmd_list	*lst_cmd_new(t_w_cmd_list *cmds, t_fd_list *fds, t_redir_list *redir,
 	if (!new)
 		return (NULL);
 	new->cmd = cmds;
-	if (!new->cmd && errno == ENOMEM)
-		return (free(new), NULL);
+//	if (!new->cmd && errno == ENOMEM)
+//		return (free(new), NULL);
 	new->builtin = false;
 	new->redirs = redir;
 	new->fds = fds;
