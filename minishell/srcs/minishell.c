@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/05 15:44:28 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/07 13:32:08 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,17 @@ t_minish	*create_minishell(char **envp, char **envp_sh)
 	sh->lst_w = NULL;
 	sh->garbage = NULL;
 	sh->garbage = create_garbage_container();
+	(void)envp;
+	(void)envp_sh;
 	if (!sh->garbage)
 	{
 		free(sh);
 		return (NULL);
 	}
-	if (envp_sh)
-		sh->envp = ft_dbtab_dup_gb(envp_sh, &(sh->garbage));
-	else
-		sh->envp = ft_dbtab_dup_gb(envp, &(sh->garbage));
+//	if (envp_sh)
+//		sh->envp = ft_dbtab_dup_gb(envp_sh, &(sh->garbage));
+//	else
+//		sh->envp = ft_dbtab_dup_gb(envp, &(sh->garbage));
 	return (sh);
 }
 
@@ -82,43 +84,30 @@ void	minishell(char **envp)
 			add_history(line);
 		minish = create_minishell(envp, envp_sh);
 		if (!minish)
-			return ; // ! ERROR
+			return ; // ! ERROR free line
 		if (!(create_char_lst_with_c_inside(line, &minish)))
 		{
 			free(line);
 			free_and_exit_minish(minish, &envp_sh);
 		}
 		give_type_in_lst(&minish->lst_c);
-//		print_lst_char(minish->lst_c);
-		if (process_quotes(minish->lst_c) == true)
+		if (unhandled_char(minish->lst_c))
 		{
 			ft_free_all(&minish->garbage);
 			continue ;
 		}
-		if (is_forbidden_char(minish->lst_c))
-		{
-			ft_free_all(&minish->garbage);
-			continue ;
-		}
-		if (is_bad_redir(minish->lst_c))
-		{
-			ft_free_all(&minish->garbage);
-			continue ;
-		}
-		harmonize_spaces(minish->lst_c, &(minish->garbage));
-//		print_lst_char(minish->lst_c);
+		harmonize_spaces(&(minish->lst_c), &(minish->garbage));
+		print_lst_char(minish->lst_c);
 		if (!(create_word_lst(&minish)))
 			free_and_exit_minish(minish, &envp_sh);
-		if ((!redir_is_valid(&(minish->lst_w), &(minish->garbage))))
+		if ((!check_pipe_and_redir(&(minish->garbage), &(minish->lst_w))))
 			continue ;
-		//! gerer redir in redir >< "bash: syntax error near unexpected token `<'"
-		//! gerer quand chevron ou pipe en fin de ligne
-//		print_lst_word(minish->lst_w);
+		//! gerer quand chevron avec epace
 		expand_commands(minish);
-//		print_lst_word(minish->lst_w);
+		print_lst_word(minish->lst_w);
 		if (!(sh_pars(&minish)))
 			free_and_exit_minish(minish, &envp_sh);
-//		print_lst_cmd(minish->cmds);
+		print_lst_cmd(minish->cmds);
 		exec_all(minish);
 		cp_envp_to_envp_sh(&envp_sh, minish->envp);
 		ft_free_all(&minish->garbage);

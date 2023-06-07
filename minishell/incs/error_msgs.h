@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 13:34:42 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/07 14:12:26 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/07 15:21:27 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,13 @@
 # define S_DOLLAR(x)	"minishell: feature not handled: '$" #x "'\n"
 
 /* bash errors*/
-# define S_SM_A_BRA	"minishell: syntax error near unexpected token `<'\n"
-# define D_SM_A_BRA	"minishell: syntax error near unexpected token `<<'\n"
-# define S_GR_A_BRA	"minishell: syntax error near unexpected token `>'\n"
-# define D_GR_A_BRA	"minishell: syntax error near unexpected token `>>'\n"
-# define NL_TKN		"minishell: syntax error near unexpected token `newline'\n"
-# define PIPE_TKN	"minishell: syntax error near unexpected token `|'\n"
+# define S_SM_A_BRA	"minishell: syntax error near unexpected token '<'\n"
+# define D_SM_A_BRA	"minishell: syntax error near unexpected token '<<'\n"
+# define S_GR_A_BRA	"minishell: syntax error near unexpected token '>'\n"
+# define D_GR_A_BRA	"minishell: syntax error near unexpected token '>>'\n"
+# define NL_TKN		"minishell: syntax error near unexpected token 'newline'\n"
+# define PIPE_TKN	"minishell: syntax error near unexpected token '|'\n"
 
-
-
-
-
-
-
+# define UN_TKN(x)	"minishell: syntax error near unexpected token '" #x "'\n"
+# define IS_DIR(x)	"minishell: '" #x "' Is a directory\n"
 #endif

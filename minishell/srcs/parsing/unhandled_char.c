@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unhandled_char.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 17:43:08 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/07 14:07:38 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/05 16:39:39 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,10 @@ bool	is_forbidden_char(t_char_lst *lst)
 			return (ft_fdprintf(2, RED D_DOLLAR RESET), true);
 		if (lst->c == '$' && lst->next && ft_isdigit(lst->next->c) && !lst->s_quote)
 			return (ft_fdprintf(2, RED S_DOLLAR(\%c) RESET, lst->next->c), true);
+		if (lst->c == '!' && !lst->s_quote && !lst->d_quote)
+			return (true);
+		if (lst->c == ':' && !lst->s_quote && !lst->d_quote)
+			return (true);
 		lst = lst->next;
 	}
 	return (false);
@@ -98,5 +102,16 @@ bool	is_bad_redir(t_char_lst *lst)
 		else if (lst)
 			lst = lst->next;
 	}
+	return (false);
+}
+
+bool	unhandled_char(t_char_lst *lst)
+{
+	if (process_quotes(lst))
+		return (true);
+	if (is_forbidden_char(lst))
+		return (true);
+	if (is_bad_redir(lst))
+		return (true);
 	return (false);
 }

@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:14:27 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/05 15:54:13 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/05 17:33:26 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,31 @@ int pipe_is_valid(t_word_lst **lst, t_garbage **gb)
 	{
 		if ((*lst)->type == w_pipe)
 		{
-			if (!(*lst)->next)
+			if (!(*lst)->next || !(*lst)->prev)
+			{
 				ft_fdprintf(2, RED PIPE_TKN RESET);
+				free_error_word_lst(gb, lst);
+				return (0);
+			}
+		}
+		if ((*lst)->next)
+			*lst = (*lst)->next;
+		else
+			break ;
+	}
+	while ((*lst)->prev)
+		*lst = (*lst)->prev;
+	return (1);
+}
+
+int is_a_dir(t_word_lst **lst, t_garbage **gb)
+{
+	while (*lst)
+	{
+		if ((ft_strncmp((*lst)->word, "/", 1) == 0
+				|| (ft_strncmp((*lst)->word, ".", 1) == 0)) && !(*lst)->prev)
+		{
+			ft_fdprintf(2, RED IS_DIR(\%s) RESET, (*lst)->word);
 			free_error_word_lst(gb, lst);
 			return (0);
 		}
@@ -28,9 +51,10 @@ int pipe_is_valid(t_word_lst **lst, t_garbage **gb)
 		else
 			break ;
 	}
+	while ((*lst)->prev)
+		*lst = (*lst)->prev;
 	return (1);
 }
-
 
 int	ft_is_redir(t_type_word type)
 {
@@ -51,7 +75,8 @@ int	redir_is_valid(t_word_lst **lst, t_garbage **gb)
 				if (!(*lst)->next)
 					ft_fdprintf(2, RED NL_TKN RESET);
 				else
-					ft_fdprintf(2, "syntax error near unexpected token `%s'\n", (*lst)->next->word);
+					ft_fdprintf(2, RED UN_TKN(\%s) RESET,
+						(*lst)->next->word);
 				free_error_word_lst(gb, lst);
 				return (0);
 			}
@@ -66,3 +91,13 @@ int	redir_is_valid(t_word_lst **lst, t_garbage **gb)
 	return (1);
 }
 
+int	check_pipe_and_redir(t_garbage **gb, t_word_lst **lst)
+{
+	if (!(redir_is_valid(lst, gb)))
+		return (0);
+	if (!(pipe_is_valid(lst, gb)))
+		return (0);
+	if (!(is_a_dir(lst, gb)))
+		return (0);
+	return (1);
+}
