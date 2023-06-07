@@ -66,7 +66,7 @@ void	print_lst_cmd(t_cmd_list *lst)
 			lst->cmd = lst->cmd->next;
 		}
 		lst->cmd = first_w;
-		printf("\n");
+		printf("\n"RESET);
 		print_fd(lst->fds);
 		print_redir(lst->redirs);
 		lst = lst->next;
