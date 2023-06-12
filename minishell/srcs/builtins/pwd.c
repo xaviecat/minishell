@@ -26,8 +26,6 @@ char	*get_pwd_from_envp(char **envp)
 	return (NULL);
 }
 
-/* proteger getcwd */
-//PWD DISPONIBLE DANS ENVP
 void	b_pwd(char **envp)
 {
 	char	*path;
@@ -37,5 +35,4 @@ void	b_pwd(char **envp)
 		path = get_pwd_from_envp(envp);
 	else
 		printf("%s\n", path);
-	//free(path);
 }

@@ -15,7 +15,7 @@
 bool	param_n(t_w_cmd_list **lst)
 {
 	t_w_cmd_list	*first;
-	int 			i;
+	int				i;
 	bool			ret;
 
 	ret = false;
