@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_msgs.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 13:34:42 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/07 15:21:27 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/08 10:50:56 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # define SEMICOLON		"minishell: feature not handled: ';'\n"
 # define BACKSLASH		"minishell: feature not handled: '\\'\n"
 # define D_DOLLAR		"minishell: feature not handled: '$$'\n"
-# define S_DOLLAR(x)	"minishell: feature not handled: '$" #x "'\n"
+# define S_DOLLAR(x)	"minishell: feature not handled: " #x "\n"
 
 /* bash errors*/
 # define S_SM_A_BRA	"minishell: syntax error near unexpected token '<'\n"
@@ -31,6 +31,6 @@
 # define NL_TKN		"minishell: syntax error near unexpected token 'newline'\n"
 # define PIPE_TKN	"minishell: syntax error near unexpected token '|'\n"
 
-# define UN_TKN(x)	"minishell: syntax error near unexpected token '" #x "'\n"
-# define IS_DIR(x)	"minishell: '" #x "' Is a directory\n"
+# define UN_TKN(x)	"minishell: syntax error near unexpected token " #x "\n"
+# define IS_DIR(x)	"minishell: " #x ": Is a directory\n"
 #endif
