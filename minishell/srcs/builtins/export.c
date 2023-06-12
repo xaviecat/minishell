@@ -44,7 +44,7 @@ int	export_print(t_minish *msh)
 
 	if (!msh->envp)
 		printf("NULL\n");
-	envp_cpy = ft_dbtab_dup_gb(msh->envp, &(msh->garbage));
+	envp_cpy = ft_gbtabdup(msh->envp, &(msh->garbage));
 	ft_sort_str_arr(envp_cpy);
 	i = 0;
 	while (envp_cpy[i])
@@ -79,7 +79,7 @@ int	b_export(t_minish *msh, t_w_cmd_list *cmd)
 	{
 		if (not_in_env(cmd->cmd, save_envp))
 		{
-			(msh->envp)[i] = ft_gb_strdup(cmd->cmd, &(msh->garbage));
+			(msh->envp)[i] = ft_gbstrdup(cmd->cmd, &(msh->garbage));
 			if (!(msh->envp[i++]))
 				return (0);
 		}
@@ -89,7 +89,7 @@ int	b_export(t_minish *msh, t_w_cmd_list *cmd)
 		cmd = cmd->next;
 	}
 	msh->envp[i] = NULL;
-	modified_envp = ft_gb_dbtab_join(save_envp, msh->envp, &(msh->garbage));
+	modified_envp = ft_gbtabjoin(save_envp, msh->envp, &(msh->garbage));
 	if (!modified_envp && errno == ENOMEM)
 		return (ft_free(&(msh->garbage), msh->envp), 0);
 	ft_free(&(msh->garbage), msh->envp);

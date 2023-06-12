@@ -88,7 +88,7 @@ t_word_lst	*word_lst_new(char *word, t_garbage **gb)
 	new = ft_malloc(gb, sizeof(t_word_lst), 1);
 	if (!new)
 		return (NULL);
-	new->word = ft_gb_strdup(word, gb);
+	new->word = ft_gbstrdup(word, gb);
 	new->type = not_define;
 	new->next = NULL;
 	new->prev = NULL;

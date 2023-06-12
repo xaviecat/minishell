@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 13:34:42 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/08 10:50:56 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/12 17:12:51 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # define D_DOLLAR		"minishell: feature not handled: '$$'\n"
 # define S_DOLLAR(x)	"minishell: feature not handled: " #x "\n"
 
+# define CMD_NOT_FOUND	": command not found\n"
+
 /* bash errors*/
 # define S_SM_A_BRA	"minishell: syntax error near unexpected token '<'\n"
 # define D_SM_A_BRA	"minishell: syntax error near unexpected token '<<'\n"
@@ -33,4 +35,5 @@
 
 # define UN_TKN(x)	"minishell: syntax error near unexpected token " #x "\n"
 # define IS_DIR(x)	"minishell: " #x ": Is a directory\n"
+
 #endif
