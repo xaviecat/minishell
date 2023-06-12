@@ -140,15 +140,12 @@ int	expand_commands(t_minish *minish)
 	t_word_lst	*w_lst_cpy;
 
 	w_lst_cpy = minish->lst_w;
-//	printf(GREEN"expand :\n"RESET);
 	while (w_lst_cpy)
 	{
 		w_lst_cpy->word = expand_vars(w_lst_cpy->word, minish);
 		if (!w_lst_cpy->word)
 			return (0); // ? code d'erreur a ajouter
-//		printf("%s\n", w_lst_cpy->word);
 		w_lst_cpy = w_lst_cpy->next;
 	}
-//	printf("expand end\n\n"RESET);
 	return (1);
 }

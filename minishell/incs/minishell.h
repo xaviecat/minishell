@@ -151,6 +151,8 @@ typedef struct s_cmd_list
 	t_w_cmd_list		*cmd;
 	char				*cmdpath; // strjoin PATH+CMD
 	char				**cmdtab;
+	char				*cmd_c;
+	char				**cmd_tab;
 	bool				builtin;
 	struct s_redir_list	*redirs;
 	struct s_fd_list	*fds;
@@ -205,6 +207,8 @@ void			print_fd(t_fd_list *lst);
 void			harmonize_spaces(t_char_lst **lst, t_garbage **gb);
 int				redir_is_valid(t_word_lst **lst, t_garbage **gb);
 int				check_pipe_and_redir(t_garbage **gb, t_word_lst **lst);
+char			**reforme_d_tab_cmd(t_w_cmd_list **lst, char *cmd, t_garbage **gb);
+int				ft_del_quotes(t_minish *msh);
 
 /* error */
 bool			is_forbidden_char(t_char_lst *lst);
@@ -218,9 +222,10 @@ void			free_error_word_lst(t_garbage **gb, t_word_lst **lst);
 void			b_pwd(char **envp);
 void			b_cd(char *path, char **envp);
 void			b_echo(t_w_cmd_list *content);
-void			b_exit(t_minish *minish);
+void			b_exit(t_minish **minish);
 int				b_export(t_minish *msh, t_w_cmd_list *cmds);
 void			b_env(char **env);
+int				b_unset(t_minish *sh);
 void			find_builtin(t_minish *sh);
 
 /* exec */
@@ -280,6 +285,8 @@ t_type_word		is_a_bultin(char *word);
 t_type_word		get_cat_of_word(char *word);
 void			word_lst_delone(t_word_lst **lst, t_garbage **gb);
 t_word_lst		*word_lst_first(t_word_lst *lst);
+void			get_other_type_word(t_word_lst **lst);
+t_word_lst		*word_lst_new(char *word, t_garbage **gb);
 
 /* list command maybe not useful */
 t_cmd_list		*lst_cmd_new(t_w_cmd_list *cmds,

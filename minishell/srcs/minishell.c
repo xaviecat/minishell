@@ -128,6 +128,9 @@ void	minishell(char **envp)
 		if (!(sh_pars(&minish)))
 			free_and_exit_minish(minish, &envp_sh);
 		print_lst_cmd(minish->cmds);
+		if (!ft_del_quotes(minish))
+			return (ft_free_all(&(minish->garbage)),
+				free_and_exit_minish(minish, &envp_sh), (void) 0);
 		placeholder(&minish);
 		exec_all(minish);
 		cp_envp_to_envp_sh(&envp_sh, minish->envp);

@@ -12,13 +12,14 @@
 
 #include "../../incs/minishell.h"
 
-t_w_cmd_list	*new_w_cmd_list(char *content, bool s_quote, bool d_quote, t_garbage **gb)
+t_w_cmd_list	*new_w_cmd_list(char *content, bool s_quote, bool d_quote,
+								t_garbage **gb)
 {
 	t_w_cmd_list	*new;
 
 	new = ft_malloc(gb, sizeof(t_w_cmd_list), 1);
 	if (!new)
-		return (NULL); //! ERROR
+		return (NULL);
 	new->cmd = ft_gbstrtrim(content, " ", gb);
 	if (!new->cmd)
 		return (NULL);
@@ -37,21 +38,6 @@ t_w_cmd_list	*w_cmd_lst_last(t_w_cmd_list *lst)
 		lst = lst->next;
 	}
 	return (lst);
-}
-
-void	w_cmd_lst_add_back(t_w_cmd_list **lst, t_w_cmd_list *new)
-{
-	t_w_cmd_list	*tmp;
-
-	if (!lst)
-		return ;
-	if (*lst)
-	{
-		tmp = w_cmd_lst_last(*lst);
-		tmp->next = new;
-	}
-	else
-		*lst = new;
 }
 
 t_w_cmd_list	*get_cmd(t_word_lst **old_lst, t_garbage **gb)

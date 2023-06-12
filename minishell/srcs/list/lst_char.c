@@ -6,35 +6,11 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:39:55 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/07 13:09:54 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/12 17:16:37 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
-
-/**
- * @brief print all link data
- * @param lst
- */
-void	print_lst_char(t_char_lst *lst)
-{
-	t_char_lst	*first;
-
-	first = lst;
-	printf(BLUE"lst_c :\n");
-	while (lst)
-	{
-		printf("%c | ", lst->c);
-		printf("sq : %i | ", lst->s_quote);
-		printf("dq : %i | ", lst->d_quote);
-		printf("aq : %i | ", lst->a_quote);
-		printf("type : %i |", lst->type);
-		printf("\n");
-		lst = lst->next;
-	}
-	printf("\n"RESET);
-	lst = first;
-}
 
 /**
  * @brief delete one link in the char list
@@ -65,10 +41,10 @@ t_char_lst	*char_lst_new(char c, t_garbage **gb)
 	t_char_lst	*new;
 
 	if (!c)
-		return (NULL); // ! ERROR
+		return (NULL);
 	new = ft_malloc(gb, sizeof(t_char_lst), 1);
 	if (!new)
-		return (NULL); // ! ERROR
+		return (NULL);
 	new->c = c;
 	new->next = NULL;
 	new->prev = NULL;
@@ -96,28 +72,6 @@ t_char_lst	*char_lst_last(t_char_lst *lst)
 	return (lst);
 }
 
-/**
- * @brief add the link new at the end of the char list 'lst'
- * @param lst
- * @param new
- */
-void	char_lst_add_back(t_char_lst **lst, t_char_lst *new)
-{
-	t_char_lst	*tmp;
-
-	if (!lst)
-		return ;
-	if (*lst)
-	{
-		tmp = char_lst_last(*lst);
-		new->prev = tmp;
-		tmp->next = new;
-	}
-	else
-		*lst = new;
-	return ;
-}
-
 void	free_error_char_lst(t_garbage **gb, t_char_lst **lst_c)
 {
 	t_char_lst	*next;
@@ -133,6 +87,7 @@ void	free_error_char_lst(t_garbage **gb, t_char_lst **lst_c)
 		*lst_c = next;
 	}
 }
+
 /**
  * @brief split the command char in a char list
  * @param cmd_line
@@ -151,10 +106,7 @@ int	create_char_lst_with_c_inside(char *cmd_line, t_minish **sh)
 	{
 		new = char_lst_new(cmd_line[i], &((*sh)->garbage));
 		if (!new)
-		{
-			free_error_char_lst(&((*sh)->garbage), &((*sh)->lst_c));
-			return (0);
-		}
+			return (free_error_char_lst(&((*sh)->garbage), &((*sh)->lst_c)), 0);
 		if ((*sh)->lst_c)
 		{
 			new->prev = (*sh)->lst_c->last_added;

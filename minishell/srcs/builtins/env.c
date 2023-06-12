@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 14:59:14 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/08 15:24:44 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/12 14:49:12 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,4 @@ void	b_env(char **env)
 			printf("%s\n", env[i]);
 		i++;
 	}
-	return ;
 }

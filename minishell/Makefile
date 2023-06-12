@@ -7,6 +7,7 @@ SRCS			:=	minishell.c\
 					builtins/exit.c\
 					builtins/export.c\
 					builtins/pwd.c\
+					builtins/unset.c\
 					\
 					exec/builtin.c\
 					exec/check_access.c\
@@ -22,6 +23,7 @@ SRCS			:=	minishell.c\
 					list/lst_char.c\
 					list/lst_cmd.c\
 					list/lst_word.c\
+					list/lst_word_utils.c\
 					\
 					parsing/expand.c\
 					parsing/harmonize_spaces.c\
@@ -31,6 +33,8 @@ SRCS			:=	minishell.c\
 					parsing/process_quotes.c\
 					parsing/redir_is_valid.c\
 					parsing/unhandled_char.c\
+					\
+					print_things/print_1.c\
 					\
 					redir/redir.c\
 					\
@@ -50,6 +54,7 @@ SRCS			:=	minishell.c\
 					utils/ft_sort_str_arr.c\
 					utils/ft_tabfree.c\
 					utils/utils.c\
+
 
 SRCS_D			:=	srcs/
 
@@ -111,6 +116,7 @@ $(OBJS_D)		:
 				mkdir -p $(OBJS_D)/garbage
 				mkdir -p $(OBJS_D)/list
 				mkdir -p $(OBJS_D)/parsing
+				mkdir -p $(OBJS_D)/print_things
 				mkdir -p $(OBJS_D)/redir
 				mkdir -p $(OBJS_D)/signal
 				mkdir -p $(OBJS_D)/utils
