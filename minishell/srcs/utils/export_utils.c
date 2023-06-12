@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 13:17:59 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/05 14:23:37 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/08 12:41:50 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ static size_t	get_var_name_len(char *arg)
 //	var_name[i] = 0;
 //	return (var_name);
 	i = 0;
-	while (arg[i] && arg[i] != '=')
+	while (printf("%c\n", arg[i]) && arg[i] && (arg[i] != '='
+			&& !(arg[i] == '+' && arg[i + 1] && arg[i + 1] == '=')))
 		i++;
 	return (i + 1);
 }
@@ -59,6 +60,7 @@ int	not_in_env(char *cmd, char **envp)
 	size_t	var_name_len;
 
 	var_name_len = get_var_name_len(cmd);
+	printf("%li, %c\n", var_name_len, cmd[var_name_len]);
 	i = 0;
 	while (envp[i])
 		if (!ft_strncmp(cmd, envp[i++], var_name_len))

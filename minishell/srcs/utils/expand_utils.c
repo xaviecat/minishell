@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 17:01:30 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/07 17:28:42 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/12 13:35:21 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ char *ft_cut_var(char *str, t_garbage **gb)
 	char	*new_str;
 
 	new_str_len = 0;
-	while (str[new_str_len] && (ft_isalnum(str[new_str_len]) || (str[new_str_len] == '$' && !new_str_len)))
+	while (str[new_str_len] && (ft_isalnum(str[new_str_len])
+			|| (str[new_str_len] == '$' && !new_str_len)))
 		new_str_len++;
 	new_str = ft_malloc(gb, sizeof(char), new_str_len + 1);
 	if (!new_str)

@@ -44,6 +44,7 @@ SRCS			:=	minishell.c\
 					utils/reforme_d_tab_cmd.c\
 					print_things/print_1.c\
 
+					parsing/remove_quotes.c
 
 SRCS_D			:=	srcs/
 

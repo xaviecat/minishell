@@ -206,6 +206,7 @@ void			harmonize_spaces(t_char_lst **lst, t_garbage **gb);
 int				redir_is_valid(t_word_lst **lst, t_garbage **gb);
 int				check_pipe_and_redir(t_garbage **gb, t_word_lst **lst);
 char			**reforme_d_tab_cmd(t_w_cmd_list **lst, char *cmd, t_garbage **gb);
+int				ft_del_quotes(t_minish *msh);
 
 /* error */
 bool			is_forbidden_char(t_char_lst *lst);
