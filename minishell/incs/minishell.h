@@ -14,6 +14,8 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+int	num_exit_status;
+
 # include "../libft/incs/libft.h"
 # include "colors.h"
 # include "error_msgs.h"
@@ -216,10 +218,14 @@ void			b_cd(char *path, char **envp);
 void			b_echo(t_w_cmd_list *content);
 void			b_exit(t_minish *minish);
 int				b_export(t_minish *msh, t_w_cmd_list *cmds);
+void			b_env(char **env);
 void			find_builtin(t_minish *sh);
 
 /* exec */
 void			exec_all(t_minish *minish);
+
+/* signal */
+void			signal_handler(int signum);
 
 /* utils */
 char			*ft_cut_var(char *str, t_garbage **gb);

@@ -1,21 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/23 13:05:10 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/23 13:06:05 by syluiset         ###   ########.fr       */
+/*   Created: 2023/06/08 12:30:33 by syluiset          #+#    #+#             */
+/*   Updated: 2023/06/08 12:30:33 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-void	b_exit(t_minish *minish)
+void	signal_handler(int signum)
 {
-	ft_free_all(&minish->garbage);
-	free(minish->garbage);
-	free(minish);
-	exit(EXIT_SUCCESS);
+	if (signum == SIGINT)
+	{
+		printf("\nCtrl+C recu \n");
+	}
+	else if (signum == SIGQUIT)
+	{
+		printf("Ctrl+\\ recu\n");
+	}
+	else if (signum == SIGTSTP)
+	{
+		printf("Ctrl+D recu\n");
+	}
 }
