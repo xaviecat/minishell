@@ -5,17 +5,14 @@ SRCS			:=	minishell.c\
 					builtins/cd.c\
 					builtins/echo.c\
 					builtins/exit.c\
+					builtins/env.c\
+					builtins/export.c\
 					parsing/process_quotes.c\
 					parsing/expand.c\
 					parsing/unhandled_char.c\
 					parsing/pars_in_minish.c\
 					parsing/harmonize_spaces.c\
 					parsing/redir_is_valid.c\
-					utils/expand_utils.c\
-					utils/utils.c\
-					utils/libftgarbage.c\
-					utils/ft_dbtab_dup_gb.c\
-					utils/free_char_tab.c\
 					list/lst.c\
 					list/lst_char.c\
 					list/lst_word.c\
@@ -25,17 +22,22 @@ SRCS			:=	minishell.c\
 					fds/fds.c\
 					garbage/ft_free.c\
 					garbage/ft_malloc.c\
+					exec/builtin.c\
+					exec/exec.c\
+					signal/signal.c\
 					utils/ft_gb_strdup.c\
 					utils/ft_gbstrjoin.c\
-					exec/builtin.c\
 					utils/ft_gbstrtrim.c\
 					utils/ft_gbcalloc.c\
-					exec/exec.c\
-					builtins/export.c\
 					utils/ft_gb_dbtab_join.c\
 					utils/ft_gb_free_split.c\
 					utils/export_utils.c\
-					utils/ft_sort_str_arr.c
+					utils/ft_sort_str_arr.c\
+					utils/expand_utils.c\
+					utils/utils.c\
+					utils/libftgarbage.c\
+					utils/ft_dbtab_dup_gb.c\
+					utils/free_char_tab.c\
 
 
 SRCS_D			:=	srcs/
@@ -100,6 +102,7 @@ $(OBJS_D)		:
 				mkdir -p $(OBJS_D)/redir
 				mkdir -p $(OBJS_D)/garbage
 				mkdir -p $(OBJS_D)/exec
+				mkdir -p $(OBJS_D)/signal
 
 $(LIB_A)		:	FORCE
 				make -j -C $(LIB_D)

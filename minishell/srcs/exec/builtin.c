@@ -27,10 +27,8 @@ void	find_builtin(t_minish *sh)
 		b_pwd(sh->envp);
 	if (ft_strncmp(cp_cmd, "export", 7) == 0)
 		b_export(sh, sh->cmds->cmd);
-	//if (ft_strncmp(cp_cmd, "export", 7) == 0)
-		//
 	//if (ft_strncmp(cp_cmd, "unset", 6) == 0)
 		//
-	//if (ft_strncmp(cp_cmd, "env", 4) == 0)
-		//
+	if (ft_strncmp(cp_cmd, "env", 4) == 0)
+		b_env(sh->envp);
 }
