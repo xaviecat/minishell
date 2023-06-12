@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 13:17:59 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/08 12:41:50 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/12 18:00:39 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,11 @@
 static size_t	get_var_name_len(char *arg)
 {
 	size_t	i;
-//	char	*var_name;
-//
-//	i = 0;
-//	while (arg[i] != '=')
-//		i++;
-//	var_name = ft_malloc(gb, sizeof(char), i + 2);
-//	if (!var_name)
-//		return (NULL);
-//	i = 0;
-//	while (arg[i++] != '=')
-//		var_name[i - 1] = arg[i - 1];
-//	var_name[i] = 0;
-//	return (var_name);
+
 	i = 0;
-	while (printf("%c\n", arg[i]) && arg[i] && (arg[i] != '='
-			&& !(arg[i] == '+' && arg[i + 1] && arg[i + 1] == '=')))
+	while (arg[i] && arg[i] != '=')
 		i++;
-	return (i + 1);
+	return (i);
 }
 
 size_t	modify_envp(char *cmd, char **envp, t_garbage **gb)
@@ -54,16 +41,61 @@ size_t	modify_envp(char *cmd, char **envp, t_garbage **gb)
 	return (1);
 }
 
+int is_concat(char *cmd)
+{
+	size_t	i;
+
+	i = 0;
+	while (cmd[i])
+	{
+		if (cmd[i] == '=')
+			return (0);
+		else if (cmd[i] == '+')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int cmp_concat(char **envp, char *cmd)
+{
+	size_t	i;
+	size_t	var_len;
+
+	var_len = 0;
+	while (cmd[var_len] != '+')
+		var_len++;
+	i = 0;
+	while (envp[i])
+	{
+		if (!ft_strncmp(cmd, envp[i], var_len - 1))
+		{
+			if (envp)
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
 int	not_in_env(char *cmd, char **envp)
 {
 	size_t	i;
 	size_t	var_name_len;
 
+	if (is_concat(cmd))
+		return (cmp_concat(envp, cmd));
 	var_name_len = get_var_name_len(cmd);
-	printf("%li, %c\n", var_name_len, cmd[var_name_len]);
 	i = 0;
 	while (envp[i])
-		if (!ft_strncmp(cmd, envp[i++], var_name_len))
+	{
+		if (ft_strlen(envp[i]) == var_name_len)
+		{
+			if (!ft_strncmp(cmd, envp[i++], var_name_len))
+				return (0);
+		}
+		else if (!ft_strncmp(cmd, envp[i++], var_name_len + 1))
 			return (0);
+	}
 	return (1);
 }
