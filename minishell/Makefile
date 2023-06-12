@@ -1,6 +1,5 @@
 #===========================VARIABLE===============================#
 SRCS			:=	minishell.c\
-					parsing/pars.c\
 					builtins/pwd.c\
 					builtins/cd.c\
 					builtins/echo.c\
@@ -15,15 +14,12 @@ SRCS			:=	minishell.c\
 					parsing/redir_is_valid.c\
 					parsing/is_error_fct1.c\
 					parsing/is_error_fct2.c\
-					utils/expand_utils.c\
 					utils/utils.c\
 					utils/libftgarbage.c\
-					utils/ft_dbtab_dup_gb.c\
-					utils/free_char_tab.c\
 					list/lst.c\
 					list/lst_char.c\
 					list/lst_word.c\
-					list/lst_w_cmd.c\
+					list/lst_cmd.c\
 					list/find_type.c\
 					redir/redir.c\
 					fds/fds.c\
@@ -41,8 +37,6 @@ SRCS			:=	minishell.c\
 					utils/export_utils.c\
 					utils/ft_sort_str_arr.c\
 					utils/expand_utils.c\
-					utils/utils.c\
-					utils/libftgarbage.c\
 					utils/ft_dbtab_dup_gb.c\
 					utils/free_char_tab.c\
 

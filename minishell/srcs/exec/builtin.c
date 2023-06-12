@@ -18,7 +18,7 @@ void	find_builtin(t_minish *sh)
 
 	cp_cmd = ft_gb_strdup(sh->cmds->cmd->cmd, &(sh->garbage));
 	if (ft_strncmp(cp_cmd, "exit", 5) == 0)
-		b_exit(sh);
+		b_exit(&sh);
 	if (ft_strncmp(cp_cmd, "echo", 5) == 0)
 		b_echo(sh->cmds->cmd);
 	if (ft_strncmp(cp_cmd, "cd", 3) == 0)

@@ -216,7 +216,7 @@ void			free_error_word_lst(t_garbage **gb, t_word_lst **lst);
 void			b_pwd(char **envp);
 void			b_cd(char *path, char **envp);
 void			b_echo(t_w_cmd_list *content);
-void			b_exit(t_minish *minish);
+void			b_exit(t_minish **minish);
 int				b_export(t_minish *msh, t_w_cmd_list *cmds);
 void			b_env(char **env);
 void			find_builtin(t_minish *sh);
