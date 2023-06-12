@@ -39,7 +39,7 @@ SRCS			:=	minishell.c\
 					utils/expand_utils.c\
 					utils/ft_dbtab_dup_gb.c\
 					utils/free_char_tab.c\
-
+					parsing/remove_quotes.c
 
 SRCS_D			:=	srcs/
 
