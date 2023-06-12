@@ -35,8 +35,8 @@ SRCS			:=	minishell.c\
 					utils/ft_gb_dbtab_join.c\
 					utils/ft_gb_free_split.c\
 					utils/export_utils.c\
-					utils/ft_sort_str_arr.c
-
+					utils/ft_sort_str_arr.c\
+					parsing/remove_quotes.c
 
 SRCS_D			:=	srcs/
 
