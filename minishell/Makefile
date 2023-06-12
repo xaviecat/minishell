@@ -6,6 +6,7 @@ SRCS			:=	minishell.c\
 					builtins/exit.c\
 					builtins/env.c\
 					builtins/export.c\
+					builtins/unset.c\
 					parsing/process_quotes.c\
 					parsing/expand.c\
 					parsing/unhandled_char.c\
@@ -19,6 +20,7 @@ SRCS			:=	minishell.c\
 					list/lst.c\
 					list/lst_char.c\
 					list/lst_word.c\
+					list/lst_word_utils.c\
 					list/lst_cmd.c\
 					list/find_type.c\
 					redir/redir.c\
@@ -39,6 +41,8 @@ SRCS			:=	minishell.c\
 					utils/expand_utils.c\
 					utils/ft_dbtab_dup_gb.c\
 					utils/free_char_tab.c\
+					utils/reforme_d_tab_cmd.c\
+					print_things/print_1.c\
 
 
 SRCS_D			:=	srcs/
@@ -104,6 +108,7 @@ $(OBJS_D)		:
 				mkdir -p $(OBJS_D)/garbage
 				mkdir -p $(OBJS_D)/exec
 				mkdir -p $(OBJS_D)/signal
+				mkdir -p $(OBJS_D)/print_things
 
 $(LIB_A)		:	FORCE
 				make -j -C $(LIB_D)

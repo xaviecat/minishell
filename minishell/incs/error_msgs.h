@@ -33,4 +33,5 @@
 
 # define UN_TKN(x)	"minishell: syntax error near unexpected token " #x "\n"
 # define IS_DIR(x)	"minishell: " #x ": Is a directory\n"
+# define NT_VAL_ID(x) "minishell: unset: " #x ": not a valid identifier\n"
 #endif

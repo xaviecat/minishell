@@ -28,10 +28,7 @@ char	*get_home_from_env(char **envp)
 
 void	b_cd(char *path, char **envp)
 {
-	//use HOME from env
 	if (path == NULL)
 		path = get_home_from_env(envp);
-		//SECURISER
 	chdir(path);
-	 //free(path);
 }

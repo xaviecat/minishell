@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 13:57:31 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/31 12:10:08 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/12 17:07:31 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ t_garbage_list	*new_garbage(void *content)
 	return (new);
 }
 
-
 t_garbage_list	*garbage_last(t_garbage_list *lst)
 {
 	while (lst)
@@ -53,21 +52,6 @@ t_garbage_list	*garbage_last(t_garbage_list *lst)
 		lst = lst->next;
 	}
 	return (lst);
-}
-
-void	garbage_add_back(t_garbage_list **lst, t_garbage_list *new)
-{
-	t_garbage_list	*tmp;
-
-	if (!lst)
-		return ;
-	if (*lst)
-	{
-		tmp = garbage_last(*lst);
-		tmp->next = new;
-	}
-	else
-		*lst = new;
 }
 
 void	*ft_malloc(t_garbage **garbage, int the_size, int number)
@@ -82,7 +66,7 @@ void	*ft_malloc(t_garbage **garbage, int the_size, int number)
 		return (NULL);
 	new = new_garbage(content);
 	if (!new)
-		return (NULL);// ! ERROR
+		return (NULL);
 	if (!(*garbage)->first)
 	{
 		(*garbage)->first = new;
