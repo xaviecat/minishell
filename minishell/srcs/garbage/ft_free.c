@@ -87,6 +87,8 @@ void	ft_free_all(t_garbage **lst)
 	next = NULL;
 	while ((*lst)->first)
 	{
+		if ((*lst)->first == (*lst)->last)
+			(*lst)->last = NULL;
 		if ((*lst)->first->next)
 			next = (*lst)->first->next;
 		else
