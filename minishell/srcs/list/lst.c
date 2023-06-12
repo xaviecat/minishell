@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   lst.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:02:59 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/07 15:19:46 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/07 18:21:56 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-void 	free_chunk(t_cmd_list *lst)
+void	free_chunk(t_cmd_list *lst)
 {
 	while (lst->cmd)
 	{
@@ -59,20 +59,20 @@ void	print_lst_cmd(t_cmd_list *lst)
 			lst->cmd = lst->cmd->next;
 		}
 		else
-			printf("(NULL)");
+			printf("(null)                         |");
 		while (lst->cmd)
 		{
 			printf("[%s] ", lst->cmd->cmd);
 			lst->cmd = lst->cmd->next;
 		}
 		lst->cmd = first_w;
-		printf("\n"RESET);
+		printf("\n");
 		print_fd(lst->fds);
 		print_redir(lst->redirs);
 		lst = lst->next;
 		i++;
 	}
-	printf("\n"RESET);
+	printf(RESET"\n");
 }
 
 t_cmd_list	*lst_cmd_last(t_cmd_list *lst)
@@ -101,7 +101,8 @@ void	lst_cmd_add_back(t_cmd_list **lst, t_cmd_list *new)
 		*lst = new;
 }
 
-t_cmd_list	*lst_cmd_new(t_w_cmd_list *cmds, t_fd_list *fds, t_redir_list *redir, t_garbage **gb)
+t_cmd_list	*lst_cmd_new(t_w_cmd_list *cmds, t_fd_list *fds,
+						t_redir_list *redir, t_garbage **gb)
 {
 	t_cmd_list	*new;
 

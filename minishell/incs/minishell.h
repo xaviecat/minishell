@@ -14,6 +14,8 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+int	num_exit_status;
+
 # include "../libft/incs/libft.h"
 # include "colors.h"
 # include "error_msgs.h"
@@ -164,9 +166,6 @@ typedef struct s_word_lst
 	struct s_word_lst	*last_added;
 }						t_word_lst;
 
-/**
- * @brief Contain the whole command line characters in chained list
- */
 typedef struct s_char_lst
 {
 	int					pipe;
@@ -182,17 +181,19 @@ typedef struct s_char_lst
 
 typedef struct s_minish
 {
-	char			**envp;
-	t_cmd_list		*cmds;
-	t_char_lst		*lst_c;
-	t_word_lst		*lst_w;
-	t_garbage		*garbage;
+	char		**envp;
+	t_cmd_list	*cmds;
+	t_char_lst	*lst_c;
+	t_word_lst	*lst_w;
+	t_garbage	*garbage;
 }				t_minish;
+
+typedef bool	(*t_unhandled_char)(t_char_lst *);
 
 /* parsing */
 char			**parsing_argu(char *arg_term);
 t_minish		*parsing_command(char *cmd_line, t_minish *sh);
-int expand_commands(t_minish *minish);
+int				expand_commands(t_minish *minish);
 char			*cut_whitespaces(char *str, t_garbage **gb);
 bool			process_quotes(t_char_lst *lst);
 t_redir_list	*get_redir(t_word_lst **lst, t_garbage **gb);
@@ -210,21 +211,25 @@ bool			unhandled_char(t_char_lst *lst);
 bool			is_bad_redir(t_char_lst *lst);
 void			free_error_fds(t_garbage **gb, t_fd_list **lst);
 void			free_error_redir(t_garbage **gb, t_redir_list **lst);
-void			free_error_word_lst(t_garbage  **gb, t_word_lst **lst);
+void			free_error_word_lst(t_garbage **gb, t_word_lst **lst);
 
 /* builtins */
 void			b_pwd(char **envp);
 void			b_cd(char *path, char **envp);
 void			b_echo(t_w_cmd_list *content);
-void			b_exit(t_minish *minish);
+void			b_exit(t_minish **minish);
 int				b_export(t_minish *msh, t_w_cmd_list *cmds);
+void			b_env(char **env);
 void			find_builtin(t_minish *sh);
 
 /* exec */
 void			exec_all(t_minish *minish);
 
+/* signal */
+void			signal_handler(int signum);
+
 /* utils */
-char *ft_cut_var(char *str, t_garbage **gb);
+char			*ft_cut_var(char *str, t_garbage **gb);
 int				ft_isspace(char c);
 char			*str_cpy_to_x(char *src, char *dst, char x);
 int				is_dollar_alone(char *env_var, char *cmd, size_t start);
@@ -267,8 +272,8 @@ void			char_lst_delone(t_char_lst **lst, t_garbage **gb);
 /* lst_word function */
 int				create_word_lst(t_minish **sh);
 void			print_lst_word(t_word_lst *lst);
-int				is_a_bultin(char *word);
-int				get_cat_of_word(char *word);
+t_type_word is_a_bultin(char *word);
+t_type_word get_cat_of_word(char *word);
 void			word_lst_delone(t_word_lst **lst, t_garbage **gb);
 t_word_lst		*word_lst_first(t_word_lst *lst);
 
@@ -284,6 +289,14 @@ int				sh_pars(t_minish **minish);
 bool			builtin_or_command(char *cmd);
 
 /* lst_w_cmd function */
-
 t_w_cmd_list	*get_cmd(t_word_lst **old_lst, t_garbage **gb);
+
+bool			is_amp_error(t_char_lst *lst);
+bool			is_pipe_error(t_char_lst *lst);
+bool			is_semicolon_error(t_char_lst *lst);
+bool			is_backslash_error(t_char_lst *lst);
+bool			is_dollar_error(t_char_lst *lst);
+bool			is_exclamation_error(t_char_lst *lst);
+bool			is_colon_error(t_char_lst *lst);
+
 #endif

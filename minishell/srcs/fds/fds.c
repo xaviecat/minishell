@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fds.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 17:45:12 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/07 17:35:29 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/07 18:25:16 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_fd_list	*new_fds(t_garbage **gb)
 
 	fds = ft_malloc(gb, sizeof(t_fd_list), 1);
 	if (!fds)
-	    return (NULL);
+		return (NULL);
 	fds->in = STDIN_FILENO;
 	fds->out = STDOUT_FILENO;
 	fds->next = NULL;
@@ -91,7 +91,7 @@ t_fd_list	*create_fds_list(t_redir_list *redirs, t_garbage **gb)
 	t_fd_list		*fds;
 	t_fd_list		*new;
 
-    fds = NULL;
+	fds = NULL;
 	if (redirs)
 	{
 		fds = new_fds(gb);

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
 /*   Updated: 2023/06/12 14:57:51 by nfaust           ###   ########.fr       */
@@ -61,6 +61,24 @@ void	minishell(char **envp)
 	char		*line;
 	t_minish	*minish;
 	char		**envp_sh;
+
+	/* TEST SIGNAL */
+	struct	sigaction	sa_int;
+	struct	sigaction	sa_quit;
+	struct	sigaction	sa_stop;
+	//Ctrl+C
+	sa_int.sa_handler = signal_handler;
+	sa_int.sa_flags = 0;
+	sigaction(SIGINT, &sa_int, NULL);
+	//(Ctrl+\)
+	sa_quit.sa_handler = signal_handler;
+	sa_quit.sa_flags = 0;
+	sigaction(SIGQUIT, &sa_quit, NULL);
+	//Ctrl+D
+	sa_stop.sa_handler = signal_handler;
+	sa_stop.sa_flags = 0;
+	sigaction(SIGTSTP, &sa_stop, NULL);
+	/* TEST SIGNAL */
 
 	envp_sh = NULL;
 	printf(LBLUE TRISHBANNER0"\n");

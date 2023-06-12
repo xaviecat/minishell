@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 17:21:43 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/26 15:45:53 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/07 17:59:07 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	print_redir(t_redir_list *lst)
 	{
 		printf("[%d] ", i);
 		printf("filename : %-15s | ", lst->filename);
-		printf("type : %-7d | ", lst->redir);
+		printf("type : %-27d | ", lst->redir);
 		printf("\n");
 		lst = lst->next;
 		i++;

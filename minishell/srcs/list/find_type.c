@@ -12,7 +12,7 @@
 
 #include "../../incs/minishell.h"
 
-int	is_a_bultin(char *word)
+t_type_word is_a_bultin(char *word)
 {
 	if (ft_strncmp(word, "exit", 5) == 0)
 		return (builtin);
@@ -36,7 +36,7 @@ int	is_a_bultin(char *word)
  * @param word
  * @return the type of the word, not_define if is not part of the first group
  */
-int	get_cat_of_word(char *word)
+t_type_word get_cat_of_word(char *word)
 {
 	if (ft_strncmp(word, "<", 2) == 0)
 		return (open_file);
@@ -64,7 +64,7 @@ int	get_cat_of_word(char *word)
  * @param c
  * @return type of character
  */
-int	find_type_of_c(char c)
+t_type_char find_type_of_c(char c)
 {
 	if (c == 9 || c == 32)
 		return (space);

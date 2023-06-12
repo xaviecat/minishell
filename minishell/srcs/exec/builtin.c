@@ -18,7 +18,7 @@ void	find_builtin(t_minish *sh)
 
 	cp_cmd = ft_gb_strdup(sh->cmds->cmd->cmd, &(sh->garbage));
 	if (ft_strncmp(cp_cmd, "exit", 5) == 0)
-		b_exit(sh);
+		b_exit(&sh);
 	if (ft_strncmp(cp_cmd, "echo", 5) == 0)
 		b_echo(sh->cmds->cmd);
 	if (ft_strncmp(cp_cmd, "cd", 3) == 0)
@@ -27,10 +27,8 @@ void	find_builtin(t_minish *sh)
 		b_pwd(sh->envp);
 	if (ft_strncmp(cp_cmd, "export", 7) == 0)
 		b_export(sh, sh->cmds->cmd);
-	//if (ft_strncmp(cp_cmd, "export", 7) == 0)
-		//
 	//if (ft_strncmp(cp_cmd, "unset", 6) == 0)
 		//
-	//if (ft_strncmp(cp_cmd, "env", 4) == 0)
-		//
+	if (ft_strncmp(cp_cmd, "env", 4) == 0)
+		b_env(sh->envp);
 }

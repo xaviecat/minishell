@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unhandled_char.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 17:43:08 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/05 16:39:39 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/08 12:46:17 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,30 +20,21 @@
  */
 bool	is_forbidden_char(t_char_lst *lst)
 {
+	static t_unhandled_char	is_error_fct[8] = {&is_amp_error, &is_pipe_error,
+		&is_semicolon_error, &is_backslash_error, &is_dollar_error,
+		&is_exclamation_error, &is_colon_error,	NULL};
+	size_t					i;
+
 	while (lst)
 	{
-		if (lst->c == '&' && !lst->s_quote && !lst->d_quote)
+		i = 0;
+		while (is_error_fct[i])
 		{
-			if (lst->next && lst->next->c == '&')
-				return (ft_fdprintf(2, RED D_AMP RESET), true);
-			return (ft_fdprintf(2, RED S_AMP RESET), true);
+			if (is_error_fct[i](lst) == false)
+				i++;
+			else
+				return (true);
 		}
-		if (lst->c == '|' && lst->next && lst->next->c == '|'
-			&& !lst->s_quote && !lst->d_quote)
-			return (ft_fdprintf(2,
-					RED D_PIPE RESET), true);
-		if (lst->c == ';' && !lst->s_quote && !lst->d_quote)
-			return (ft_fdprintf(2, RED SEMICOLON RESET), true);
-		if (lst->c == '\\' && !lst->s_quote && !lst->d_quote)
-			return (ft_fdprintf(2, RED BACKSLASH RESET), true);
-		if (lst->c == '$' && lst->next && lst->next->c == '$' && !lst->s_quote)
-			return (ft_fdprintf(2, RED D_DOLLAR RESET), true);
-		if (lst->c == '$' && lst->next && ft_isdigit(lst->next->c) && !lst->s_quote)
-			return (ft_fdprintf(2, RED S_DOLLAR(\%c) RESET, lst->next->c), true);
-		if (lst->c == '!' && !lst->s_quote && !lst->d_quote)
-			return (true);
-		if (lst->c == ':' && !lst->s_quote && !lst->d_quote)
-			return (true);
 		lst = lst->next;
 	}
 	return (false);
@@ -77,11 +68,9 @@ bool	is_greater_bracket_error(t_char_lst **lst)
 		i++;
 	}
 	if (i == 3)
-		return (printf(RED S_GR_A_BRA RESET),
-			true);
+		return (printf(RED S_GR_A_BRA RESET), true);
 	else if (i > 3)
-		return (printf(RED D_GR_A_BRA RESET),
-			true);
+		return (printf(RED D_GR_A_BRA RESET), true);
 	return (false);
 }
 

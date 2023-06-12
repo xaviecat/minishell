@@ -18,7 +18,7 @@ void	get_first_garbage(t_garbage **lst)
 		(*lst)->first = (*lst)->first->prev;
 }
 
-t_garbage	*create_garbage_container()
+t_garbage	*create_garbage_container(void)
 {
 	t_garbage	*gb_c;
 
@@ -88,7 +88,7 @@ void	*ft_malloc(t_garbage **garbage, int the_size, int number)
 		(*garbage)->first = new;
 		(*garbage)->last = new;
 	}
-    else
+	else
 	{
 		new->prev = (*garbage)->last;
 		(*garbage)->last->next = new;

@@ -43,7 +43,8 @@ void	remove_extra_spaces(t_char_lst **lst, t_garbage **gb)
 	{
 		while ((*lst) && ((*lst)->s_quote || (*lst)->d_quote))
 			(*lst) = (*lst)->next;
-		while (*lst && (*lst)->next && (*lst)->c == ' ' && (*lst)->next->c == ' ')
+		while (*lst && (*lst)->next && (*lst)->c == ' '
+			&& (*lst)->next->c == ' ')
 		{
 			if ((*lst) == first)
 				first = (*lst)->next;
