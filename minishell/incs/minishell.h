@@ -229,7 +229,7 @@ void			find_builtin(t_minish *sh);
 
 /* exec */
 void			exec_all(t_minish *minish);
-void			placeholder(t_minish **sh);
+void			get_access(t_minish **sh);
 
 /* signal */
 void			signal_handler(int signum);
