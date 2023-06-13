@@ -177,7 +177,6 @@ typedef struct s_char_lst
 	t_type_char			type;
 	bool				s_quote;
 	bool				d_quote;
-	bool				a_quote;
 	struct s_char_lst	*prev;
 	struct s_char_lst	*next;
 	struct s_char_lst	*last_added;
