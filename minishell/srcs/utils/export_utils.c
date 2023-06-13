@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 13:17:59 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/12 18:00:39 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/13 12:06:01 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,44 @@ static size_t	get_var_name_len(char *arg)
 	size_t	i;
 
 	i = 0;
-	while (arg[i] && arg[i] != '=')
+	while (arg[i] && arg[i] != '=' && arg[i] != '+')
 		i++;
 	return (i);
 }
 
-size_t	modify_envp(char *cmd, char **envp, t_garbage **gb)
+int	concat_var(char *cmd, size_t var_name_len, t_garbage **gb, char **envp)
+{
+	size_t	i;
+
+	printf("concatening var...\n");
+	i = 0;
+	while (envp[i])
+	{
+		if (!ft_strncmp(envp[i], cmd, var_name_len - 1)
+			&& (!envp[i][var_name_len] || envp[i][var_name_len] == '='))
+			break ;
+		i++;
+	}
+	if (envp[i][var_name_len] && envp[i][var_name_len + 1])
+		var_name_len++;
+	envp[i] = ft_gbstrjoin(envp[i], cmd + var_name_len + 1, gb);
+	if (!envp[i])
+		return (0);
+	return (1);
+}
+
+int	modify_envp(char *cmd, char **envp, t_garbage **gb)
 {
 	size_t	i;
 	size_t	var_name_len;
 
 	var_name_len = get_var_name_len(cmd);
+	if (cmd[var_name_len] == '+')
+		return (concat_var(cmd, var_name_len, gb, envp));
 	i = 0;
-	while (envp[i])
-		if (!ft_strncmp(cmd, envp[i++], var_name_len))
-			break ;
+	while (ft_strncmp(cmd, envp[i++], var_name_len))
+		i++;
 	i--;
-//	printf("\n\n%s\n\n", envp[i]);
 	ft_free(gb, envp[i]);
 	envp[i] = ft_gb_strdup(cmd, gb);
 	if (!envp[i])
@@ -69,13 +90,11 @@ int cmp_concat(char **envp, char *cmd)
 	while (envp[i])
 	{
 		if (!ft_strncmp(cmd, envp[i], var_len - 1))
-		{
-			if (envp)
-			return (1);
-		}
+			if (!envp[i][var_len] || envp[i][var_len] == '=')
+				return (0);
 		i++;
 	}
-	return (0);
+	return (1);
 }
 
 int	not_in_env(char *cmd, char **envp)

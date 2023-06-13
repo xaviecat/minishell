@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:46:20 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/12 17:41:17 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/13 12:01:20 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,32 @@ int	export_print(t_minish *msh)
 	return (1);
 }
 
+char *dup_without_plus(char *cmd, t_garbage **gb)
+{
+	size_t	i;
+	size_t	j;
+	char	*new_cmd;
+
+	i = 0;
+	j = 0;
+	while (cmd[i])
+	{
+		if (cmd[i] != '+')
+			j++;
+		i++;
+	}
+	new_cmd = ft_malloc(gb, sizeof(char), j + 1);
+	if (!new_cmd)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (cmd[i])
+		if (cmd[i++] != '+')
+			new_cmd[j++] = cmd[i - 1];
+	new_cmd[j] = 0;
+	return (new_cmd);
+}
+
 int	add_new_var_to_envp(t_w_cmd_list *cmd, char **save_envp, t_minish *msh)
 {
 	size_t	i;
@@ -100,7 +126,10 @@ int	add_new_var_to_envp(t_w_cmd_list *cmd, char **save_envp, t_minish *msh)
 	{
 		if (not_in_env(cmd->cmd, save_envp))
 		{
-			(msh->envp)[i] = ft_gb_strdup(cmd->cmd, &(msh->garbage));
+			if (!is_concat(cmd->cmd))
+				(msh->envp)[i] = ft_gb_strdup(cmd->cmd, &(msh->garbage));
+			else
+				msh->envp[i] = dup_without_plus(cmd->cmd, &(msh->garbage));
 			if (!(msh->envp[i++]))
 				return (0);
 		}
@@ -117,6 +146,7 @@ int	b_export(t_minish *msh, t_w_cmd_list *cmd)
 	char	**save_envp;
 	char	**modified_envp;
 
+	printf("cest bon ici\n");
 	if (!cmd->next)
 		return (export_print(msh));
 	save_envp = msh->envp;
