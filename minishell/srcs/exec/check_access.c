@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 11:36:08 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/12 18:06:37 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/13 10:47:09 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,15 +62,13 @@ char	*dig_for_access(char **cmdpath, char *cmd, t_garbage **gb)
 {
 	size_t	i;
 	bool	f_ok;
-//	bool	x_ok;
 	char	*good_path;
 
 	i = 0;
 	f_ok = false;
-//	x_ok = false;
 	while (cmdpath[i])
 	{
-		ft_printf(YELLOW"cmdpath[%d] = %s => ", i, cmdpath[i]);
+//		ft_printf(YELLOW"cmdpath[%d] = %s => "RESET, i, cmdpath[i]);
 		if (!access(cmdpath[i], F_OK))
 			f_ok = true;
 		if (!access(cmdpath[i], X_OK))
@@ -98,7 +96,7 @@ void	get_access(char **path, t_cmd_list **lst_cmds, t_garbage **gb)
 	{
 		cmdpath = get_cmdpath(path, (*lst_cmds)->cmd->cmd, gb);
 		(*lst_cmds)->cmdpath = dig_for_access(cmdpath, (*lst_cmds)->cmd->cmd, gb);
-		ft_printf(PURPLE"right path = %s\n"RESET, (*lst_cmds)->cmdpath);
+		ft_printf(PURPLE"%s\n"RESET, (*lst_cmds)->cmdpath);
 		if (!((*lst_cmds)->cmdpath))
 			return ((void) ft_printf(RED"ERROR ???"RESET)); //! ERROR A GERER
 		(*lst_cmds) = (*lst_cmds)->next;
@@ -114,9 +112,12 @@ void	placeholder(t_minish **sh)
 	char	**path;
 
 	path = get_path((*sh)->envp, &((*sh)->garbage));
+	if (!path)
+	{
+		if (errno == ENOMEM)
+			return ((void)ft_fdprintf(2, RED"malloc error in get_path\n"RESET));
+		else
+			return ((void)ft_fdprintf(2, RED"no path in env\n"RESET));
+	}
 	get_access(path, &((*sh)->cmds), &((*sh)->garbage));
 }
-
-/*
- * **splited_path = gbsplit()
- */

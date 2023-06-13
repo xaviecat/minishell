@@ -32,6 +32,7 @@ SRCS			:=	minishell.c\
 					parsing/pars_in_minish.c\
 					parsing/process_quotes.c\
 					parsing/redir_is_valid.c\
+					parsing/remove_quotes.c\
 					parsing/unhandled_char.c\
 					\
 					print_things/print_1.c\
@@ -53,6 +54,7 @@ SRCS			:=	minishell.c\
 					utils/ft_gbtabjoin.c\
 					utils/ft_sort_str_arr.c\
 					utils/ft_tabfree.c\
+					utils/reforme_d_tab_cmd.c\
 					utils/utils.c\
 
 
