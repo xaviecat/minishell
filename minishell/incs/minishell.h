@@ -14,7 +14,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-//int	num_exit_status;
+int	num_exit_status;
 
 # include "../libft/incs/libft.h"
 # include "colors.h"
@@ -149,6 +149,10 @@ typedef struct s_w_cmd_list
 typedef struct s_cmd_list
 {
 	t_w_cmd_list		*cmd;
+	char				*cmdpath; // strjoin PATH+CMD
+	char				**cmdtab;
+	char				*cmd_c;
+	char				**cmd_tab;
 	bool				builtin;
 	struct s_redir_list	*redirs;
 	struct s_fd_list	*fds;
@@ -203,6 +207,7 @@ void			print_fd(t_fd_list *lst);
 void			harmonize_spaces(t_char_lst **lst, t_garbage **gb);
 int				redir_is_valid(t_word_lst **lst, t_garbage **gb);
 int				check_pipe_and_redir(t_garbage **gb, t_word_lst **lst);
+char			**reforme_d_tab_cmd(t_w_cmd_list **lst, char *cmd, t_garbage **gb);
 int				ft_del_quotes(t_minish *msh);
 
 /* error */
@@ -220,10 +225,12 @@ void			b_echo(t_w_cmd_list *content);
 void			b_exit(t_minish **minish);
 int				b_export(t_minish *msh, t_w_cmd_list *cmds);
 void			b_env(char **env);
+int				b_unset(t_minish *sh);
 void			find_builtin(t_minish *sh);
 
 /* exec */
 void			exec_all(t_minish *minish);
+void			placeholder(t_minish **sh);
 
 /* signal */
 void			signal_handler(int signum);
@@ -239,7 +246,7 @@ void			ft_free(t_garbage **lst, void *content);
 t_garbage_list	*new_garbage(void *content);
 t_garbage		*create_garbage_container(void);
 void			garbage_add_back(t_garbage_list **lst, t_garbage_list *new);
-char			*ft_gb_strdup(const char *src, t_garbage **gb);
+char			*ft_gbstrdup(const char *src, t_garbage **gb);
 void			get_first_garbage(t_garbage **lst);
 char			*ft_gbstrjoin(char const *s1, char const *s2, t_garbage **gb);
 void			ft_free_mcmd(char *env_var, char *cmd,
@@ -248,14 +255,17 @@ char			*fill_mdcmd(char *cmd, size_t start,
 					char *exp_env_v, char *env_var);
 void			*ft_gbcalloc(size_t count, size_t size, t_garbage **gb);
 char			*ft_gbstrtrim(char const *s1, char const *set, t_garbage **gb);
-char			**ft_dbtab_dup_gb(char **dbtab, t_garbage **gb);
-void			free_char_tab(char **c_tab);
-void			free_char_tab_gb(char **c_tab, t_garbage **gb);
-char			**ft_gb_dbtab_join(char **tab1, char **tab2, t_garbage **gb);
-void			ft_gb_free_split(char **tab_to_free, t_garbage **gb);
+char			**ft_gbtabdup(char **dbtab, t_garbage **gb);
+void			ft_tabfree(char **tbl);
+void			ft_gbtabfree(char **tbl, t_garbage **gb);
+char			**ft_gbtabjoin(char **tab1, char **tab2, t_garbage **gb);
+//void			ft_gbfree_tab(char **tab_to_free, t_garbage **gb); //! supprimer remplacer par ft_gbtabfree
 int				not_in_env(char *cmd, char **envp);
 int				modify_envp(char *cmd, char **envp, t_garbage **gb);
 void			ft_sort_str_arr(char **str_arr);
+char			**ft_gbsplit(char const *s, char c, t_garbage **gb);
+char			*ft_gbsubstr(char const *s,
+					unsigned int start, size_t len, t_garbage **gb);
 int				is_concat(char *cmd);
 
 
@@ -273,10 +283,12 @@ void			char_lst_delone(t_char_lst **lst, t_garbage **gb);
 /* lst_word function */
 int				create_word_lst(t_minish **sh);
 void			print_lst_word(t_word_lst *lst);
-t_type_word is_a_bultin(char *word);
-t_type_word get_cat_of_word(char *word);
+t_type_word		is_a_bultin(char *word);
+t_type_word		get_cat_of_word(char *word);
 void			word_lst_delone(t_word_lst **lst, t_garbage **gb);
 t_word_lst		*word_lst_first(t_word_lst *lst);
+void			get_other_type_word(t_word_lst **lst);
+t_word_lst		*word_lst_new(char *word, t_garbage **gb);
 
 /* list command maybe not useful */
 t_cmd_list		*lst_cmd_new(t_w_cmd_list *cmds,

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   find_type.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 15:17:00 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/17 17:36:09 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/12 17:12:12 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-t_type_word is_a_bultin(char *word)
+t_type_word	is_a_bultin(char *word)
 {
 	if (ft_strncmp(word, "exit", 5) == 0)
 		return (builtin);
@@ -36,7 +36,7 @@ t_type_word is_a_bultin(char *word)
  * @param word
  * @return the type of the word, not_define if is not part of the first group
  */
-t_type_word get_cat_of_word(char *word)
+t_type_word	get_cat_of_word(char *word)
 {
 	if (ft_strncmp(word, "<", 2) == 0)
 		return (open_file);
@@ -64,7 +64,7 @@ t_type_word get_cat_of_word(char *word)
  * @param c
  * @return type of character
  */
-t_type_char find_type_of_c(char c)
+t_type_char	find_type_of_c(char c)
 {
 	if (c == 9 || c == 32)
 		return (space);
@@ -100,3 +100,31 @@ void	give_type_in_lst(t_char_lst **lst)
 	*lst = first;
 }
 
+/**
+ * @brief assign a type to the link pass in parameter
+ * @param lst
+ */
+void	get_other_type_word(t_word_lst **lst)
+{
+	t_word_lst	*first;
+
+	first = *lst;
+	while (*lst)
+	{
+		if ((*lst)->prev && (*lst)->type == not_define)
+		{
+			if ((*lst)->prev->type == redir)
+				(*lst)->type = outfile;
+			if ((*lst)->prev->type == hd)
+				(*lst)->type = delimiteur;
+			if ((*lst)->prev->type == appnd)
+				(*lst)->type = outfile;
+			if ((*lst)->prev->type == open_file)
+				(*lst)->type = infile;
+		}
+		if ((*lst)->type == not_define)
+			(*lst)->type = is_a_bultin((*lst)->word);
+		*lst = (*lst)->next;
+	}
+	*lst = first;
+}

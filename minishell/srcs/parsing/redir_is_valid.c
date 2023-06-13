@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   redir_is_valid.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:14:27 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/08 10:44:55 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/12 17:20:57 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-int pipe_is_valid(t_word_lst **lst, t_garbage **gb)
+int	pipe_is_valid(t_word_lst **lst, t_garbage **gb)
 {
 	while (*lst)
 	{
@@ -35,7 +35,7 @@ int pipe_is_valid(t_word_lst **lst, t_garbage **gb)
 	return (1);
 }
 
-int is_a_dir(t_word_lst **lst, t_garbage **gb)
+int	is_a_dir(t_word_lst **lst, t_garbage **gb)
 {
 	while (*lst)
 	{

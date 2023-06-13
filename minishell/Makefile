@@ -1,45 +1,62 @@
 #===========================VARIABLE===============================#
 SRCS			:=	minishell.c\
-					builtins/pwd.c\
+					\
 					builtins/cd.c\
 					builtins/echo.c\
-					builtins/exit.c\
 					builtins/env.c\
+					builtins/exit.c\
 					builtins/export.c\
-					parsing/process_quotes.c\
-					parsing/expand.c\
-					parsing/unhandled_char.c\
-					parsing/pars_in_minish.c\
-					parsing/harmonize_spaces.c\
-					parsing/redir_is_valid.c\
-					parsing/is_error_fct1.c\
-					parsing/is_error_fct2.c\
-					utils/utils.c\
-					utils/libftgarbage.c\
-					list/lst.c\
-					list/lst_char.c\
-					list/lst_word.c\
-					list/lst_cmd.c\
-					list/find_type.c\
-					redir/redir.c\
+					builtins/pwd.c\
+					builtins/unset.c\
+					\
+					exec/builtin.c\
+					exec/check_access.c\
+					exec/exec.c\
+					\
 					fds/fds.c\
+					\
 					garbage/ft_free.c\
 					garbage/ft_malloc.c\
-					exec/builtin.c\
-					exec/exec.c\
+					\
+					list/find_type.c\
+					list/lst.c\
+					list/lst_char.c\
+					list/lst_cmd.c\
+					list/lst_word.c\
+					list/lst_word_utils.c\
+					\
+					parsing/expand.c\
+					parsing/harmonize_spaces.c\
+					parsing/is_error_fct1.c\
+					parsing/is_error_fct2.c\
+					parsing/pars_in_minish.c\
+					parsing/process_quotes.c\
+					parsing/redir_is_valid.c\
+					parsing/remove_quotes.c\
+					parsing/unhandled_char.c\
+					\
+					print_things/print_1.c\
+					\
+					redir/redir.c\
+					\
 					signal/signal.c\
-					utils/ft_gb_strdup.c\
+					\
+					utils/expand_utils.c\
+					utils/export_utils.c\
+					utils/ft_gbcalloc.c\
+					utils/ft_gbsplit.c\
+					utils/ft_gbstrdup.c\
 					utils/ft_gbstrjoin.c\
 					utils/ft_gbstrtrim.c\
-					utils/ft_gbcalloc.c\
-					utils/ft_gb_dbtab_join.c\
-					utils/ft_gb_free_split.c\
-					utils/export_utils.c\
+					utils/ft_gbsubstr.c\
+					utils/ft_gbtabdup.c\
+					utils/ft_gbtabfree.c\
+					utils/ft_gbtabjoin.c\
 					utils/ft_sort_str_arr.c\
-					utils/expand_utils.c\
-					utils/ft_dbtab_dup_gb.c\
-					utils/free_char_tab.c\
-					parsing/remove_quotes.c
+					utils/ft_tabfree.c\
+					utils/reforme_d_tab_cmd.c\
+					utils/utils.c\
+
 
 SRCS_D			:=	srcs/
 
@@ -95,15 +112,16 @@ $(OBJS)			:	$(OBJS_D)%.o: $(SRCS_D)%.c $(HEAD_A) $(LIB_A)
 
 $(OBJS_D)		:
 				mkdir -p $(OBJS_D)
-				mkdir -p $(OBJS_D)/parsing
 				mkdir -p $(OBJS_D)/builtins
-				mkdir -p $(OBJS_D)/utils
-				mkdir -p $(OBJS_D)/list
-				mkdir -p $(OBJS_D)/fds
-				mkdir -p $(OBJS_D)/redir
-				mkdir -p $(OBJS_D)/garbage
 				mkdir -p $(OBJS_D)/exec
+				mkdir -p $(OBJS_D)/fds
+				mkdir -p $(OBJS_D)/garbage
+				mkdir -p $(OBJS_D)/list
+				mkdir -p $(OBJS_D)/parsing
+				mkdir -p $(OBJS_D)/print_things
+				mkdir -p $(OBJS_D)/redir
 				mkdir -p $(OBJS_D)/signal
+				mkdir -p $(OBJS_D)/utils
 
 $(LIB_A)		:	FORCE
 				make -j -C $(LIB_D)

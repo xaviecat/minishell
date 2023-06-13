@@ -1,28 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_cmd.c                                        :+:      :+:    :+:   */
+/*   ft_gbtabdup.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/07 15:08:59 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/07 15:12:06 by syluiset         ###   ########.fr       */
+/*   Created: 2023/06/02 11:24:46 by syluiset          #+#    #+#             */
+/*   Updated: 2023/06/02 14:01:15 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-int	check_command(t_w_cmd_list *lst)
+char	**ft_gbtabdup(char **dbtab, t_garbage **gb)
 {
-	int	i;
+	int		i;
+	char	**new_tab;
 
+	if (!dbtab)
+		return (NULL);
 	i = 0;
-	while (lst)
+	while (dbtab[i])
+		i++;
+	new_tab = ft_malloc(gb, sizeof(char *), (i + 1));
+	if (!new_tab)
+		return (NULL);
+	i = 0;
+	while (dbtab[i])
 	{
-		if (lst->cmd)
+		new_tab[i] = ft_gbstrdup(dbtab[i], gb);
+		if (!new_tab[i])
 		{
-
+			while (--i >= 0)
+				ft_free(gb, new_tab[i]);
+			ft_free(gb, new_tab);
+			return (NULL);
 		}
-		lst = lst->next;
+		i++;
 	}
+	new_tab[i] = NULL;
+	return (new_tab);
 }

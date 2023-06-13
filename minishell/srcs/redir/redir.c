@@ -50,25 +50,6 @@ void	redir_add_back(t_redir_list **lst, t_redir_list *new)
 		*lst = new;
 }
 
-void	print_redir(t_redir_list *lst)
-{
-	t_redir_list	*first;
-	int				i;
-
-	first = lst;
-	i = 0;
-	while (lst)
-	{
-		printf("[%d] ", i);
-		printf("filename : %-15s | ", lst->filename);
-		printf("type : %-27d | ", lst->redir);
-		printf("\n");
-		lst = lst->next;
-		i++;
-	}
-	lst = first;
-}
-
 void	free_error_redir(t_garbage **gb, t_redir_list **lst)
 {
 	t_redir_list	*next;
@@ -106,7 +87,7 @@ t_redir_list	*get_redir(t_word_lst **lst, t_garbage **gb)
 		if (new)
 		{
 			word_lst_delone(lst, gb);
-			new->filename = ft_gb_strdup((*lst)->word, gb);
+			new->filename = ft_gbstrdup((*lst)->word, gb);
 			word_lst_delone(lst, gb);
 			redir_add_back(&redirs, new); // ? A voir si il faut le changer
 			new = NULL;

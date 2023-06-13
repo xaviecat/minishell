@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 19:25:52 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/01 14:11:32 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/12 16:53:11 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,15 @@ void	exec_all(t_minish *minish)
 {
 	while (minish->cmds)
 	{
-		// if (minish->cmds->redirs)
-
 		if (minish->cmds->builtin == true)
 			find_builtin(minish);
+		else
+		{
+			minish->cmds->cmd_c = ft_gbstrdup(minish->cmds->cmd->cmd,
+					&(minish->garbage));
+			minish->cmds->cmd_tab = reforme_d_tab_cmd(&(minish->cmds->cmd),
+					minish->cmds->cmd_c, &(minish->garbage));
+		}
 		minish->cmds = minish->cmds->next;
 	}
 }
