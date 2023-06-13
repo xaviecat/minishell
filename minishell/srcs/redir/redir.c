@@ -87,7 +87,7 @@ t_redir_list	*get_redir(t_word_lst **lst, t_garbage **gb)
 		if (new)
 		{
 			word_lst_delone(lst, gb);
-			new->filename = ft_gb_strdup((*lst)->word, gb);
+			new->filename = ft_gbstrdup((*lst)->word, gb);
 			word_lst_delone(lst, gb);
 			redir_add_back(&redirs, new); // ? A voir si il faut le changer
 			new = NULL;

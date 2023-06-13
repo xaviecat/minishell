@@ -1,39 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_char_tab.c                                    :+:      :+:    :+:   */
+/*   ft_gbstrdup.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/02 13:45:29 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/02 13:45:29 by syluiset         ###   ########.fr       */
+/*   Created: 2023/05/26 16:56:37 by syluiset          #+#    #+#             */
+/*   Updated: 2023/05/26 16:56:37 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-void	free_char_tab_gb(char **c_tab, t_garbage **gb)
+char	*ft_gbstrdup(const char *src, t_garbage **gb)
 {
-	int i;
+	int		i;
+	char	*dest;
 
 	i = 0;
-	while (c_tab[i])
+	dest = ft_malloc(gb, sizeof(*src), ft_strlen(src) + 1);
+	if (!dest)
+		return (0);
+	while (src[i])
 	{
-		ft_free(gb, c_tab[i]);
+		dest[i] = ((char *)src)[i];
 		i++;
 	}
-	ft_free(gb, c_tab);
-}
-
-void	free_char_tab(char **c_tab)
-{
-	int	i;
-
-	i = 0;
-	while (c_tab[i])
-	{
-		free(c_tab[i]);
-		i++;
-	}
-	free(c_tab);
+	dest[i] = '\0';
+	return (dest);
 }

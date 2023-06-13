@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 13:43:43 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/12 16:51:49 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/12 18:19:29 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	create_unset_tab(char **new_tab, char **old_tab, t_garbage **gb, char *var)
 			i++;
 		else
 		{
-			new_tab[j] = ft_gb_strdup(old_tab[i], gb);
+			new_tab[j] = ft_gbstrdup(old_tab[i], gb);
 			i++;
 			j++;
 		}
@@ -81,16 +81,16 @@ int	b_unset(t_minish *sh)
 
 	if (!sh->cmds->cmd->next->cmd)
 		return (0);
-	name_var = ft_gb_strdup(sh->cmds->cmd->next->cmd, &(sh->garbage));
+	name_var = ft_gbstrdup(sh->cmds->cmd->next->cmd, &(sh->garbage));
 	if (!check_var_exist_and_valid(name_var, sh->envp))
 		return (0);
-	old_envp = ft_dbtab_dup_gb(sh->envp, &(sh->garbage));
+	old_envp = ft_gbtabdup(sh->envp, &(sh->garbage));
 	if (!old_envp && errno == ENOMEM)
 	{
 		ft_free_all(&(sh->garbage));
 		return (1); // ! ERROR
 	}
-	free_char_tab_gb(sh->envp, &(sh->garbage));
+	ft_gbtabfree(sh->envp, &(sh->garbage));
 	sh->envp = ft_malloc(&(sh->garbage), sizeof(char *),
 			length_char_tab(old_envp));
 	create_unset_tab(sh->envp, old_envp, &(sh->garbage), name_var);

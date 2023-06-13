@@ -34,12 +34,12 @@ void	complete_tab(char **tabi, t_w_cmd_list **lst, t_garbage **gb, char *cmd)
 	t_w_cmd_list	*next;
 
 	i = 1;
-	tabi[0] = ft_gb_strdup(cmd, gb);
+	tabi[0] = ft_gbstrdup(cmd, gb);
 	ft_free(gb, cmd); // ? A voir
 	*lst = (*lst)->next;
 	while (*lst)
 	{
-		tabi[i] = ft_gb_strdup((*lst)->cmd, gb);
+		tabi[i] = ft_gbstrdup((*lst)->cmd, gb);
 		next = (*lst)->next;
 		ft_free(gb, (*lst)->cmd);
 		ft_free(gb, (*lst));

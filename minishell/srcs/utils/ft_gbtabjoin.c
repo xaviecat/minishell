@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_gb_dbtab_join.c                                 :+:      :+:    :+:   */
+/*   ft_gbtabjoin.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 13:51:11 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/05 16:40:26 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/12 11:56:49 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@ int	allocate_inside(char **dst_tab, char **tab1, char **tab2, t_garbage **gb)
 		dst_tab[j] = ft_malloc(gb, sizeof(char), ft_strlen(tab1[i++]) + 1);
 //		printf("%li : %li\n", j, ft_strlen(tab1[i - 1]));
 		if (!dst_tab[j++])
-			return (ft_gb_free_split(dst_tab, gb), 0);
+			return (ft_gbtabfree(dst_tab, gb), 0);
 	}
 	i = 0;
 	while (tab2[i])
 	{
 		dst_tab[j] = ft_malloc(gb, sizeof(char), ft_strlen(tab2[i++]) + 1);
 		if (!dst_tab[j++])
-			return (ft_gb_free_split(dst_tab, gb), 0);
+			return (ft_gbtabfree(dst_tab, gb), 0);
 	}
 	return (1);
 }
@@ -80,7 +80,7 @@ void	fill_tab(char **dst, char **tab1, char **tab2)
 	dst[i] = NULL;
 }
 
-char	**ft_gb_dbtab_join(char **tab1, char **tab2, t_garbage **gb)
+char	**ft_gbtabjoin(char **tab1, char **tab2, t_garbage **gb)
 {
 	size_t	char_pt_count;
 	char	**joined_tab;

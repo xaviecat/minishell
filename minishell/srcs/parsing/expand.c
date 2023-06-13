@@ -39,13 +39,13 @@ static char	*expand_env_var(t_garbage **gb, char **envp, char *var)
 		if (ft_strncmp(envp[i++], var_expansion, var_len) == 0)
 		{
 			ft_free(gb, var_expansion);
-			var_expansion = ft_gb_strdup(envp[i - 1] + var_len, gb);
+			var_expansion = ft_gbstrdup(envp[i - 1] + var_len, gb);
 			if (!var_expansion)
 				return (NULL);
 			return (var_expansion);
 		}
 	}
-	return (ft_free(gb, var_expansion), ft_gb_strdup("", gb));
+	return (ft_free(gb, var_expansion), ft_gbstrdup("", gb));
 }
 
 /**
