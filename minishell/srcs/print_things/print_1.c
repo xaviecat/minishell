@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 16:54:48 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/12 16:57:25 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/13 16:41:02 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	print_lst_char(t_char_lst *lst)
 		printf("%c | ", lst->c);
 		printf("sq : %i | ", lst->s_quote);
 		printf("dq : %i | ", lst->d_quote);
-		printf("aq : %i | ", lst->a_quote);
 		printf("type : %i |", lst->type);
 		printf("\n");
 		lst = lst->next;
