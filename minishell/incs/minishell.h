@@ -177,7 +177,6 @@ typedef struct s_char_lst
 	t_type_char			type;
 	bool				s_quote;
 	bool				d_quote;
-	bool				a_quote;
 	struct s_char_lst	*prev;
 	struct s_char_lst	*next;
 	struct s_char_lst	*last_added;
@@ -230,7 +229,7 @@ void			find_builtin(t_minish *sh);
 
 /* exec */
 void			exec_all(t_minish *minish);
-void			placeholder(t_minish **sh);
+void			get_access(t_minish **sh);
 
 /* signal */
 void			signal_handler(int signum);

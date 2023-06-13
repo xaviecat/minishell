@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 11:36:08 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/13 10:47:09 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/13 18:23:17 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,29 @@ char	**get_cmdpath(char **path, char *cmd, t_garbage **gb)
 	size_t	i;
 
 	i = 0;
+	if (!ft_strncmp(cmd, "./", 2))
+	{
+		cmdpath = ft_malloc(gb, sizeof(char *), 2);
+		if (!cmdpath)
+			return (NULL); //!ERROR
+		cmdpath[0] = ft_gbstrdup(cmd, gb);
+		if (!cmdpath[0])
+			return (NULL); //!ERROR
+		cmdpath[1] = NULL;
+		return (cmdpath);
+	}
 	while (path[i])
 		i++;
 	scmd = ft_gbstrjoin("/", cmd, gb);
 	cmdpath = ft_malloc(gb, sizeof(char *), i + 1);
 	if (!cmdpath)
-		return (NULL); //ERROR
+		return (NULL); //!ERROR
 	i = 0;
 	while (path[i])
 	{
 		cmdpath[i] = ft_gbstrjoin(path[i], scmd, gb);
 		if (!cmdpath[i])
-			return (NULL); //ERROR
+			return (NULL); //!ERROR
 		i++;
 	}
 	ft_free(gb, scmd);
@@ -58,7 +69,7 @@ char	**get_cmdpath(char **path, char *cmd, t_garbage **gb)
 	return (cmdpath);
 }
 
-char	*dig_for_access(char **cmdpath, char *cmd, t_garbage **gb)
+char	*check_access(char **cmdpath, char *cmd, t_garbage **gb)
 {
 	size_t	i;
 	bool	f_ok;
@@ -68,11 +79,11 @@ char	*dig_for_access(char **cmdpath, char *cmd, t_garbage **gb)
 	f_ok = false;
 	while (cmdpath[i])
 	{
-//		ft_printf(YELLOW"cmdpath[%d] = %s => "RESET, i, cmdpath[i]);
 		if (!access(cmdpath[i], F_OK))
 			f_ok = true;
 		if (!access(cmdpath[i], X_OK))
 		{
+			ft_fdprintf(2, LCYAN"%s\n"RESET, cmdpath[i]);
 			good_path = ft_gbstrdup(cmdpath[i], gb);
 			if (!good_path)
 				return (NULL);//! ERROR A GERER
@@ -81,12 +92,12 @@ char	*dig_for_access(char **cmdpath, char *cmd, t_garbage **gb)
 		}
 		i++;
 	}
-	if (!f_ok) //! check presence puis droit
+	if (!f_ok)
 		return (ft_fdprintf(2, RED"%s"CMD_NOT_FOUND RESET, cmd), NULL); //! retour a gerer
 	return (NULL);//! a voir
 }
 
-void	get_access(char **path, t_cmd_list **lst_cmds, t_garbage **gb)
+void	give_access(char **path, t_cmd_list **lst_cmds, t_garbage **gb)
 {
 	t_cmd_list	*first;
 	char		**cmdpath;
@@ -95,10 +106,10 @@ void	get_access(char **path, t_cmd_list **lst_cmds, t_garbage **gb)
 	while (*lst_cmds)
 	{
 		cmdpath = get_cmdpath(path, (*lst_cmds)->cmd->cmd, gb);
-		(*lst_cmds)->cmdpath = dig_for_access(cmdpath, (*lst_cmds)->cmd->cmd, gb);
-		ft_printf(PURPLE"%s\n"RESET, (*lst_cmds)->cmdpath);
+		(*lst_cmds)->cmdpath = check_access(cmdpath, (*lst_cmds)->cmd->cmd,
+				gb);
 		if (!((*lst_cmds)->cmdpath))
-			return ((void) ft_printf(RED"ERROR ???"RESET)); //! ERROR A GERER
+			return ((void) ft_fdprintf(2, RED"no path%s\n"RESET, (*lst_cmds)->cmd->cmd)); //! ERROR A GERER
 		(*lst_cmds) = (*lst_cmds)->next;
 	}
 	ft_gbtabfree(path, gb);
@@ -107,7 +118,7 @@ void	get_access(char **path, t_cmd_list **lst_cmds, t_garbage **gb)
 	return ;
 }
 
-void	placeholder(t_minish **sh)
+void	get_access(t_minish **sh)
 {
 	char	**path;
 
@@ -119,5 +130,19 @@ void	placeholder(t_minish **sh)
 		else
 			return ((void)ft_fdprintf(2, RED"no path in env\n"RESET));
 	}
-	get_access(path, &((*sh)->cmds), &((*sh)->garbage));
+	give_access(path, &((*sh)->cmds), &((*sh)->garbage));
 }
+
+
+/*
+ * error when permission denied but no when is dir
+ * cat | grep | ls | awk | sleep | bash
+ * grep | ./cat | ls | awk | sleep | bash
+ * cat | grep | ls | awk | ./sleep | bash
+ *
+ *
+ * ././awk: command not found
+ * no path././awk
+ * TRI_SH $> cat | grep | ls | ././awk | ././cat | ./sleep | bash
+
+ */

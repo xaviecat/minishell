@@ -50,7 +50,6 @@ t_char_lst	*char_lst_new(char c, t_garbage **gb)
 	new->prev = NULL;
 	new->d_quote = false;
 	new->s_quote = false;
-	new->a_quote = false;
 	new->pipe = 0;
 	new->last_added = NULL;
 	return (new);
