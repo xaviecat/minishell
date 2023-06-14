@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   harmonize_spaces.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 11:20:59 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/07 13:26:12 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/14 13:28:43 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	char_lst_add_in(t_char_lst **lst, t_position pos, t_char_lst	*new) //! secu
 		new_prev = (*lst)->prev;
 		new_next = *lst;
 	}
-	else /*if (pos == next && *lst)*/
+	else/* if (pos == next && *lst)*/
 	{
 		new_prev = *lst;
 		new_next = (*lst)->next;
@@ -39,6 +39,12 @@ void	remove_extra_spaces(t_char_lst **lst, t_garbage **gb)
 	t_char_lst	*first;
 
 	first = *lst;
+	while ((*lst) && (*lst)->c == ' ')
+	{
+		if ((*lst) == first)
+			first = (*lst)->next;
+		char_lst_delone(lst, gb);
+	}
 	while (*lst)
 	{
 		while ((*lst) && ((*lst)->s_quote || (*lst)->d_quote))
