@@ -14,7 +14,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-//int	num_exit_status;
+extern int	g_exit_status;
 
 # include "../libft/incs/libft.h"
 # include "colors.h"
@@ -151,8 +151,6 @@ typedef struct s_cmd_list
 	t_w_cmd_list		*cmd;
 	char				*cmdpath; // strjoin PATH+CMD
 	char				**cmdtab;
-	char				*cmd_c;
-	char				**cmd_tab;
 	bool				builtin;
 	struct s_redir_list	*redirs;
 	struct s_fd_list	*fds;
