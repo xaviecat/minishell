@@ -56,8 +56,6 @@ SRCS			:=	minishell.c\
 					utils/ft_tabfree.c\
 					utils/reforme_d_tab_cmd.c\
 					utils/utils.c\
-					print_things/print_1.c\
-					parsing/remove_quotes.c\
 
 SRCS_D			:=	srcs/
 
