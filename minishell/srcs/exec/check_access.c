@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 11:36:08 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/13 18:23:17 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/14 12:05:56 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ char	*check_access(char **cmdpath, char *cmd, t_garbage **gb)
 			f_ok = true;
 		if (!access(cmdpath[i], X_OK))
 		{
-			ft_fdprintf(2, LCYAN"%s\n"RESET, cmdpath[i]);
 			good_path = ft_gbstrdup(cmdpath[i], gb);
 			if (!good_path)
 				return (NULL);//! ERROR A GERER
@@ -94,6 +93,7 @@ char	*check_access(char **cmdpath, char *cmd, t_garbage **gb)
 	}
 	if (!f_ok)
 		return (ft_fdprintf(2, RED"%s"CMD_NOT_FOUND RESET, cmd), NULL); //! retour a gerer
+	perror(cmd);
 	return (NULL);//! a voir
 }
 
@@ -109,7 +109,7 @@ void	give_access(char **path, t_cmd_list **lst_cmds, t_garbage **gb)
 		(*lst_cmds)->cmdpath = check_access(cmdpath, (*lst_cmds)->cmd->cmd,
 				gb);
 		if (!((*lst_cmds)->cmdpath))
-			return ((void) ft_fdprintf(2, RED"no path%s\n"RESET, (*lst_cmds)->cmd->cmd)); //! ERROR A GERER
+			return ;//ft_fdprintf(2, RED"no path%s\n"RESET, (*lst_cmds)->cmd->cmd) //! ERROR A GERER
 		(*lst_cmds) = (*lst_cmds)->next;
 	}
 	ft_gbtabfree(path, gb);
@@ -139,7 +139,7 @@ void	get_access(t_minish **sh)
  * cat | grep | ls | awk | sleep | bash
  * grep | ./cat | ls | awk | sleep | bash
  * cat | grep | ls | awk | ./sleep | bash
- *
+ * cat -en << EOF | cat -en | ./grep 'salut' >> "$USER"
  *
  * ././awk: command not found
  * no path././awk

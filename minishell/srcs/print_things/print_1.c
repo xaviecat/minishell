@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 16:54:48 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/13 16:41:02 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/14 13:09:35 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ void	print_lst_word(t_word_lst *lst)
 	{
 		printf("%-30s | ", lst->word);
 		printf("type : %-2d | ", lst->type);
-		// printf("next : %p |", lst->next);
 		printf("\n");
 		lst = lst->next;
 	}
@@ -118,8 +117,9 @@ void	print_lst_cmd(t_cmd_list *lst)
 			printf("[%s] ", lst->cmd->cmd);
 			lst->cmd = lst->cmd->next;
 		}
+		printf(ITALIC LCYAN"\ncmdpath : %s"RESET, lst->cmdpath);
 		lst->cmd = first_w;
-		printf("\n");
+		printf(CYAN"\n");
 		print_fd(lst->fds);
 		print_redir(lst->redirs);
 		lst = lst->next;
