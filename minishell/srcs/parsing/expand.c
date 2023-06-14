@@ -142,7 +142,8 @@ int	expand_commands(t_minish *minish)
 	w_lst_cpy = minish->lst_w;
 	while (w_lst_cpy)
 	{
-		w_lst_cpy->word = expand_vars(w_lst_cpy->word, minish);
+		if (w_lst_cpy->type != delimiteur)
+			w_lst_cpy->word = expand_vars(w_lst_cpy->word, minish);
 		if (!w_lst_cpy->word)
 			return (0); // ? code d'erreur a ajouter
 		w_lst_cpy = w_lst_cpy->next;

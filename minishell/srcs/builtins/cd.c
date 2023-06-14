@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:36:42 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/03 14:37:58 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/13 17:23:56 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_home_from_env(char **envp)
+char	*get_home_from_env(char **envp, t_garbage **gb)
 {
 	int		i;
 
@@ -20,15 +20,23 @@ char	*get_home_from_env(char **envp)
 	while (envp[i])
 	{
 		if (ft_strncmp(envp[i], "HOME=", 5) == 0)
-			return (ft_strdup(envp[i] + 5));
+			return (ft_gbstrdup(envp[i] + 5, gb));
 		i++;
 	}
 	return (NULL);
 }
 
-void	b_cd(char *path, char **envp)
+void	b_cd(t_w_cmd_list *cmd, t_minish *msh)
 {
-	if (path == NULL)
-		path = get_home_from_env(envp);
-	chdir(path);
+	char	*path;
+
+	if (cmd->next == NULL)
+		path = get_home_from_env(msh->envp, &(msh->garbage));
+	else
+		path = cmd->next->cmd;
+	if (chdir(path) == -1)
+	{
+		printf(CD_FILE);
+		perror(path);
+	}
 }
