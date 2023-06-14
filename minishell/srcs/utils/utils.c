@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:59:51 by nfaust            #+#    #+#             */
-/*   Updated: 2023/05/31 21:34:28 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/14 15:52:08 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static size_t	count_chars_to_keep(char *str)
  * @param str the string you want spaces to be deleted from
  * @return cleaned string
  */
-char *cut_whitespaces(char *str, t_garbage **gb)
+char	*cut_whitespaces(char *str, t_garbage **gb)
 {
 	size_t	trimed_len;
 	size_t	j;
@@ -74,4 +74,15 @@ char *cut_whitespaces(char *str, t_garbage **gb)
 		str[j++] = trimed_str++[0];
 	}
 	return (ft_free(gb, trimed_str - trimed_len), str[j] = 0, str);
+}
+
+int	does_contain_quotes(char *str)
+{
+	size_t	i;
+
+	i = 0;
+	while (str[i++])
+		if (str[i - 1] == '\'' || str[i - 1] == '"')
+			return (1);
+	return (0);
 }

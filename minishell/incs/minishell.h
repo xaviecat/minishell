@@ -154,6 +154,7 @@ typedef struct s_cmd_list
 	bool				builtin;
 	struct s_redir_list	*redirs;
 	struct s_fd_list	*fds;
+	struct s_word_lst	*heredoc;
 	struct s_cmd_list	*next;
 	struct s_cmd_list	*previous;
 	struct s_cmd_list	*last_added;
@@ -308,5 +309,11 @@ bool			is_backslash_error(t_char_lst *lst);
 bool			is_dollar_error(t_char_lst *lst);
 bool			is_exclamation_error(t_char_lst *lst);
 bool			is_colon_error(t_char_lst *lst);
+
+/* A RANGER LOL */
+int				heredoc_handling(t_minish *msh);
+char			*expand_vars(char *command, t_minish *msh);
+int				does_contain_quotes(char *str);
+
 
 #endif

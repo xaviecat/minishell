@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/14 12:00:11 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/14 15:42:19 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,14 +126,17 @@ void	minishell(char **envp)
 		if (!expand_commands(minish))
 			return (ft_free_all(&(minish->garbage)),
 				free_and_exit_minish(minish, &envp_sh), (void) 0);
-		print_lst_word(minish->lst_w);
+//		print_lst_word(minish->lst_w);
 		if (!(sh_pars(&minish)))
 			free_and_exit_minish(minish, &envp_sh);
+		if (!heredoc_handling(minish))
+			return (ft_free_all(&(minish->garbage)),
+				free_and_exit_minish(minish, &envp_sh), (void) 0);
 		if (!ft_del_quotes(minish))
 			return (ft_free_all(&(minish->garbage)),
 				free_and_exit_minish(minish, &envp_sh), (void) 0);
-		get_access(&minish);
-		print_lst_cmd(minish->cmds);
+//		get_access(&minish);
+//		print_lst_cmd(minish->cmds);
 		exec_all(minish);
 		cp_envp_to_envp_sh(&envp_sh, minish->envp);
 		ft_free_all(&minish->garbage);

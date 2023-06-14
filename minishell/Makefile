@@ -38,6 +38,7 @@ SRCS			:=	minishell.c\
 					print_things/print_1.c\
 					\
 					redir/redir.c\
+					redir/heredoc.c\
 					\
 					signal/signal.c\
 					\
@@ -90,7 +91,7 @@ CFLAGS			:=	-Wall -Wextra -Werror
 
 RDL				:=	-lreadline
 
-ASAN_F			:=	-g3 #-fsanitize=address
+ASAN_F			:=	-g3 -fsanitize=address
 
 #========================EXEC===============================#
 all				:	$(NAME)
