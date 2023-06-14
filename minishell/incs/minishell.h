@@ -222,8 +222,6 @@ void			fds_add_back(t_fd_list **lst, t_fd_list *new);
 bool			is_forbidden_char(t_char_lst *lst);
 bool			unhandled_char(t_char_lst *lst);
 bool			is_bad_redir(t_char_lst *lst);
-void			free_error_fds(t_garbage **gb, t_fd_list **lst);
-void			free_error_redir(t_garbage **gb, t_redir_list **lst);
 void			free_error_word_lst(t_garbage **gb, t_word_lst **lst);
 
 /* builtins */
@@ -275,8 +273,6 @@ char			**ft_gbsplit(char const *s, char c, t_garbage **gb);
 char			*ft_gbsubstr(char const *s,
 					unsigned int start, size_t len, t_garbage **gb);
 int				is_concat(char *cmd);
-
-
 
 /* list_char function */
 t_char_lst		*char_lst_new(char c, t_garbage **gb);
