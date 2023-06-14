@@ -35,11 +35,17 @@ void	complete_tab(char **tabi, t_w_cmd_list **lst, t_garbage **gb, char *cmd)
 
 	i = 1;
 	tabi[0] = ft_gbstrdup(cmd, gb);
-	ft_free(gb, cmd); // ? A voir
+	ft_free(gb, cmd);
 	*lst = (*lst)->next;
 	while (*lst)
 	{
 		tabi[i] = ft_gbstrdup((*lst)->cmd, gb);
+		if (!tabi[i] && errno == ENOMEM)
+		{
+			ft_gbtabfree(tabi, gb);
+			tabi = NULL;
+			return ;
+		}
 		next = (*lst)->next;
 		ft_free(gb, (*lst)->cmd);
 		ft_free(gb, (*lst));

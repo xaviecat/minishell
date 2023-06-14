@@ -20,7 +20,7 @@ t_minish	*create_minishell(char **envp, char **envp_sh)
 
 	sh = malloc(sizeof(t_minish));
 	if (!sh)
-		return (NULL); // ! ERROR
+		return (NULL);
 	sh->cmds = NULL;
 	sh->lst_c = NULL;
 	sh->lst_w = NULL;
@@ -134,7 +134,9 @@ void	minishell(char **envp)
 				free_and_exit_minish(minish, &envp_sh), (void) 0);
 		get_access(&minish);
 		print_lst_cmd(minish->cmds);
-		exec_all(minish);
+		if (!exec_all(minish))
+			return (ft_free_all(&(minish->garbage)),
+				free_and_exit_minish(minish, &envp_sh), (void) 0);
 		cp_envp_to_envp_sh(&envp_sh, minish->envp);
 		ft_free_all(&minish->garbage);
 		free(minish);

@@ -6,64 +6,23 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 17:21:43 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/07 17:59:07 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/14 14:18:32 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-t_redir_list	*new_redir(t_type_redir type_red, t_garbage **gb)
+t_redir_list	*create_redir(t_garbage **gb, t_word_lst *lst)
 {
-	t_redir_list	*red;
-
-	red = ft_malloc(gb, sizeof(t_redir_list), 1);
-	if (!red)
-		return (NULL); // ! ERROR maybe free direct ici
-	red->redir = type_red;
-	red->next = NULL;
-	return (red);
-}
-
-t_redir_list	*redir_last(t_redir_list *lst)
-{
-	while (lst)
-	{
-		if (!lst->next)
-			return (lst);
-		lst = lst->next;
-	}
-	return (lst);
-}
-
-void	redir_add_back(t_redir_list **lst, t_redir_list *new)
-{
-	t_redir_list	*tmp;
-
-	if (!lst)
-		return ;
-	if (*lst)
-	{
-		tmp = redir_last(*lst);
-		tmp->next = new;
-	}
-	else
-		*lst = new;
-}
-
-void	free_error_redir(t_garbage **gb, t_redir_list **lst)
-{
-	t_redir_list	*next;
-
-	next = NULL;
-	while (*lst)
-	{
-		if ((*lst)->next)
-			next = (*lst)->next;
-		else
-			next = NULL;
-		ft_free(gb, *lst);
-		*lst = next;
-	}
+	if (lst->type == open_file)
+		return (new_redir(in, gb));
+	if (lst->type == hd)
+		return (new_redir(inin, gb));
+	if (lst->type == redir)
+		return (new_redir(out, gb));
+	if (lst->type == appnd)
+		return (new_redir(outout, gb));
+	return (NULL);
 }
 
 t_redir_list	*get_redir(t_word_lst **lst, t_garbage **gb)
@@ -75,35 +34,22 @@ t_redir_list	*get_redir(t_word_lst **lst, t_garbage **gb)
 	new = NULL;
 	while (*lst && (*lst)->type != w_pipe)
 	{
-	// ! ERROR DE MALLOC A REFLECHIR
-		if ((*lst)->type == open_file)
-			new = new_redir(in, gb);
-		if ((*lst)->type == hd)
-			new = new_redir(inin, gb);
-		if ((*lst)->type == redir)
-			new = new_redir(out, gb);
-		if ((*lst)->type == appnd)
-			new = new_redir(outout, gb);
+		new = create_redir(gb, *lst);
 		if (new)
 		{
 			word_lst_delone(lst, gb);
 			new->filename = ft_gbstrdup((*lst)->word, gb);
 			word_lst_delone(lst, gb);
-			redir_add_back(&redirs, new); // ? A voir si il faut le changer
-			new = NULL;
+			redir_add_back(&redirs, new);
 		}
 		else
 		{
 			if (errno == ENOMEM)
-			{
-				free_error_redir(gb, &redirs);
-				return (NULL);
-			}
+				return (free_error_redir(gb, &redirs), NULL);
 			if (!(*lst)->next)
 				break ;
 			*lst = (*lst)->next;
 		}
 	}
-	*lst = word_lst_first(*lst);
-	return (redirs);
+	return (*lst = word_lst_first(*lst), redirs);
 }

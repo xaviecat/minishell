@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_in_minish.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 11:50:54 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/07 18:30:03 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/14 14:58:55 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,23 @@ void	free_error_cmd(t_garbage **gb, t_cmd_list **lst)
 	}
 }
 
+t_cmd_list	*create_command(t_minish **sh)
+{
+	t_redir_list	*redirs;
+	t_fd_list		*fds;
+	t_cmd_list		*new;
+
+	redirs = get_redir(&((*sh)->lst_w), &((*sh)->garbage));
+	if (errno == ENOMEM)
+		return (free_error_word_lst(&((*sh)->garbage), &((*sh)->lst_w)), NULL);
+	fds = create_fds_list(redirs, &(*sh)->garbage);
+	if (errno == ENOMEM)
+		return (free_error_word_lst(&((*sh)->garbage), &((*sh)->lst_w)), NULL);
+	new = lst_cmd_new(get_cmd(&(*sh)->lst_w, &(*sh)->garbage),
+			fds, redirs, &((*sh)->garbage));
+	return (new);
+}
+
 /**
  * @brief parsing redirection list, command list, fd list in minishell struct
  * @param old_lst
@@ -54,36 +71,16 @@ void	free_error_cmd(t_garbage **gb, t_cmd_list **lst)
  */
 int	sh_pars(t_minish **sh)
 {
-	t_redir_list	*redirs;
-	t_fd_list		*fds;
 	t_cmd_list		*new;
 
-	redirs = NULL;
-	fds = NULL;
 	new = NULL;
 	if (!(*sh)->lst_w)
 		return (0);
 	while ((*sh)->lst_w)
 	{
-		redirs = get_redir(&((*sh)->lst_w), &((*sh)->garbage));
-		if (errno == ENOMEM)
-		{
-			free_error_word_lst(&((*sh)->garbage), &((*sh)->lst_w));
-			return (0);
-		}
-		fds = create_fds_list(redirs, &(*sh)->garbage);
-		if (errno == ENOMEM)
-		{
-			free_error_word_lst(&((*sh)->garbage), &((*sh)->lst_w));
-			return (0);
-		}
-		new = lst_cmd_new(get_cmd(&(*sh)->lst_w, &(*sh)->garbage),
-				fds, redirs, &((*sh)->garbage));
+		new = create_command(sh);
 		if (!new && errno == ENOMEM)
-		{
-			free_error_cmd(&((*sh)->garbage), &((*sh)->cmds));
-			return (0);
-		}
+			return (free_error_cmd(&((*sh)->garbage), &((*sh)->cmds)), 0);
 		if (new->cmd)
 			new->builtin = builtin_or_command(new->cmd->cmd);
 		if ((*sh)->cmds)

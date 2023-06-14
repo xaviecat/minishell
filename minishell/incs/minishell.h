@@ -198,22 +198,31 @@ t_minish		*parsing_command(char *cmd_line, t_minish *sh);
 int				expand_commands(t_minish *minish);
 char			*cut_whitespaces(char *str, t_garbage **gb);
 bool			process_quotes(t_char_lst *lst);
-t_redir_list	*get_redir(t_word_lst **lst, t_garbage **gb);
-void			print_redir(t_redir_list *lst);
-t_fd_list		*create_fds_list(t_redir_list *redirs, t_garbage **gb);
-void			print_fd(t_fd_list *lst);
 void			harmonize_spaces(t_char_lst **lst, t_garbage **gb);
 int				redir_is_valid(t_word_lst **lst, t_garbage **gb);
 int				check_pipe_and_redir(t_garbage **gb, t_word_lst **lst);
 char			**reforme_d_tab_cmd(t_w_cmd_list **lst, char *cmd, t_garbage **gb);
 int				ft_del_quotes(t_minish *msh);
 
+/* redir */
+t_redir_list	*get_redir(t_word_lst **lst, t_garbage **gb);
+void			print_redir(t_redir_list *lst);
+void			free_error_redir(t_garbage **gb, t_redir_list **lst);
+void			redir_add_back(t_redir_list **lst, t_redir_list *new);
+t_redir_list	*redir_last(t_redir_list *lst);
+t_redir_list	*new_redir(t_type_redir type_red, t_garbage **gb);
+
+/* fds */
+t_fd_list		*create_fds_list(t_redir_list *redirs, t_garbage **gb);
+void			print_fd(t_fd_list *lst);
+void			free_error_fds(t_garbage **gb, t_fd_list **lst);
+t_fd_list		*new_fds(t_garbage **gb);
+void			fds_add_back(t_fd_list **lst, t_fd_list *new);
+
 /* error */
 bool			is_forbidden_char(t_char_lst *lst);
 bool			unhandled_char(t_char_lst *lst);
 bool			is_bad_redir(t_char_lst *lst);
-void			free_error_fds(t_garbage **gb, t_fd_list **lst);
-void			free_error_redir(t_garbage **gb, t_redir_list **lst);
 void			free_error_word_lst(t_garbage **gb, t_word_lst **lst);
 
 /* builtins */
@@ -224,10 +233,10 @@ void			b_exit(t_minish **minish);
 int				b_export(t_minish *msh, t_w_cmd_list *cmds);
 void			b_env(char **env);
 int				b_unset(t_minish *sh);
-void			find_builtin(t_minish *sh);
+int				find_builtin(t_minish *sh);
 
 /* exec */
-void			exec_all(t_minish *msh);
+int				exec_all(t_minish *msh);
 void			get_access(t_minish **sh);
 
 /* signal */
@@ -265,8 +274,6 @@ char			**ft_gbsplit(char const *s, char c, t_garbage **gb);
 char			*ft_gbsubstr(char const *s,
 					unsigned int start, size_t len, t_garbage **gb);
 int				is_concat(char *cmd);
-
-
 
 /* list_char function */
 t_char_lst		*char_lst_new(char c, t_garbage **gb);

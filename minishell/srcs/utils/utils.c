@@ -48,7 +48,7 @@ static size_t	count_chars_to_keep(char *str)
  * @param str the string you want spaces to be deleted from
  * @return cleaned string
  */
-char *cut_whitespaces(char *str, t_garbage **gb)
+char	*cut_whitespaces(char *str, t_garbage **gb)
 {
 	size_t	trimed_len;
 	size_t	j;

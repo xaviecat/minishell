@@ -13,6 +13,13 @@
 #include "../../incs/minishell.h"
 
 void	exec_all(t_minish *msh)
+/**
+ * @brief Execute all function pars in the cmd_list, it should be an builtin or
+ * a command with complete path
+ * @param minish
+ * @return 0 if all worked fine, 1 if an error occurred
+ */
+int	exec_all(t_minish *minish)
 {
 	while (msh->cmds)
 	{
@@ -26,4 +33,5 @@ void	exec_all(t_minish *msh)
 		}
 		msh->cmds = msh->cmds->next;
 	}
+	return (1);
 }
