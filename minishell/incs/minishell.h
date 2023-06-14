@@ -151,8 +151,6 @@ typedef struct s_cmd_list
 	t_w_cmd_list		*cmd;
 	char				*cmdpath; // strjoin PATH+CMD
 	char				**cmdtab;
-	char				*cmd_c;
-	char				**cmd_tab;
 	bool				builtin;
 	struct s_redir_list	*redirs;
 	struct s_fd_list	*fds;
@@ -219,7 +217,7 @@ void			free_error_word_lst(t_garbage **gb, t_word_lst **lst);
 
 /* builtins */
 void			b_pwd(char **envp);
-void			b_cd(char *path, char **envp);
+void			b_cd(t_w_cmd_list *cmd, t_minish *msh);
 void			b_echo(t_w_cmd_list *content);
 void			b_exit(t_minish **minish);
 int				b_export(t_minish *msh, t_w_cmd_list *cmds);
@@ -260,11 +258,13 @@ void			ft_gbtabfree(char **tbl, t_garbage **gb);
 char			**ft_gbtabjoin(char **tab1, char **tab2, t_garbage **gb);
 //void			ft_gbfree_tab(char **tab_to_free, t_garbage **gb); //! supprimer remplacer par ft_gbtabfree
 int				not_in_env(char *cmd, char **envp);
-size_t			modify_envp(char *cmd, char **envp, t_garbage **gb);
+int				modify_envp(char *cmd, char **envp, t_garbage **gb);
 void			ft_sort_str_arr(char **str_arr);
 char			**ft_gbsplit(char const *s, char c, t_garbage **gb);
 char			*ft_gbsubstr(char const *s,
 					unsigned int start, size_t len, t_garbage **gb);
+int				is_concat(char *cmd);
+
 
 
 /* list_char function */

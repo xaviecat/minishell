@@ -57,7 +57,6 @@ SRCS			:=	minishell.c\
 					utils/reforme_d_tab_cmd.c\
 					utils/utils.c\
 
-
 SRCS_D			:=	srcs/
 
 OBJS_D			:=	objs/

@@ -111,7 +111,8 @@ void	get_other_type_word(t_word_lst **lst)
 	first = *lst;
 	while (*lst)
 	{
-		if ((*lst)->prev && (*lst)->type == not_define)
+		if ((*lst)->prev && ((*lst)->type == not_define
+				|| (*lst)->type == expand))
 		{
 			if ((*lst)->prev->type == redir)
 				(*lst)->type = outfile;
