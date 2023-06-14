@@ -62,7 +62,7 @@ int	modify_envp(char *cmd, char **envp, t_garbage **gb)
 	return (1);
 }
 
-int is_concat(char *cmd)
+int	is_concat(char *cmd)
 {
 	size_t	i;
 
@@ -78,7 +78,7 @@ int is_concat(char *cmd)
 	return (0);
 }
 
-int cmp_concat(char **envp, char *cmd)
+int	cmp_concat(char **envp, char *cmd)
 {
 	size_t	i;
 	size_t	var_len;

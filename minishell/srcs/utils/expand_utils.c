@@ -18,7 +18,7 @@
  * @param gb the t_garbage lst for allocations and free
  * @return the duplicated string
  */
-char *ft_cut_var(char *str, t_garbage **gb)
+char	*ft_cut_var(char *str, t_garbage **gb)
 {
 	size_t	new_str_len;
 	size_t	i;

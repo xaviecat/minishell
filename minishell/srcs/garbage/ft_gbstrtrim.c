@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incs/minishell.h"
+#include "minishell.h"
 
 char	*ft_gbstrtrim(char const *s1, char const *set, t_garbage **gb)
 {

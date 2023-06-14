@@ -12,7 +12,6 @@
 
 #include "../../incs/minishell.h"
 
-
 static size_t	countwords(char const *s, char c)
 {
 	size_t	i;

@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   ft_gbcalloc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/08 12:30:33 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/08 12:30:33 by syluiset         ###   ########.fr       */
+/*   Created: 2023/05/31 21:42:51 by nfaust            #+#    #+#             */
+/*   Updated: 2023/06/14 14:27:16 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incs/minishell.h"
+#include "minishell.h"
 
-void	signal_handler(int signum)
+void	*ft_gbcalloc(size_t count, size_t size, t_garbage **gb)
 {
-	if (signum == SIGINT)
-	{
-		printf("\nCtrl+C recu \n");
-	}
-	else if (signum == SIGQUIT)
-	{
-		printf("Ctrl+\\ recu\n");
-	}
-	else if (signum == SIGTSTP)
-	{
-		printf("Ctrl+D recu\n");
-	}
+	void	*mem;
+
+	if (size && count >= 4294967295 / size)
+		return (0);
+	mem = ft_malloc(gb, size, count);
+	if (!mem)
+		return (NULL);
+	ft_bzero(mem, count * size);
+	return (mem);
 }
