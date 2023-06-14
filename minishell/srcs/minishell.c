@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/12 16:58:01 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/13 16:44:00 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ void	minishell(char **envp)
 		print_lst_char(minish->lst_c);
 		if (!(create_word_lst(&minish)))
 			free_and_exit_minish(minish, &envp_sh);
+		print_lst_word(minish->lst_w);
 		if ((!check_pipe_and_redir(&(minish->garbage), &(minish->lst_w))))
 			continue ;
 		//! gerer quand chevron avec epace
@@ -131,7 +132,7 @@ void	minishell(char **envp)
 		if (!ft_del_quotes(minish))
 			return (ft_free_all(&(minish->garbage)),
 				free_and_exit_minish(minish, &envp_sh), (void) 0);
-//		placeholder(&minish);
+		get_access(&minish);
 		exec_all(minish);
 		cp_envp_to_envp_sh(&envp_sh, minish->envp);
 		ft_free_all(&minish->garbage);
