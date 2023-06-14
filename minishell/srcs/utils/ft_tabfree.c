@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_gb_strdup.c                                     :+:      :+:    :+:   */
+/*   ft_tabfree.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/26 16:56:37 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/26 16:56:37 by syluiset         ###   ########.fr       */
+/*   Created: 2023/06/02 13:45:29 by syluiset          #+#    #+#             */
+/*   Updated: 2023/06/02 13:45:29 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-char	*ft_gb_strdup(const char *src, t_garbage **gb)
+void	ft_tabfree(char **tbl)
 {
-	int		i;
-	char	*dest;
+	size_t	i;
 
 	i = 0;
-	dest = ft_malloc(gb, sizeof(*src), ft_strlen(src) + 1);
-	if (!dest)
-		return (0);
-	while (src[i])
+	while (tbl[i])
 	{
-		dest[i] = ((char *)src)[i];
+		free(tbl[i]);
 		i++;
 	}
-	dest[i] = '\0';
-	return (dest);
+	free(tbl);
 }

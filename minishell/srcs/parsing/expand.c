@@ -39,13 +39,13 @@ static char	*expand_env_var(t_garbage **gb, char **envp, char *var)
 		if (ft_strncmp(envp[i++], var_expansion, var_len) == 0)
 		{
 			ft_free(gb, var_expansion);
-			var_expansion = ft_gb_strdup(envp[i - 1] + var_len, gb);
+			var_expansion = ft_gbstrdup(envp[i - 1] + var_len, gb);
 			if (!var_expansion)
 				return (NULL);
 			return (var_expansion);
 		}
 	}
-	return (ft_free(gb, var_expansion), ft_gb_strdup("", gb));
+	return (ft_free(gb, var_expansion), ft_gbstrdup("", gb));
 }
 
 /**
@@ -142,7 +142,8 @@ int	expand_commands(t_minish *minish)
 	w_lst_cpy = minish->lst_w;
 	while (w_lst_cpy)
 	{
-		w_lst_cpy->word = expand_vars(w_lst_cpy->word, minish);
+		if (w_lst_cpy->type != delimiteur)
+			w_lst_cpy->word = expand_vars(w_lst_cpy->word, minish);
 		if (!w_lst_cpy->word)
 			return (0); // ? code d'erreur a ajouter
 		w_lst_cpy = w_lst_cpy->next;

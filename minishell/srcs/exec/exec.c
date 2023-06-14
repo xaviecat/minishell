@@ -20,7 +20,7 @@ void	exec_all(t_minish *minish)
 			find_builtin(minish);
 		else
 		{
-			minish->cmds->cmd_c = ft_gb_strdup(minish->cmds->cmd->cmd,
+			minish->cmds->cmd_c = ft_gbstrdup(minish->cmds->cmd->cmd,
 					&(minish->garbage));
 			minish->cmds->cmd_tab = reforme_d_tab_cmd(&(minish->cmds->cmd),
 					minish->cmds->cmd_c, &(minish->garbage));

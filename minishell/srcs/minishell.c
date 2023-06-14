@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/12 17:24:37 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/13 16:44:00 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,16 @@ t_minish	*create_minishell(char **envp, char **envp_sh)
 		return (NULL);
 	}
 	if (envp_sh)
-		sh->envp = ft_dbtab_dup_gb(envp_sh, &(sh->garbage));
+		sh->envp = ft_gbtabdup(envp_sh, &(sh->garbage));
 	else
-		sh->envp = ft_dbtab_dup_gb(envp, &(sh->garbage));
+		sh->envp = ft_gbtabdup(envp, &(sh->garbage));
 	return (sh);
 }
 
 void	free_and_exit_minish(t_minish *minish, char ***envp_sh)
 {
 	if (*envp_sh)
-		free_char_tab_gb(*envp_sh, &(minish->garbage));
+		ft_gbtabfree(*envp_sh, &(minish->garbage));
 	envp_sh = NULL;
 	free(minish->garbage);
 	free(minish);
@@ -54,7 +54,7 @@ void	free_and_exit_minish(t_minish *minish, char ***envp_sh)
 void	cp_envp_to_envp_sh(char ***envp_sh, char **envp_in_minish)
 {
 	if (*envp_sh)
-		free_char_tab(*envp_sh);
+		ft_tabfree(*envp_sh);
 	*envp_sh = ft_dbtab_dup(envp_in_minish);
 }
 
@@ -120,6 +120,7 @@ void	minishell(char **envp)
 		print_lst_char(minish->lst_c);
 		if (!(create_word_lst(&minish)))
 			free_and_exit_minish(minish, &envp_sh);
+		print_lst_word(minish->lst_w);
 		if ((!check_pipe_and_redir(&(minish->garbage), &(minish->lst_w))))
 			continue ;
 		//! gerer quand chevron avec epace
@@ -133,6 +134,7 @@ void	minishell(char **envp)
 		if (!ft_del_quotes(minish))
 			return (ft_free_all(&(minish->garbage)),
 				free_and_exit_minish(minish, &envp_sh), (void) 0);
+		get_access(&minish);
 		exec_all(minish);
 		cp_envp_to_envp_sh(&envp_sh, minish->envp);
 		ft_free_all(&minish->garbage);

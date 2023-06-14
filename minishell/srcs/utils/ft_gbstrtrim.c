@@ -20,7 +20,7 @@ char	*ft_gbstrtrim(char const *s1, char const *set, t_garbage **gb)
 	if (!s1)
 		return (NULL);
 	if (!set)
-		return (ft_gb_strdup(s1, gb));
+		return (ft_gbstrdup(s1, gb));
 	while (*s1 && ft_strchr(set, *s1))
 		s1++;
 	start = s1;
