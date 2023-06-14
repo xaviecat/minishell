@@ -14,7 +14,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-int	num_exit_status;
+//int	num_exit_status;
 
 # include "../libft/incs/libft.h"
 # include "colors.h"
@@ -220,7 +220,7 @@ void			free_error_word_lst(t_garbage **gb, t_word_lst **lst);
 
 /* builtins */
 void			b_pwd(char **envp);
-void			b_cd(char *path, char **envp);
+void			b_cd(t_w_cmd_list *cmd, t_minish *msh);
 void			b_echo(t_w_cmd_list *content);
 void			b_exit(t_minish **minish);
 int				b_export(t_minish *msh, t_w_cmd_list *cmds);

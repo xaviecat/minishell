@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:46:20 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/13 12:01:20 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/13 13:12:38 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	export_print(t_minish *msh)
 	size_t	i;
 	size_t	j;
 
-	envp_cpy = ft_dbtab_dup_gb(msh->envp, &(msh->garbage));
+	envp_cpy = ft_gbtabdup(msh->envp, &(msh->garbage));
 	ft_sort_str_arr(envp_cpy);
 	i = 0;
 	while (envp_cpy[i])
@@ -127,7 +127,7 @@ int	add_new_var_to_envp(t_w_cmd_list *cmd, char **save_envp, t_minish *msh)
 		if (not_in_env(cmd->cmd, save_envp))
 		{
 			if (!is_concat(cmd->cmd))
-				(msh->envp)[i] = ft_gb_strdup(cmd->cmd, &(msh->garbage));
+				(msh->envp)[i] = ft_gbstrdup(cmd->cmd, &(msh->garbage));
 			else
 				msh->envp[i] = dup_without_plus(cmd->cmd, &(msh->garbage));
 			if (!(msh->envp[i++]))
@@ -154,7 +154,7 @@ int	b_export(t_minish *msh, t_w_cmd_list *cmd)
 		return (0);
 	if (!add_new_var_to_envp(cmd, save_envp, msh))
 		return (0);
-	modified_envp = ft_gb_dbtab_join(save_envp, msh->envp, &(msh->garbage));
+	modified_envp = ft_gbtabjoin(save_envp, msh->envp, &(msh->garbage));
 	if (!modified_envp && errno == ENOMEM)
 		return (ft_free(&(msh->garbage), msh->envp), 0);
 	ft_free(&(msh->garbage), msh->envp);

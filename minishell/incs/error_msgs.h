@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_msgs.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 13:34:42 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/12 17:12:51 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/13 17:12:25 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # define D_GR_A_BRA	"minishell: syntax error near unexpected token '>>'\n"
 # define NL_TKN		"minishell: syntax error near unexpected token 'newline'\n"
 # define PIPE_TKN	"minishell: syntax error near unexpected token '|'\n"
+# define CD_FILE	"minishell: cd: "
 
 # define UN_TKN(x)	"minishell: syntax error near unexpected token " #x "\n"
 # define IS_DIR(x)	"minishell: " #x ": Is a directory\n"
