@@ -113,16 +113,16 @@ $(OBJS)			:	$(OBJS_D)%.o: $(SRCS_D)%.c $(HEAD_A) $(LIB_A)
 
 $(OBJS_D)		:
 				mkdir -p $(OBJS_D)
-				mkdir -p $(OBJS_D)/builtins
-				mkdir -p $(OBJS_D)/exec
-				mkdir -p $(OBJS_D)/fds
-				mkdir -p $(OBJS_D)/garbage
-				mkdir -p $(OBJS_D)/list
-				mkdir -p $(OBJS_D)/parsing
-				mkdir -p $(OBJS_D)/print_things
-				mkdir -p $(OBJS_D)/redir
-				mkdir -p $(OBJS_D)/signal
-				mkdir -p $(OBJS_D)/utils
+				mkdir -p $(OBJS_D)builtins
+				mkdir -p $(OBJS_D)exec
+				mkdir -p $(OBJS_D)fds
+				mkdir -p $(OBJS_D)garbage
+				mkdir -p $(OBJS_D)list
+				mkdir -p $(OBJS_D)parsing
+				mkdir -p $(OBJS_D)print_things
+				mkdir -p $(OBJS_D)redir
+				mkdir -p $(OBJS_D)signal
+				mkdir -p $(OBJS_D)utils
 
 $(LIB_A)		:	FORCE
 				make -j -C $(LIB_D)

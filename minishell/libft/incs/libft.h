@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:38:22 by xcharra           #+#    #+#             */
-/*   Updated: 2023/03/16 18:52:14 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/14 13:43:18 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,9 @@ char	*ft_dtoa(double n, size_t precision);
 
 char	**ft_split(char const *s, char c);
 
-void	ft_free_split(char **tab);
+void	ft_tabfree(char **tab);
+
+char	**ft_tabdup(char **dbtab);
 
 char	*ft_strchr(const char *str, int c);
 
@@ -141,7 +143,5 @@ char	*get_next_line(int fd);
 int		ft_fdprintf(int fd, const char *str, ...);
 
 int		ft_printf(const char *str, ...);
-
-char	**ft_dbtab_dup(char **dbtab);
 
 #endif

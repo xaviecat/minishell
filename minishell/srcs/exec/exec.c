@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 19:25:52 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/14 15:03:06 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/14 18:36:14 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,19 @@
  * @param minish
  * @return 0 if all worked fine, 1 if an error occurred
  */
-int	exec_all(t_minish *minish)
+int	exec_all(t_minish *msh)
 {
-	while (minish->cmds)
+	while (msh->cmds)
 	{
-		if (minish->cmds->builtin == true)
-		{
-			if (!find_builtin(minish))
-				return (0);
-		}
+		if (msh->cmds->builtin == true)
+			find_builtin(msh);
 		else
 		{
-			minish->cmds->cmdpath = ft_gbstrdup(minish->cmds->cmd->cmd,
-					&(minish->garbage));
-			minish->cmds->cmdtab = reforme_d_tab_cmd(&(minish->cmds->cmd),
-					minish->cmds->cmdpath, &(minish->garbage)); //peut renvoyer NULL
+			if (msh->cmds->cmd)
+				msh->cmds->cmdtab = reforme_d_tab_cmd(&(msh->cmds->cmd),
+						msh->cmds->cmdpath, &(msh->garbage));
 		}
-		minish->cmds = minish->cmds->next;
+		msh->cmds = msh->cmds->next;
 	}
 	return (1);
 }
