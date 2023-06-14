@@ -23,7 +23,7 @@ void	char_lst_add_in(t_char_lst **lst, t_position pos, t_char_lst	*new) //! secu
 		new_prev = (*lst)->prev;
 		new_next = *lst;
 	}
-	else if (pos == next && *lst)
+	else /*if (pos == next && *lst)*/
 	{
 		new_prev = *lst;
 		new_next = (*lst)->next;

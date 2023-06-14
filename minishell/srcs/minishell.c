@@ -12,6 +12,8 @@
 
 #include "../incs/minishell.h"
 
+int g_exit_status;
+
 t_minish	*create_minishell(char **envp, char **envp_sh)
 {
 	t_minish		*sh;

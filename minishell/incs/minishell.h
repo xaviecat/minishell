@@ -14,7 +14,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-int	num_exit_status;
+extern int	g_exit_status;
 
 # include "../libft/incs/libft.h"
 # include "colors.h"
