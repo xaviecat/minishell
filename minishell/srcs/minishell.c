@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/14 12:00:11 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/14 13:29:19 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	cp_envp_to_envp_sh(char ***envp_sh, char **envp_in_minish)
 {
 	if (*envp_sh)
 		ft_tabfree(*envp_sh);
-	*envp_sh = ft_dbtab_dup(envp_in_minish);
+	*envp_sh = ft_tabdup(envp_in_minish);
 }
 
 void	minishell(char **envp)

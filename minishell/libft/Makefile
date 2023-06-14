@@ -3,7 +3,6 @@ SRCS			=	ft_atoi.c\
 					ft_calloc.c\
 					ft_dtoa.c\
 					ft_fdprintf.c\
-					ft_free_split.c\
 					ft_isalnum.c\
 					ft_isalpha.c\
 					ft_isascii.c\
@@ -49,10 +48,11 @@ SRCS			=	ft_atoi.c\
 					ft_strrchr.c\
 					ft_strtrim.c\
 					ft_substr.c\
+					ft_tabdup.c\
+					ft_tabfree.c\
 					ft_tolower.c\
 					ft_toupper.c\
 					get_next_line.c\
-					ft_dbtab_dup.c
 
 SRCS_D			=	srcs/
 

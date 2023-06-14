@@ -14,8 +14,6 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-extern int	g_exit_status;
-
 # include "../libft/incs/libft.h"
 # include "colors.h"
 # include "error_msgs.h"
@@ -29,6 +27,7 @@ extern int	g_exit_status;
 /* close, read, write, access, dup, dup2, execve, fork, pipe, unlink
 , rl_*, getcwd, chdir, stat, lstat, fstat, isatty, ttyname,ttyslot */
 # include <unistd.h>
+# include <sys/stat.h>
 
 /* perror printf readline ??*/
 # include <stdio.h>
@@ -56,6 +55,8 @@ extern int	g_exit_status;
 
 /* errno */
 # include <errno.h>
+
+extern int	g_exit_status;
 
 /* structure */
 
@@ -226,7 +227,7 @@ int				b_unset(t_minish *sh);
 void			find_builtin(t_minish *sh);
 
 /* exec */
-void			exec_all(t_minish *minish);
+void			exec_all(t_minish *msh);
 void			get_access(t_minish **sh);
 
 /* signal */

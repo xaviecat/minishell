@@ -18,7 +18,7 @@ t_redir_list	*new_redir(t_type_redir type_red, t_garbage **gb)
 
 	red = ft_malloc(gb, sizeof(t_redir_list), 1);
 	if (!red)
-	    return (NULL); // ! ERROR maybe free direct ici
+		return (NULL); // ! ERROR maybe free direct ici
 	red->redir = type_red;
 	red->next = NULL;
 	return (red);
