@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/14 13:29:19 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/15 14:56:30 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,9 @@ void	minishell(char **envp)
 //		print_lst_word(minish->lst_w);
 		if (!(sh_pars(&minish)))
 			free_and_exit_minish(minish, &envp_sh);
+		if (!heredoc_handling(minish))
+			return (ft_free_all(&(minish->garbage)),
+				free_and_exit_minish(minish, &envp_sh), (void) 0);
 		if (!ft_del_quotes(minish))
 			return (ft_free_all(&(minish->garbage)),
 				free_and_exit_minish(minish, &envp_sh), (void) 0);

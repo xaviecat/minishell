@@ -104,7 +104,7 @@ static char	*modify_command(char *cmd, t_minish *msh,
  * @param envp
  * @return the modified string
  */
-static char	*expand_vars(char *command, t_minish *msh)
+char	*expand_vars(char *command, t_minish *msh)
 {
 	size_t	i;
 	int		double_not_closed;

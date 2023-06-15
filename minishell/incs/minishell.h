@@ -21,29 +21,39 @@
 
 /* malloc, free, exit, getenv, tcsetattr, tcgetattr, */
 # include <stdlib.h>
+
 /* open */
 # include <fcntl.h>
+
 /* close, read, write, access, dup, dup2, execve, fork, pipe, unlink
 , rl_*, getcwd, chdir, stat, lstat, fstat, isatty, ttyname,ttyslot */
 # include <unistd.h>
 # include <sys/stat.h>
+
 /* perror printf readline ??*/
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+
 /* strerror */
 # include <string.h>
+
 /* wait, waitpid, wait3, wait4 */
 # include <sys/wait.h>
+
 /* signal, sigaction, sigemptyset, siggadset, kill */
 # include <signal.h>
+
 /* opendir,readdir, closedir */
 # include <dirent.h>
+
 /* ioctl,  */
 # include <sys/ioctl.h>
+
 /* tgetent, tgetflag, tgetnum, tgetstrr, tgoto, tputs */
 # include <curses.h>
 # include <term.h>
+
 /* errno */
 # include <errno.h>
 
@@ -155,6 +165,8 @@ void			word_lst_delone(t_word_lst **lst, t_garbage **gb);
 t_word_lst		*word_lst_first(t_word_lst *lst);
 void			get_other_type_word(t_word_lst **lst);
 t_word_lst		*word_lst_new(char *word, t_garbage **gb);
+t_word_lst		*word_lst_add_back(t_word_lst *wlst, t_garbage **gb,
+					char *word);
 
 /* list command maybe not useful */
 t_cmd_list		*lst_cmd_new(t_w_cmd_list *cmds,
@@ -177,5 +189,17 @@ bool			is_backslash_error(t_char_lst *lst);
 bool			is_dollar_error(t_char_lst *lst);
 bool			is_exclamation_error(t_char_lst *lst);
 bool			is_colon_error(t_char_lst *lst);
+
+/* heredoc */
+int				heredoc_handling(t_minish *msh);
+t_word_lst		*display_heredoc(t_word_lst *heredoc,
+					t_minish *msh, t_redir_list *redirs);
+int				expand_heredoc(t_word_lst *heredoc, t_minish *msh);
+
+
+/* A RANGER LOL */
+char			*expand_vars(char *command, t_minish *msh);
+int				does_contain_quotes(char *str);
+
 
 #endif

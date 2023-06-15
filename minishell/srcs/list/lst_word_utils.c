@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_word_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:12:14 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/12 17:14:07 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/15 11:56:50 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ t_word_lst	*word_lst_new(char *word, t_garbage **gb)
 	if (!new)
 		return (NULL);
 	new->word = ft_gbstrdup(word, gb);
+	if (!new->word)
+		return (ft_free(gb, new), NULL);
 	new->type = not_define;
 	new->next = NULL;
 	new->prev = NULL;
@@ -54,6 +56,21 @@ void	word_lst_delone(t_word_lst **lst, t_garbage **gb)
 		*lst = next;
 	else
 		*lst = prev;
+}
+
+t_word_lst *word_lst_add_back(t_word_lst *wlst, t_garbage **gb, char *word)
+{
+	if (!wlst)
+		return (word_lst_new(word, gb));
+	while (wlst->next)
+		wlst = wlst->next;
+	wlst->next = word_lst_new(word, gb);
+	if (!(wlst->next))
+		return (NULL);
+	wlst->next->prev = wlst;
+	while (wlst->prev)
+		wlst = wlst->prev;
+	return (wlst);
 }
 
 t_word_lst	*word_lst_first(t_word_lst *lst)
