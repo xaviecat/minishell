@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:15:43 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/15 10:21:34 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/15 15:23:23 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ typedef struct s_cmd_list
 	char				**cmdtab;
 	bool				builtin;
 	struct s_redir_list	*redirs;
+	struct s_word_lst	*heredoc;
 	struct s_fd_list	*fds;
 	struct s_cmd_list	*next;
 	struct s_cmd_list	*previous;
