@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/15 15:36:05 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/15 15:37:12 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,10 @@ void	minishell(char **envp)
 				continue;
 			}
 			else
+			{
+				printf("exit");
 				break ;
+			}
 		}
 		if (line && *line)
 			add_history(line);
