@@ -178,4 +178,7 @@ bool			is_dollar_error(t_char_lst *lst);
 bool			is_exclamation_error(t_char_lst *lst);
 bool			is_colon_error(t_char_lst *lst);
 
+/* excution */
+void			execution(t_minish *msh);
+
 #endif

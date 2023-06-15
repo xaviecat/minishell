@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 16:54:48 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/15 10:44:04 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/15 16:15:55 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,8 @@ void	print_lst_cmd(t_cmd_list *lst)
 			printf("[%s] ", lst->cmd->cmd);
 			lst->cmd = lst->cmd->next;
 		}
-		printf(ITALIC BGRED LCYAN"\ncmdpath : %s"RESET, lst->cmdpath);
+		if (lst->cmdpath)
+			printf("\ncmdpath : %s", lst->cmdpath);
 		lst->cmd = first_w;
 		printf(CYAN"\n");
 		print_fd(lst->fds);

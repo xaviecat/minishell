@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/14 13:29:19 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/15 14:58:01 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ void	minishell(char **envp)
 		if (!exec_all(minish))
 			return (ft_free_all(&(minish->garbage)),
 				free_and_exit_minish(minish, &envp_sh), (void) 0);
+		execution(minish);
 		cp_envp_to_envp_sh(&envp_sh, minish->envp);
 		ft_free_all(&minish->garbage);
 		free(minish);

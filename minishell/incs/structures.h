@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:15:43 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/15 10:21:34 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/15 11:35:07 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ typedef struct s_cmd_list
 	char				*cmdpath; // strjoin PATH+CMD
 	char				**cmdtab;
 	bool				builtin;
+	pid_t				pid;
 	struct s_redir_list	*redirs;
 	struct s_fd_list	*fds;
 	struct s_cmd_list	*next;
@@ -140,6 +141,8 @@ typedef struct s_minish
 {
 	char		**envp;
 	t_cmd_list	*cmds;
+	int			prev_pipe[2];
+	int			curr_pipe[2];
 	t_char_lst	*lst_c;
 	t_word_lst	*lst_w;
 	t_garbage	*garbage;
