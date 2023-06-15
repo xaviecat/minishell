@@ -117,7 +117,7 @@ void	minishell(char **envp)
 			continue ;
 		}
 		harmonize_spaces(&(minish->lst_c), &(minish->garbage));
-		print_lst_char(minish->lst_c);
+//		print_lst_char(minish->lst_c);
 		if (!(create_word_lst(&minish)))
 			free_and_exit_minish(minish, &envp_sh);
 		if ((!check_pipe_and_redir(&(minish->garbage), &(minish->lst_w))))
@@ -126,7 +126,7 @@ void	minishell(char **envp)
 		if (!expand_commands(minish))
 			return (ft_free_all(&(minish->garbage)),
 				free_and_exit_minish(minish, &envp_sh), (void) 0);
-		print_lst_word(minish->lst_w);
+//		print_lst_word(minish->lst_w);
 		if (!(sh_pars(&minish)))
 			free_and_exit_minish(minish, &envp_sh);
 		if (!ft_del_quotes(minish))
