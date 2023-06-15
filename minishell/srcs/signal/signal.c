@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 12:30:33 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/15 15:05:08 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/15 16:15:09 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,35 +29,37 @@
 ////sa_stop.sa_flags = 0;
 //sigaction(SIGTSTP, &sa_stop, NULL);
 
-void	signal_hub_term(int signum)
+void	signal_hub_term(void)
 {
 	struct sigaction	sa;
 
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART;
-	sa.sa_handler = signal_term;
+	sa.sa_handler = &signal_term;
 	sigaction(SIGINT, &sa, NULL);
+	sa.sa_handler = SIG_IGN;
 	sigaction(SIGQUIT, &sa, NULL);
 }
 
-void	signal_hub_heredoc(int signum)
+void	signal_hub_heredoc(void)
 {
 	struct sigaction	sa;
 
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART;
-	sa.sa_handler = signal_heredoc;
+	sa.sa_handler = &signal_heredoc;
 	sigaction(SIGINT, &sa, NULL);
+	sa.sa_handler = SIG_IGN;
 	sigaction(SIGQUIT, &sa, NULL);
 }
 
-void	signal_hub_exec(int signum)
+void	signal_hub_exec(void)
 {
 	struct sigaction	sa;
 
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART;
-	sa.sa_handler = signal_exec;
+	sa.sa_handler = &signal_exec;
 	sigaction(SIGINT, &sa, NULL);
 	sigaction(SIGTSTP, &sa, NULL);
 	sigaction(SIGQUIT, &sa, NULL);

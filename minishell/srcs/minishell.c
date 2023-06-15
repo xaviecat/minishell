@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/15 14:56:30 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/15 15:36:05 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,15 +77,19 @@ void	minishell(char **envp)
 	printf(TRISHBANNER6"\n");
 	printf(TRISHBANNER7"\n");
 	printf(BOLD TRISHBANNER8"\n" RESET);
-	signal_hub_term;
+	signal_hub_term();
 	while (1)
 	{
 		line = readline(GREEN UNDERLINE"TRI_SH $>"RESET" ");
 		if (!line || *line == '\0')
 		{
 			if (line)
+			{
 				free(line);
-			continue ;
+				continue;
+			}
+			else
+				break ;
 		}
 		if (line && *line)
 			add_history(line);
