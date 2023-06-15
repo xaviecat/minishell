@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:54:13 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/15 15:13:46 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/15 16:13:33 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,29 +22,23 @@ void	signal_term(int signum)
 		rl_redisplay();
 		g_exit_status = 128 + signum;
 	}
-	else if (signum == SIGQUIT)
-	{
-		write(1, "exit", 4);
-		g_exit_status = 128 + signum;
-	}
+//	else if (signum == SIGQUIT)
+//	{
+//		write(1, "exit", 4);
+//		g_exit_status = 128 + signum;
+//	}
 }
 
 void	signal_heredoc(int signum)
 {
-	if (signum == SIGINT)
-	{
-		ioctl(STDIN_FILENO, TIOCNOTTY, NULL);
+		ioctl(STDIN_FILENO, TIOCSTI, "\n");
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
 		g_exit_status = 128 + signum;
-	}
-	if (signum == SIGQUIT)
-	{
-//		write(1, "Quit (core dumped)", 18);
-//		g_exit_status = 128 + signum;
-	}
 }
+
+void
 
 void	signal_exec(int signum)
 {
