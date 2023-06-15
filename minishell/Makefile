@@ -51,6 +51,7 @@ SRCS			:=	minishell.c\
 					redir/redir_utils.c\
 					\
 					signal/signal.c\
+					signal/signal2.c\
 					\
 					utils/expand_utils.c\
 					utils/export_utils.c\

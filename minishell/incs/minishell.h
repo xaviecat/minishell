@@ -240,6 +240,12 @@ void			get_access(t_minish **sh);
 
 /* signal */
 void			signal_handler(int signum);
+void			signal_term(int signum);
+void			signal_heredoc(int signum);
+void			signal_exec(int signum);
+void			signal_hub_term(int signum);
+void			signal_hub_heredoc(int signum);
+void			signal_hub_exec(int signum);
 
 /* utils */
 char			*ft_cut_var(char *str, t_garbage **gb);
