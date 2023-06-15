@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 11:36:08 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/14 12:05:56 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/14 17:48:38 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,6 @@ char	**get_cmdpath(char **path, char *cmd, t_garbage **gb)
 	size_t	i;
 
 	i = 0;
-	if (!ft_strncmp(cmd, "./", 2))
-	{
-		cmdpath = ft_malloc(gb, sizeof(char *), 2);
-		if (!cmdpath)
-			return (NULL); //!ERROR
-		cmdpath[0] = ft_gbstrdup(cmd, gb);
-		if (!cmdpath[0])
-			return (NULL); //!ERROR
-		cmdpath[1] = NULL;
-		return (cmdpath);
-	}
 	while (path[i])
 		i++;
 	scmd = ft_gbstrjoin("/", cmd, gb);
@@ -69,24 +58,25 @@ char	**get_cmdpath(char **path, char *cmd, t_garbage **gb)
 	return (cmdpath);
 }
 
-char	*check_access(char **cmdpath, char *cmd, t_garbage **gb)
+char	*check_access(char **cmdpaths, char *cmd, t_garbage **gb)
 {
-	size_t	i;
-	bool	f_ok;
-	char	*good_path;
+	size_t		i;
+	bool		f_ok;
+	char		*good_path;
+
 
 	i = 0;
 	f_ok = false;
-	while (cmdpath[i])
+	while (cmdpaths[i])
 	{
-		if (!access(cmdpath[i], F_OK))
+		if (!access(cmdpaths[i], F_OK))
 			f_ok = true;
-		if (!access(cmdpath[i], X_OK))
+		if (!access(cmdpaths[i], X_OK))
 		{
-			good_path = ft_gbstrdup(cmdpath[i], gb);
+			good_path = ft_gbstrdup(cmdpaths[i], gb);
 			if (!good_path)
-				return (NULL);//! ERROR A GERER
-			ft_gbtabfree(cmdpath, gb);
+				return (NULL); //! MALLOC ERROR
+			ft_gbtabfree(cmdpaths, gb);
 			return (good_path);
 		}
 		i++;
@@ -97,24 +87,54 @@ char	*check_access(char **cmdpath, char *cmd, t_garbage **gb)
 	return (NULL);//! a voir
 }
 
-void	give_access(char **path, t_cmd_list **lst_cmds, t_garbage **gb)
+void	cmd_in_current_dir(t_cmd_list **lst, t_garbage **gb)
+{
+	struct stat	st;
+
+	if (access((*lst)->cmd->cmd, F_OK))
+		return ((void)ft_fdprintf(2, RED MSH "%s" NO_SFD RESET, (*lst)->cmd->cmd));
+	stat((*lst)->cmd->cmd, &st);
+	if (S_ISDIR(st.st_mode))
+		return ((void)ft_fdprintf(2, RED MSH"%s" IS_DI RESET, (*lst)->cmd->cmd));
+	if (access((*lst)->cmd->cmd, X_OK))
+		return ((void)ft_fdprintf(2, RED MSH"%s" NO_PERM RESET, (*lst)->cmd->cmd));
+	(*lst)->cmdpath = ft_gbstrdup((*lst)->cmd->cmd, gb);
+	if (!((*lst)->cmdpath))
+		return ; //!ERROR
+	return ;
+
+}
+
+void	give_access(char **path, t_cmd_list **lst, t_garbage **gb)
 {
 	t_cmd_list	*first;
-	char		**cmdpath;
+	char		**cmdpaths;
 
-	first = *lst_cmds;
-	while (*lst_cmds)
+	first = *lst;
+	while (*lst)
 	{
-		cmdpath = get_cmdpath(path, (*lst_cmds)->cmd->cmd, gb);
-		(*lst_cmds)->cmdpath = check_access(cmdpath, (*lst_cmds)->cmd->cmd,
-				gb);
-		if (!((*lst_cmds)->cmdpath))
-			return ;//ft_fdprintf(2, RED"no path%s\n"RESET, (*lst_cmds)->cmd->cmd) //! ERROR A GERER
-		(*lst_cmds) = (*lst_cmds)->next;
+		if (!((*lst)->cmd))
+		{
+			(*lst)->cmdpath = NULL;
+			(*lst) = (*lst)->next;
+			continue ;
+		}
+		if (!ft_strncmp((*lst)->cmd->cmd, "./", 2)
+			|| !ft_strncmp((*lst)->cmd->cmd, "/", 1)
+			|| ft_strchr((*lst)->cmd->cmd, '/'))
+		{
+			cmd_in_current_dir(lst, gb);
+			(*lst) = (*lst)->next;
+			continue ;
+		}
+		cmdpaths = get_cmdpath(path, (*lst)->cmd->cmd, gb);
+		(*lst)->cmdpath = check_access(cmdpaths, (*lst)->cmd->cmd, gb);
+		if (!((*lst)->cmdpath))
+			return ;//ft_fdprintf(2, RED"no path%s\n"RESET, (*lst)->cmd->cmd) //! ERROR A GERER
+		(*lst) = (*lst)->next;
 	}
 	ft_gbtabfree(path, gb);
-	ft_gbtabfree(cmdpath, gb);
-	(*lst_cmds) = first;
+	(*lst) = first;
 	return ;
 }
 
@@ -139,10 +159,10 @@ void	get_access(t_minish **sh)
  * cat | grep | ls | awk | sleep | bash
  * grep | ./cat | ls | awk | sleep | bash
  * cat | grep | ls | awk | ./sleep | bash
+ * cat | grep | ls | awk | ./sleep | ./grep
+ * ./cat | grep | ls | awk | ./sleep | ./grep
+ * ./cat | grep | ls | awk | ./sleep | ./grep -F
  * cat -en << EOF | cat -en | ./grep 'salut' >> "$USER"
  *
- * ././awk: command not found
- * no path././awk
- * TRI_SH $> cat | grep | ls | ././awk | ././cat | ./sleep | bash
-
+ * env | grep 'PATH=' | awk -F: '{gsub(/:/,"\n"); print}'
  */

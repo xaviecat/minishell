@@ -49,6 +49,7 @@ SRCS			:=	minishell.c\
 					\
 					redir/redir.c\
 					redir/redir_utils.c\
+					redir/heredoc.c\
 					\
 					signal/signal.c\
 					signal/signal2.c\
@@ -59,6 +60,7 @@ SRCS			:=	minishell.c\
 					utils/ft_tabfree.c\
 					utils/reforme_d_tab_cmd.c\
 					utils/utils.c\
+					utils/heredoc_utils.c\
 
 SRCS_D			:=	srcs/
 
@@ -68,7 +70,8 @@ OBJS			:=	$(SRCS:%.c=$(OBJS_D)%.o)
 
 HEAD			:=	minishell.h\
 					error_msgs.h\
-					colors.h
+					colors.h\
+					structures.h\
 
 HEAD_D			:=	incs/
 
@@ -114,16 +117,16 @@ $(OBJS)			:	$(OBJS_D)%.o: $(SRCS_D)%.c $(HEAD_A) $(LIB_A)
 
 $(OBJS_D)		:
 				mkdir -p $(OBJS_D)
-				mkdir -p $(OBJS_D)/builtins
-				mkdir -p $(OBJS_D)/exec
-				mkdir -p $(OBJS_D)/fds
-				mkdir -p $(OBJS_D)/garbage
-				mkdir -p $(OBJS_D)/list
-				mkdir -p $(OBJS_D)/parsing
-				mkdir -p $(OBJS_D)/print_things
-				mkdir -p $(OBJS_D)/redir
-				mkdir -p $(OBJS_D)/signal
-				mkdir -p $(OBJS_D)/utils
+				mkdir -p $(OBJS_D)builtins
+				mkdir -p $(OBJS_D)exec
+				mkdir -p $(OBJS_D)fds
+				mkdir -p $(OBJS_D)garbage
+				mkdir -p $(OBJS_D)list
+				mkdir -p $(OBJS_D)parsing
+				mkdir -p $(OBJS_D)print_things
+				mkdir -p $(OBJS_D)redir
+				mkdir -p $(OBJS_D)signal
+				mkdir -p $(OBJS_D)utils
 
 $(LIB_A)		:	FORCE
 				make -j -C $(LIB_D)

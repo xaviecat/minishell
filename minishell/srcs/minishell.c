@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/15 13:59:22 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/15 14:56:30 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	cp_envp_to_envp_sh(char ***envp_sh, char **envp_in_minish)
 {
 	if (*envp_sh)
 		ft_tabfree(*envp_sh);
-	*envp_sh = ft_dbtab_dup(envp_in_minish);
+	*envp_sh = ft_tabdup(envp_in_minish);
 }
 
 void	minishell(char **envp)
@@ -116,6 +116,9 @@ void	minishell(char **envp)
 		print_lst_word(minish->lst_w);
 		if (!(sh_pars(&minish)))
 			free_and_exit_minish(minish, &envp_sh);
+		if (!heredoc_handling(minish))
+			return (ft_free_all(&(minish->garbage)),
+				free_and_exit_minish(minish, &envp_sh), (void) 0);
 		if (!ft_del_quotes(minish))
 			return (ft_free_all(&(minish->garbage)),
 				free_and_exit_minish(minish, &envp_sh), (void) 0);
