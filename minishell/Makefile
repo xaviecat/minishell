@@ -52,6 +52,7 @@ SRCS			:=	minishell.c\
 					redir/heredoc.c\
 					\
 					signal/signal.c\
+					signal/signal2.c\
 					\
 					utils/expand_utils.c\
 					utils/export_utils.c\
