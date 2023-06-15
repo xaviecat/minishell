@@ -35,27 +35,6 @@ int	pipe_is_valid(t_word_lst **lst, t_garbage **gb)
 	return (1);
 }
 
-int	is_a_dir(t_word_lst **lst, t_garbage **gb)
-{
-	while (*lst)
-	{
-		if ((ft_strncmp((*lst)->word, "/", 1) == 0
-				|| (ft_strncmp((*lst)->word, ".", 1) == 0)) && !(*lst)->prev)
-		{
-			ft_fdprintf(2, RED IS_DIR('%s') RESET, (*lst)->word);
-			free_error_word_lst(gb, lst);
-			return (0);
-		}
-		if ((*lst)->next)
-			*lst = (*lst)->next;
-		else
-			break ;
-	}
-	while ((*lst)->prev)
-		*lst = (*lst)->prev;
-	return (1);
-}
-
 int	ft_is_redir(t_type_word type)
 {
 	if (type == redir || type == hd || type == appnd || type == open_file)
@@ -97,7 +76,5 @@ int	check_pipe_and_redir(t_garbage **gb, t_word_lst **lst)
 		return (0);
 	if (!(pipe_is_valid(lst, gb)))
 		return (0);
-//	if (!(is_a_dir(lst, gb)))
-//		return (0);
 	return (1);
 }

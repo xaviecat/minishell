@@ -21,7 +21,7 @@ t_w_cmd_list	*new_w_cmd_list(char *content, bool s_quote, bool d_quote,
 	if (!new)
 		return (NULL);
 	new->cmd = ft_gbstrtrim(content, " ", gb);
-	if (!new->cmd)
+	if (!new->cmd && errno == ENOMEM)
 		return (NULL);
 	new->s_quote = s_quote;
 	new->d_quote = d_quote;

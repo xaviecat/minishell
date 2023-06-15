@@ -37,7 +37,6 @@ int	allocate_inside(char **dst_tab, char **tab1, char **tab2, t_garbage **gb)
 	while (tab1[i])
 	{
 		dst_tab[j] = ft_malloc(gb, sizeof(char), ft_strlen(tab1[i++]) + 1);
-//		printf("%li : %li\n", j, ft_strlen(tab1[i - 1]));
 		if (!dst_tab[j++])
 			return (ft_gbtabfree(dst_tab, gb), 0);
 	}
@@ -64,7 +63,6 @@ void	fill_tab(char **dst, char **tab1, char **tab2)
 		k = 0;
 		while (tab1[j][k++])
 			dst[i][k - 1] = tab1[j][k - 1];
-//		printf("%li : %li\n", j, k - 1);
 		dst[i++][k - 1] = 0;
 		j++;
 	}

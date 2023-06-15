@@ -14,9 +14,19 @@ SRCS			:=	minishell.c\
 					exec/exec.c\
 					\
 					fds/fds.c\
+					fds/fds_utils.c\
 					\
 					garbage/ft_free.c\
 					garbage/ft_malloc.c\
+					garbage/ft_gbcalloc.c\
+					garbage/ft_gbsplit.c\
+					garbage/ft_gbstrdup.c\
+					garbage/ft_gbstrjoin.c\
+					garbage/ft_gbstrtrim.c\
+					garbage/ft_gbsubstr.c\
+					garbage/ft_gbtabdup.c\
+					garbage/ft_gbtabfree.c\
+					garbage/ft_gbtabjoin.c\
 					\
 					list/find_type.c\
 					list/lst.c\
@@ -38,21 +48,13 @@ SRCS			:=	minishell.c\
 					print_things/print_1.c\
 					\
 					redir/redir.c\
+					redir/redir_utils.c\
 					redir/heredoc.c\
 					\
 					signal/signal.c\
 					\
 					utils/expand_utils.c\
 					utils/export_utils.c\
-					utils/ft_gbcalloc.c\
-					utils/ft_gbsplit.c\
-					utils/ft_gbstrdup.c\
-					utils/ft_gbstrjoin.c\
-					utils/ft_gbstrtrim.c\
-					utils/ft_gbsubstr.c\
-					utils/ft_gbtabdup.c\
-					utils/ft_gbtabfree.c\
-					utils/ft_gbtabjoin.c\
 					utils/ft_sort_str_arr.c\
 					utils/ft_tabfree.c\
 					utils/reforme_d_tab_cmd.c\
@@ -67,7 +69,8 @@ OBJS			:=	$(SRCS:%.c=$(OBJS_D)%.o)
 
 HEAD			:=	minishell.h\
 					error_msgs.h\
-					colors.h
+					colors.h\
+					structures.h\
 
 HEAD_D			:=	incs/
 
@@ -92,7 +95,7 @@ CFLAGS			:=	-Wall -Wextra -Werror
 
 RDL				:=	-lreadline
 
-ASAN_F			:=	-g3 -fsanitize=address
+ASAN_F			:=	-g3 #-fsanitize=address
 
 #========================EXEC===============================#
 all				:	$(NAME)
@@ -113,16 +116,16 @@ $(OBJS)			:	$(OBJS_D)%.o: $(SRCS_D)%.c $(HEAD_A) $(LIB_A)
 
 $(OBJS_D)		:
 				mkdir -p $(OBJS_D)
-				mkdir -p $(OBJS_D)/builtins
-				mkdir -p $(OBJS_D)/exec
-				mkdir -p $(OBJS_D)/fds
-				mkdir -p $(OBJS_D)/garbage
-				mkdir -p $(OBJS_D)/list
-				mkdir -p $(OBJS_D)/parsing
-				mkdir -p $(OBJS_D)/print_things
-				mkdir -p $(OBJS_D)/redir
-				mkdir -p $(OBJS_D)/signal
-				mkdir -p $(OBJS_D)/utils
+				mkdir -p $(OBJS_D)builtins
+				mkdir -p $(OBJS_D)exec
+				mkdir -p $(OBJS_D)fds
+				mkdir -p $(OBJS_D)garbage
+				mkdir -p $(OBJS_D)list
+				mkdir -p $(OBJS_D)parsing
+				mkdir -p $(OBJS_D)print_things
+				mkdir -p $(OBJS_D)redir
+				mkdir -p $(OBJS_D)signal
+				mkdir -p $(OBJS_D)utils
 
 $(LIB_A)		:	FORCE
 				make -j -C $(LIB_D)

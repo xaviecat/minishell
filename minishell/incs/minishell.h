@@ -14,11 +14,10 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-extern int	g_exit_status;
 
-# include "../libft/incs/libft.h"
 # include "colors.h"
 # include "error_msgs.h"
+# include "../libft/incs/libft.h"
 
 /* malloc, free, exit, getenv, tcsetattr, tcgetattr, */
 # include <stdlib.h>
@@ -29,6 +28,7 @@ extern int	g_exit_status;
 /* close, read, write, access, dup, dup2, execve, fork, pipe, unlink
 , rl_*, getcwd, chdir, stat, lstat, fstat, isatty, ttyname,ttyslot */
 # include <unistd.h>
+# include <sys/stat.h>
 
 /* perror printf readline ??*/
 # include <stdio.h>
@@ -57,138 +57,9 @@ extern int	g_exit_status;
 /* errno */
 # include <errno.h>
 
-/* structure */
+# include "structures.h"
 
-	/* enum */
-
-typedef enum e_position
-{
-	prev,
-	next,
-}	t_position;
-
-typedef enum e_type_char
-{
-	space,
-	s_quote,
-	d_quote,
-	charc,
-	c_pipe,
-	dash,
-	a_bracket,
-	dollar
-}			t_type_char;
-
-typedef enum e_type_word
-{
-	not_define,
-	command,
-	builtin,
-	param,
-	redir,
-	hd,
-	appnd,
-	w_pipe,
-	expand,
-	open_file,
-	delimiteur,
-	infile,
-	outfile,
-	in_d_quote,
-	in_s_quote
-}			t_type_word;
-
-typedef enum e_type_redir
-{
-	in,
-	inin,
-	out,
-	outout
-}			t_type_redir;
-
-	/* list chaine*/
-
-typedef struct s_garbage_list
-{
-	void					*content;
-	struct s_garbage_list	*next;
-	struct s_garbage_list	*prev;
-}				t_garbage_list;
-
-typedef struct s_garbage
-{
-	t_garbage_list	*first;
-	t_garbage_list	*last;
-}				t_garbage;
-
-typedef struct s_redir_list
-{
-	t_type_redir		redir;
-	char				*filename;
-	struct s_redir_list	*next;
-	struct s_redir_list	*last_added;
-}				t_redir_list;
-
-typedef struct s_fd_list
-{
-	int					in;
-	int					out;
-	struct s_fd_list	*next;
-	struct s_fd_list	*last_added;
-}				t_fd_list;
-
-typedef struct s_w_cmd_list
-{
-	char				*cmd;
-	bool				s_quote;
-	bool				d_quote;
-	struct s_w_cmd_list	*next;
-	struct s_w_cmd_list	*last_added;
-}				t_w_cmd_list;
-
-typedef struct s_cmd_list
-{
-	t_w_cmd_list		*cmd;
-	char				*cmdpath; // strjoin PATH+CMD
-	char				**cmdtab;
-	bool				builtin;
-	struct s_redir_list	*redirs;
-	struct s_fd_list	*fds;
-	struct s_word_lst	*heredoc;
-	struct s_cmd_list	*next;
-	struct s_cmd_list	*previous;
-	struct s_cmd_list	*last_added;
-}				t_cmd_list;
-
-typedef struct s_word_lst
-{
-	char				*word;
-	t_type_word			type;
-	struct s_word_lst	*next;
-	struct s_word_lst	*prev;
-	struct s_word_lst	*last_added;
-}						t_word_lst;
-
-typedef struct s_char_lst
-{
-	int					pipe;
-	char				c;
-	t_type_char			type;
-	bool				s_quote;
-	bool				d_quote;
-	struct s_char_lst	*prev;
-	struct s_char_lst	*next;
-	struct s_char_lst	*last_added;
-}				t_char_lst;
-
-typedef struct s_minish
-{
-	char		**envp;
-	t_cmd_list	*cmds;
-	t_char_lst	*lst_c;
-	t_word_lst	*lst_w;
-	t_garbage	*garbage;
-}				t_minish;
+extern int	g_exit_status;
 
 typedef bool	(*t_unhandled_char)(t_char_lst *);
 
@@ -198,22 +69,31 @@ t_minish		*parsing_command(char *cmd_line, t_minish *sh);
 int				expand_commands(t_minish *minish);
 char			*cut_whitespaces(char *str, t_garbage **gb);
 bool			process_quotes(t_char_lst *lst);
-t_redir_list	*get_redir(t_word_lst **lst, t_garbage **gb);
-void			print_redir(t_redir_list *lst);
-t_fd_list		*create_fds_list(t_redir_list *redirs, t_garbage **gb);
-void			print_fd(t_fd_list *lst);
 void			harmonize_spaces(t_char_lst **lst, t_garbage **gb);
 int				redir_is_valid(t_word_lst **lst, t_garbage **gb);
 int				check_pipe_and_redir(t_garbage **gb, t_word_lst **lst);
 char			**reforme_d_tab_cmd(t_w_cmd_list **lst, char *cmd, t_garbage **gb);
 int				ft_del_quotes(t_minish *msh);
 
+/* redir */
+t_redir_list	*get_redir(t_word_lst **lst, t_garbage **gb);
+void			print_redir(t_redir_list *lst);
+void			free_error_redir(t_garbage **gb, t_redir_list **lst);
+void			redir_add_back(t_redir_list **lst, t_redir_list *new);
+t_redir_list	*redir_last(t_redir_list *lst);
+t_redir_list	*new_redir(t_type_redir type_red, t_garbage **gb);
+
+/* fds */
+t_fd_list		*create_fds_list(t_redir_list *redirs, t_garbage **gb);
+void			print_fd(t_fd_list *lst);
+void			free_error_fds(t_garbage **gb, t_fd_list **lst);
+t_fd_list		*new_fds(t_garbage **gb);
+void			fds_add_back(t_fd_list **lst, t_fd_list *new);
+
 /* error */
 bool			is_forbidden_char(t_char_lst *lst);
 bool			unhandled_char(t_char_lst *lst);
 bool			is_bad_redir(t_char_lst *lst);
-void			free_error_fds(t_garbage **gb, t_fd_list **lst);
-void			free_error_redir(t_garbage **gb, t_redir_list **lst);
 void			free_error_word_lst(t_garbage **gb, t_word_lst **lst);
 
 /* builtins */
@@ -224,10 +104,10 @@ void			b_exit(t_minish **minish);
 int				b_export(t_minish *msh, t_w_cmd_list *cmds);
 void			b_env(char **env);
 int				b_unset(t_minish *sh);
-void			find_builtin(t_minish *sh);
+int				find_builtin(t_minish *sh);
 
 /* exec */
-void			exec_all(t_minish *minish);
+int				exec_all(t_minish *msh);
 void			get_access(t_minish **sh);
 
 /* signal */
@@ -265,8 +145,6 @@ char			**ft_gbsplit(char const *s, char c, t_garbage **gb);
 char			*ft_gbsubstr(char const *s,
 					unsigned int start, size_t len, t_garbage **gb);
 int				is_concat(char *cmd);
-
-
 
 /* list_char function */
 t_char_lst		*char_lst_new(char c, t_garbage **gb);

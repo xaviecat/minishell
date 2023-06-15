@@ -20,7 +20,7 @@ t_minish	*create_minishell(char **envp, char **envp_sh)
 
 	sh = malloc(sizeof(t_minish));
 	if (!sh)
-		return (NULL); // ! ERROR
+		return (NULL);
 	sh->cmds = NULL;
 	sh->lst_c = NULL;
 	sh->lst_w = NULL;
@@ -55,7 +55,7 @@ void	cp_envp_to_envp_sh(char ***envp_sh, char **envp_in_minish)
 {
 	if (*envp_sh)
 		ft_tabfree(*envp_sh);
-	*envp_sh = ft_dbtab_dup(envp_in_minish);
+	*envp_sh = ft_tabdup(envp_in_minish);
 }
 
 void	minishell(char **envp)
@@ -117,7 +117,7 @@ void	minishell(char **envp)
 			continue ;
 		}
 		harmonize_spaces(&(minish->lst_c), &(minish->garbage));
-		print_lst_char(minish->lst_c);
+//		print_lst_char(minish->lst_c);
 		if (!(create_word_lst(&minish)))
 			free_and_exit_minish(minish, &envp_sh);
 		if ((!check_pipe_and_redir(&(minish->garbage), &(minish->lst_w))))
@@ -135,9 +135,11 @@ void	minishell(char **envp)
 		if (!ft_del_quotes(minish))
 			return (ft_free_all(&(minish->garbage)),
 				free_and_exit_minish(minish, &envp_sh), (void) 0);
-//		get_access(&minish);
-//		print_lst_cmd(minish->cmds);
-		exec_all(minish);
+		get_access(&minish);
+		print_lst_cmd(minish->cmds);
+		if (!exec_all(minish))
+			return (ft_free_all(&(minish->garbage)),
+				free_and_exit_minish(minish, &envp_sh), (void) 0);
 		cp_envp_to_envp_sh(&envp_sh, minish->envp);
 		ft_free_all(&minish->garbage);
 		free(minish);

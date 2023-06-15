@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:08:17 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/07 17:44:57 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/14 16:07:16 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,46 @@ char	*expand_vars(char *command, t_minish *msh)
 	return (command);
 }
 
+void	word_lst_add_in(t_word_lst **lst, t_word_lst *new)
+{
+	t_word_lst	*new_prev;
+	t_word_lst	*new_next;
+
+	new->type = param;
+	new_prev = *lst;
+	new_next = (*lst)->next;
+	new->next = new_next;
+	new->prev = new_prev;
+	if (new_prev)
+		new_prev->next = new;
+	if (new_next)
+		new_next->prev = new;
+}
+
+int	cut_space_expand(t_word_lst **lst ,t_garbage **gb)
+{
+	char		**splt;
+	int			i;
+	t_word_lst	*new;
+
+	splt = NULL;
+	splt = ft_gbsplit((*lst)->word, ' ', gb);
+	if (!splt && errno == ENOMEM)
+		return (0);
+	ft_free(gb, (*lst)->word);
+	(*lst)->word = ft_gbstrdup(splt[0], gb);
+	i = 1;
+	while (splt[i])
+	{
+		new = word_lst_new(splt[i], gb);
+		if (!new && errno == ENOMEM)
+			return (0);
+		word_lst_add_in(lst, new);
+		i++;
+	}
+	return (1);
+}
+
 /**
  * @brief expand parts of commands that needs to be expanded
  * @param w_lst command word list
@@ -146,6 +186,11 @@ int	expand_commands(t_minish *minish)
 			w_lst_cpy->word = expand_vars(w_lst_cpy->word, minish);
 		if (!w_lst_cpy->word)
 			return (0); // ? code d'erreur a ajouter
+		if (ft_strchr(w_lst_cpy->word, ' ') != NULL
+			&& ft_strchr(w_lst_cpy->word, '"') == NULL
+			&& ft_strchr(w_lst_cpy->word, '"') == NULL)
+			if (!cut_space_expand(&w_lst_cpy, &(minish->garbage)))
+				return (0);
 		w_lst_cpy = w_lst_cpy->next;
 	}
 	return (1);

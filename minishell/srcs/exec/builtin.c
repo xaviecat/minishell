@@ -3,16 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 16:44:20 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/13 16:52:56 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/14 14:59:27 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-void	find_builtin(t_minish *sh)
+/**
+ * @brief find which builtin as been called, and executed it
+ * @param sh
+ * @return 0 if an error occurred, 1 if it worked fine
+ */
+int	find_builtin(t_minish *sh)
 {
 	char	*cp_cmd;
 
@@ -28,7 +33,11 @@ void	find_builtin(t_minish *sh)
 	else if (ft_strncmp(cp_cmd, "export", 7) == 0)
 		b_export(sh, sh->cmds->cmd);
 	else if (ft_strncmp(cp_cmd, "unset", 6) == 0)
-		b_unset(sh);
+	{
+		if (!b_unset(sh))
+			return (0);
+	}
 	else if (ft_strncmp(cp_cmd, "env", 4) == 0)
 		b_env(sh->envp);
+	return (1);
 }
