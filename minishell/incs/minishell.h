@@ -66,6 +66,7 @@ typedef bool	(*t_unhandled_char)(t_char_lst *);
 /* global */
 void			free_and_exit_minish(t_msh *minish, char ***envp_sh);
 void			print_bannier(void);
+t_msh			*create_minishell(char **envp, char **envp_sh);
 /* parsing */
 int				parsing_char(t_msh **minish, char *line, char **envp_sh);
 int				parsing_word(t_msh **minish, char **envp_sh);
@@ -106,7 +107,7 @@ void			free_error_word_lst(t_garbage **gb, t_word_lst **lst);
 void			b_pwd(char **envp);
 void			b_cd(t_cmd_lst *cmd, t_msh *msh);
 void			b_echo(t_cmd_lst *content);
-void			b_exit(t_msh **msh);
+void			b_exit(t_msh *msh);
 int				b_export(t_msh *msh, t_cmd_lst *cmds);
 void			b_env(char **env);
 int				b_unset(t_msh *sh);
