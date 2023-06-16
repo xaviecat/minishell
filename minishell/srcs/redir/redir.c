@@ -12,7 +12,7 @@
 
 #include "../../incs/minishell.h"
 
-t_redir_list	*create_redir(t_garbage **gb, t_word_lst *lst)
+t_redir_lst	*create_redir(t_garbage **gb, t_word_lst *lst)
 {
 	if (lst->type == open_file)
 		return (new_redir(in, gb));
@@ -25,10 +25,10 @@ t_redir_list	*create_redir(t_garbage **gb, t_word_lst *lst)
 	return (NULL);
 }
 
-t_redir_list	*get_redir(t_word_lst **lst, t_garbage **gb)
+t_redir_lst	*get_redir(t_word_lst **lst, t_garbage **gb)
 {
-	t_redir_list	*redirs;
-	t_redir_list	*new;
+	t_redir_lst	*redirs;
+	t_redir_lst	*new;
 
 	redirs = NULL;
 	new = NULL;

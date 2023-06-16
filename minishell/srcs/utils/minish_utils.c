@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
-int	parsing_char(t_minish **minish, char *line, char **envp_sh)
+int	parsing_char(t_msh **minish, char *line, char **envp_sh)
 {
 	if (!(create_char_lst_with_c_inside(line, minish)))
 	{
@@ -26,7 +26,7 @@ int	parsing_char(t_minish **minish, char *line, char **envp_sh)
 	return (1);
 }
 
-int	parsing_word(t_minish **minish, char **envp_sh)
+int	parsing_word(t_msh **minish, char **envp_sh)
 {
 	if (!(create_word_lst(minish)))
 		free_and_exit_minish(*minish, &envp_sh);
@@ -41,7 +41,7 @@ int	parsing_word(t_minish **minish, char **envp_sh)
 	return (1);
 }
 
-int	parsing_cmd(t_minish **minish, char **envp_sh)
+int	parsing_cmd(t_msh **minish, char **envp_sh)
 {
 	if (!(sh_pars(minish)))
 		free_and_exit_minish(*minish, &envp_sh);
@@ -56,6 +56,6 @@ int	parsing_cmd(t_minish **minish, char **envp_sh)
 		free_and_exit_minish(*minish, &envp_sh);
 	}
 	get_access(minish);
-	print_lst_cmd((*minish)->cmds);
+	print_lst_cmd((*minish)->lst_n);
 	return (1);
 }

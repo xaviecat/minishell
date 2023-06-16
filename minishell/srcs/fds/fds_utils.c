@@ -12,7 +12,7 @@
 
 #include "../../incs/minishell.h"
 
-void	fds_add_back(t_fd_list **lst, t_fd_list *new)
+void	fds_add_back(t_fd_lst **lst, t_fd_lst *new)
 {
 	if (!lst)
 		return ;
@@ -23,11 +23,11 @@ void	fds_add_back(t_fd_list **lst, t_fd_list *new)
 	(*lst)->last_added = new;
 }
 
-t_fd_list	*new_fds(t_garbage **gb)
+t_fd_lst	*new_fds(t_garbage **gb)
 {
-	t_fd_list	*fds;
+	t_fd_lst	*fds;
 
-	fds = ft_malloc(gb, sizeof(t_fd_list), 1);
+	fds = ft_malloc(gb, sizeof(t_fd_lst), 1);
 	if (!fds)
 		return (NULL);
 	fds->in = STDIN_FILENO;
@@ -37,9 +37,9 @@ t_fd_list	*new_fds(t_garbage **gb)
 	return (fds);
 }
 
-void	free_error_fds(t_garbage **gb, t_fd_list **lst)
+void	free_error_fds(t_garbage **gb, t_fd_lst **lst)
 {
-	t_fd_list	*next;
+	t_fd_lst	*next;
 
 	next = NULL;
 	while (*lst)

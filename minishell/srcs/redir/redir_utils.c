@@ -12,11 +12,11 @@
 
 #include "../../incs/minishell.h"
 
-t_redir_list	*new_redir(t_type_redir type_red, t_garbage **gb)
+t_redir_lst	*new_redir(t_type_redir type_red, t_garbage **gb)
 {
-	t_redir_list	*red;
+	t_redir_lst	*red;
 
-	red = ft_malloc(gb, sizeof(t_redir_list), 1);
+	red = ft_malloc(gb, sizeof(t_redir_lst), 1);
 	if (!red)
 		return (NULL);
 	red->redir = type_red;
@@ -24,7 +24,7 @@ t_redir_list	*new_redir(t_type_redir type_red, t_garbage **gb)
 	return (red);
 }
 
-t_redir_list	*redir_last(t_redir_list *lst)
+t_redir_lst	*redir_last(t_redir_lst *lst)
 {
 	while (lst)
 	{
@@ -35,9 +35,9 @@ t_redir_list	*redir_last(t_redir_list *lst)
 	return (lst);
 }
 
-void	redir_add_back(t_redir_list **lst, t_redir_list *new)
+void	redir_add_back(t_redir_lst **lst, t_redir_lst *new)
 {
-	t_redir_list	*tmp;
+	t_redir_lst	*tmp;
 
 	if (!lst)
 		return ;
@@ -50,9 +50,9 @@ void	redir_add_back(t_redir_list **lst, t_redir_list *new)
 		*lst = new;
 }
 
-void	free_error_redir(t_garbage **gb, t_redir_list **lst)
+void	free_error_redir(t_garbage **gb, t_redir_lst **lst)
 {
-	t_redir_list	*next;
+	t_redir_lst	*next;
 
 	next = NULL;
 	while (*lst)

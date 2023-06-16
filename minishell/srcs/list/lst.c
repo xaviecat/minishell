@@ -3,24 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   lst.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:02:59 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/12 17:19:21 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/15 17:18:26 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-t_cmd_list	*lst_cmd_new(t_w_cmd_list *cmds, t_fd_list *fds,
-						t_redir_list *redir, t_garbage **gb)
+t_node_lst	*lst_cmd_new(t_cmd_lst *cmds, t_fd_lst *fds,
+						   t_redir_lst *redir, t_garbage **gb)
 {
-	t_cmd_list	*new;
+	t_node_lst	*new;
 
-	new = ft_malloc(gb, sizeof(t_cmd_list), 1);
+	new = ft_malloc(gb, sizeof(t_node_lst), 1);
 	if (!new)
 		return (NULL);
-	new->cmd = cmds;
+	new->lst_cmd = cmds;
 	new->builtin = false;
 	new->redirs = redir;
 	new->fds = fds;

@@ -64,37 +64,37 @@ extern int	g_exit_status;
 typedef bool	(*t_unhandled_char)(t_char_lst *);
 
 /* global */
-void			free_and_exit_minish(t_minish *minish, char ***envp_sh);
+void			free_and_exit_minish(t_msh *minish, char ***envp_sh);
 void			print_bannier(void);
 /* parsing */
-int				parsing_char(t_minish **minish, char *line, char **envp_sh);
-int				parsing_word(t_minish **minish, char **envp_sh);
-int				parsing_cmd(t_minish **minish, char **envp_sh);
+int				parsing_char(t_msh **minish, char *line, char **envp_sh);
+int				parsing_word(t_msh **minish, char **envp_sh);
+int				parsing_cmd(t_msh **minish, char **envp_sh);
 char			**parsing_argu(char *arg_term);
-t_minish		*parsing_command(char *cmd_line, t_minish *sh);
-int				expand_commands(t_minish *minish);
+t_msh			*parsing_command(char *cmd_line, t_msh *sh);
+int				expand_commands(t_msh *msh);
 char			*cut_whitespaces(char *str, t_garbage **gb);
 bool			process_quotes(t_char_lst *lst);
 void			harmonize_spaces(t_char_lst **lst, t_garbage **gb);
 int				redir_is_valid(t_word_lst **lst, t_garbage **gb);
 int				check_pipe_and_redir(t_garbage **gb, t_word_lst **lst);
-char			**reforme_d_tab_cmd(t_w_cmd_list **lst, char *cmd, t_garbage **gb);
-int				ft_del_quotes(t_minish *msh);
+char			**reforme_d_tab_cmd(t_cmd_lst **lst, char *cmd, t_garbage **gb);
+int				ft_del_quotes(t_msh *msh);
 
 /* redir */
-t_redir_list	*get_redir(t_word_lst **lst, t_garbage **gb);
-void			print_redir(t_redir_list *lst);
-void			free_error_redir(t_garbage **gb, t_redir_list **lst);
-void			redir_add_back(t_redir_list **lst, t_redir_list *new);
-t_redir_list	*redir_last(t_redir_list *lst);
-t_redir_list	*new_redir(t_type_redir type_red, t_garbage **gb);
+t_redir_lst		*get_redir(t_word_lst **lst, t_garbage **gb);
+void			print_redir(t_redir_lst *lst);
+void			free_error_redir(t_garbage **gb, t_redir_lst **lst);
+void			redir_add_back(t_redir_lst **lst, t_redir_lst *new);
+t_redir_lst		*redir_last(t_redir_lst *lst);
+t_redir_lst		*new_redir(t_type_redir type_red, t_garbage **gb);
 
 /* fds */
-t_fd_list		*create_fds_list(t_redir_list *redirs, t_garbage **gb);
-void			print_fd(t_fd_list *lst);
-void			free_error_fds(t_garbage **gb, t_fd_list **lst);
-t_fd_list		*new_fds(t_garbage **gb);
-void			fds_add_back(t_fd_list **lst, t_fd_list *new);
+t_fd_lst		*create_fds_list(t_redir_lst *redirs, t_garbage **gb);
+void			print_fd(t_fd_lst *lst);
+void			free_error_fds(t_garbage **gb, t_fd_lst **lst);
+t_fd_lst		*new_fds(t_garbage **gb);
+void			fds_add_back(t_fd_lst **lst, t_fd_lst *new);
 
 /* error */
 bool			is_forbidden_char(t_char_lst *lst);
@@ -104,17 +104,17 @@ void			free_error_word_lst(t_garbage **gb, t_word_lst **lst);
 
 /* builtins */
 void			b_pwd(char **envp);
-void			b_cd(t_w_cmd_list *cmd, t_minish *msh);
-void			b_echo(t_w_cmd_list *content);
-void			b_exit(t_minish **minish);
-int				b_export(t_minish *msh, t_w_cmd_list *cmds);
+void			b_cd(t_cmd_lst *cmd, t_msh *msh);
+void			b_echo(t_cmd_lst *content);
+void			b_exit(t_msh **msh);
+int				b_export(t_msh *msh, t_cmd_lst *cmds);
 void			b_env(char **env);
-int				b_unset(t_minish *sh);
-int				find_builtin(t_minish *sh);
+int				b_unset(t_msh *sh);
+int				find_builtin(t_msh *sh);
 
 /* exec */
-int				exec_all(t_minish *msh);
-void			get_access(t_minish **sh);
+int				exec_all(t_msh *msh);
+void			get_access(t_msh **sh);
 
 /* signal */
 void			signal_handler(int signum);
@@ -133,9 +133,9 @@ int				is_dollar_alone(char *env_var, char *cmd, size_t start);
 void			*ft_malloc(t_garbage **garbage, int the_size, int number);
 void			ft_free_all(t_garbage **lst);
 void			ft_free(t_garbage **lst, void *content);
-t_garbage_list	*new_garbage(void *content);
+t_garbage_lst	*new_garbage(void *content);
 t_garbage		*create_garbage_container(void);
-void			garbage_add_back(t_garbage_list **lst, t_garbage_list *new);
+void			garbage_add_back(t_garbage_lst **lst, t_garbage_lst *new);
 char			*ft_gbstrdup(const char *src, t_garbage **gb);
 void			get_first_garbage(t_garbage **lst);
 char			*ft_gbstrjoin(char const *s1, char const *s2, t_garbage **gb);
@@ -163,13 +163,13 @@ t_char_lst		*char_lst_new(char c, t_garbage **gb);
 t_char_lst		*char_lst_last(t_char_lst *lst);
 void			char_lst_add_back(t_char_lst **lst, t_char_lst *new);
 void			char_lst_add_front(t_char_lst **lst, t_char_lst *new);
-int				create_char_lst_with_c_inside(char *cmd_line, t_minish **sh);
+int				create_char_lst_with_c_inside(char *cmd_line, t_msh **sh);
 void			give_type_in_lst(t_char_lst **lst);
 void			print_lst_char(t_char_lst *lst);
 void			char_lst_delone(t_char_lst **lst, t_garbage **gb);
 
 /* lst_word function */
-int				create_word_lst(t_minish **sh);
+int				create_word_lst(t_msh **sh);
 void			print_lst_word(t_word_lst *lst);
 t_type_word		is_a_bultin(char *word);
 t_type_word		get_cat_of_word(char *word);
@@ -181,18 +181,18 @@ t_word_lst		*word_lst_add_back(t_word_lst *wlst, t_garbage **gb,
 					char *word);
 
 /* list command maybe not useful */
-t_cmd_list		*lst_cmd_new(t_w_cmd_list *cmds,
-					t_fd_list *fds, t_redir_list *redir, t_garbage **gb);
-void			lst_cmd_add_back(t_cmd_list **lst, t_cmd_list *new);
-void			print_lst_cmd(t_cmd_list *lst);
-void			lst_clear(t_cmd_list **lst);
-t_cmd_list		*create_lst_cmd(t_word_lst **old_lst,
-					t_fd_list *fds, t_redir_list *redirs);
-int				sh_pars(t_minish **minish);
+t_node_lst		*lst_cmd_new(t_cmd_lst *cmds,
+							   t_fd_lst *fds, t_redir_lst *redir, t_garbage **gb);
+void			lst_cmd_add_back(t_node_lst **lst, t_node_lst *new);
+void			print_lst_cmd(t_node_lst *lst);
+void			lst_clear(t_node_lst **lst);
+t_node_lst		*create_lst_cmd(t_word_lst **old_lst,
+								  t_fd_lst *fds, t_redir_lst *redirs);
+int				sh_pars(t_msh **msh);
 bool			builtin_or_command(char *cmd);
 
 /* lst_w_cmd function */
-t_w_cmd_list	*get_cmd(t_word_lst **old_lst, t_garbage **gb);
+t_cmd_lst	*get_cmd(t_word_lst **old_lst, t_garbage **gb);
 
 bool			is_amp_error(t_char_lst *lst);
 bool			is_pipe_error(t_char_lst *lst);
@@ -203,15 +203,18 @@ bool			is_exclamation_error(t_char_lst *lst);
 bool			is_colon_error(t_char_lst *lst);
 
 /* heredoc */
-int				heredoc_handling(t_minish *msh);
+int				heredoc_handling(t_msh *msh);
 t_word_lst		*display_heredoc(t_word_lst *heredoc,
-					t_minish *msh, t_redir_list *redirs);
-int				expand_heredoc(t_word_lst *heredoc, t_minish *msh);
+					t_msh *msh, t_redir_lst *redirs);
+int				expand_heredoc(t_word_lst *heredoc, t_msh *msh);
 
 
 /* A RANGER LOL */
-char			*expand_vars(char *command, t_minish *msh);
+char			*expand_vars(char *command, t_msh *msh);
 int				does_contain_quotes(char *str);
 
+
+/* excution */
+void			execution(t_msh *msh);
 
 #endif

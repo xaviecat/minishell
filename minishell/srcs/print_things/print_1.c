@@ -6,13 +6,13 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 16:54:48 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/15 10:44:04 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/15 17:18:26 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-void	print_fd(t_fd_list *lst)
+void	print_fd(t_fd_lst *lst)
 {
 	int			i;
 
@@ -28,7 +28,7 @@ void	print_fd(t_fd_list *lst)
 	}
 }
 
-void	print_redir(t_redir_list *lst)
+void	print_redir(t_redir_lst *lst)
 {
 	int				i;
 
@@ -92,33 +92,34 @@ void	print_tab(char **tabi)
 	}
 }
 
-void	print_lst_cmd(t_cmd_list *lst)
+void	print_lst_cmd(t_node_lst *lst)
 {
-	t_w_cmd_list	*first_w;
+	t_cmd_lst		*first_w;
 	int				i;
 
 	i = 0;
 	printf(CYAN"lst_cmd:\n");
 	while (lst)
 	{
-		first_w = lst->cmd;
+		first_w = lst->lst_cmd;
 		printf(UNDERLINE"node : %d\n"RESET, i);
 		printf(CYAN"builtin : %d\n", lst->builtin);
 		printf("cmd :                          | params :\n");
-		if (lst->cmd)
+		if (lst->lst_cmd)
 		{
-			printf("%-30s | ", lst->cmd->cmd);
-			lst->cmd = lst->cmd->next;
+			printf("%-30s | ", lst->lst_cmd->cmd);
+			lst->lst_cmd = lst->lst_cmd->next;
 		}
 		else
 			printf("(null)                         |");
-		while (lst->cmd)
+		while (lst->lst_cmd)
 		{
-			printf("[%s] ", lst->cmd->cmd);
-			lst->cmd = lst->cmd->next;
+			printf("[%s] ", lst->lst_cmd->cmd);
+			lst->lst_cmd = lst->lst_cmd->next;
 		}
-		printf(ITALIC BGRED LCYAN"\ncmdpath : %s"RESET, lst->cmdpath);
-		lst->cmd = first_w;
+		if (lst->cmdpath)
+			printf("\ncmdpath : %s", lst->cmdpath);
+		lst->lst_cmd = first_w;
 		printf(CYAN"\n");
 		print_fd(lst->fds);
 		print_redir(lst->redirs);
