@@ -23,7 +23,7 @@ int	find_builtin(t_msh *sh)
 
 	cp_cmd = ft_gbstrdup(sh->lst_n->lst_cmd->cmd, &(sh->garbage));
 	if (ft_strncmp(cp_cmd, "exit", 5) == 0)
-		b_exit(&sh);
+		b_exit(sh);
 	else if (ft_strncmp(cp_cmd, "echo", 5) == 0)
 		b_echo(sh->lst_n->lst_cmd);
 	else if (ft_strncmp(cp_cmd, "cd", 3) == 0)

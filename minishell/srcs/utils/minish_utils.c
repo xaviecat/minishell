@@ -59,3 +59,29 @@ int	parsing_cmd(t_msh **minish, char **envp_sh)
 	print_lst_cmd((*minish)->lst_n);
 	return (1);
 }
+
+t_msh	*create_minishell(char **envp, char **envp_sh)
+{
+	t_msh		*sh;
+
+	sh = malloc(sizeof(t_msh));
+	if (!sh)
+		return (NULL);
+	sh->lst_n = NULL;
+	sh->lst_c = NULL;
+	sh->lst_w = NULL;
+	sh->garbage = NULL;
+	sh->garbage = create_garbage_container();
+	(void)envp;
+	(void)envp_sh;
+	if (!sh->garbage)
+	{
+		free(sh);
+		return (NULL);
+	}
+	if (envp_sh)
+		sh->envp = ft_gbtabdup(envp_sh, &(sh->garbage));
+	else
+		sh->envp = ft_gbtabdup(envp, &(sh->garbage));
+	return (sh);
+}
