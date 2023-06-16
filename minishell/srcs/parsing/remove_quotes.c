@@ -70,8 +70,6 @@ int	delete_quotes(t_cmd_lst *cmd, t_garbage **gb)
 	size_t	new_cmd_len;
 
 	new_cmd_len = get_newcmd_len(cmd->cmd) + 1;
-	if (new_cmd_len == 10000)
-		return (0);
 	new_cmd = ft_malloc(gb, sizeof(char), new_cmd_len);
 	if (!new_cmd)
 		return (0);

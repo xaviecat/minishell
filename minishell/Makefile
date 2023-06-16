@@ -49,8 +49,10 @@ SRCS			:=	minishell.c\
 					\
 					redir/redir.c\
 					redir/redir_utils.c\
+					redir/heredoc.c\
 					\
 					signal/signal.c\
+					signal/signal2.c\
 					\
 					utils/expand_utils.c\
 					utils/export_utils.c\
@@ -58,6 +60,7 @@ SRCS			:=	minishell.c\
 					utils/ft_tabfree.c\
 					utils/reforme_d_tab_cmd.c\
 					utils/utils.c\
+					utils/heredoc_utils.c\
 
 SRCS_D			:=	srcs/
 

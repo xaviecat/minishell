@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:15:43 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/15 17:20:35 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/15 15:23:23 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ typedef struct s_node_lst
 	bool				builtin;
 	pid_t				pid;
 	struct s_redir_lst	*redirs;
+	struct s_word_lst	*heredoc;
 	struct s_fd_lst		*fds;
 	struct s_node_lst	*next;
 	struct s_node_lst	*previous;
