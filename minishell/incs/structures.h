@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:15:43 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/16 14:30:18 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/16 14:31:36 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,8 @@ typedef struct s_node_lst
 	pid_t				pid;
 	struct s_redir_lst	*redirs;
 	struct s_word_lst	*heredoc;
+	pid_t				hdpid;
+	int 				pipehd[2];
 	struct s_fd_lst		*fds;
 	struct s_node_lst	*next;
 	struct s_node_lst	*previous;
