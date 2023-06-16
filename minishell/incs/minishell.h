@@ -126,6 +126,9 @@ void			signal_exec(int signum);
 void			signal_hub_term(void);
 void			signal_hub_heredoc(void);
 void			signal_hub_exec(void);
+void			signal_hub_ign(void);
+void	signal_sigquit(int signum);
+void	signal_sigint(int signum);
 
 /* utils */
 char			*ft_cut_var(char *str, t_garbage **gb);

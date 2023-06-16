@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 12:30:33 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/15 16:15:09 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/16 12:26:55 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	signal_hub_heredoc(void)
 	sa.sa_flags = SA_RESTART;
 	sa.sa_handler = &signal_heredoc;
 	sigaction(SIGINT, &sa, NULL);
-	sa.sa_handler = SIG_IGN;
+	//sa.sa_handler = SIG_IGN;
 	sigaction(SIGQUIT, &sa, NULL);
 }
 
@@ -59,8 +59,19 @@ void	signal_hub_exec(void)
 
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART;
-	sa.sa_handler = &signal_exec;
+	sa.sa_handler = &signal_sigint;
 	sigaction(SIGINT, &sa, NULL);
-	sigaction(SIGTSTP, &sa, NULL);
+	sa.sa_handler = &signal_sigquit;
+	sigaction(SIGQUIT, &sa, NULL);
+}
+
+void	signal_hub_ign(void)
+{
+	struct sigaction	sa;
+
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = SA_RESTART;
+	sa.sa_handler = SIG_IGN;
+	sigaction(SIGINT, &sa, NULL);
 	sigaction(SIGQUIT, &sa, NULL);
 }

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 19:25:52 by syluiset          #+#    #+#             */
 /*   Updated: 2023/06/16 14:23:22 by xcharra          ###   ########.fr       */
@@ -42,10 +42,13 @@ int	exec_all(t_msh *msh)
 void	execution(t_msh *msh)
 {
 	t_node_lst	*first;
+	int			status_pid;
 
+	status_pid = 0;
 	msh->prev_pipe[0] = -1;
 	msh->prev_pipe[1] = -1;
 	first = msh->lst_n;
+	//signal_hub_ign();
 	while (msh->lst_n)
 	{
 		if (pipe(msh->curr_pipe) < 0)
@@ -75,7 +78,6 @@ void	execution(t_msh *msh)
 					return ; //! ERROR
 				close(msh->prev_pipe[0]);
 				close(msh->prev_pipe[1]);
-
 			}
 			else if (msh->lst_n->next)
 			{
@@ -84,6 +86,7 @@ void	execution(t_msh *msh)
 				close(msh->curr_pipe[0]);
 				close(msh->curr_pipe[1]);
 			}
+			signal_hub_exec();
 			execve(msh->lst_n->cmdpath, msh->lst_n->cmdtab, msh->envp);
 		}
 		else //? Parent
@@ -120,8 +123,24 @@ void	execution(t_msh *msh)
 		close(msh->prev_pipe[1]);
 	}
 	msh->lst_n = first;
-	while (msh->lst_n && waitpid(msh->lst_n->pid, NULL, 0) > 0)
-		if (msh->lst_n->next)
-			msh->lst_n = msh->lst_n->next;
+	while (msh->lst_n)
+	{
+	//	if (msh->lst_n->next)
+		waitpid(msh->lst_n->pid, &status_pid, 0);
+		if (WIFSIGNALED(status_pid))
+		{
+//			if (WTERMSIG(status_pid) == SIGINT)
+//				signal_sigint(SIGINT);
+//			else if (WTERMSIG(SIGQUIT))
+//				signal_sigquit(SIGQUIT);
+			signal_exec(WTERMSIG(status_pid));
+		}
+		else
+			g_exit_status = WEXITSTATUS(status_pid);
+		//if (g_exit_status == EXIT_FAILURE)
+			//return ; //TOUT FREE AND EXIT avec code failure
+		msh->lst_n = msh->lst_n->next;
+	}
+	signal_hub_exec();
 	msh->lst_n = first;
 }
