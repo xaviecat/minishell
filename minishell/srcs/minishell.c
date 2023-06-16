@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/15 15:37:12 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/15 17:21:51 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,18 +64,8 @@ void	minishell(char **envp)
 	t_msh		*minish;
 	char		**envp_sh;
 
-	/* TEST SIGNAL */
-
 	envp_sh = NULL;
-	printf(LBLUE TRISHBANNER0"\n");
-	printf(TRISHBANNER1"\n");
-	printf(TRISHBANNER2"\n");
-	printf(TRISHBANNER3"\n");
-	printf(TRISHBANNER4"\n");
-	printf(TRISHBANNER5"\n");
-	printf(TRISHBANNER6"\n");
-	printf(TRISHBANNER7"\n");
-	printf(BOLD TRISHBANNER8"\n" RESET);
+	print_bannier();
 	signal_hub_term();
 	while (1)
 	{
@@ -85,7 +75,7 @@ void	minishell(char **envp)
 			if (line)
 			{
 				free(line);
-				continue;
+				continue ;
 			}
 			else
 			{
@@ -97,43 +87,17 @@ void	minishell(char **envp)
 			add_history(line);
 		minish = create_minishell(envp, envp_sh);
 		if (!minish)
-			return ; // ! ERROR free line
-		if (!(create_char_lst_with_c_inside(line, &minish)))
-		{
-			free(line);
-			free_and_exit_minish(minish, &envp_sh);
-		}
-		give_type_in_lst(&minish->lst_c);
-		if (unhandled_char(minish->lst_c))
-		{
-			ft_free_all(&minish->garbage);
+			return (free(line));
+		if (!parsing_char(&minish, line, envp_sh))
 			continue ;
-		}
-		harmonize_spaces(&(minish->lst_c), &(minish->garbage));
-//		print_lst_char(minish->lst_c);
-		if (!(create_word_lst(&minish)))
-			free_and_exit_minish(minish, &envp_sh);
-		if ((!check_pipe_and_redir(&(minish->garbage), &(minish->lst_w))))
+		if (!parsing_word(&minish, envp_sh))
 			continue ;
-		//! gerer quand chevron avec epace
-		if (!expand_commands(minish))
-			return (ft_free_all(&(minish->garbage)),
-				free_and_exit_minish(minish, &envp_sh), (void) 0);
-		print_lst_word(minish->lst_w);
-		if (!(sh_pars(&minish)))
-			free_and_exit_minish(minish, &envp_sh);
-		if (!heredoc_handling(minish))
-			return (ft_free_all(&(minish->garbage)),
-				free_and_exit_minish(minish, &envp_sh), (void) 0);
-		if (!ft_del_quotes(minish))
-			return (ft_free_all(&(minish->garbage)),
-				free_and_exit_minish(minish, &envp_sh), (void) 0);
-		get_access(&minish);
-		print_lst_cmd(minish->lst_n);
+		parsing_cmd(&minish, envp_sh);
 		if (!exec_all(minish))
-			return (ft_free_all(&(minish->garbage)),
-				free_and_exit_minish(minish, &envp_sh), (void) 0);
-		execution(minish);
+		{
+			ft_free_all(&(minish->garbage)),
+			free_and_exit_minish(minish, &envp_sh);
+		}
 		cp_envp_to_envp_sh(&envp_sh, minish->envp);
 		ft_free_all(&minish->garbage);
 		free(minish);
