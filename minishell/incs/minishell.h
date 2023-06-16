@@ -63,7 +63,13 @@ extern int	g_exit_status;
 
 typedef bool	(*t_unhandled_char)(t_char_lst *);
 
+/* global */
+void			free_and_exit_minish(t_minish *minish, char ***envp_sh);
+void			print_bannier(void);
 /* parsing */
+int				parsing_char(t_minish **minish, char *line, char **envp_sh);
+int				parsing_word(t_minish **minish, char **envp_sh);
+int				parsing_cmd(t_minish **minish, char **envp_sh);
 char			**parsing_argu(char *arg_term);
 t_minish		*parsing_command(char *cmd_line, t_minish *sh);
 int				expand_commands(t_minish *minish);

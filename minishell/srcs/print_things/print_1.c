@@ -127,3 +127,16 @@ void	print_lst_cmd(t_cmd_list *lst)
 	}
 	printf(RESET"\n");
 }
+
+void	print_bannier(void)
+{
+	printf(LBLUE TRISHBANNER0"\n");
+	printf(TRISHBANNER1"\n");
+	printf(TRISHBANNER2"\n");
+	printf(TRISHBANNER3"\n");
+	printf(TRISHBANNER4"\n");
+	printf(TRISHBANNER5"\n");
+	printf(TRISHBANNER6"\n");
+	printf(TRISHBANNER7"\n");
+	printf(BOLD TRISHBANNER8"\n" RESET);
+}
