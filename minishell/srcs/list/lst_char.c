@@ -92,7 +92,7 @@ void	free_error_char_lst(t_garbage **gb, t_char_lst **lst_c)
  * @param cmd_line
  * @return the char list create
  */
-int	create_char_lst_with_c_inside(char *cmd_line, t_minish **sh)
+int	create_char_lst_with_c_inside(char *cmd_line, t_msh **sh)
 {
 	int			i;
 	t_char_lst	*new;

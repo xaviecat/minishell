@@ -26,7 +26,7 @@ char	*get_home_from_env(char **envp, t_garbage **gb)
 	return (NULL);
 }
 
-void	b_cd(t_w_cmd_list *cmd, t_minish *msh)
+void	b_cd(t_cmd_lst *cmd, t_msh *msh)
 {
 	char	*path;
 

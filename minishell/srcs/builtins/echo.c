@@ -12,9 +12,9 @@
 
 #include "../../incs/minishell.h"
 
-bool	param_n(t_w_cmd_list **lst)
+bool	param_n(t_cmd_lst **lst)
 {
-	t_w_cmd_list	*first;
+	t_cmd_lst	*first;
 	int				i;
 	bool			ret;
 
@@ -40,7 +40,7 @@ bool	param_n(t_w_cmd_list **lst)
 	return (ret);
 }
 
-void	b_echo(t_w_cmd_list *content)
+void	b_echo(t_cmd_lst *content)
 {
 	bool	new_line;
 

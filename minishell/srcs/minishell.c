@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/15 14:58:01 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/15 17:16:07 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 int g_exit_status = 0;
 
-t_minish	*create_minishell(char **envp, char **envp_sh)
+t_msh	*create_minishell(char **envp, char **envp_sh)
 {
-	t_minish		*sh;
+	t_msh		*sh;
 
-	sh = malloc(sizeof(t_minish));
+	sh = malloc(sizeof(t_msh));
 	if (!sh)
 		return (NULL);
-	sh->cmds = NULL;
+	sh->lst_n = NULL;
 	sh->lst_c = NULL;
 	sh->lst_w = NULL;
 	sh->garbage = NULL;
@@ -40,7 +40,7 @@ t_minish	*create_minishell(char **envp, char **envp_sh)
 	return (sh);
 }
 
-void	free_and_exit_minish(t_minish *minish, char ***envp_sh)
+void	free_and_exit_minish(t_msh *minish, char ***envp_sh)
 {
 	if (*envp_sh)
 		ft_gbtabfree(*envp_sh, &(minish->garbage));
@@ -61,7 +61,7 @@ void	cp_envp_to_envp_sh(char ***envp_sh, char **envp_in_minish)
 void	minishell(char **envp)
 {
 	char		*line;
-	t_minish	*minish;
+	t_msh	*minish;
 	char		**envp_sh;
 
 	/* TEST SIGNAL */
@@ -117,7 +117,7 @@ void	minishell(char **envp)
 			continue ;
 		}
 		harmonize_spaces(&(minish->lst_c), &(minish->garbage));
-//		print_lst_char(minish->lst_c);
+//		print_lst_char(minish->lst_cmd);
 		if (!(create_word_lst(&minish)))
 			free_and_exit_minish(minish, &envp_sh);
 		if ((!check_pipe_and_redir(&(minish->garbage), &(minish->lst_w))))
@@ -133,7 +133,7 @@ void	minishell(char **envp)
 			return (ft_free_all(&(minish->garbage)),
 				free_and_exit_minish(minish, &envp_sh), (void) 0);
 		get_access(&minish);
-		print_lst_cmd(minish->cmds);
+		print_lst_cmd(minish->lst_n);
 		if (!exec_all(minish))
 			return (ft_free_all(&(minish->garbage)),
 				free_and_exit_minish(minish, &envp_sh), (void) 0);

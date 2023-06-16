@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 13:43:43 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/12 18:19:29 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/15 17:16:07 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,14 @@ int	check_var_exist_and_valid(char *var, char **tabi)
 	return (0);
 }
 
-int	b_unset(t_minish *sh)
+int	b_unset(t_msh *sh)
 {
 	char	**old_envp;
 	char	*name_var;
 
-	if (!sh->cmds->cmd->next->cmd)
+	if (!sh->lst_n->lst_cmd->next->cmd)
 		return (0);
-	name_var = ft_gbstrdup(sh->cmds->cmd->next->cmd, &(sh->garbage));
+	name_var = ft_gbstrdup(sh->lst_n->lst_cmd->next->cmd, &(sh->garbage));
 	if (!check_var_exist_and_valid(name_var, sh->envp))
 		return (0);
 	old_envp = ft_gbtabdup(sh->envp, &(sh->garbage));

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 17:01:30 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/12 13:35:21 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/15 17:02:14 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	*str_cpy_to_x(char *src, char *dst, char x)
 /**
  * @brief find out if the env var is a dollar surrounded by no quotes
  * @param env_var the environment variable
- * @param cmd the total cmd
+ * @param cmd the total lst_cmd
  * @param start the start index ($pos)
  * @return 1 if the $ sybol is alone \n 0 if not
  */

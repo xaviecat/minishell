@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:08:17 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/14 16:07:16 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/15 17:16:07 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ static char	*expand_env_var(t_garbage **gb, char **envp, char *var)
  * @param envp
  * @return the content of the environnement variable
  */
-static char	*set_expanded_env_var(char *env_var, t_minish *msh,
-									int double_not_closed)
+static char	*set_expanded_env_var(char *env_var, t_msh *msh,
+                                     int double_not_closed)
 {
 	char	*expanded_env_var;
 
@@ -70,16 +70,16 @@ static char	*set_expanded_env_var(char *env_var, t_minish *msh,
 }
 
 /**
- * @brief modify a cmd from start to whitespace by replacing
+ * @brief modify a lst_cmd from start to whitespace by replacing
  * env vars by their content and reallocating it
- * @param cmd the cmd that you want to expand
+ * @param cmd the lst_cmd that you want to expand
  * @param start the index of the $ symbol
  * @param envp
  * @param double_not_closed 1 if a double quote is opened, \n 0 if not
- * @return the modified cmd
+ * @return the modified lst_cmd
  */
-static char	*modify_command(char *cmd, t_minish *msh,
-							size_t start, int double_not_closed)
+static char	*modify_command(char *cmd, t_msh *msh,
+                               size_t start, int double_not_closed)
 {
 	char	*env_var;
 	char	*exp_env_v;
@@ -104,7 +104,7 @@ static char	*modify_command(char *cmd, t_minish *msh,
  * @param envp
  * @return the modified string
  */
-static char	*expand_vars(char *command, t_minish *msh)
+static char	*expand_vars(char *command, t_msh *msh)
 {
 	size_t	i;
 	int		double_not_closed;
@@ -175,7 +175,7 @@ int	cut_space_expand(t_word_lst **lst ,t_garbage **gb)
  * @param w_lst command word list
  * @param envp
  */
-int	expand_commands(t_minish *minish)
+int	expand_commands(t_msh *minish)
 {
 	t_word_lst	*w_lst_cpy;
 

@@ -46,7 +46,7 @@ int	get_number_c_of_word(t_char_lst **lst_c)
  * @param lst_c
  * @return the word created
  */
-char	*reforme_word(t_minish **sh, t_garbage **gb)
+char	*reforme_word(t_msh **sh, t_garbage **gb)
 {
 	char		*word;
 	int			nb_c_word;
@@ -90,7 +90,7 @@ void	free_error_word_lst(t_garbage **gb, t_word_lst **lst)
  * @param old_lst
  * @return the word list created
  */
-int	create_word_lst(t_minish **sh)
+int	create_word_lst(t_msh **sh)
 {
 	t_word_lst	*new;
 	char		*word;

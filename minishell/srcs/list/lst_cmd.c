@@ -12,12 +12,12 @@
 
 #include "../../incs/minishell.h"
 
-t_w_cmd_list	*new_w_cmd_list(char *content, bool s_quote, bool d_quote,
-								t_garbage **gb)
+t_cmd_lst	*new_w_cmd_list(char *content, bool s_quote, bool d_quote,
+							 t_garbage **gb)
 {
-	t_w_cmd_list	*new;
+	t_cmd_lst	*new;
 
-	new = ft_malloc(gb, sizeof(t_w_cmd_list), 1);
+	new = ft_malloc(gb, sizeof(t_cmd_lst), 1);
 	if (!new)
 		return (NULL);
 	new->cmd = ft_gbstrtrim(content, " ", gb);
@@ -29,7 +29,7 @@ t_w_cmd_list	*new_w_cmd_list(char *content, bool s_quote, bool d_quote,
 	return (new);
 }
 
-t_w_cmd_list	*w_cmd_lst_last(t_w_cmd_list *lst)
+t_cmd_lst	*w_cmd_lst_last(t_cmd_lst *lst)
 {
 	while (lst)
 	{
@@ -40,10 +40,10 @@ t_w_cmd_list	*w_cmd_lst_last(t_w_cmd_list *lst)
 	return (lst);
 }
 
-t_w_cmd_list	*get_cmd(t_word_lst **old_lst, t_garbage **gb)
+t_cmd_lst	*get_cmd(t_word_lst **old_lst, t_garbage **gb)
 {
-	t_w_cmd_list	*cmds;
-	t_w_cmd_list	*new;
+	t_cmd_lst	*cmds;
+	t_cmd_lst	*new;
 	bool			two_quote;
 	bool			one_quote;
 

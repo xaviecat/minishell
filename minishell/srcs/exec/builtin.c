@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 16:44:20 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/14 14:59:27 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/15 17:16:07 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,21 @@
  * @param sh
  * @return 0 if an error occurred, 1 if it worked fine
  */
-int	find_builtin(t_minish *sh)
+int	find_builtin(t_msh *sh)
 {
 	char	*cp_cmd;
 
-	cp_cmd = ft_gbstrdup(sh->cmds->cmd->cmd, &(sh->garbage));
+	cp_cmd = ft_gbstrdup(sh->lst_n->lst_cmd->cmd, &(sh->garbage));
 	if (ft_strncmp(cp_cmd, "exit", 5) == 0)
 		b_exit(&sh);
 	else if (ft_strncmp(cp_cmd, "echo", 5) == 0)
-		b_echo(sh->cmds->cmd);
+		b_echo(sh->lst_n->lst_cmd);
 	else if (ft_strncmp(cp_cmd, "cd", 3) == 0)
-		b_cd(sh->cmds->cmd, sh);
+		b_cd(sh->lst_n->lst_cmd, sh);
 	else if (ft_strncmp(cp_cmd, "pwd", 4) == 0)
 		b_pwd(sh->envp);
 	else if (ft_strncmp(cp_cmd, "export", 7) == 0)
-		b_export(sh, sh->cmds->cmd);
+		b_export(sh, sh->lst_n->lst_cmd);
 	else if (ft_strncmp(cp_cmd, "unset", 6) == 0)
 	{
 		if (!b_unset(sh))
