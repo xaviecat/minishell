@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-char	*get_pwd_from_envp(char **envp)
+static char	*get_pwd_from_envp(char **envp)
 {
 	int	i;
 
