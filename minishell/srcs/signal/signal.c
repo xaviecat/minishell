@@ -59,9 +59,8 @@ void	signal_hub_exec(void)
 
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART;
-	sa.sa_handler = &signal_sigint;
+	sa.sa_handler = &signal_exec;
 	sigaction(SIGINT, &sa, NULL);
-	sa.sa_handler = &signal_sigquit;
 	sigaction(SIGQUIT, &sa, NULL);
 }
 

@@ -60,7 +60,7 @@ void	minishell(char **envp)
 			}
 			else
 			{
-				printf("exit");
+				printf("exit\n");
 				break ;
 			}
 		}

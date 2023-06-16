@@ -48,7 +48,7 @@ void	execution(t_msh *msh)
 	msh->prev_pipe[0] = -1;
 	msh->prev_pipe[1] = -1;
 	first = msh->lst_n;
-	//signal_hub_ign();
+	signal_hub_ign();
 	while (msh->lst_n)
 	{
 		if (pipe(msh->curr_pipe) < 0)
