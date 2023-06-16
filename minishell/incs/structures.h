@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:15:43 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/15 15:23:23 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/16 14:30:18 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,18 @@
 # include "minishell.h"
 
 /* enum */
+typedef enum e_builtin
+{
+	e_none,
+	e_cd,
+	e_echo,
+	e_env,
+	e_exit,
+	e_export,
+	e_pwd,
+	e_unset,
+}	t_builtin;
+
 typedef enum e_position
 {
 	prev,
@@ -105,7 +117,7 @@ typedef struct s_node_lst
 	t_cmd_lst			*lst_cmd;
 	char				*cmdpath;
 	char				**cmdtab;
-	bool				builtin;
+	t_builtin			builtin;
 	pid_t				pid;
 	struct s_redir_lst	*redirs;
 	struct s_word_lst	*heredoc;

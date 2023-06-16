@@ -15,8 +15,8 @@
 static bool	param_n(t_cmd_lst **lst)
 {
 	t_cmd_lst	*first;
-	int				i;
-	bool			ret;
+	int			i;
+	bool		ret;
 
 	ret = false;
 	first = *lst;
