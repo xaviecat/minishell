@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 19:25:52 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/16 14:23:22 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/16 17:36:44 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,15 @@ int	exec_all(t_msh *msh)
 	while (msh->lst_n)
 	{
 		if (msh->lst_n->builtin > e_none)
-			find_builtin(msh);
+		{
+			if (!find_builtin(msh))
+				return (0);
+		}
 		else
 		{
 			if (msh->lst_n->lst_cmd)
 				msh->lst_n->cmdtab = reforme_d_tab_cmd(&(msh->lst_n->lst_cmd),
-								msh->lst_n->lst_cmd->cmd, &(msh->garbage));
+						msh->lst_n->lst_cmd->cmd, &(msh->garbage));
 		}
 		msh->lst_n = msh->lst_n->next;
 	}
@@ -87,6 +90,8 @@ void	execution(t_msh *msh)
 				close(msh->curr_pipe[1]);
 			}
 			signal_hub_exec();
+			//signal_hub_default();
+			//signal(SIGQUIT, signal_sigquit);
 			execve(msh->lst_n->cmdpath, msh->lst_n->cmdtab, msh->envp);
 		}
 		else //? Parent
@@ -127,6 +132,7 @@ void	execution(t_msh *msh)
 	{
 	//	if (msh->lst_n->next)
 		waitpid(msh->lst_n->pid, &status_pid, 0);
+		printf("%d", WIFSIGNALED(status_pid) == 1);
 		if (WIFSIGNALED(status_pid))
 		{
 //			if (WTERMSIG(status_pid) == SIGINT)

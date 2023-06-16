@@ -105,12 +105,12 @@ bool			is_bad_redir(t_char_lst *lst);
 void			free_error_word_lst(t_garbage **gb, t_word_lst **lst);
 
 /* builtins */
-void			b_pwd(char **envp);
-void			b_cd(t_cmd_lst *cmd, t_msh *msh);
-void			b_echo(t_cmd_lst *content);
+int				b_pwd(t_msh *msh);
+int				b_cd(t_msh *msh);
+int				b_echo(t_msh *msh);
 void			b_exit(t_msh *msh);
 int				b_export(t_msh *msh, t_cmd_lst *cmds);
-void			b_env(char **env);
+int				b_env(t_msh *msh);
 int				b_unset(t_msh *sh);
 int				find_builtin(t_msh *sh);
 
@@ -129,6 +129,7 @@ void			signal_hub_exec(void);
 void			signal_hub_ign(void);
 void	signal_sigquit(int signum);
 void	signal_sigint(int signum);
+void	signal_hub_default(void);
 
 /* utils */
 char			*ft_cut_var(char *str, t_garbage **gb);
