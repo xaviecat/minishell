@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 19:25:52 by syluiset          #+#    #+#             */
 /*   Updated: 2023/06/16 17:36:44 by syluiset         ###   ########.fr       */
@@ -61,7 +61,36 @@ void	execution(t_msh *msh)
 			return (perror("fork error")); //! ERROR A CHECK
 		else if (msh->lst_n->pid == 0) //? Child
 		{
-			if (msh->lst_n->fds && msh->lst_n->fds->in > 0)
+			if (msh->lst_n->heredoc)
+			{
+				if (pipe(msh->lst_n->pipehd) < 0)
+					return ; //! ERROR
+				ft_fdprintf(2, "pipehd[0] = %d, pipehd[1] = %d\n", msh->lst_n->pipehd[0], msh->lst_n->pipehd[1]);
+				msh->lst_n->hdpid = fork();
+				if (msh->lst_n->hdpid < 0)
+					return ; //! ERROR
+				else if (msh->lst_n->hdpid == 0) //? Child heredoc
+				{
+					while (msh->lst_n->heredoc->word)
+					{
+						ft_fdprintf(msh->lst_n->pipehd[1], "%s\n",
+							msh->lst_n->heredoc->word);
+						msh->lst_n->heredoc = msh->lst_n->heredoc->next;
+					}
+					close(msh->lst_n->pipehd[0]);
+					close(msh->lst_n->pipehd[1]);
+					exit(EXIT_SUCCESS);
+				}
+				else //? Parents heredoc
+				{
+					ft_fdprintf(2, "pipehd[0] = %d, pipehd[1] = %d\n", msh->lst_n->pipehd[0], msh->lst_n->pipehd[1]);
+					if (dup2(msh->lst_n->pipehd[0], STDIN_FILENO) < 0)
+						return ; //! ERROR
+					close(msh->lst_n->pipehd[0]);
+					close(msh->lst_n->pipehd[1]);
+				}
+			}
+			else if (msh->lst_n->fds && msh->lst_n->fds->in > 0)
 			{
 				if (dup2(msh->lst_n->fds->in, STDIN_FILENO) < 0)
 					return ; //! ERROR
@@ -90,8 +119,6 @@ void	execution(t_msh *msh)
 				close(msh->curr_pipe[1]);
 			}
 			signal_hub_exec();
-			//signal_hub_default();
-			//signal(SIGQUIT, signal_sigquit);
 			execve(msh->lst_n->cmdpath, msh->lst_n->cmdtab, msh->envp);
 		}
 		else //? Parent
@@ -132,7 +159,6 @@ void	execution(t_msh *msh)
 	{
 	//	if (msh->lst_n->next)
 		waitpid(msh->lst_n->pid, &status_pid, 0);
-		printf("%d", WIFSIGNALED(status_pid) == 1);
 		if (WIFSIGNALED(status_pid))
 		{
 //			if (WTERMSIG(status_pid) == SIGINT)
