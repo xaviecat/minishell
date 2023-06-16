@@ -90,7 +90,7 @@ t_word_lst	*run_heredoc(char *delimiter, t_garbage **gb)
 	return (heredoc);
 }
 
-int	expand_heredoc(t_word_lst *heredoc, t_minish *msh)
+int	expand_heredoc(t_word_lst *heredoc, t_msh *msh)
 {
 	t_word_lst	*heredoc_cpy;
 
@@ -106,7 +106,7 @@ int	expand_heredoc(t_word_lst *heredoc, t_minish *msh)
 }
 
 t_word_lst	*display_heredoc(t_word_lst *heredoc,
-							t_minish *msh, t_redir_list *redirs)
+							t_msh *msh, t_redir_lst *redirs)
 {
 	destroy_heredoc(heredoc, &(msh->garbage));
 	heredoc = run_heredoc(redirs->filename, &(msh->garbage));

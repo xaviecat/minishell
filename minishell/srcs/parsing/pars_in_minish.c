@@ -69,30 +69,30 @@ t_node_lst	*create_command(t_msh **sh)
  * @param old_lst
  * @param minish
  */
-int	sh_pars(t_msh **sh)
+int	sh_pars(t_msh **msh)
 {
 	t_node_lst		*new;
 
 	new = NULL;
-	if (!(*sh)->lst_w)
+	if (!(*msh)->lst_w)
 		return (0);
-	while ((*sh)->lst_w)
+	while ((*msh)->lst_w)
 	{
-		new = create_command(sh);
+		new = create_command(msh);
 		if (!new && errno == ENOMEM)
-			return (free_error_cmd(&((*sh)->garbage), &((*sh)->lst_n)), 0);
+			return (free_error_cmd(&((*msh)->garbage), &((*msh)->lst_n)), 0);
 		if (new->lst_cmd)
 			new->builtin = builtin_or_command(new->lst_cmd->cmd);
-		if ((*sh)->lst_n)
+		if ((*msh)->lst_n)
 		{
-			new->previous = (*sh)->lst_n->last_added;
-			(*sh)->lst_n->last_added->next = new;
+			new->previous = (*msh)->lst_n->last_added;
+			(*msh)->lst_n->last_added->next = new;
 		}
 		else
-			(*sh)->lst_n = new;
-		(*sh)->lst_n->last_added = new;
-		if ((*sh)->lst_w && (*sh)->lst_w->type == w_pipe)
-			word_lst_delone(&(*sh)->lst_w, &(*sh)->garbage);
+			(*msh)->lst_n = new;
+		(*msh)->lst_n->last_added = new;
+		if ((*msh)->lst_w && (*msh)->lst_w->type == w_pipe)
+			word_lst_delone(&(*msh)->lst_w, &(*msh)->garbage);
 	}
 	return (1);
 }

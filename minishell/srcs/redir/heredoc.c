@@ -12,13 +12,13 @@
 
 #include "../../incs/minishell.h"
 
-int	heredoc_handling(t_minish *msh)
+int	heredoc_handling(t_msh *msh)
 {
-	t_cmd_list		*cmds;
-	t_redir_list	*redirs;
+	t_node_lst		*cmds;
+	t_redir_lst		*redirs;
 	t_word_lst		*heredoc;
 
-	cmds = msh->cmds;
+	cmds = msh->lst_n;
 	while (cmds)
 	{
 		redirs = cmds->redirs;
@@ -33,7 +33,7 @@ int	heredoc_handling(t_minish *msh)
 			}
 			redirs = redirs->next;
 		}
-		msh->cmds->heredoc = heredoc;
+		msh->lst_n->heredoc = heredoc;
 		cmds = cmds->next;
 	}
 	return (1);

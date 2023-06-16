@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:08:17 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/16 10:20:57 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/16 10:29:22 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static char	*set_expanded_env_var(char *env_var, t_msh *msh,
  * @return the modified lst_cmd
  */
 static char	*modify_command(char *cmd, t_msh *msh,
-                               size_t start, int double_not_closed)
+							size_t start, int double_not_closed)
 {
 	char	*env_var;
 	char	*exp_env_v;
@@ -104,7 +104,7 @@ static char	*modify_command(char *cmd, t_msh *msh,
  * @param envp
  * @return the modified string
  */
-static char	*expand_vars(char *command, t_msh *msh)
+char	*expand_vars(char *command, t_msh *msh)
 {
 	size_t	i;
 	int		double_not_closed;
@@ -175,21 +175,21 @@ int	cut_space_expand(t_word_lst **lst ,t_garbage **gb)
  * @param w_lst command word list
  * @param envp
  */
-int	expand_commands(t_msh *minish)
+int	expand_commands(t_msh *msh)
 {
 	t_word_lst	*w_lst_cpy;
 
-	w_lst_cpy = minish->lst_w;
+	w_lst_cpy = msh->lst_w;
 	while (w_lst_cpy)
 	{
 		if (w_lst_cpy->type != delimiteur)
-			w_lst_cpy->word = expand_vars(w_lst_cpy->word, minish);
+			w_lst_cpy->word = expand_vars(w_lst_cpy->word, msh);
 		if (!w_lst_cpy->word)
 			return (0); // ? code d'erreur a ajouter
 		if (ft_strchr(w_lst_cpy->word, ' ') != NULL
 			&& ft_strchr(w_lst_cpy->word, '"') == NULL
 			&& ft_strchr(w_lst_cpy->word, '"') == NULL)
-			if (!cut_space_expand(&w_lst_cpy, &(minish->garbage)))
+			if (!cut_space_expand(&w_lst_cpy, &(msh->garbage)))
 				return (0);
 		w_lst_cpy = w_lst_cpy->next;
 	}

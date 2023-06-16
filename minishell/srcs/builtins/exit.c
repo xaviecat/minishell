@@ -12,12 +12,12 @@
 
 #include "../../incs/minishell.h"
 
-void	b_exit(t_msh **minish)
+void	b_exit(t_msh **msh)
 {
-	ft_free_all(&((*minish)->garbage));
-	free((*minish)->garbage);
-	(*minish)->garbage = NULL;
-	free(*minish);
-	minish = NULL;
+	ft_free_all(&((*msh)->garbage));
+	free((*msh)->garbage);
+	(*msh)->garbage = NULL;
+	free(*msh);
+	msh = NULL;
 	exit(EXIT_SUCCESS);
 }

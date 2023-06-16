@@ -66,7 +66,7 @@ typedef bool	(*t_unhandled_char)(t_char_lst *);
 /* parsing */
 char			**parsing_argu(char *arg_term);
 t_msh			*parsing_command(char *cmd_line, t_msh *sh);
-int				expand_commands(t_msh *minish);
+int				expand_commands(t_msh *msh);
 char			*cut_whitespaces(char *str, t_garbage **gb);
 bool			process_quotes(t_char_lst *lst);
 void			harmonize_spaces(t_char_lst **lst, t_garbage **gb);
@@ -100,7 +100,7 @@ void			free_error_word_lst(t_garbage **gb, t_word_lst **lst);
 void			b_pwd(char **envp);
 void			b_cd(t_cmd_lst *cmd, t_msh *msh);
 void			b_echo(t_cmd_lst *content);
-void			b_exit(t_msh **minish);
+void			b_exit(t_msh **msh);
 int				b_export(t_msh *msh, t_cmd_lst *cmds);
 void			b_env(char **env);
 int				b_unset(t_msh *sh);
@@ -182,7 +182,7 @@ void			print_lst_cmd(t_node_lst *lst);
 void			lst_clear(t_node_lst **lst);
 t_node_lst		*create_lst_cmd(t_word_lst **old_lst,
 								  t_fd_lst *fds, t_redir_lst *redirs);
-int				sh_pars(t_msh **minish);
+int				sh_pars(t_msh **msh);
 bool			builtin_or_command(char *cmd);
 
 /* lst_w_cmd function */
