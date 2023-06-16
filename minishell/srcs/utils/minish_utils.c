@@ -22,7 +22,7 @@ int	parsing_char(t_msh **minish, char *line, char **envp_sh)
 	if (unhandled_char((*minish)->lst_c))
 		return (ft_free_all(&(*minish)->garbage), 0);
 	harmonize_spaces(&((*minish)->lst_c), &((*minish)->garbage));
-	print_lst_char((*minish)->lst_c);
+//	print_lst_char((*minish)->lst_c);
 	return (1);
 }
 
@@ -37,7 +37,7 @@ int	parsing_word(t_msh **minish, char **envp_sh)
 		ft_free_all(&((*minish)->garbage)),
 		free_and_exit_minish(*minish, &envp_sh);
 	}
-	print_lst_word((*minish)->lst_w);
+//	print_lst_word((*minish)->lst_w);
 	return (1);
 }
 

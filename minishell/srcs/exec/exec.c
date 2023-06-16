@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 19:25:52 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/16 12:32:20 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/16 14:23:22 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ int	exec_all(t_msh *msh)
 	first = msh->lst_n;
 	while (msh->lst_n)
 	{
-		if (msh->lst_n->builtin == true)
+		if (msh->lst_n->builtin > e_none)
 			find_builtin(msh);
 		else
 		{
 			if (msh->lst_n->lst_cmd)
 				msh->lst_n->cmdtab = reforme_d_tab_cmd(&(msh->lst_n->lst_cmd),
-                                                       msh->lst_n->lst_cmd->cmd, &(msh->garbage));
+								msh->lst_n->lst_cmd->cmd, &(msh->garbage));
 		}
 		msh->lst_n = msh->lst_n->next;
 	}
@@ -58,15 +58,31 @@ void	execution(t_msh *msh)
 			return (perror("fork error")); //! ERROR A CHECK
 		else if (msh->lst_n->pid == 0) //? Child
 		{
-			if (msh->prev_pipe[0] != -1)
+			if (msh->lst_n->fds && msh->lst_n->fds->in > 0)
 			{
-				dup2(msh->prev_pipe[0], STDIN_FILENO);
+				if (dup2(msh->lst_n->fds->in, STDIN_FILENO) < 0)
+					return ; //! ERROR
 				close(msh->prev_pipe[0]);
 				close(msh->prev_pipe[1]);
 			}
-			if (msh->lst_n->next)
+			else if (msh->prev_pipe[0] != -1)
 			{
-				dup2(msh->curr_pipe[1], STDOUT_FILENO);
+				if (dup2(msh->prev_pipe[0], STDIN_FILENO) < 0)
+					return ; //! ERROR
+				close(msh->prev_pipe[0]);
+				close(msh->prev_pipe[1]);
+			}
+			if (msh->lst_n->fds && msh->lst_n->fds->out > 1)
+			{
+				if (dup2(msh->lst_n->fds->out, STDOUT_FILENO) < 0)
+					return ; //! ERROR
+				close(msh->prev_pipe[0]);
+				close(msh->prev_pipe[1]);
+			}
+			else if (msh->lst_n->next)
+			{
+				if (dup2(msh->curr_pipe[1], STDOUT_FILENO) < 0)
+					return ; //! ERROR
 				close(msh->curr_pipe[0]);
 				close(msh->curr_pipe[1]);
 			}
@@ -85,6 +101,19 @@ void	execution(t_msh *msh)
 				msh->prev_pipe[0] = msh->curr_pipe[0];
 				msh->prev_pipe[1] = msh->curr_pipe[1];
 			}
+			else
+			{
+				close(msh->curr_pipe[0]);
+				close(msh->curr_pipe[1]);
+			}
+			if (msh->lst_n->fds)
+			{
+				if (msh->lst_n->fds->in > 0)
+					close(msh->lst_n->fds->in);
+				if (msh->lst_n->fds->out > 0 && msh->lst_n->fds->out != 1)
+					close(msh->lst_n->fds->out);
+			}
+
 		}
 		msh->lst_n = msh->lst_n->next;
 	}

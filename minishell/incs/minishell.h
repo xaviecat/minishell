@@ -59,9 +59,10 @@
 
 # include "structures.h"
 
-extern int	g_exit_status;
+extern int		g_exit_status;
 
-typedef bool	(*t_unhandled_char)(t_char_lst *);
+typedef bool	(*t_unhandled_tab)(t_char_lst *);
+typedef int		(*t_builtin_tab)();
 
 /* global */
 void			free_and_exit_minish(t_msh *minish, char ***envp_sh);
@@ -193,7 +194,8 @@ void			lst_clear(t_node_lst **lst);
 t_node_lst		*create_lst_cmd(t_word_lst **old_lst,
 								  t_fd_lst *fds, t_redir_lst *redirs);
 int				sh_pars(t_msh **msh);
-bool			builtin_or_command(char *cmd);
+
+t_builtin builtin_or_command(char *cmd);
 
 /* lst_w_cmd function */
 t_cmd_lst	*get_cmd(t_word_lst **old_lst, t_garbage **gb);
