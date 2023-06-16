@@ -12,7 +12,7 @@
 
 #include "../../incs/minishell.h"
 
-int	is_empty(char *line)
+static int	is_empty(char *line)
 {
 	int	i;
 

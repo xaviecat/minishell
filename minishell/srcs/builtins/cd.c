@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-char	*get_home_from_env(char **envp, t_garbage **gb)
+static char	*get_home_from_env(char **envp, t_garbage **gb)
 {
 	int		i;
 
