@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 17:43:08 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/08 12:46:17 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/16 15:05:39 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@
  */
 bool	is_forbidden_char(t_char_lst *lst)
 {
-	static t_unhandled_char	is_error_fct[8] = {&is_amp_error, &is_pipe_error,
-		&is_semicolon_error, &is_backslash_error, &is_dollar_error,
-		&is_exclamation_error, &is_colon_error,	NULL};
+	static t_unhandled_tab	is_error_fct[8] = {&is_amp_error, &is_pipe_error,
+												 &is_semicolon_error, &is_backslash_error, &is_dollar_error,
+												 &is_exclamation_error, &is_colon_error, NULL};
 	size_t					i;
 
 	while (lst)
