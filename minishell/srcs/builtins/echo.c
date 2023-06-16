@@ -12,7 +12,7 @@
 
 #include "../../incs/minishell.h"
 
-bool	param_n(t_w_cmd_list **lst)
+static bool	param_n(t_w_cmd_list **lst)
 {
 	t_w_cmd_list	*first;
 	int				i;

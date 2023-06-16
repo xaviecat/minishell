@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 13:43:43 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/12 18:19:29 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/16 10:36:10 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-int	length_char_tab(char **tabi)
+static int	length_char_tab(char **tabi)
 {
 	int	i;
 
@@ -22,7 +22,7 @@ int	length_char_tab(char **tabi)
 	return (i);
 }
 
-int	create_unset_tab(char **new_tab, char **old_tab, t_garbage **gb, char *var)
+static int	unset_tab(char **new_tab, char **old_tab, t_garbage **gb, char *var)
 {
 	int	i;
 	int	j;
@@ -50,7 +50,8 @@ int	create_unset_tab(char **new_tab, char **old_tab, t_garbage **gb, char *var)
 	return (0);
 }
 
-int	check_var_exist_and_valid(char *var, char **tabi)
+
+static int	check_var_exist_and_valid(char *var, char **tabi)
 {
 	int	i;
 
@@ -68,7 +69,7 @@ int	check_var_exist_and_valid(char *var, char **tabi)
 	while (tabi[i])
 	{
 		if (ft_strncmp(var, tabi[i], ft_strlen(var)) == 0)
-			return (0);
+			return (1);
 		i++;
 	}
 	return (0);
@@ -90,7 +91,7 @@ int	b_unset(t_minish *sh)
 	ft_gbtabfree(sh->envp, &(sh->garbage));
 	sh->envp = ft_malloc(&(sh->garbage), sizeof(char *),
 			length_char_tab(old_envp));
-	create_unset_tab(sh->envp, old_envp, &(sh->garbage), name_var);
+	unset_tab(sh->envp, old_envp, &(sh->garbage), name_var);
 	ft_free(&(sh->garbage), name_var);
 	return (0);
 }
