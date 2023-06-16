@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 19:25:52 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/16 17:36:44 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/16 17:35:05 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,12 @@ void	execution(t_msh *msh)
 			{
 				if (pipe(msh->lst_n->pipehd) < 0)
 					return ; //! ERROR
-				ft_fdprintf(2, "pipehd[0] = %d, pipehd[1] = %d\n", msh->lst_n->pipehd[0], msh->lst_n->pipehd[1]);
 				msh->lst_n->hdpid = fork();
 				if (msh->lst_n->hdpid < 0)
 					return ; //! ERROR
 				else if (msh->lst_n->hdpid == 0) //? Child heredoc
 				{
-					while (msh->lst_n->heredoc->word)
+					while (msh->lst_n->heredoc)
 					{
 						ft_fdprintf(msh->lst_n->pipehd[1], "%s\n",
 							msh->lst_n->heredoc->word);
@@ -83,7 +82,6 @@ void	execution(t_msh *msh)
 				}
 				else //? Parents heredoc
 				{
-					ft_fdprintf(2, "pipehd[0] = %d, pipehd[1] = %d\n", msh->lst_n->pipehd[0], msh->lst_n->pipehd[1]);
 					if (dup2(msh->lst_n->pipehd[0], STDIN_FILENO) < 0)
 						return ; //! ERROR
 					close(msh->lst_n->pipehd[0]);
@@ -119,7 +117,10 @@ void	execution(t_msh *msh)
 				close(msh->curr_pipe[1]);
 			}
 			signal_hub_exec();
-			execve(msh->lst_n->cmdpath, msh->lst_n->cmdtab, msh->envp);
+			if (msh->lst_n->cmdpath)
+				execve(msh->lst_n->cmdpath, msh->lst_n->cmdtab, msh->envp);
+			//! ERROR
+			exit(EXIT_FAILURE);
 		}
 		else //? Parent
 		{
