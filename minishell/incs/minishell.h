@@ -64,12 +64,12 @@ extern int	g_exit_status;
 typedef bool	(*t_unhandled_char)(t_char_lst *);
 
 /* global */
-void			free_and_exit_minish(t_minish *minish, char ***envp_sh);
+void			free_and_exit_minish(t_msh *minish, char ***envp_sh);
 void			print_bannier(void);
 /* parsing */
-int				parsing_char(t_minish **minish, char *line, char **envp_sh);
-int				parsing_word(t_minish **minish, char **envp_sh);
-int				parsing_cmd(t_minish **minish, char **envp_sh);
+int				parsing_char(t_msh **minish, char *line, char **envp_sh);
+int				parsing_word(t_msh **minish, char **envp_sh);
+int				parsing_cmd(t_msh **minish, char **envp_sh);
 char			**parsing_argu(char *arg_term);
 t_msh			*parsing_command(char *cmd_line, t_msh *sh);
 int				expand_commands(t_msh *msh);
