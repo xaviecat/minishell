@@ -72,6 +72,7 @@ t_word_lst	*run_heredoc(char *delimiter, t_garbage **gb)
 	delimiter_len = ft_strlen(delimiter);
 	heredoc = NULL;
 	signal_hub_heredoc();
+	dprintf(2, "ccc\n");
 	while (g_exit_status != 130)
 	{
 		line = readline("> ");
@@ -113,6 +114,6 @@ t_word_lst	*display_heredoc(t_word_lst *heredoc,
 	if ((!heredoc && errno == ENOMEM)
 		|| (!does_contain_quotes(redirs->filename)
 			&& !expand_heredoc(heredoc, msh)))
-		return (NULL);
+        return (NULL);
 	return (heredoc);
 }

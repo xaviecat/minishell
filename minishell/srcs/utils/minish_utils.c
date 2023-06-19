@@ -28,15 +28,19 @@ int	parsing_char(t_msh **minish, char *line, char **envp_sh)
 
 int	parsing_word(t_msh **minish, char **envp_sh)
 {
+	int	ret;
 	if (!(create_word_lst(minish)))
 		free_and_exit_minish(*minish, &envp_sh);
 	if ((!check_pipe_and_redir(&((*minish)->garbage), &((*minish)->lst_w))))
 		return (0);
-	if (!expand_commands(*minish))
+	ret = expand_commands(*minish);
+	if (ret == 0)
 	{
 		ft_free_all(&((*minish)->garbage)),
 		free_and_exit_minish(*minish, &envp_sh);
 	}
+	if (ret == 2)
+		return (0);
 //	print_lst_word((*minish)->lst_w);
 	return (1);
 }

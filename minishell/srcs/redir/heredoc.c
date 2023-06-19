@@ -26,7 +26,7 @@ int	heredoc_handling(t_msh *msh)
 		while (redirs)
 		{
 			if (redirs->redir == inin)
-			{
+            {
 				heredoc = display_heredoc(heredoc, msh, redirs);
 				if (!heredoc)
 					return (0);

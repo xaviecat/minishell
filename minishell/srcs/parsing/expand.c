@@ -182,6 +182,8 @@ int	expand_commands(t_msh *msh)
 	w_lst_cpy = msh->lst_w;
 	while (w_lst_cpy)
 	{
+		if (ft_strncmp(w_lst_cpy->word, "$?", 3) == 0)
+			return (printf("%d\n", g_exit_status), 2);
 		if (w_lst_cpy->type != delimiteur)
 			w_lst_cpy->word = expand_vars(w_lst_cpy->word, msh);
 		if (!w_lst_cpy->word)

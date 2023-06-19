@@ -92,6 +92,21 @@ void	print_tab(char **tabi)
 	}
 }
 
+void    print_heredoc(t_word_lst *hd)
+{
+    t_word_lst  *first;
+
+    if (!hd)
+        return ((void)printf("HD NULL\n"));
+    first = hd;
+    while (hd)
+    {
+        printf("%s", hd->word);
+        hd = hd->next;
+    }
+    hd = first;
+}
+
 void	print_lst_cmd(t_node_lst *lst)
 {
 	t_cmd_lst		*first_w;
@@ -102,27 +117,28 @@ void	print_lst_cmd(t_node_lst *lst)
 	while (lst)
 	{
 		first_w = lst->lst_cmd;
-		printf(UNDERLINE"node : %d\n"RESET, i);
-		printf(CYAN"builtin : %d\n", lst->builtin);
-		printf("cmd :                          | params :\n");
+		dprintf(2,UNDERLINE"node : %d\n"RESET, i);
+		dprintf(2, CYAN"builtin : %d\n", lst->builtin);
+		dprintf(2,"cmd :                          | params :\n");
 		if (lst->lst_cmd)
 		{
-			printf("%-30s | ", lst->lst_cmd->cmd);
+			dprintf(2,"%-30s | ", lst->lst_cmd->cmd);
 			lst->lst_cmd = lst->lst_cmd->next;
 		}
 		else
-			printf("(null)                         |");
+			dprintf(2,"(null)                         |");
 		while (lst->lst_cmd)
 		{
-			printf("[%s] ", lst->lst_cmd->cmd);
+			dprintf(2,"[%s] ", lst->lst_cmd->cmd);
 			lst->lst_cmd = lst->lst_cmd->next;
 		}
-		if (lst->cmdpath)
-			printf("\ncmdpath : %s", lst->cmdpath);
+		if (lst->cmdpath != NULL)
+			dprintf(2,"\ncmdpath : %s", lst->cmdpath);
 		lst->lst_cmd = first_w;
-		printf(CYAN"\n");
+		dprintf(2,CYAN"\n");
 		print_fd(lst->fds);
 		print_redir(lst->redirs);
+        print_heredoc(lst->heredoc);
 		lst = lst->next;
 		i++;
 	}

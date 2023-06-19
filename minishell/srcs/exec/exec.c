@@ -53,7 +53,7 @@ void	execution(t_msh *msh)
 	first = msh->lst_n;
 	signal_hub_ign();
 	while (msh->lst_n)
-	{
+    {
 		if (pipe(msh->curr_pipe) < 0)
 			return (perror("pipe error")); //! ERROR A CHECK
 		msh->lst_n->pid = fork();
@@ -120,6 +120,7 @@ void	execution(t_msh *msh)
 			if (msh->lst_n->cmdpath)
 				execve(msh->lst_n->cmdpath, msh->lst_n->cmdtab, msh->envp);
 			//! ERROR
+			//perror(msh->lst_n->cmdtab[0]);
 			exit(EXIT_FAILURE);
 		}
 		else //? Parent

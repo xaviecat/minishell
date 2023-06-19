@@ -47,9 +47,9 @@ void	signal_exec(int signum)
 //		rl_redisplay();
 //		g_exit_status = 128 + signum;
 //	}
-//	if (signum == SIGQUIT)
-//	{
+	if (signum == SIGQUIT)
+	{
 		ft_putendl_fd("Quit (core dumped)", 2);
 		g_exit_status = 128 + signum;
-//	}
+	}
 }
