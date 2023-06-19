@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 17:01:30 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/15 17:02:14 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/19 14:42:21 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ char	*ft_cut_var(char *str, t_garbage **gb)
 	while (str[new_str_len] && (ft_isalnum(str[new_str_len])
 			|| (str[new_str_len] == '$' && !new_str_len)))
 		new_str_len++;
+	if (str[new_str_len] && new_str_len == 1 && str[new_str_len] == '?')
+		return (ft_gbstrdup("$?", gb));
 	new_str = ft_malloc(gb, sizeof(char), new_str_len + 1);
 	if (!new_str)
 		return (NULL);
