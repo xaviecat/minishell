@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:00:59 by xcharra           #+#    #+#             */
-/*   Updated: 2023/05/10 13:18:22 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/16 16:37:22 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_pwd_from_envp(char **envp)
+static char	*get_pwd_from_envp(char **envp)
 {
 	int	i;
 
@@ -26,13 +26,13 @@ char	*get_pwd_from_envp(char **envp)
 	return (NULL);
 }
 
-void	b_pwd(char **envp)
+int	b_pwd(t_msh *msh)
 {
 	char	*path;
 
 	path = getcwd(NULL, 0);
 	if (!path)
-		path = get_pwd_from_envp(envp);
-	else
-		printf("%s\n", path);
+		path = get_pwd_from_envp(msh->envp);
+	printf("%s\n", path);
+	return (0);
 }

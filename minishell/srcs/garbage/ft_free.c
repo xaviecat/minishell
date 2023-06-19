@@ -14,7 +14,7 @@
 
 void	ft_free_first(t_garbage **lst)
 {
-	t_garbage_list	*first;
+	t_garbage_lst	*first;
 
 	first = NULL;
 	first = (*lst)->first->next;
@@ -27,7 +27,7 @@ void	ft_free_first(t_garbage **lst)
 
 void	ft_free_last(t_garbage **lst)
 {
-	t_garbage_list	*last;
+	t_garbage_lst	*last;
 
 	last = NULL;
 	last = (*lst)->last->prev;
@@ -40,8 +40,8 @@ void	ft_free_last(t_garbage **lst)
 
 void	ft_free_other(t_garbage **lst)
 {
-	t_garbage_list	*prev;
-	t_garbage_list	*next;
+	t_garbage_lst	*prev;
+	t_garbage_lst	*next;
 
 	prev = (*lst)->first->prev;
 	next = (*lst)->first->next;
@@ -82,7 +82,7 @@ void	ft_free(t_garbage **lst, void *content)
 
 void	ft_free_all(t_garbage **lst)
 {
-	t_garbage_list	*next;
+	t_garbage_lst	*next;
 
 	next = NULL;
 	while ((*lst)->first)

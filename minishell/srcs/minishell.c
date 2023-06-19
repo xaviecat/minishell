@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/15 14:56:30 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/16 11:00:47 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,7 @@
 
 int g_exit_status = 0;
 
-t_minish	*create_minishell(char **envp, char **envp_sh)
-{
-	t_minish		*sh;
-
-	sh = malloc(sizeof(t_minish));
-	if (!sh)
-		return (NULL);
-	sh->cmds = NULL;
-	sh->lst_c = NULL;
-	sh->lst_w = NULL;
-	sh->garbage = NULL;
-	sh->garbage = create_garbage_container();
-	(void)envp;
-	(void)envp_sh;
-	if (!sh->garbage)
-	{
-		free(sh);
-		return (NULL);
-	}
-	if (envp_sh)
-		sh->envp = ft_gbtabdup(envp_sh, &(sh->garbage));
-	else
-		sh->envp = ft_gbtabdup(envp, &(sh->garbage));
-	return (sh);
-}
-
-void	free_and_exit_minish(t_minish *minish, char ***envp_sh)
+void	free_and_exit_minish(t_msh *minish, char ***envp_sh)
 {
 	if (*envp_sh)
 		ft_gbtabfree(*envp_sh, &(minish->garbage));
@@ -49,6 +23,13 @@ void	free_and_exit_minish(t_minish *minish, char ***envp_sh)
 	free(minish);
 	rl_clear_history();
 	exit(EXIT_FAILURE);
+}
+
+void	free_end_loop(t_msh *msh)
+{
+	ft_free_all(&msh->garbage);
+	free(msh->garbage);
+	free(msh);
 }
 
 void	cp_envp_to_envp_sh(char ***envp_sh, char **envp_in_minish)
@@ -61,96 +42,52 @@ void	cp_envp_to_envp_sh(char ***envp_sh, char **envp_in_minish)
 void	minishell(char **envp)
 {
 	char		*line;
-	t_minish	*minish;
+	t_msh		*msh;
 	char		**envp_sh;
 
-	/* TEST SIGNAL */
-	struct	sigaction	sa_int;
-	struct	sigaction	sa_quit;
-	struct	sigaction	sa_stop;
-	//Ctrl+C
-	sa_int.sa_handler = signal_handler;
-	sa_int.sa_flags = 0;
-	sigaction(SIGINT, &sa_int, NULL);
-	//(Ctrl+\)
-	sa_quit.sa_handler = signal_handler;
-	sa_quit.sa_flags = 0;
-	sigaction(SIGQUIT, &sa_quit, NULL);
-	//Ctrl+D
-	sa_stop.sa_handler = signal_handler;
-	sa_stop.sa_flags = 0;
-	sigaction(SIGTSTP, &sa_stop, NULL);
-	/* TEST SIGNAL */
-
 	envp_sh = NULL;
-	printf(LBLUE TRISHBANNER0"\n");
-	printf(TRISHBANNER1"\n");
-	printf(TRISHBANNER2"\n");
-	printf(TRISHBANNER3"\n");
-	printf(TRISHBANNER4"\n");
-	printf(TRISHBANNER5"\n");
-	printf(TRISHBANNER6"\n");
-	printf(TRISHBANNER7"\n");
-	printf(BOLD TRISHBANNER8"\n" RESET);
+	print_bannier();
 	while (1)
 	{
 		line = readline(GREEN UNDERLINE"TRI_SH $>"RESET" ");
-		if (*line == '\0')
+		signal_hub_term();
+		if (!line || *line == '\0')
 		{
-			free(line);
-			continue ;
+			if (line)
+			{
+				free(line);
+				continue ;
+			}
+			else
+			{
+				printf("exit\n");
+				break ;
+			}
 		}
 		if (line && *line)
 			add_history(line);
-		minish = create_minishell(envp, envp_sh);
-		if (!minish)
-			return ; // ! ERROR free line
-		if (!(create_char_lst_with_c_inside(line, &minish)))
-		{
-			free(line);
-			free_and_exit_minish(minish, &envp_sh);
-		}
-		give_type_in_lst(&minish->lst_c);
-		if (unhandled_char(minish->lst_c))
-		{
-			ft_free_all(&minish->garbage);
+		msh = create_minishell(envp, envp_sh);
+		if (!msh)
+			return (free(line));
+		if (!parsing_char(&msh, line, envp_sh))
 			continue ;
-		}
-		harmonize_spaces(&(minish->lst_c), &(minish->garbage));
-//		print_lst_char(minish->lst_c);
-		if (!(create_word_lst(&minish)))
-			free_and_exit_minish(minish, &envp_sh);
-		if ((!check_pipe_and_redir(&(minish->garbage), &(minish->lst_w))))
+		if (!parsing_word(&msh, envp_sh))
 			continue ;
-		//! gerer quand chevron avec epace
-		if (!expand_commands(minish))
-			return (ft_free_all(&(minish->garbage)),
-				free_and_exit_minish(minish, &envp_sh), (void) 0);
-//		print_lst_word(minish->lst_w);
-		if (!(sh_pars(&minish)))
-			free_and_exit_minish(minish, &envp_sh);
-		if (!heredoc_handling(minish))
-			return (ft_free_all(&(minish->garbage)),
-				free_and_exit_minish(minish, &envp_sh), (void) 0);
-		if (!ft_del_quotes(minish))
-			return (ft_free_all(&(minish->garbage)),
-				free_and_exit_minish(minish, &envp_sh), (void) 0);
-		get_access(&minish);
-		print_lst_cmd(minish->cmds);
-		if (!exec_all(minish))
-			return (ft_free_all(&(minish->garbage)),
-				free_and_exit_minish(minish, &envp_sh), (void) 0);
-		cp_envp_to_envp_sh(&envp_sh, minish->envp);
-		ft_free_all(&minish->garbage);
-		free(minish);
+		parsing_cmd(&msh, envp_sh);
+		if (!exec_all(msh))
+		{
+			ft_free_all(&(msh->garbage)),
+			free_and_exit_minish(msh, &envp_sh);
+		}
+		execution(msh);
+		cp_envp_to_envp_sh(&envp_sh, msh->envp);
+		free_end_loop(msh);
 	}
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	(void) argv;
-//	(void) envp;
-//	(void) argc;
 	if (argc == 1)
 		minishell(envp);
 	return (1);

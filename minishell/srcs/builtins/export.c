@@ -12,7 +12,7 @@
 
 #include "../../incs/minishell.h"
 
-size_t	get_arg_count(t_w_cmd_list *curr, char **envp)
+size_t	get_arg_count(t_cmd_lst *curr, char **envp)
 {
 	size_t	size;
 
@@ -27,7 +27,7 @@ size_t	get_arg_count(t_w_cmd_list *curr, char **envp)
 	return (size);
 }
 
-int	ft_alloc_envp(t_minish *msh, t_w_cmd_list *curr)
+int	ft_alloc_envp(t_msh *msh, t_cmd_lst *curr)
 {
 	msh->envp = ft_malloc(&(msh->garbage), sizeof(char *),
 			get_arg_count(curr, msh->envp) + 1);
@@ -64,7 +64,7 @@ void	print_with_backslash(char *str)
 	printf("\"\n");
 }
 
-int	export_print(t_minish *msh)
+int	export_print(t_msh *msh)
 {
 	char	**envp_cpy;
 	size_t	i;
@@ -116,7 +116,7 @@ char *dup_without_plus(char *cmd, t_garbage **gb)
 	return (new_cmd);
 }
 
-int	add_new_var_to_envp(t_w_cmd_list *cmd, char **save_envp, t_minish *msh)
+int	add_new_var_to_envp(t_cmd_lst *cmd, char **save_envp, t_msh *msh)
 {
 	size_t	i;
 
@@ -141,7 +141,7 @@ int	add_new_var_to_envp(t_w_cmd_list *cmd, char **save_envp, t_minish *msh)
 	return (1);
 }
 
-int	b_export(t_minish *msh, t_w_cmd_list *cmd)
+int	b_export(t_msh *msh, t_cmd_lst *cmd)
 {
 	char	**save_envp;
 	char	**modified_envp;

@@ -27,6 +27,7 @@ SRCS			:=	minishell.c\
 					garbage/ft_gbtabdup.c\
 					garbage/ft_gbtabfree.c\
 					garbage/ft_gbtabjoin.c\
+					garbage/ft_gbitoa.c\
 					\
 					list/find_type.c\
 					list/lst.c\
@@ -52,6 +53,7 @@ SRCS			:=	minishell.c\
 					redir/heredoc.c\
 					\
 					signal/signal.c\
+					signal/signal2.c\
 					\
 					utils/expand_utils.c\
 					utils/export_utils.c\
@@ -61,6 +63,7 @@ SRCS			:=	minishell.c\
 					utils/utils.c\
 					utils/heredoc_utils.c\
 					utils/export_error_management.c\
+					utils/minish_utils.c\
 
 SRCS_D			:=	srcs/
 
@@ -96,7 +99,7 @@ CFLAGS			:=	-Wall -Wextra -Werror
 
 RDL				:=	-lreadline
 
-ASAN_F			:=	-g3 #-fsanitize=address
+ASAN_F			:=	-g3 -fsanitize=address
 
 #========================EXEC===============================#
 all				:	$(NAME)

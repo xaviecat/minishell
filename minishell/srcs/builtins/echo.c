@@ -6,17 +6,17 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 13:08:46 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/31 19:56:51 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/19 13:14:40 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-bool	param_n(t_w_cmd_list **lst)
+static bool	param_n(t_cmd_lst **lst)
 {
-	t_w_cmd_list	*first;
-	int				i;
-	bool			ret;
+	t_cmd_lst	*first;
+	int			i;
+	bool		ret;
 
 	ret = false;
 	first = *lst;
@@ -40,19 +40,20 @@ bool	param_n(t_w_cmd_list **lst)
 	return (ret);
 }
 
-void	b_echo(t_w_cmd_list *content)
+int	b_echo(t_msh *msh)
 {
 	bool	new_line;
 
-	if (!content)
-		return ;
-	content = content->next;
-	new_line = param_n(&content);
-	while (content)
+	if (!msh->lst_n->lst_cmd)
+		return (1);
+	msh->lst_n->lst_cmd = msh->lst_n->lst_cmd->next;
+	new_line = param_n(&(msh->lst_n->lst_cmd));
+	while (msh->lst_n->lst_cmd)
 	{
-		printf("%s ", content->cmd);
-		content = content->next;
+		printf("%s ", msh->lst_n->lst_cmd->cmd);
+		msh->lst_n->lst_cmd = msh->lst_n->lst_cmd->next;
 	}
 	if (!new_line)
 		printf("\n");
+	return (0);
 }

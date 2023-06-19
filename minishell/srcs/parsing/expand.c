@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:08:17 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/14 16:07:16 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/19 13:16:38 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ static char	*expand_env_var(t_garbage **gb, char **envp, char *var)
  * @param envp
  * @return the content of the environnement variable
  */
-static char	*set_expanded_env_var(char *env_var, t_minish *msh,
-									int double_not_closed)
+static char	*set_expanded_env_var(char *env_var, t_msh *msh,
+                                     int double_not_closed)
 {
 	char	*expanded_env_var;
 
@@ -70,15 +70,15 @@ static char	*set_expanded_env_var(char *env_var, t_minish *msh,
 }
 
 /**
- * @brief modify a cmd from start to whitespace by replacing
+ * @brief modify a lst_cmd from start to whitespace by replacing
  * env vars by their content and reallocating it
- * @param cmd the cmd that you want to expand
+ * @param cmd the lst_cmd that you want to expand
  * @param start the index of the $ symbol
  * @param envp
  * @param double_not_closed 1 if a double quote is opened, \n 0 if not
- * @return the modified cmd
+ * @return the modified lst_cmd
  */
-static char	*modify_command(char *cmd, t_minish *msh,
+static char	*modify_command(char *cmd, t_msh *msh,
 							size_t start, int double_not_closed)
 {
 	char	*env_var;
@@ -104,7 +104,7 @@ static char	*modify_command(char *cmd, t_minish *msh,
  * @param envp
  * @return the modified string
  */
-char	*expand_vars(char *command, t_minish *msh)
+char	*expand_vars(char *command, t_msh *msh)
 {
 	size_t	i;
 	int		double_not_closed;
@@ -170,26 +170,33 @@ int	cut_space_expand(t_word_lst **lst ,t_garbage **gb)
 	return (1);
 }
 
+
 /**
  * @brief expand parts of commands that needs to be expanded
  * @param w_lst command word list
  * @param envp
  */
-int	expand_commands(t_minish *minish)
+int	expand_commands(t_msh *msh)
 {
 	t_word_lst	*w_lst_cpy;
 
-	w_lst_cpy = minish->lst_w;
+	w_lst_cpy = msh->lst_w;
 	while (w_lst_cpy)
 	{
+		if (ft_strncmp(w_lst_cpy->word, "$?", 3) == 0)
+		{
+			ft_free(&(msh->garbage), msh->lst_w->word);
+			msh->lst_w->word = ft_gbitoa(g_exit_status, &(msh->garbage));
+		}
 		if (w_lst_cpy->type != delimiteur)
-			w_lst_cpy->word = expand_vars(w_lst_cpy->word, minish);
+
+			w_lst_cpy->word = expand_vars(w_lst_cpy->word, msh);
 		if (!w_lst_cpy->word)
 			return (0); // ? code d'erreur a ajouter
 		if (ft_strchr(w_lst_cpy->word, ' ') != NULL
 			&& ft_strchr(w_lst_cpy->word, '"') == NULL
 			&& ft_strchr(w_lst_cpy->word, '"') == NULL)
-			if (!cut_space_expand(&w_lst_cpy, &(minish->garbage)))
+			if (!cut_space_expand(&w_lst_cpy, &(msh->garbage)))
 				return (0);
 		w_lst_cpy = w_lst_cpy->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 11:36:08 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/14 17:48:38 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/15 17:16:07 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,50 +87,50 @@ char	*check_access(char **cmdpaths, char *cmd, t_garbage **gb)
 	return (NULL);//! a voir
 }
 
-void	cmd_in_current_dir(t_cmd_list **lst, t_garbage **gb)
+void	cmd_in_current_dir(t_node_lst **lst, t_garbage **gb)
 {
 	struct stat	st;
 
-	if (access((*lst)->cmd->cmd, F_OK))
-		return ((void)ft_fdprintf(2, RED MSH "%s" NO_SFD RESET, (*lst)->cmd->cmd));
-	stat((*lst)->cmd->cmd, &st);
+	if (access((*lst)->lst_cmd->cmd, F_OK))
+		return ((void)ft_fdprintf(2, RED MSH "%s" NO_SFD RESET, (*lst)->lst_cmd->cmd));
+	stat((*lst)->lst_cmd->cmd, &st);
 	if (S_ISDIR(st.st_mode))
-		return ((void)ft_fdprintf(2, RED MSH"%s" IS_DI RESET, (*lst)->cmd->cmd));
-	if (access((*lst)->cmd->cmd, X_OK))
-		return ((void)ft_fdprintf(2, RED MSH"%s" NO_PERM RESET, (*lst)->cmd->cmd));
-	(*lst)->cmdpath = ft_gbstrdup((*lst)->cmd->cmd, gb);
+		return ((void)ft_fdprintf(2, RED MSH"%s" IS_DI RESET, (*lst)->lst_cmd->cmd));
+	if (access((*lst)->lst_cmd->cmd, X_OK))
+		return ((void)ft_fdprintf(2, RED MSH"%s" NO_PERM RESET, (*lst)->lst_cmd->cmd));
+	(*lst)->cmdpath = ft_gbstrdup((*lst)->lst_cmd->cmd, gb);
 	if (!((*lst)->cmdpath))
 		return ; //!ERROR
 	return ;
 
 }
 
-void	give_access(char **path, t_cmd_list **lst, t_garbage **gb)
+void	give_access(char **path, t_node_lst **lst, t_garbage **gb)
 {
-	t_cmd_list	*first;
+	t_node_lst	*first;
 	char		**cmdpaths;
 
 	first = *lst;
 	while (*lst)
 	{
-		if (!((*lst)->cmd))
+		if (!((*lst)->lst_cmd))
 		{
 			(*lst)->cmdpath = NULL;
 			(*lst) = (*lst)->next;
 			continue ;
 		}
-		if (!ft_strncmp((*lst)->cmd->cmd, "./", 2)
-			|| !ft_strncmp((*lst)->cmd->cmd, "/", 1)
-			|| ft_strchr((*lst)->cmd->cmd, '/'))
+		if (!ft_strncmp((*lst)->lst_cmd->cmd, "./", 2)
+			|| !ft_strncmp((*lst)->lst_cmd->cmd, "/", 1)
+			|| ft_strchr((*lst)->lst_cmd->cmd, '/'))
 		{
 			cmd_in_current_dir(lst, gb);
 			(*lst) = (*lst)->next;
 			continue ;
 		}
-		cmdpaths = get_cmdpath(path, (*lst)->cmd->cmd, gb);
-		(*lst)->cmdpath = check_access(cmdpaths, (*lst)->cmd->cmd, gb);
+		cmdpaths = get_cmdpath(path, (*lst)->lst_cmd->cmd, gb);
+		(*lst)->cmdpath = check_access(cmdpaths, (*lst)->lst_cmd->cmd, gb);
 		if (!((*lst)->cmdpath))
-			return ;//ft_fdprintf(2, RED"no path%s\n"RESET, (*lst)->cmd->cmd) //! ERROR A GERER
+			return ;//ft_fdprintf(2, RED"no path%s\n"RESET, (*lst)->lst_cmd->lst_cmd) //! ERROR A GERER
 		(*lst) = (*lst)->next;
 	}
 	ft_gbtabfree(path, gb);
@@ -138,7 +138,7 @@ void	give_access(char **path, t_cmd_list **lst, t_garbage **gb)
 	return ;
 }
 
-void	get_access(t_minish **sh)
+void	get_access(t_msh **sh)
 {
 	char	**path;
 
@@ -150,7 +150,7 @@ void	get_access(t_minish **sh)
 		else
 			return ((void)ft_fdprintf(2, RED"no path in env\n"RESET));
 	}
-	give_access(path, &((*sh)->cmds), &((*sh)->garbage));
+	give_access(path, &((*sh)->lst_n), &((*sh)->garbage));
 }
 
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:57:11 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/15 14:57:11 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/19 10:51:28 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,23 +71,26 @@ t_word_lst	*run_heredoc(char *delimiter, t_garbage **gb)
 		return (NULL);
 	delimiter_len = ft_strlen(delimiter);
 	heredoc = NULL;
-	while (1) // remplacer par fonction de silvain
+	signal_hub_heredoc();
+	while (g_exit_status != 130)
 	{
 		line = readline("> ");
-		if (!ft_strncmp(line, delimiter, delimiter_len + 1))
+		if (!line || !ft_strncmp(line, delimiter, delimiter_len + 1))
 			break ;
 		heredoc = word_lst_add_back(heredoc, gb, ft_gbstrdup(line, gb));
 		if (!heredoc)
 			return (free(line), NULL);
 		free(line);
 	}
+	if (g_exit_status == 130 || g_exit_status == 131)
+		return (NULL);
 	free(line);
 	while (heredoc && heredoc->prev)
 		heredoc = heredoc->prev;
 	return (heredoc);
 }
 
-int	expand_heredoc(t_word_lst *heredoc, t_minish *msh)
+int	expand_heredoc(t_word_lst *heredoc, t_msh *msh)
 {
 	t_word_lst	*heredoc_cpy;
 
@@ -103,7 +106,7 @@ int	expand_heredoc(t_word_lst *heredoc, t_minish *msh)
 }
 
 t_word_lst	*display_heredoc(t_word_lst *heredoc,
-							t_minish *msh, t_redir_list *redirs)
+							t_msh *msh, t_redir_lst *redirs)
 {
 	destroy_heredoc(heredoc, &(msh->garbage));
 	heredoc = run_heredoc(redirs->filename, &(msh->garbage));

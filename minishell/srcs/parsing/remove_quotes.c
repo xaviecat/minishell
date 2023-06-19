@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 13:56:29 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/15 16:58:31 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/19 14:11:16 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ static char	*modify_cmd(char *cmd, char *new_cmd, t_garbage **gb)
 	return (new_cmd);
 }
 
-int	delete_quotes(t_w_cmd_list *cmd, t_garbage **gb)
+int	delete_quotes(t_cmd_lst *cmd, t_garbage **gb)
 {
 	char	*new_cmd;
 	size_t	new_cmd_len;
@@ -107,15 +107,15 @@ int	delete_quotes(t_w_cmd_list *cmd, t_garbage **gb)
 	return (1);
 }
 
-int	ft_del_quotes(t_minish *msh)
+int	ft_del_quotes(t_msh *msh)
 {
-	t_cmd_list		*cmds_cpy;
-	t_w_cmd_list	*cmd_cpy;
+	t_node_lst		*cmds_cpy;
+	t_cmd_lst	*cmd_cpy;
 
-	cmds_cpy = msh->cmds;
+	cmds_cpy = msh->lst_n;
 	while (cmds_cpy)
 	{
-		cmd_cpy = cmds_cpy->cmd;
+		cmd_cpy = cmds_cpy->lst_cmd;
 		while (cmd_cpy)
 		{
 			if (!delete_quotes(cmd_cpy, &(msh->garbage)))

@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lst_w_cmd.c                                        :+:      :+:    :+:   */
+/*   lst_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 17:16:51 by syluiset          #+#    #+#             */
-/*   Updated: 2023/05/26 15:44:23 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/19 14:03:15 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-t_w_cmd_list	*new_w_cmd_list(char *content, bool s_quote, bool d_quote,
-								t_garbage **gb)
+t_cmd_lst	*new_w_cmd_list(char *content, bool s_quote, bool d_quote,
+							 t_garbage **gb)
 {
-	t_w_cmd_list	*new;
+	t_cmd_lst	*new;
 
-	new = ft_malloc(gb, sizeof(t_w_cmd_list), 1);
+	new = ft_malloc(gb, sizeof(t_cmd_lst), 1);
 	if (!new)
 		return (NULL);
 	new->cmd = ft_gbstrtrim(content, " ", gb);
@@ -29,7 +29,7 @@ t_w_cmd_list	*new_w_cmd_list(char *content, bool s_quote, bool d_quote,
 	return (new);
 }
 
-t_w_cmd_list	*w_cmd_lst_last(t_w_cmd_list *lst)
+t_cmd_lst	*w_cmd_lst_last(t_cmd_lst *lst)
 {
 	while (lst)
 	{
@@ -40,10 +40,10 @@ t_w_cmd_list	*w_cmd_lst_last(t_w_cmd_list *lst)
 	return (lst);
 }
 
-t_w_cmd_list	*get_cmd(t_word_lst **old_lst, t_garbage **gb)
+t_cmd_lst	*get_cmd(t_word_lst **old_lst, t_garbage **gb)
 {
-	t_w_cmd_list	*cmds;
-	t_w_cmd_list	*new;
+	t_cmd_lst	*cmds;
+	t_cmd_lst	*new;
 	bool			two_quote;
 	bool			one_quote;
 
@@ -52,16 +52,19 @@ t_w_cmd_list	*get_cmd(t_word_lst **old_lst, t_garbage **gb)
 	one_quote = false;
 	while (*old_lst && (*old_lst)->type != w_pipe)
 	{
-		if ((*old_lst)->type == in_d_quote)
-			two_quote = true;
-		if ((*old_lst)->type == in_s_quote)
-			one_quote = true;
-		new = new_w_cmd_list((*old_lst)->word, one_quote, two_quote, gb);
-		if (cmds)
-			cmds->last_added->next = new;
-		else
-			cmds = new;
-		cmds->last_added = new;
+		if (!(*old_lst)->word[0] == '\0')
+		{
+			if ((*old_lst)->type == in_d_quote)
+				two_quote = true;
+			if ((*old_lst)->type == in_s_quote)
+				one_quote = true;
+			new = new_w_cmd_list((*old_lst)->word, one_quote, two_quote, gb);
+			if (cmds)
+				cmds->last_added->next = new;
+			else
+				cmds = new;
+			cmds->last_added = new;
+		}
 		word_lst_delone(old_lst, gb);
 	}
 	return (cmds);

@@ -30,11 +30,11 @@ t_garbage	*create_garbage_container(void)
 	return (gb_c);
 }
 
-t_garbage_list	*new_garbage(void *content)
+t_garbage_lst	*new_garbage(void *content)
 {
-	t_garbage_list	*new;
+	t_garbage_lst	*new;
 
-	new = malloc(sizeof(t_garbage_list));
+	new = malloc(sizeof(t_garbage_lst));
 	if (!new)
 		return (NULL);
 	new->content = content;
@@ -43,7 +43,7 @@ t_garbage_list	*new_garbage(void *content)
 	return (new);
 }
 
-t_garbage_list	*garbage_last(t_garbage_list *lst)
+t_garbage_lst	*garbage_last(t_garbage_lst *lst)
 {
 	while (lst)
 	{
@@ -56,7 +56,7 @@ t_garbage_list	*garbage_last(t_garbage_list *lst)
 
 void	*ft_malloc(t_garbage **garbage, int the_size, int number)
 {
-	t_garbage_list	*new;
+	t_garbage_lst	*new;
 	void			*content;
 
 	new = NULL;

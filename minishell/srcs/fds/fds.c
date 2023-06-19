@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   fds.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 17:45:12 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/12 17:03:03 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/15 17:17:57 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-t_fd_list	*create_fd(t_garbage **gb, t_redir_list *redirs)
+t_fd_lst	*create_fd(t_garbage **gb, t_redir_lst *redirs)
 {
-	t_fd_list	*new;
+	t_fd_lst	*new;
 
 	new = new_fds(gb);
 	if (!new)
 		return (NULL);
 	if (redirs->redir == in)
 		new->in = open(redirs->filename, O_RDONLY, 0444);
-	//		if (redirs->redir == inin)
-	//			new->in = ;//HEREDOC
+//			if (redirs->redir == inin)
+//				new->in =
 	if (redirs->redir == out)
 		new->out = open(redirs->filename, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (redirs->redir == outout)
@@ -30,10 +30,10 @@ t_fd_list	*create_fd(t_garbage **gb, t_redir_list *redirs)
 	return (new);
 }
 
-t_fd_list	*create_fds_list(t_redir_list *redirs, t_garbage **gb)
+t_fd_lst	*create_fds_list(t_redir_lst *redirs, t_garbage **gb)
 {
-	t_fd_list		*fds;
-	t_fd_list		*new;
+	t_fd_lst		*fds;
+	t_fd_lst		*new;
 
 	if (!redirs)
 		return (NULL);

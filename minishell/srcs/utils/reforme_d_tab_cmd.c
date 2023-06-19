@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   reforme_d_tab_cmd.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 11:36:12 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/12 13:39:20 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/15 17:04:37 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-int	count_length_w_cmd(t_w_cmd_list *lst)
+int	count_length_w_cmd(t_cmd_lst *lst)
 {
 	int	nb_p_char;
 
@@ -28,15 +28,13 @@ int	count_length_w_cmd(t_w_cmd_list *lst)
 	return (nb_p_char);
 }
 
-void	complete_tab(char **tabi, t_w_cmd_list **lst, t_garbage **gb, char *cmd)
+void	complete_tab(char **tabi, t_cmd_lst **lst, t_garbage **gb, char *cmd)
 {
 	int				i;
-	t_w_cmd_list	*next;
+	t_cmd_lst		*next;
 
-	i = 1;
-	tabi[0] = ft_gbstrdup(cmd, gb);
-	ft_free(gb, cmd);
-	*lst = (*lst)->next;
+	i = 0;
+	(void)cmd;
 	while (*lst)
 	{
 		tabi[i] = ft_gbstrdup((*lst)->cmd, gb);
@@ -55,7 +53,7 @@ void	complete_tab(char **tabi, t_w_cmd_list **lst, t_garbage **gb, char *cmd)
 	tabi[i] = NULL;
 }
 
-char	**reforme_d_tab_cmd(t_w_cmd_list **lst, char *cmd, t_garbage **gb)
+char	**reforme_d_tab_cmd(t_cmd_lst **lst, char *cmd, t_garbage **gb)
 {
 	int		nb_p_char;
 	char	**new_d_tab;

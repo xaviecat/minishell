@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:15:43 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/15 15:23:23 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/16 14:31:36 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,18 @@
 # include "minishell.h"
 
 /* enum */
+typedef enum e_builtin
+{
+	e_none,
+	e_cd,
+	e_echo,
+	e_env,
+	e_exit,
+	e_export,
+	e_pwd,
+	e_unset,
+}	t_builtin;
+
 typedef enum e_position
 {
 	prev,
@@ -32,7 +44,7 @@ typedef enum e_type_char
 	dash,
 	a_bracket,
 	dollar
-}			t_type_char;
+}	t_type_char;
 
 typedef enum e_type_word
 {
@@ -51,7 +63,7 @@ typedef enum e_type_word
 	outfile,
 	in_d_quote,
 	in_s_quote
-}			t_type_word;
+}	t_type_word;
 
 typedef enum e_type_redir
 {
@@ -59,62 +71,63 @@ typedef enum e_type_redir
 	inin,
 	out,
 	outout
-}			t_type_redir;
+}	t_type_redir;
 
 /* structure */
-/* list chaine*/
-
-typedef struct s_garbage_list
+typedef struct s_garbage_lst
 {
 	void					*content;
-	struct s_garbage_list	*next;
-	struct s_garbage_list	*prev;
-}				t_garbage_list;
+	struct s_garbage_lst	*next;
+	struct s_garbage_lst	*prev;
+}	t_garbage_lst;
 
 typedef struct s_garbage
 {
-	t_garbage_list	*first;
-	t_garbage_list	*last;
-}				t_garbage;
+	t_garbage_lst	*first;
+	t_garbage_lst	*last;
+}	t_garbage;
 
-typedef struct s_redir_list
+typedef struct s_redir_lst
 {
 	t_type_redir		redir;
 	char				*filename;
-	struct s_redir_list	*next;
-	struct s_redir_list	*last_added;
-}				t_redir_list;
+	struct s_redir_lst	*next;
+	struct s_redir_lst	*last_added;
+}	t_redir_lst;
 
-typedef struct s_fd_list
+typedef struct s_fd_lst
 {
-	int					in;
-	int					out;
-	struct s_fd_list	*next;
-	struct s_fd_list	*last_added;
-}				t_fd_list;
+	int				in;
+	int				out;
+	struct s_fd_lst	*next;
+	struct s_fd_lst	*last_added;
+}	t_fd_lst;
 
-typedef struct s_w_cmd_list
+typedef struct s_cmd_lst
 {
 	char				*cmd;
 	bool				s_quote;
 	bool				d_quote;
-	struct s_w_cmd_list	*next;
-	struct s_w_cmd_list	*last_added;
-}				t_w_cmd_list;
+	struct s_cmd_lst	*next;
+	struct s_cmd_lst	*last_added;
+}	t_cmd_lst;
 
-typedef struct s_cmd_list
+typedef struct s_node_lst
 {
-	t_w_cmd_list		*cmd;
-	char				*cmdpath; // strjoin PATH+CMD
+	t_cmd_lst			*lst_cmd;
+	char				*cmdpath;
 	char				**cmdtab;
-	bool				builtin;
-	struct s_redir_list	*redirs;
+	t_builtin			builtin;
+	pid_t				pid;
+	struct s_redir_lst	*redirs;
 	struct s_word_lst	*heredoc;
-	struct s_fd_list	*fds;
-	struct s_cmd_list	*next;
-	struct s_cmd_list	*previous;
-	struct s_cmd_list	*last_added;
-}				t_cmd_list;
+	pid_t				hdpid;
+	int 				pipehd[2];
+	struct s_fd_lst		*fds;
+	struct s_node_lst	*next;
+	struct s_node_lst	*previous;
+	struct s_node_lst	*last_added;
+}	t_node_lst;
 
 typedef struct s_word_lst
 {
@@ -123,7 +136,7 @@ typedef struct s_word_lst
 	struct s_word_lst	*next;
 	struct s_word_lst	*prev;
 	struct s_word_lst	*last_added;
-}						t_word_lst;
+}	t_word_lst;
 
 typedef struct s_char_lst
 {
@@ -135,16 +148,17 @@ typedef struct s_char_lst
 	struct s_char_lst	*prev;
 	struct s_char_lst	*next;
 	struct s_char_lst	*last_added;
-}				t_char_lst;
+}	t_char_lst;
 
-typedef struct s_minish
+typedef struct s_msh
 {
 	char		**envp;
-	t_cmd_list	*cmds;
+	int			prev_pipe[2];
+	int			curr_pipe[2];
 	t_char_lst	*lst_c;
 	t_word_lst	*lst_w;
+	t_node_lst	*lst_n;
 	t_garbage	*garbage;
-}				t_minish;
-
+}	t_msh;
 
 #endif

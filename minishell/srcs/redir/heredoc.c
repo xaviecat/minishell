@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:35:07 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/15 14:56:30 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/19 10:40:02 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-int	heredoc_handling(t_minish *msh)
+int	heredoc_handling(t_msh *msh)
 {
-	t_cmd_list		*cmds;
-	t_redir_list	*redirs;
+	t_node_lst		*cmds;
+	t_redir_lst		*redirs;
 	t_word_lst		*heredoc;
 
-	cmds = msh->cmds;
+	cmds = msh->lst_n;
 	while (cmds)
 	{
 		redirs = cmds->redirs;
@@ -29,11 +29,14 @@ int	heredoc_handling(t_minish *msh)
 			{
 				heredoc = display_heredoc(heredoc, msh, redirs);
 				if (!heredoc)
+				{
+					dprintf(2, "slut");
 					return (0);
+				}
 			}
 			redirs = redirs->next;
 		}
-		msh->cmds->heredoc = heredoc;
+		msh->lst_n->heredoc = heredoc;
 		cmds = cmds->next;
 	}
 	return (1);

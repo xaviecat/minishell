@@ -6,13 +6,13 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 14:59:14 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/12 14:49:12 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/16 16:37:22 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-int	is_empty(char *line)
+static int	is_empty(char *line)
 {
 	int	i;
 
@@ -31,15 +31,16 @@ int	is_empty(char *line)
 	return (0);
 }
 
-void	b_env(char **env)
+int	b_env(t_msh *msh)
 {
 	int	i;
 
 	i = 0;
-	while (env[i])
+	while (msh->envp[i])
 	{
-		if (is_empty(env[i]))
-			printf("%s\n", env[i]);
+		if (is_empty(msh->envp[i]))
+			printf("%s\n", msh->envp[i]);
 		i++;
 	}
+	return (0);
 }

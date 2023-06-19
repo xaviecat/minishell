@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   pars_in_minish.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 11:50:54 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/14 14:58:55 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/15 17:18:26 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-void	free_error_cmd_w(t_garbage **gb, t_w_cmd_list **lst)
+void	free_error_cmd_w(t_garbage **gb, t_cmd_lst **lst)
 {
-	t_w_cmd_list	*next;
+	t_cmd_lst	*next;
 
 	next = NULL;
 	while (*lst)
@@ -29,9 +29,9 @@ void	free_error_cmd_w(t_garbage **gb, t_w_cmd_list **lst)
 	}
 }
 
-void	free_error_cmd(t_garbage **gb, t_cmd_list **lst)
+void	free_error_cmd(t_garbage **gb, t_node_lst **lst)
 {
-	t_cmd_list	*next;
+	t_node_lst	*next;
 
 	next = NULL;
 	while (*lst)
@@ -42,16 +42,16 @@ void	free_error_cmd(t_garbage **gb, t_cmd_list **lst)
 			next = NULL;
 		free_error_redir(gb, &((*lst)->redirs));
 		free_error_fds(gb, &((*lst)->fds));
-		free_error_cmd_w(gb, &((*lst)->cmd));
+		free_error_cmd_w(gb, &((*lst)->lst_cmd));
 		*lst = next;
 	}
 }
 
-t_cmd_list	*create_command(t_minish **sh)
+t_node_lst	*create_command(t_msh **sh)
 {
-	t_redir_list	*redirs;
-	t_fd_list		*fds;
-	t_cmd_list		*new;
+	t_redir_lst	*redirs;
+	t_fd_lst		*fds;
+	t_node_lst		*new;
 
 	redirs = get_redir(&((*sh)->lst_w), &((*sh)->garbage));
 	if (errno == ENOMEM)
@@ -69,30 +69,30 @@ t_cmd_list	*create_command(t_minish **sh)
  * @param old_lst
  * @param minish
  */
-int	sh_pars(t_minish **sh)
+int	sh_pars(t_msh **msh)
 {
-	t_cmd_list		*new;
+	t_node_lst		*new;
 
 	new = NULL;
-	if (!(*sh)->lst_w)
+	if (!(*msh)->lst_w)
 		return (0);
-	while ((*sh)->lst_w)
+	while ((*msh)->lst_w)
 	{
-		new = create_command(sh);
+		new = create_command(msh);
 		if (!new && errno == ENOMEM)
-			return (free_error_cmd(&((*sh)->garbage), &((*sh)->cmds)), 0);
-		if (new->cmd)
-			new->builtin = builtin_or_command(new->cmd->cmd);
-		if ((*sh)->cmds)
+			return (free_error_cmd(&((*msh)->garbage), &((*msh)->lst_n)), 0);
+		if (new->lst_cmd)
+			new->builtin = builtin_or_command(new->lst_cmd->cmd);
+		if ((*msh)->lst_n)
 		{
-			new->previous = (*sh)->cmds->last_added;
-			(*sh)->cmds->last_added->next = new;
+			new->previous = (*msh)->lst_n->last_added;
+			(*msh)->lst_n->last_added->next = new;
 		}
 		else
-			(*sh)->cmds = new;
-		(*sh)->cmds->last_added = new;
-		if ((*sh)->lst_w && (*sh)->lst_w->type == w_pipe)
-			word_lst_delone(&(*sh)->lst_w, &(*sh)->garbage);
+			(*msh)->lst_n = new;
+		(*msh)->lst_n->last_added = new;
+		if ((*msh)->lst_w && (*msh)->lst_w->type == w_pipe)
+			word_lst_delone(&(*msh)->lst_w, &(*msh)->garbage);
 	}
 	return (1);
 }

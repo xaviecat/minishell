@@ -12,7 +12,7 @@
 
 #include "../../incs/minishell.h"
 
-int	length_char_tab(char **tabi)
+static int	length_char_tab(char **tabi)
 {
 	int	i;
 
@@ -22,7 +22,7 @@ int	length_char_tab(char **tabi)
 	return (i);
 }
 
-int	create_unset_tab(char **new_tab, char **old_tab, t_garbage **gb, char *var)
+static int	unset_tab(char **new_tab, char **old_tab, t_garbage **gb, char *var)
 {
 	int	i;
 	int	j;
@@ -50,7 +50,7 @@ int	create_unset_tab(char **new_tab, char **old_tab, t_garbage **gb, char *var)
 	return (0);
 }
 
-int	check_var_exist_and_valid(char *var, char **tabi)
+static int	check_var_exist_and_valid(char *var, char **tabi)
 {
 	int	i;
 
@@ -68,29 +68,29 @@ int	check_var_exist_and_valid(char *var, char **tabi)
 	while (tabi[i])
 	{
 		if (ft_strncmp(var, tabi[i], ft_strlen(var)) == 0)
-			return (0);
+			return (1);
 		i++;
 	}
 	return (0);
 }
 
-int	b_unset(t_minish *sh)
+int	b_unset(t_msh *sh)
 {
 	char	**old_envp;
 	char	*name_var;
 
-	if (!sh->cmds->cmd->next->cmd)
+	if (!sh->lst_n->lst_cmd->next->cmd)
 		return (0);
-	name_var = ft_gbstrdup(sh->cmds->cmd->next->cmd, &(sh->garbage));
+	name_var = ft_gbstrdup(sh->lst_n->lst_cmd->next->cmd, &(sh->garbage));
 	if (!check_var_exist_and_valid(name_var, sh->envp))
-		return (0);
+		return (1);
 	old_envp = ft_gbtabdup(sh->envp, &(sh->garbage));
 	if (!old_envp && errno == ENOMEM)
-		return (1);
+		return (ENOMEM);
 	ft_gbtabfree(sh->envp, &(sh->garbage));
 	sh->envp = ft_malloc(&(sh->garbage), sizeof(char *),
 			length_char_tab(old_envp));
-	create_unset_tab(sh->envp, old_envp, &(sh->garbage), name_var);
+	unset_tab(sh->envp, old_envp, &(sh->garbage), name_var);
 	ft_free(&(sh->garbage), name_var);
 	return (0);
 }
