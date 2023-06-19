@@ -82,7 +82,9 @@ int	does_contain_quotes(char *str)
 
 	i = 0;
 	while (str[i++])
+	{
 		if (str[i - 1] == '\'' || str[i - 1] == '"')
 			return (1);
+	}
 	return (0);
 }

@@ -66,6 +66,7 @@ typedef int		(*t_builtin_tab)();
 
 /* global */
 void			free_and_exit_minish(t_msh *minish, char ***envp_sh);
+void			free_end_loop(t_msh *msh);
 void			print_bannier(void);
 t_msh			*create_minishell(char **envp, char **envp_sh);
 /* parsing */
@@ -105,12 +106,12 @@ bool			is_bad_redir(t_char_lst *lst);
 void			free_error_word_lst(t_garbage **gb, t_word_lst **lst);
 
 /* builtins */
-void			b_pwd(char **envp);
-void			b_cd(t_cmd_lst *cmd, t_msh *msh);
-void			b_echo(t_cmd_lst *content);
+int				b_pwd(t_msh *msh);
+int				b_cd(t_msh *msh);
+int				b_echo(t_msh *msh);
 void			b_exit(t_msh *msh);
 int				b_export(t_msh *msh, t_cmd_lst *cmds);
-void			b_env(char **env);
+int				b_env(t_msh *msh);
 int				b_unset(t_msh *sh);
 int				find_builtin(t_msh *sh);
 
@@ -129,6 +130,7 @@ void			signal_hub_exec(void);
 void			signal_hub_ign(void);
 void	signal_sigquit(int signum);
 void	signal_sigint(int signum);
+void	signal_hub_default(void);
 
 /* utils */
 char			*ft_cut_var(char *str, t_garbage **gb);
@@ -162,6 +164,7 @@ char			**ft_gbsplit(char const *s, char c, t_garbage **gb);
 char			*ft_gbsubstr(char const *s,
 					unsigned int start, size_t len, t_garbage **gb);
 int				is_concat(char *cmd);
+char			*ft_gbitoa(int n, t_garbage **gb);
 
 /* list_char function */
 t_char_lst		*char_lst_new(char c, t_garbage **gb);

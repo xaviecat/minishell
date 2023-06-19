@@ -47,10 +47,10 @@ void	minishell(char **envp)
 
 	envp_sh = NULL;
 	print_bannier();
-	signal_hub_term();
 	while (1)
 	{
 		line = readline(GREEN UNDERLINE"TRI_SH $>"RESET" ");
+		signal_hub_term();
 		if (!line || *line == '\0')
 		{
 			if (line)
@@ -60,7 +60,7 @@ void	minishell(char **envp)
 			}
 			else
 			{
-				printf("exit");
+				printf("exit\n");
 				break ;
 			}
 		}

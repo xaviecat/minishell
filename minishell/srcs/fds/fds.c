@@ -21,8 +21,8 @@ t_fd_lst	*create_fd(t_garbage **gb, t_redir_lst *redirs)
 		return (NULL);
 	if (redirs->redir == in)
 		new->in = open(redirs->filename, O_RDONLY, 0444);
-	//		if (redirs->redir == inin)
-	//			new->in = ;//HEREDOC
+//			if (redirs->redir == inin)
+//				new->in =
 	if (redirs->redir == out)
 		new->out = open(redirs->filename, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (redirs->redir == outout)

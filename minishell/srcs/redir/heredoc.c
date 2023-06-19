@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:35:07 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/15 14:56:30 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/19 10:40:02 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ int	heredoc_handling(t_msh *msh)
 			{
 				heredoc = display_heredoc(heredoc, msh, redirs);
 				if (!heredoc)
+				{
+					dprintf(2, "slut");
 					return (0);
+				}
 			}
 			redirs = redirs->next;
 		}

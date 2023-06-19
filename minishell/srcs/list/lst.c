@@ -24,6 +24,9 @@ t_node_lst	*lst_cmd_new(t_cmd_lst *cmds, t_fd_lst *fds,
 	new->builtin = e_none;
 	new->redirs = redir;
 	new->fds = fds;
+	new->cmdpath = NULL;
+	new->cmdtab = NULL;
+	new->heredoc = NULL;
 	new->next = NULL;
 	new->previous = NULL;
 	return (new);

@@ -73,8 +73,14 @@ int	redir_is_valid(t_word_lst **lst, t_garbage **gb)
 int	check_pipe_and_redir(t_garbage **gb, t_word_lst **lst)
 {
 	if (!(redir_is_valid(lst, gb)))
+	{
+		g_exit_status = 2;
 		return (0);
+	}
 	if (!(pipe_is_valid(lst, gb)))
+	{
+		g_exit_status = 2;
 		return (0);
+	}
 	return (1);
 }

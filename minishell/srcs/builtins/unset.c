@@ -83,10 +83,10 @@ int	b_unset(t_msh *sh)
 		return (0);
 	name_var = ft_gbstrdup(sh->lst_n->lst_cmd->next->cmd, &(sh->garbage));
 	if (!check_var_exist_and_valid(name_var, sh->envp))
-		return (0);
+		return (1);
 	old_envp = ft_gbtabdup(sh->envp, &(sh->garbage));
 	if (!old_envp && errno == ENOMEM)
-		return (1);
+		return (ENOMEM);
 	ft_gbtabfree(sh->envp, &(sh->garbage));
 	sh->envp = ft_malloc(&(sh->garbage), sizeof(char *),
 			length_char_tab(old_envp));

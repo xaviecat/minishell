@@ -27,6 +27,7 @@ SRCS			:=	minishell.c\
 					garbage/ft_gbtabdup.c\
 					garbage/ft_gbtabfree.c\
 					garbage/ft_gbtabjoin.c\
+					garbage/ft_gbitoa.c\
 					\
 					list/find_type.c\
 					list/lst.c\
@@ -97,7 +98,7 @@ CFLAGS			:=	-Wall -Wextra -Werror
 
 RDL				:=	-lreadline
 
-ASAN_F			:=	-g3 #-fsanitize=address
+ASAN_F			:=	-g3 -fsanitize=address
 
 #========================EXEC===============================#
 all				:	$(NAME)

@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 16:59:21 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/15 17:22:20 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/19 11:02:42 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,16 @@ int	parsing_char(t_msh **minish, char *line, char **envp_sh)
 {
 	if (!(create_char_lst_with_c_inside(line, minish)))
 	{
+		g_exit_status = 128 + 12;
 		free(line);
 		free_and_exit_minish(*minish, &envp_sh);
 	}
 	give_type_in_lst(&(*minish)->lst_c);
 	if (unhandled_char((*minish)->lst_c))
-		return (ft_free_all(&(*minish)->garbage), 0);
+	{
+		g_exit_status = 2;
+		return (free_end_loop(*minish), 0);
+	}
 	harmonize_spaces(&((*minish)->lst_c), &((*minish)->garbage));
 //	print_lst_char((*minish)->lst_c);
 	return (1);
@@ -28,15 +32,20 @@ int	parsing_char(t_msh **minish, char *line, char **envp_sh)
 
 int	parsing_word(t_msh **minish, char **envp_sh)
 {
+	int	ret;
+
 	if (!(create_word_lst(minish)))
 		free_and_exit_minish(*minish, &envp_sh);
 	if ((!check_pipe_and_redir(&((*minish)->garbage), &((*minish)->lst_w))))
 		return (0);
-	if (!expand_commands(*minish))
+	ret = expand_commands(*minish);
+	if (ret == 0)
 	{
 		ft_free_all(&((*minish)->garbage)),
 		free_and_exit_minish(*minish, &envp_sh);
 	}
+	if (ret == 2)
+		return (free_end_loop(*minish), 0);
 //	print_lst_word((*minish)->lst_w);
 	return (1);
 }
