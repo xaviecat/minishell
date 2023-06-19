@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:35:07 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/19 10:40:02 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/19 14:30:26 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,8 @@ int	heredoc_handling(t_msh *msh)
 			if (redirs->redir == inin)
 			{
 				heredoc = display_heredoc(heredoc, msh, redirs);
-				if (!heredoc)
-				{
-					dprintf(2, "slut");
+				if (!heredoc && errno == ENOMEM)
 					return (0);
-				}
 			}
 			redirs = redirs->next;
 		}

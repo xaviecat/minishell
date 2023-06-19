@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 13:56:29 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/19 14:11:16 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/19 14:48:15 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,6 @@ static size_t	get_newcmd_len(char *cmd)
 		if ((cmd[i] != '"' || is_sq_opened > 0)
 			&& (cmd[i] != '\'' || is_dq_opened > 0))
 			counter++;
-		if (cmd[i + 1] && ((cmd[i] == '"' && cmd[i + 1] == '"')
-				|| (cmd[i] == '\'' && cmd[i + 1] == '\'')))
-			counter += 2;
 		i++;
 	}
 	return (counter);
@@ -85,8 +82,6 @@ static char	*modify_cmd(char *cmd, char *new_cmd, t_garbage **gb)
 		if ((cmd[i] != '"' || is_sq_opened > 0)
 			&& (cmd[i] != '\'' || is_dq_opened > 0))
 			new_cmd[j++] = cmd[i];
-		if (is_quote_quote(cmd, i))
-			new_cmd[j++] = cmd[i];
 		i++;
 	}
 	new_cmd[j] = 0;
@@ -110,7 +105,7 @@ int	delete_quotes(t_cmd_lst *cmd, t_garbage **gb)
 int	ft_del_quotes(t_msh *msh)
 {
 	t_node_lst		*cmds_cpy;
-	t_cmd_lst	*cmd_cpy;
+	t_cmd_lst		*cmd_cpy;
 
 	cmds_cpy = msh->lst_n;
 	while (cmds_cpy)

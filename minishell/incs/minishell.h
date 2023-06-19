@@ -83,7 +83,7 @@ int				redir_is_valid(t_word_lst **lst, t_garbage **gb);
 int				check_pipe_and_redir(t_garbage **gb, t_word_lst **lst);
 char			**reforme_d_tab_cmd(t_cmd_lst **lst, char *cmd, t_garbage **gb);
 int				ft_del_quotes(t_msh *msh);
-int				export_error_management(t_msh *msh, t_w_cmd_list *cmd);
+int				export_error_management(t_msh *msh, t_cmd_lst *cmd);
 
 
 /* redir */
@@ -167,7 +167,7 @@ char			*ft_gbsubstr(char const *s,
 					unsigned int start, size_t len, t_garbage **gb);
 int				is_concat(char *cmd);
 char			*ft_gbitoa(int n, t_garbage **gb);
-int				is_quote_quote(char *str, size_t i);
+//int				is_quote_quote(char *str, size_t i);
 
 /* list_char function */
 t_char_lst		*char_lst_new(char c, t_garbage **gb);
