@@ -122,7 +122,6 @@ typedef struct s_node_lst
 	struct s_redir_lst	*redirs;
 	struct s_word_lst	*heredoc;
 	pid_t				hdpid;
-	int 				pipehd[2];
 	struct s_fd_lst		*fds;
 	struct s_node_lst	*next;
 	struct s_node_lst	*previous;
@@ -153,8 +152,6 @@ typedef struct s_char_lst
 typedef struct s_msh
 {
 	char		**envp;
-	int			prev_pipe[2];
-	int			curr_pipe[2];
 	t_char_lst	*lst_c;
 	t_word_lst	*lst_w;
 	t_node_lst	*lst_n;
