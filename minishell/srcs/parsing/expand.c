@@ -188,19 +188,16 @@ int	expand_commands(t_msh *msh)
 			ft_free(&(msh->garbage), msh->lst_w->word);
 			msh->lst_w->word = ft_gbitoa(g_exit_status, &(msh->garbage));
 		}
-		else
-		{
-			if (w_lst_cpy->type != delimiteur)
+		if (w_lst_cpy->type != delimiteur)
 
-				w_lst_cpy->word = expand_vars(w_lst_cpy->word, msh);
-			if (!w_lst_cpy->word)
-				return (0); // ? code d'erreur a ajouter
-			if (ft_strchr(w_lst_cpy->word, ' ') != NULL
-				&& ft_strchr(w_lst_cpy->word, '"') == NULL
-				&& ft_strchr(w_lst_cpy->word, '"') == NULL)
-				if (!cut_space_expand(&w_lst_cpy, &(msh->garbage)))
-					return (0);
-		}
+			w_lst_cpy->word = expand_vars(w_lst_cpy->word, msh);
+		if (!w_lst_cpy->word)
+			return (0); // ? code d'erreur a ajouter
+		if (ft_strchr(w_lst_cpy->word, ' ') != NULL
+			&& ft_strchr(w_lst_cpy->word, '"') == NULL
+			&& ft_strchr(w_lst_cpy->word, '"') == NULL)
+			if (!cut_space_expand(&w_lst_cpy, &(msh->garbage)))
+				return (0);
 		w_lst_cpy = w_lst_cpy->next;
 	}
 	return (1);
