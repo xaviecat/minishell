@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_msgs.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 13:34:42 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/14 16:56:14 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/15 17:12:21 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # define BACKSLASH		"minishell: feature not handled: '\\'\n"
 # define D_DOLLAR		"minishell: feature not handled: '$$'\n"
 # define S_DOLLAR(x)	"minishell: feature not handled: " #x "\n"
+# define MEXP			"minishell: export: '"
+# define NOVAL_ID		"': not a valid identifier\n"
 
 # define CMD_NOT_FOUND	": command not found\n"
 

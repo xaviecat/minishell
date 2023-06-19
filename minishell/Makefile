@@ -60,6 +60,7 @@ SRCS			:=	minishell.c\
 					utils/reforme_d_tab_cmd.c\
 					utils/utils.c\
 					utils/heredoc_utils.c\
+					utils/export_error_management.c\
 
 SRCS_D			:=	srcs/
 
