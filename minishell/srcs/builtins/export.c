@@ -146,7 +146,7 @@ int	b_export(t_msh *msh, t_cmd_lst *cmd)
 	char	**save_envp;
 	char	**modified_envp;
 
-	if (!cmd->next || (cmd->next && *(cmd->next->cmd) == 0))
+	if (!cmd->next)
 		return (export_print(msh));
 	if (!export_error_management(msh, cmd))
 		return (1);
