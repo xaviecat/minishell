@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 11:36:08 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/19 14:49:47 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/19 14:53:38 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,11 @@ char	*check_access(char **cmdpaths, char *cmd, t_garbage **gb)
 		i++;
 	}
 	if (!f_ok)
-		return (ft_fdprintf(2, RED"%s"CMD_NOT_FOUND RESET, cmd), NULL); //! retour a gerer
+	{
+		g_exit_status = 127;
+		return (ft_fdprintf(2, RED"%s"CMD_NOT_FOUND RESET,
+							cmd), NULL); //! retour a gerer
+	}
 	perror(cmd);
 	return (NULL);//! a voir
 }
@@ -129,7 +133,7 @@ void	give_access(char **path, t_node_lst **lst, t_garbage **gb)
 		cmdpaths = get_cmdpath(path, (*lst)->lst_cmd->cmd, gb);
 		(*lst)->cmdpath = check_access(cmdpaths, (*lst)->lst_cmd->cmd, gb);
 		if (!((*lst)->cmdpath))
-			return ;//ft_fdprintf(2, RED"no path%s\n"RESET, (*lst)->lst_cmd->lst_cmd) //! ERROR A GERER
+			return;//ft_fdprintf(2, RED"no path%s\n"RESET, (*lst)->lst_cmd->lst_cmd) //! ERROR A GERER
 		(*lst) = (*lst)->next;
 	}
 	ft_gbtabfree(path, gb);

@@ -61,6 +61,7 @@ void	minishell(char **envp)
 			else
 			{
 				printf("exit\n");
+				ft_tabfree(envp_sh);
 				break ;
 			}
 		}

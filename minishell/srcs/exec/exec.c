@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 19:25:52 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/19 14:48:15 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/19 15:31:53 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,13 +162,7 @@ void	execution(t_msh *msh)
 	//	if (msh->lst_n->next)
 		waitpid(msh->lst_n->pid, &status_pid, 0);
 		if (WIFSIGNALED(status_pid))
-		{
-//			if (WTERMSIG(status_pid) == SIGINT)
-//				signal_sigint(SIGINT);
-//			else if (WTERMSIG(SIGQUIT))
-//				signal_sigquit(SIGQUIT);
 			signal_exec(WTERMSIG(status_pid));
-		}
 		else
 			g_exit_status = WEXITSTATUS(status_pid);
 		//if (g_exit_status == EXIT_FAILURE)
