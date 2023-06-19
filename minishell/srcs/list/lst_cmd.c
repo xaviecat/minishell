@@ -6,14 +6,14 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 17:16:51 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/19 14:03:15 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/19 14:04:01 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
 t_cmd_lst	*new_w_cmd_list(char *content, bool s_quote, bool d_quote,
-							 t_garbage **gb)
+			t_garbage **gb)
 {
 	t_cmd_lst	*new;
 

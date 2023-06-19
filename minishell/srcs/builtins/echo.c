@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 13:08:46 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/19 13:14:40 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/19 14:58:59 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ int	b_echo(t_msh *msh)
 	new_line = param_n(&(msh->lst_n->lst_cmd));
 	while (msh->lst_n->lst_cmd)
 	{
-		printf("%s ", msh->lst_n->lst_cmd->cmd);
+		if (msh->lst_n->lst_cmd->next)
+			printf("%s ", msh->lst_n->lst_cmd->cmd);
+		else
+			printf("%s", msh->lst_n->lst_cmd->cmd);
 		msh->lst_n->lst_cmd = msh->lst_n->lst_cmd->next;
 	}
 	if (!new_line)

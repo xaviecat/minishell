@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_access.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 11:36:08 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/15 17:16:07 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/19 14:49:47 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ void	cmd_in_current_dir(t_node_lst **lst, t_garbage **gb)
 	if (!((*lst)->cmdpath))
 		return ; //!ERROR
 	return ;
-
 }
 
 void	give_access(char **path, t_node_lst **lst, t_garbage **gb)
