@@ -3,14 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   remove_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 13:56:29 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/15 17:16:07 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/19 14:11:16 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
+
+//static size_t	get_newcmd_len(char *cmd)
+//{
+//	size_t	i;
+//	size_t	counter;
+//	int		is_sq_opened;
+//	int		is_dq_opened;
+//
+//	i = 0;
+//	counter = 0;
+//	is_dq_opened = -1;
+//	is_sq_opened = -1;
+//	while (cmd[i])
+//	{
+//		if (cmd[i] == '"' && is_sq_opened < 0)
+//			is_dq_opened *= -1;
+//		else if (cmd[i] == '\'' && is_dq_opened < 0)
+//			is_sq_opened *= -1;
+//		if ((cmd[i] != '"' || is_sq_opened > 0)
+//			&& (cmd[i] != '\'' || is_dq_opened > 0))
+//			counter++;
+//		i++;
+//	}
+//	return (counter);
+//}
 
 static size_t	get_newcmd_len(char *cmd)
 {
@@ -32,6 +57,9 @@ static size_t	get_newcmd_len(char *cmd)
 		if ((cmd[i] != '"' || is_sq_opened > 0)
 			&& (cmd[i] != '\'' || is_dq_opened > 0))
 			counter++;
+		if (cmd[i + 1] && ((cmd[i] == '"' && cmd[i + 1] == '"')
+				|| (cmd[i] == '\'' && cmd[i + 1] == '\'')))
+			counter += 2;
 		i++;
 	}
 	return (counter);
@@ -56,6 +84,8 @@ static char	*modify_cmd(char *cmd, char *new_cmd, t_garbage **gb)
 			is_sq_opened *= -1;
 		if ((cmd[i] != '"' || is_sq_opened > 0)
 			&& (cmd[i] != '\'' || is_dq_opened > 0))
+			new_cmd[j++] = cmd[i];
+		if (is_quote_quote(cmd, i))
 			new_cmd[j++] = cmd[i];
 		i++;
 	}

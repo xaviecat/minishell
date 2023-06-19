@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 13:17:59 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/13 12:06:01 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/15 15:15:01 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	concat_var(char *cmd, size_t var_name_len, t_garbage **gb, char **envp)
 {
 	size_t	i;
 
-	printf("concatening var...\n");
 	i = 0;
 	while (envp[i])
 	{

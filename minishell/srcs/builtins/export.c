@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:46:20 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/13 13:12:38 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/15 17:07:24 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,9 +146,10 @@ int	b_export(t_msh *msh, t_cmd_lst *cmd)
 	char	**save_envp;
 	char	**modified_envp;
 
-	printf("cest bon ici\n");
-	if (!cmd->next)
+	if (!cmd->next || (cmd->next && *(cmd->next->cmd) == 0))
 		return (export_print(msh));
+	if (!export_error_management(msh, cmd))
+		return (1);
 	save_envp = msh->envp;
 	if (!ft_alloc_envp(msh, cmd))
 		return (0);
