@@ -66,6 +66,7 @@ typedef int		(*t_builtin_tab)();
 
 /* global */
 void			free_and_exit_minish(t_msh *minish, char ***envp_sh);
+void			free_end_loop(t_msh *msh);
 void			print_bannier(void);
 t_msh			*create_minishell(char **envp, char **envp_sh);
 /* parsing */
@@ -163,6 +164,7 @@ char			**ft_gbsplit(char const *s, char c, t_garbage **gb);
 char			*ft_gbsubstr(char const *s,
 					unsigned int start, size_t len, t_garbage **gb);
 int				is_concat(char *cmd);
+char			*ft_gbitoa(int n, t_garbage **gb);
 
 /* list_char function */
 t_char_lst		*char_lst_new(char c, t_garbage **gb);

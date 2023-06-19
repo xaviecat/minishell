@@ -27,6 +27,7 @@ SRCS			:=	minishell.c\
 					garbage/ft_gbtabdup.c\
 					garbage/ft_gbtabfree.c\
 					garbage/ft_gbtabjoin.c\
+					garbage/ft_gbitoa.c\
 					\
 					list/find_type.c\
 					list/lst.c\

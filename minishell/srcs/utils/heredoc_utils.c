@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:57:11 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/15 16:38:42 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/19 10:51:28 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ t_word_lst	*run_heredoc(char *delimiter, t_garbage **gb)
 	delimiter_len = ft_strlen(delimiter);
 	heredoc = NULL;
 	signal_hub_heredoc();
-	dprintf(2, "ccc\n");
 	while (g_exit_status != 130)
 	{
 		line = readline("> ");
@@ -114,6 +113,6 @@ t_word_lst	*display_heredoc(t_word_lst *heredoc,
 	if ((!heredoc && errno == ENOMEM)
 		|| (!does_contain_quotes(redirs->filename)
 			&& !expand_heredoc(heredoc, msh)))
-        return (NULL);
+		return (NULL);
 	return (heredoc);
 }

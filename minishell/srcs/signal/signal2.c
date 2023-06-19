@@ -42,11 +42,6 @@ void	signal_exec(int signum)
 		rl_on_new_line();
 		g_exit_status = 128 + signum;
 	}
-//	if (signum == SIGTSTP)
-//	{
-//		rl_redisplay();
-//		g_exit_status = 128 + signum;
-//	}
 	if (signum == SIGQUIT)
 	{
 		ft_putendl_fd("Quit (core dumped)", 2);
