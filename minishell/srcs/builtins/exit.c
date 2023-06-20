@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 13:05:10 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/20 12:55:13 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/20 13:08:41 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,5 @@ int	b_exit(t_msh *msh)
 	msh->garbage = NULL;
 	free(msh);
 	msh = NULL;
-	exit(EXIT_SUCCESS);
+	exit(EXIT_SUCCESS);// ! a changer
 }

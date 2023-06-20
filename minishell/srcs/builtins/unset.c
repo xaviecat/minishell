@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 13:43:43 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/12 18:19:29 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/20 13:10:27 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,18 +79,22 @@ int	b_unset(t_msh *sh)
 	char	**old_envp;
 	char	*name_var;
 
-	if (!sh->lst_n->lst_cmd->next->cmd)
+	if (!sh->lst_n->lst_cmd->next)
 		return (0);
-	name_var = ft_gbstrdup(sh->lst_n->lst_cmd->next->cmd, &(sh->garbage));
-	if (!check_var_exist_and_valid(name_var, sh->envp))
-		return (1);
-	old_envp = ft_gbtabdup(sh->envp, &(sh->garbage));
-	if (!old_envp && errno == ENOMEM)
-		return (ENOMEM);
-	ft_gbtabfree(sh->envp, &(sh->garbage));
-	sh->envp = ft_malloc(&(sh->garbage), sizeof(char *),
-			length_char_tab(old_envp));
-	unset_tab(sh->envp, old_envp, &(sh->garbage), name_var);
-	ft_free(&(sh->garbage), name_var);
+	while (sh->lst_n->lst_cmd)
+	{
+		name_var = ft_gbstrdup(sh->lst_n->lst_cmd->next->cmd, &(sh->garbage));
+		if (!check_var_exist_and_valid(name_var, sh->envp))
+			return (1);
+		old_envp = ft_gbtabdup(sh->envp, &(sh->garbage));
+		if (!old_envp && errno == ENOMEM)
+			return (ENOMEM);
+		ft_gbtabfree(sh->envp, &(sh->garbage));
+		sh->envp = ft_malloc(&(sh->garbage), sizeof(char *),
+				length_char_tab(old_envp));
+		unset_tab(sh->envp, old_envp, &(sh->garbage), name_var);
+		ft_free(&(sh->garbage), name_var);
+		sh->lst_n->lst_cmd = sh->lst_n->lst_cmd->next;
+	}
 	return (0);
 }
