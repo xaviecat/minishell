@@ -6,18 +6,12 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 19:25:52 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/20 10:25:14 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/20 13:07:17 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-/**
- * @brief Execute all function pars in the cmd_list, it should be an builtin or
- * a command with complete path
- * @param minish
- * @return 0 if all worked fine, 1 if an error occurred
- */
 int	exec_all(t_msh *msh)
 {
 	t_node_lst	*first;
@@ -25,17 +19,17 @@ int	exec_all(t_msh *msh)
 	first = msh->lst_n;
 	while (msh->lst_n)
 	{
-		if (msh->lst_n->builtin > e_none)
-		{
-			if (!find_builtin(msh))
-				return (0);
-		}
-		else
-		{
-			if (msh->lst_n->lst_cmd)
-				msh->lst_n->cmdtab = reforme_d_tab_cmd(&(msh->lst_n->lst_cmd),
-						msh->lst_n->lst_cmd->cmd, &(msh->garbage));
-		}
+//		if (msh->lst_n->builtin < e_none)
+//		{
+//			if (!find_builtin(msh))
+//				return (0);
+//		}
+//		else
+//		{
+		if (msh->lst_n->lst_cmd)
+			msh->lst_n->cmdtab = reforme_d_tab_cmd(&(msh->lst_n->lst_cmd),
+					msh->lst_n->lst_cmd->cmd, &(msh->garbage));
+//		}
 		msh->lst_n = msh->lst_n->next;
 	}
 	msh->lst_n = first;
@@ -114,14 +108,24 @@ void	redirect_fds_out(t_msh *msh, int *prev_pipe, int *curr_pipe)
 	}
 }
 
+void	builtin_execution(t_msh *msh)
+{
+	static t_builtin_tab	builtin_tab[8] = {&b_echo, &b_env, &b_pwd, &b_cd, NULL
+		/*&b_export*/, &b_unset, NULL/*&b_exit*/, NULL};
+	ft_fdprintf(2, RED"builtin = %d"RESET, msh->lst_n->builtin);
+	builtin_tab[msh->lst_n->builtin](msh);
+}
+
 void	child(t_msh *msh, int *prev_pipe, int *curr_pipe)
 {
-//			dprintf(2, GREEN"child = [%d]\n"RESET, getpid());
+//	dprintf(2, GREEN"child = [%d]\n"RESET, getpid());
 	redirect_fds_in(msh, prev_pipe, curr_pipe);
 	redirect_fds_out(msh, prev_pipe, curr_pipe);
 	signal_hub_exec();
-	if (msh->lst_n->cmdpath)
+	if (msh->lst_n->builtin == e_none && msh->lst_n->cmdpath)
 		execve(msh->lst_n->cmdpath, msh->lst_n->cmdtab, msh->envp);
+	else if (msh->lst_n->builtin < e_none)
+		builtin_execution(msh);
 	exit(msh->lst_n->exit_code); //! en cas d'erreur set le exit code
 }
 
@@ -143,6 +147,33 @@ void	parent(t_msh *msh, int *prev_pipe, int *curr_pipe)
 		if (msh->lst_n->fds->out > 1)
 			close(msh->lst_n->fds->out);
 	}
+}
+
+void	wait_fork(t_msh *msh, int status_pid)
+{
+	t_node_lst	*first;
+
+	first = msh->lst_n;
+	while (msh->lst_n)
+	{
+		//	if (msh->lst_n->next)
+		waitpid(msh->lst_n->pid, &status_pid, 0);
+		if (WIFSIGNALED(status_pid))
+		{
+//			if (WTERMSIG(status_pid) == SIGINT)
+//				signal_sigint(SIGINT);
+//			else if (WTERMSIG(SIGQUIT))
+//				signal_sigquit(SIGQUIT);
+			signal_exec(WTERMSIG(status_pid));
+		}
+		else
+			g_exit_status = WEXITSTATUS(status_pid);
+		//if (g_exit_status == EXIT_FAILURE)
+		//return ; //TOUT FREE AND EXIT avec code failure
+		msh->lst_n = msh->lst_n->next;
+	}
+	signal_hub_exec();
+	msh->lst_n = first;
 }
 
 void	forking(t_msh *msh)
@@ -173,41 +204,18 @@ void	forking(t_msh *msh)
 	if (prev_pipe[0] != -1)
 		close_pipe(prev_pipe);
 	msh->lst_n = first;
-	while (msh->lst_n)
-	{
-	//	if (msh->lst_n->next)
-		waitpid(msh->lst_n->pid, &status_pid, 0);
-		if (WIFSIGNALED(status_pid))
-		{
-//			if (WTERMSIG(status_pid) == SIGINT)
-//				signal_sigint(SIGINT);
-//			else if (WTERMSIG(SIGQUIT))
-//				signal_sigquit(SIGQUIT);
-			signal_exec(WTERMSIG(status_pid));
-		}
-		else
-			g_exit_status = WEXITSTATUS(status_pid);
-		//if (g_exit_status == EXIT_FAILURE)
-			//return ; //TOUT FREE AND EXIT avec code failure
-		msh->lst_n = msh->lst_n->next;
-	}
-	signal_hub_exec();
-	msh->lst_n = first;
+	wait_fork(msh, status_pid);
 }
 
 void	execution(t_msh *msh)
 {
-	pid_t	main_fork;
-
+	msh->n_node = 2;
 //	dprintf(2, GREEN"parents = [%d]\n"RESET, getpid());
-	main_fork = fork();
-	if (main_fork < 0)
-		return ;
-	else if (main_fork == 0)
-	{
-//		dprintf(2, GREEN"main_fork = [%d]\n"RESET, getpid());
+	if (msh->n_node > 1)
 		forking(msh);
-	}
 	else
-		waitpid(main_fork, 0, 0);
+	{
+		ft_fdprintf(2, "icilaputain");
+		return;
+	}
 }

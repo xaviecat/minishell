@@ -62,7 +62,7 @@
 extern int		g_exit_status;
 
 typedef bool	(*t_unhandled_tab)(t_char_lst *);
-typedef int		(*t_builtin_tab)();
+typedef int		(*t_builtin_tab)(t_msh *msh);
 
 /* global */
 void			free_and_exit_minish(t_msh *minish, char ***envp_sh);

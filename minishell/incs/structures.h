@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:15:43 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/16 14:31:36 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/20 11:30:51 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@
 /* enum */
 typedef enum e_builtin
 {
-	e_none,
-	e_cd,
 	e_echo,
 	e_env,
-	e_exit,
-	e_export,
 	e_pwd,
+	e_cd,
+	e_export,
 	e_unset,
+	e_exit,
+	e_none,
 }	t_builtin;
 
 typedef enum e_position
@@ -122,7 +122,6 @@ typedef struct s_node_lst
 	pid_t				pid;
 	struct s_redir_lst	*redirs;
 	struct s_word_lst	*heredoc;
-	pid_t				hdpid;
 	struct s_fd_lst		*fds;
 	struct s_node_lst	*next;
 	struct s_node_lst	*previous;
@@ -156,6 +155,7 @@ typedef struct s_msh
 	t_char_lst	*lst_c;
 	t_word_lst	*lst_w;
 	t_node_lst	*lst_n;
+	size_t		n_node;
 	t_garbage	*garbage;
 }	t_msh;
 
