@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_access.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 11:36:08 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/19 14:53:38 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/19 14:49:47 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,7 @@ char	*check_access(char **cmdpaths, char *cmd, t_garbage **gb)
 		i++;
 	}
 	if (!f_ok)
-	{
-		g_exit_status = 127;
-		return (ft_fdprintf(2, RED"%s"CMD_NOT_FOUND RESET,
-							cmd), NULL); //! retour a gerer
-	}
+		return (ft_fdprintf(2, RED"%s"CMD_NOT_FOUND RESET, cmd), NULL); //! retour a gerer
 	perror(cmd);
 	return (NULL);//! a voir
 }
@@ -96,12 +92,24 @@ void	cmd_in_current_dir(t_node_lst **lst, t_garbage **gb)
 	struct stat	st;
 
 	if (access((*lst)->lst_cmd->cmd, F_OK))
-		return ((void)ft_fdprintf(2, RED MSH "%s" NO_SFD RESET, (*lst)->lst_cmd->cmd));
+	{
+		(*lst)->exit_code = 127;
+		ft_fdprintf(2, RED MSH "%s" NO_SFD RESET, (*lst)->lst_cmd->cmd);
+		return ;
+	}
 	stat((*lst)->lst_cmd->cmd, &st);
 	if (S_ISDIR(st.st_mode))
-		return ((void)ft_fdprintf(2, RED MSH"%s" IS_DI RESET, (*lst)->lst_cmd->cmd));
+	{
+		(*lst)->exit_code = 126;
+		ft_fdprintf(2, RED MSH"%s" IS_DI RESET, (*lst)->lst_cmd->cmd);
+		return ;
+	}
 	if (access((*lst)->lst_cmd->cmd, X_OK))
-		return ((void)ft_fdprintf(2, RED MSH"%s" NO_PERM RESET, (*lst)->lst_cmd->cmd));
+	{
+		(*lst)->exit_code = 126;
+		ft_fdprintf(2, RED MSH"%s" NO_PERM RESET, (*lst)->lst_cmd->cmd);
+		return ;
+	}
 	(*lst)->cmdpath = ft_gbstrdup((*lst)->lst_cmd->cmd, gb);
 	if (!((*lst)->cmdpath))
 		return ; //!ERROR
@@ -133,7 +141,7 @@ void	give_access(char **path, t_node_lst **lst, t_garbage **gb)
 		cmdpaths = get_cmdpath(path, (*lst)->lst_cmd->cmd, gb);
 		(*lst)->cmdpath = check_access(cmdpaths, (*lst)->lst_cmd->cmd, gb);
 		if (!((*lst)->cmdpath))
-			return;//ft_fdprintf(2, RED"no path%s\n"RESET, (*lst)->lst_cmd->lst_cmd) //! ERROR A GERER
+			return ;//ft_fdprintf(2, RED"no path%s\n"RESET, (*lst)->lst_cmd->lst_cmd) //! ERROR A GERER
 		(*lst) = (*lst)->next;
 	}
 	ft_gbtabfree(path, gb);
