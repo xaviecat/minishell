@@ -117,6 +117,7 @@ typedef struct s_node_lst
 	t_cmd_lst			*lst_cmd;
 	char				*cmdpath;
 	char				**cmdtab;
+	int					exit_code;
 	t_builtin			builtin;
 	pid_t				pid;
 	struct s_redir_lst	*redirs;

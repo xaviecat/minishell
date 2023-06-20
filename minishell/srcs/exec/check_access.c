@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 11:36:08 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/15 17:16:07 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/20 10:29:41 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,17 +92,28 @@ void	cmd_in_current_dir(t_node_lst **lst, t_garbage **gb)
 	struct stat	st;
 
 	if (access((*lst)->lst_cmd->cmd, F_OK))
-		return ((void)ft_fdprintf(2, RED MSH "%s" NO_SFD RESET, (*lst)->lst_cmd->cmd));
+	{
+		(*lst)->exit_code = 127;
+		ft_fdprintf(2, RED MSH "%s" NO_SFD RESET, (*lst)->lst_cmd->cmd);
+		return ;
+	}
 	stat((*lst)->lst_cmd->cmd, &st);
 	if (S_ISDIR(st.st_mode))
-		return ((void)ft_fdprintf(2, RED MSH"%s" IS_DI RESET, (*lst)->lst_cmd->cmd));
+	{
+		(*lst)->exit_code = 126;
+		ft_fdprintf(2, RED MSH"%s" IS_DI RESET, (*lst)->lst_cmd->cmd);
+		return ;
+	}
 	if (access((*lst)->lst_cmd->cmd, X_OK))
-		return ((void)ft_fdprintf(2, RED MSH"%s" NO_PERM RESET, (*lst)->lst_cmd->cmd));
+	{
+		(*lst)->exit_code = 126;
+		ft_fdprintf(2, RED MSH"%s" NO_PERM RESET, (*lst)->lst_cmd->cmd);
+		return ;
+	}
 	(*lst)->cmdpath = ft_gbstrdup((*lst)->lst_cmd->cmd, gb);
 	if (!((*lst)->cmdpath))
 		return ; //!ERROR
 	return ;
-
 }
 
 void	give_access(char **path, t_node_lst **lst, t_garbage **gb)

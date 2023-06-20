@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 19:25:52 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/19 18:57:25 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/20 10:25:14 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	handle_heredoc(t_msh *msh, int *curr_pipe)
 		return ; //! ERROR
 	else if (hdpid == 0) //? Child heredoc
 	{
-//					dprintf(2, GREEN"hdchild = [%d]\n"RESET, getpid());
+//		dprintf(2, GREEN"hdchild = [%d]\n"RESET, getpid());
 		while (msh->lst_n->heredoc)
 		{
 			ft_fdprintf(pipe_hd[1], "%s\n", msh->lst_n->heredoc->word);
@@ -81,9 +81,8 @@ void	handle_heredoc(t_msh *msh, int *curr_pipe)
 	}
 }
 
-void	child(t_msh *msh, int *prev_pipe, int *curr_pipe)
+void	redirect_fds_in(t_msh *msh, int *prev_pipe, int *curr_pipe)
 {
-//			dprintf(2, GREEN"child = [%d]\n"RESET, getpid());
 	if (msh->lst_n->heredoc)
 		handle_heredoc(msh, curr_pipe);
 	else if (msh->lst_n->fds && msh->lst_n->fds->in > 0)
@@ -98,6 +97,10 @@ void	child(t_msh *msh, int *prev_pipe, int *curr_pipe)
 			return ; //! ERROR
 		close_pipe(prev_pipe);
 	}
+}
+
+void	redirect_fds_out(t_msh *msh, int *prev_pipe, int *curr_pipe)
+{
 	if (msh->lst_n->fds && msh->lst_n->fds->out > 1)
 	{
 		if (dup2(msh->lst_n->fds->out, STDOUT_FILENO) < 0)
@@ -110,10 +113,37 @@ void	child(t_msh *msh, int *prev_pipe, int *curr_pipe)
 			return ; //! ERROR
 		close_pipe(prev_pipe);
 	}
+}
+
+void	child(t_msh *msh, int *prev_pipe, int *curr_pipe)
+{
+//			dprintf(2, GREEN"child = [%d]\n"RESET, getpid());
+	redirect_fds_in(msh, prev_pipe, curr_pipe);
+	redirect_fds_out(msh, prev_pipe, curr_pipe);
 	signal_hub_exec();
 	if (msh->lst_n->cmdpath)
 		execve(msh->lst_n->cmdpath, msh->lst_n->cmdtab, msh->envp);
-	exit(EXIT_FAILURE); //! en cas d'erreur set le exit code
+	exit(msh->lst_n->exit_code); //! en cas d'erreur set le exit code
+}
+
+void	parent(t_msh *msh, int *prev_pipe, int *curr_pipe)
+{
+	if (prev_pipe[0] != -1)
+		close_pipe(prev_pipe);
+	if (msh->lst_n->next)
+	{
+		prev_pipe[0] = curr_pipe[0];
+		prev_pipe[1] = curr_pipe[1];
+	}
+	else
+		close_pipe(curr_pipe);
+	if (msh->lst_n->fds)
+	{
+		if (msh->lst_n->fds->in > 0)
+			close(msh->lst_n->fds->in);
+		if (msh->lst_n->fds->out > 1)
+			close(msh->lst_n->fds->out);
+	}
 }
 
 void	forking(t_msh *msh)
@@ -136,29 +166,9 @@ void	forking(t_msh *msh)
 		if (msh->lst_n->pid < 0)
 			return (perror("fork error")); //! ERROR A CHECK
 		else if (msh->lst_n->pid == 0) //? Child
-		{
 			child(msh, prev_pipe, curr_pipe);
-		}
 		else //? Parent
-		{
-			if (prev_pipe[0] != -1)
-				close_pipe(prev_pipe);
-			if (msh->lst_n->next)
-			{
-				prev_pipe[0] = curr_pipe[0];
-				prev_pipe[1] = curr_pipe[1];
-			}
-			else
-				close_pipe(curr_pipe);
-			if (msh->lst_n->fds)
-			{
-				if (msh->lst_n->fds->in > 0)
-					close(msh->lst_n->fds->in);
-				if (msh->lst_n->fds->out > 1)
-					close(msh->lst_n->fds->out);
-			}
-
-		}
+			parent(msh, prev_pipe, curr_pipe);
 		msh->lst_n = msh->lst_n->next;
 	}
 	if (prev_pipe[0] != -1)
