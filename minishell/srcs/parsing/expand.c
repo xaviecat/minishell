@@ -190,7 +190,6 @@ int	expand_commands(t_msh *msh)
 		if (!w_lst_cpy->word)
 			return (0); // ? code d'erreur a ajouter
 		if (ft_strchr(w_lst_cpy->word, ' ') != NULL
-			&& ft_strchr(w_lst_cpy->word, '"') == NULL
 			&& ft_strchr(w_lst_cpy->word, '"') == NULL)
 			if (!cut_space_expand(&w_lst_cpy, &(msh->garbage)))
 				return (0);

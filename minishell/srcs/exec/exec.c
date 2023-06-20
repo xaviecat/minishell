@@ -159,13 +159,7 @@ void	wait_fork(t_msh *msh, int status_pid)
 		//	if (msh->lst_n->next)
 		waitpid(msh->lst_n->pid, &status_pid, 0);
 		if (WIFSIGNALED(status_pid))
-		{
-//			if (WTERMSIG(status_pid) == SIGINT)
-//				signal_sigint(SIGINT);
-//			else if (WTERMSIG(SIGQUIT))
-//				signal_sigquit(SIGQUIT);
 			signal_exec(WTERMSIG(status_pid));
-		}
 		else
 			g_exit_status = WEXITSTATUS(status_pid);
 		//if (g_exit_status == EXIT_FAILURE)

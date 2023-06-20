@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 16:59:21 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/19 13:38:15 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/20 11:38:58 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,9 @@ int	parsing_cmd(t_msh **minish, char **envp_sh)
 		free_and_exit_minish(*minish, &envp_sh);
 	}
 	get_access(minish);
-//	print_lst_cmd((*minish)->lst_n);
+	(*minish)->n_node = count_command((*minish)->lst_n);
+	printf("\nnombre commande:%zu\n", (*minish)->n_node);
+	//print_lst_cmd((*minish)->lst_n);
 	return (1);
 }
 

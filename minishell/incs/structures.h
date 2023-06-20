@@ -157,6 +157,6 @@ typedef struct s_msh
 	t_node_lst	*lst_n;
 	size_t		n_node;
 	t_garbage	*garbage;
-}	t_msh;
+}		t_msh;
 
 #endif
