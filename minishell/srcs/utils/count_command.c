@@ -1,40 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export_error_management.c                          :+:      :+:    :+:   */
+/*   count_command.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/15 16:10:58 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/19 15:21:53 by syluiset         ###   ########.fr       */
+/*   Created: 2023/06/20 11:35:16 by syluiset          #+#    #+#             */
+/*   Updated: 2023/06/20 11:35:16 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-int	export_error_management(t_msh *msh, t_cmd_lst *cmd)
+size_t	count_command(t_node_lst *lst)
 {
-	int	error_code;
+	size_t	nb;
 
-	(void)cmd;
-	error_code = 1;
-	if (error_code <= 0)
-		return (error_code);
-	(void) msh;
-	return (1);
+	nb = 0;
+	while (lst)
+	{
+		nb++;
+		lst = lst->next;
+	}
+	return (nb);
 }
-
-//
-//
-//export $fhsjd banane=test
-//
-//export
-//        $erfs=test
-//		banane=test;
-//export
-//		"=test"
-//		"banane=test";
-//
-//export =test banane="test  youpi";
-//
-//export =test banane =test NULL ;

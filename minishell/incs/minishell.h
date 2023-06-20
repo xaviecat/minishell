@@ -111,7 +111,7 @@ void			free_error_word_lst(t_garbage **gb, t_word_lst **lst);
 int				b_pwd(t_msh *msh);
 int				b_cd(t_msh *msh);
 int				b_echo(t_msh *msh);
-void			b_exit(t_msh *msh);
+int				b_exit(t_msh *msh);
 int				b_export(t_msh *msh, t_cmd_lst *cmds);
 int				b_env(t_msh *msh);
 int				b_unset(t_msh *sh);
@@ -168,6 +168,7 @@ char			*ft_gbsubstr(char const *s,
 int				is_concat(char *cmd);
 char			*ft_gbitoa(int n, t_garbage **gb);
 //int				is_quote_quote(char *str, size_t i);
+size_t			count_command(t_node_lst *lst);
 
 /* list_char function */
 t_char_lst		*char_lst_new(char c, t_garbage **gb);
