@@ -65,7 +65,7 @@ int	parsing_cmd(t_msh **minish, char **envp_sh)
 		free_and_exit_minish(*minish, &envp_sh);
 	}
 	get_access(minish);
-	print_lst_cmd((*minish)->lst_n);
+//	print_lst_cmd((*minish)->lst_n);
 	return (1);
 }
 

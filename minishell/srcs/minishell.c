@@ -46,7 +46,7 @@ void	minishell(char **envp)
 	char		**envp_sh;
 
 	envp_sh = NULL;
-	print_bannier();
+//	print_bannier();
 	while (1)
 	{
 		line = readline(GREEN UNDERLINE"TRI_SH $>"RESET" ");
