@@ -66,8 +66,8 @@ int	parsing_cmd(t_msh **minish, char **envp_sh)
 	}
 	get_access(minish);
 	(*minish)->n_node = count_command((*minish)->lst_n);
-	printf("\nnombre commande:%zu\n", (*minish)->n_node);
-	//print_lst_cmd((*minish)->lst_n);
+//	printf("\nnombre commande:%zu\n", (*minish)->n_node);
+	print_lst_cmd((*minish)->lst_n);
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 19:25:52 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/20 13:07:17 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/20 13:32:23 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,15 +104,15 @@ void	redirect_fds_out(t_msh *msh, int *prev_pipe, int *curr_pipe)
 	{
 		if (dup2(curr_pipe[1], STDOUT_FILENO) < 0)
 			return ; //! ERROR
-		close_pipe(prev_pipe);
+		close_pipe(curr_pipe);
 	}
 }
 
 void	builtin_execution(t_msh *msh)
 {
 	static t_builtin_tab	builtin_tab[8] = {&b_echo, &b_env, &b_pwd, &b_cd, NULL
-		/*&b_export*/, &b_unset, NULL/*&b_exit*/, NULL};
-	ft_fdprintf(2, RED"builtin = %d"RESET, msh->lst_n->builtin);
+		/*&b_export*/, &b_unset, &b_exit, NULL};
+	ft_fdprintf(2, RED"builtin = %d\n"RESET, msh->lst_n->builtin);
 	builtin_tab[msh->lst_n->builtin](msh);
 }
 
@@ -203,13 +203,11 @@ void	forking(t_msh *msh)
 
 void	execution(t_msh *msh)
 {
-	msh->n_node = 2;
-//	dprintf(2, GREEN"parents = [%d]\n"RESET, getpid());
-	if (msh->n_node > 1)
+	dprintf(2, GREEN"parents = [%d]\n"RESET, getpid());
+	dprintf(2, GREEN"%zu\n"RESET, msh->n_node);
+	if (msh->n_node > 1 || msh->lst_n->builtin < e_cd)
 		forking(msh);
-	else
-	{
-		ft_fdprintf(2, "icilaputain");
-		return;
-	}
+	else if (msh->n_node == 1)
+		if (msh->lst_n->builtin >= e_cd)
+			builtin_execution(msh);
 }
