@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:08:17 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/19 13:16:38 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/19 14:57:11 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ static char	*expand_env_var(t_garbage **gb, char **envp, char *var)
 	var_len = ft_strlen(var);
 	if (var_len == 0)
 		return (NULL);
+	if (!ft_strncmp("$?", var, 3))
+		return (ft_gbitoa(g_exit_status, gb));
 	var_expansion = ft_gbstrjoin(var + 1, "=", gb);
 	if (!var_expansion)
 		return (NULL);
@@ -57,7 +59,7 @@ static char	*expand_env_var(t_garbage **gb, char **envp, char *var)
  * @return the content of the environnement variable
  */
 static char	*set_expanded_env_var(char *env_var, t_msh *msh,
-                                     int double_not_closed)
+								int double_not_closed)
 {
 	char	*expanded_env_var;
 
@@ -183,24 +185,15 @@ int	expand_commands(t_msh *msh)
 	w_lst_cpy = msh->lst_w;
 	while (w_lst_cpy)
 	{
-		if (ft_strncmp(w_lst_cpy->word, "$?", 3) == 0)
-		{
-			ft_free(&(msh->garbage), msh->lst_w->word);
-			msh->lst_w->word = ft_gbitoa(g_exit_status, &(msh->garbage));
-		}
-		else
-		{
-			if (w_lst_cpy->type != delimiteur)
-
-				w_lst_cpy->word = expand_vars(w_lst_cpy->word, msh);
-			if (!w_lst_cpy->word)
-				return (0); // ? code d'erreur a ajouter
-			if (ft_strchr(w_lst_cpy->word, ' ') != NULL
-				&& ft_strchr(w_lst_cpy->word, '"') == NULL
-				&& ft_strchr(w_lst_cpy->word, '"') == NULL)
-				if (!cut_space_expand(&w_lst_cpy, &(msh->garbage)))
-					return (0);
-		}
+		if (w_lst_cpy->type != delimiteur)
+			w_lst_cpy->word = expand_vars(w_lst_cpy->word, msh);
+		if (!w_lst_cpy->word)
+			return (0); // ? code d'erreur a ajouter
+		if (ft_strchr(w_lst_cpy->word, ' ') != NULL
+			&& ft_strchr(w_lst_cpy->word, '"') == NULL
+			&& ft_strchr(w_lst_cpy->word, '"') == NULL)
+			if (!cut_space_expand(&w_lst_cpy, &(msh->garbage)))
+				return (0);
 		w_lst_cpy = w_lst_cpy->next;
 	}
 	return (1);

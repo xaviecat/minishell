@@ -3,14 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   remove_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 13:56:29 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/15 17:16:07 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/19 14:48:15 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
+
+//static size_t	get_newcmd_len(char *cmd)
+//{
+//	size_t	i;
+//	size_t	counter;
+//	int		is_sq_opened;
+//	int		is_dq_opened;
+//
+//	i = 0;
+//	counter = 0;
+//	is_dq_opened = -1;
+//	is_sq_opened = -1;
+//	while (cmd[i])
+//	{
+//		if (cmd[i] == '"' && is_sq_opened < 0)
+//			is_dq_opened *= -1;
+//		else if (cmd[i] == '\'' && is_dq_opened < 0)
+//			is_sq_opened *= -1;
+//		if ((cmd[i] != '"' || is_sq_opened > 0)
+//			&& (cmd[i] != '\'' || is_dq_opened > 0))
+//			counter++;
+//		i++;
+//	}
+//	return (counter);
+//}
 
 static size_t	get_newcmd_len(char *cmd)
 {
@@ -80,7 +105,7 @@ int	delete_quotes(t_cmd_lst *cmd, t_garbage **gb)
 int	ft_del_quotes(t_msh *msh)
 {
 	t_node_lst		*cmds_cpy;
-	t_cmd_lst	*cmd_cpy;
+	t_cmd_lst		*cmd_cpy;
 
 	cmds_cpy = msh->lst_n;
 	while (cmds_cpy)

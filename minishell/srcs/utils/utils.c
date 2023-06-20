@@ -88,3 +88,16 @@ int	does_contain_quotes(char *str)
 	}
 	return (0);
 }
+
+////int	is_quote_quote(char *str, size_t i)
+//{
+//	if (str[i + 1])
+//		if ((str[i + 1] == '"' && str[i] == '"')
+//			|| (str[i + 1] == '\'' && str[i] == '\''))
+//			return (1);
+//	if (str[i - 1])
+//		if ((str[i - 1] == '"' && str[i] == '"')
+//			|| (str[i - 1] == '\'' && str[i] == '\''))
+//			return (1);
+//	return (0);
+//}

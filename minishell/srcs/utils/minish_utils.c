@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 16:59:21 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/19 11:02:42 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/19 13:38:15 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	parsing_word(t_msh **minish, char **envp_sh)
 	if (!(create_word_lst(minish)))
 		free_and_exit_minish(*minish, &envp_sh);
 	if ((!check_pipe_and_redir(&((*minish)->garbage), &((*minish)->lst_w))))
-		return (0);
+		return (free_end_loop(*minish), 0);
 	ret = expand_commands(*minish);
 	if (ret == 0)
 	{

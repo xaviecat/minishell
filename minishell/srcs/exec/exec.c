@@ -18,7 +18,6 @@
  * @param minish
  * @return 0 if all worked fine, 1 if an error occurred
  */
-
 int	exec_all(t_msh *msh)
 {
 	t_node_lst	*first;
