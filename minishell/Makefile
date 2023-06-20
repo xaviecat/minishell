@@ -55,6 +55,7 @@ SRCS			:=	minishell.c\
 					signal/signal.c\
 					signal/signal2.c\
 					\
+					utils/count_command.c\
 					utils/expand_utils.c\
 					utils/export_utils.c\
 					utils/ft_sort_str_arr.c\
