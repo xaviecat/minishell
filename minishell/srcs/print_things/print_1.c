@@ -97,7 +97,7 @@ void	print_heredoc(t_word_lst *hd)
 	t_word_lst	*first;
 
 	if (!hd)
-		return ((void)dprintf(2, "no heredoc\n"));
+		return ((void)dprintf(2, "heredoc : 0\n"));
 	first = hd;
 	while (hd)
 	{

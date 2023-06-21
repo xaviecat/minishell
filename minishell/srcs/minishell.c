@@ -76,7 +76,7 @@ void	minishell(char **envp)
 		if (!parsing_word(&msh, envp_sh))
 			continue ;
 		parsing_cmd(&msh, envp_sh);
-		if (!exec_all(msh))
+		if (!get_cmdtab(msh))
 		{
 			ft_free_all(&(msh->garbage)),
 			free_and_exit_minish(msh, &envp_sh);

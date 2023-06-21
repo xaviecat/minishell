@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 13:08:46 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/19 14:58:59 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/21 11:23:49 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,10 @@ int	b_echo(t_msh *msh)
 {
 	bool	new_line;
 
+//	print_lst_cmd(msh->lst_n);
+//	ft_fdprintf(2, YELLOW"je passe la\n"RESET);
+//	for (t_cmd_lst *tmp = msh->lst_n->lst_cmd; tmp; tmp = tmp->next)
+//		ft_fdprintf(2, YELLOW"cmd = %s\n"RESET, tmp->cmd);
 	if (!msh->lst_n->lst_cmd)
 		return (1);
 	msh->lst_n->lst_cmd = msh->lst_n->lst_cmd->next;

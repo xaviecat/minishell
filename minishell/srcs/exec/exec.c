@@ -6,30 +6,22 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 19:25:52 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/20 13:32:23 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/21 19:03:06 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-int	exec_all(t_msh *msh)
+int	get_cmdtab(t_msh *msh)
 {
 	t_node_lst	*first;
 
 	first = msh->lst_n;
 	while (msh->lst_n)
 	{
-//		if (msh->lst_n->builtin < e_none)
-//		{
-//			if (!find_builtin(msh))
-//				return (0);
-//		}
-//		else
-//		{
 		if (msh->lst_n->lst_cmd)
-			msh->lst_n->cmdtab = reforme_d_tab_cmd(&(msh->lst_n->lst_cmd),
-					msh->lst_n->lst_cmd->cmd, &(msh->garbage));
-//		}
+			msh->lst_n->cmdtab = create_cmdtab(msh->lst_n->lst_cmd,
+					&(msh->garbage));
 		msh->lst_n = msh->lst_n->next;
 	}
 	msh->lst_n = first;
@@ -38,6 +30,8 @@ int	exec_all(t_msh *msh)
 
 void	close_pipe(int pipefd[2])
 {
+	if (!pipefd)
+		return ;
 	if (pipefd[0] > 0)
 		close(pipefd[0]);
 	if (pipefd[1] > 0)
@@ -76,6 +70,7 @@ void	handle_heredoc(t_msh *msh, int *curr_pipe)
 
 void	redirect_fds_in(t_msh *msh, int *prev_pipe, int *curr_pipe)
 {
+
 	if (msh->lst_n->heredoc)
 		handle_heredoc(msh, curr_pipe);
 	else if (msh->lst_n->fds && msh->lst_n->fds->in > 0)
@@ -97,13 +92,13 @@ void	redirect_fds_out(t_msh *msh, int *prev_pipe, int *curr_pipe)
 	if (msh->lst_n->fds && msh->lst_n->fds->out > 1)
 	{
 		if (dup2(msh->lst_n->fds->out, STDOUT_FILENO) < 0)
-			return ; //! ERROR
+			return; //! ERROR
 		close_pipe(prev_pipe);
 	}
 	else if (msh->lst_n->next)
 	{
 		if (dup2(curr_pipe[1], STDOUT_FILENO) < 0)
-			return ; //! ERROR
+			return; //! ERROR
 		close_pipe(curr_pipe);
 	}
 }
@@ -112,16 +107,21 @@ void	builtin_execution(t_msh *msh)
 {
 	static t_builtin_tab	builtin_tab[8] = {&b_echo, &b_env, &b_pwd, &b_cd, NULL
 		/*&b_export*/, &b_unset, &b_exit, NULL};
-	ft_fdprintf(2, RED"builtin = %d\n"RESET, msh->lst_n->builtin);
+//	int ret_val;
+
+//	ret_val = 0;
+//	ft_fdprintf(2, RED"builtin = %d\n"RESET, msh->lst_n->builtin);
 	builtin_tab[msh->lst_n->builtin](msh);
 }
 
 void	child(t_msh *msh, int *prev_pipe, int *curr_pipe)
 {
-//	dprintf(2, GREEN"child = [%d]\n"RESET, getpid());
+	dprintf(2, GREEN"child = [%d]\n"RESET, getpid());
 	redirect_fds_in(msh, prev_pipe, curr_pipe);
 	redirect_fds_out(msh, prev_pipe, curr_pipe);
 	signal_hub_exec();
+	close_pipe(prev_pipe);
+	close_pipe(curr_pipe);
 	if (msh->lst_n->builtin == e_none && msh->lst_n->cmdpath)
 		execve(msh->lst_n->cmdpath, msh->lst_n->cmdtab, msh->envp);
 	else if (msh->lst_n->builtin < e_none)
@@ -194,6 +194,7 @@ void	forking(t_msh *msh)
 		else //? Parent
 			parent(msh, prev_pipe, curr_pipe);
 		msh->lst_n = msh->lst_n->next;
+		usleep(1000);
 	}
 	if (prev_pipe[0] != -1)
 		close_pipe(prev_pipe);
@@ -203,11 +204,11 @@ void	forking(t_msh *msh)
 
 void	execution(t_msh *msh)
 {
-	dprintf(2, GREEN"parents = [%d]\n"RESET, getpid());
-	dprintf(2, GREEN"%zu\n"RESET, msh->n_node);
-	if (msh->n_node > 1 || msh->lst_n->builtin < e_cd)
+//	dprintf(2, GREEN"parents = [%d]\n"RESET, getpid());
+//	dprintf(2, GREEN"%zu\n"RESET, msh->n_node);
+	if (msh->n_node >= 1 && (msh->lst_n->builtin < e_cd
+			|| msh->lst_n->builtin == e_none))
 		forking(msh);
-	else if (msh->n_node == 1)
-		if (msh->lst_n->builtin >= e_cd)
-			builtin_execution(msh);
+	else if (msh->n_node == 1 && msh->lst_n->builtin >= e_cd)
+		builtin_execution(msh);
 }

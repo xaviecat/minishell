@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 11:36:08 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/19 14:49:47 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/21 15:48:28 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	cmd_in_current_dir(t_node_lst **lst, t_garbage **gb)
 	if (S_ISDIR(st.st_mode))
 	{
 		(*lst)->exit_code = 126;
-		ft_fdprintf(2, RED MSH"%s" IS_DI RESET, (*lst)->lst_cmd->cmd);
+		ft_fdprintf(2, RED MSH"%s" IS_DIR RESET, (*lst)->lst_cmd->cmd);
 		return ;
 	}
 	if (access((*lst)->lst_cmd->cmd, X_OK))
@@ -123,11 +123,14 @@ void	give_access(char **path, t_node_lst **lst, t_garbage **gb)
 	t_node_lst	*first;
 	char		**cmdpaths;
 
-	if ((*lst)->builtin < e_none)
-		return ;
 	first = *lst;
 	while (*lst)
 	{
+		if ((*lst)->builtin < e_none)
+		{
+			(*lst) = (*lst)->next;
+			continue ;
+		}
 		if (!((*lst)->lst_cmd))
 		{
 			(*lst)->cmdpath = NULL;
