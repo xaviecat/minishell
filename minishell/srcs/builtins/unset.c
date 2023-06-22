@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 13:43:43 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/20 13:10:27 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/22 11:58:25 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,10 @@ int	b_unset(t_msh *sh)
 
 	if (!sh->lst_n->lst_cmd->next)
 		return (0);
+	sh->lst_n->lst_cmd = sh->lst_n->lst_cmd->next;
 	while (sh->lst_n->lst_cmd)
 	{
-		name_var = ft_gbstrdup(sh->lst_n->lst_cmd->next->cmd, &(sh->garbage));
+		name_var = ft_gbstrdup(sh->lst_n->lst_cmd->cmd, &(sh->garbage));
 		if (!check_var_exist_and_valid(name_var, sh->envp))
 			return (1);
 		old_envp = ft_gbtabdup(sh->envp, &(sh->garbage));
