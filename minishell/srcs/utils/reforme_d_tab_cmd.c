@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 11:36:12 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/15 17:04:37 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/21 11:38:47 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ void	complete_tab(char **tabi, t_cmd_lst **lst, t_garbage **gb, char *cmd)
 			return ;
 		}
 		next = (*lst)->next;
-		ft_free(gb, (*lst)->cmd);
-		ft_free(gb, (*lst));
+//		ft_free(gb, (*lst)->cmd);
+//		ft_free(gb, (*lst));
 		*lst = next;
 		i++;
 	}
@@ -65,4 +65,35 @@ char	**reforme_d_tab_cmd(t_cmd_lst **lst, char *cmd, t_garbage **gb)
 	new_d_tab = ft_malloc(gb, sizeof(char *), nb_p_char + 1);
 	complete_tab(new_d_tab, lst, gb, cmd);
 	return (new_d_tab);
+}
+
+char	**create_cmdtab(t_cmd_lst *lst, t_garbage **gb)
+{
+	size_t		i;
+	t_cmd_lst	*first;
+	char		**cmdtab;
+
+	i = 0;
+	first = lst;
+	while (lst)
+	{
+		i++;
+		lst = lst->next;
+	}
+	cmdtab = ft_malloc(gb, sizeof(char *), i + 1);
+	if (!cmdtab)
+		return (NULL); //! ERROR
+	i = 0;
+	lst = first;
+	while (lst)
+	{
+		cmdtab[i] = ft_gbstrdup(lst->cmd, gb);
+		if (!cmdtab[i])
+			return (NULL); //! ERROR
+		i++;
+		lst = lst->next;
+	}
+	cmdtab[i] = NULL;
+	first = lst;
+	return (cmdtab);
 }

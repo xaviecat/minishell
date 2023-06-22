@@ -21,7 +21,7 @@ static int	is_empty(char *line)
 	{
 		if (line[i] == '=')
 		{
-			printf("%d\n", ft_strncmp(line + i, "=""", 3) == 0 || line[i + 1] == '\0');
+//			printf("%d\n", ft_strncmp(line + i, "=""", 3) == 0 || line[i + 1] == '\0');
 			if (ft_strncmp(line + i, "=""", 3) == 0 || line[i + 1] == '\0')
 				return (0);
 			else
