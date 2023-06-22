@@ -116,7 +116,7 @@ void	builtin_execution(t_msh *msh)
 
 void	child(t_msh *msh, int *prev_pipe, int *curr_pipe)
 {
-	dprintf(2, GREEN"child = [%d]\n"RESET, getpid());
+	//dprintf(2, GREEN"child = [%d]\n"RESET, getpid());
 	redirect_fds_in(msh, prev_pipe, curr_pipe);
 	redirect_fds_out(msh, prev_pipe, curr_pipe);
 	signal_hub_exec();

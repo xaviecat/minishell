@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:36:42 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/16 16:37:22 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/22 11:36:44 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,40 @@ static char	*get_home_from_env(char **envp, t_garbage **gb)
 	return (NULL);
 }
 
+static void	update_old_pwd(char **envp, t_garbage **gb)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		if (ft_strncmp(envp[i], "OLDPWD=", 7) == 0)
+		{
+			ft_free(gb, envp[i]);
+			envp[i] = ft_gbstrjoin("OLDPWD=",
+					ft_gbstrdup(getcwd(NULL, 0), gb), gb);
+		}
+		i++;
+	}
+}
+
+static void	update_pwd(char **envp, t_garbage **gb)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		if (ft_strncmp(envp[i], "PWD=", 4) == 0)
+		{
+			ft_free(gb, envp[i]);
+			envp[i] = ft_gbstrjoin("PWD=",
+					ft_gbstrdup(getcwd(NULL, 0), gb), gb);
+		}
+		i++;
+	}
+}
+
 int	b_cd(t_msh *msh)
 {
 	char	*path;
@@ -34,10 +68,14 @@ int	b_cd(t_msh *msh)
 		path = get_home_from_env(msh->envp, &(msh->garbage));
 	else
 		path = msh->lst_n->lst_cmd->next->cmd;
+	if (ft_strncmp(path, ".", 2) == 0)
+		update_old_pwd(msh->envp, &(msh->garbage));
 	if (chdir(path) == -1)
 	{
 		printf(CD_FILE);
 		perror(path);
 	}
+	else
+		update_pwd(msh->envp, &(msh->garbage));
 	return (0);
 }
