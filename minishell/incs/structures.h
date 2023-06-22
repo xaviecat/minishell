@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:15:43 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/20 11:30:51 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/22 17:45:02 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,14 +92,13 @@ typedef struct s_redir_lst
 	t_type_redir		redir;
 	char				*filename;
 	struct s_redir_lst	*next;
-	struct s_redir_lst	*last_added;
 }	t_redir_lst;
 
 typedef struct s_fd_lst
 {
 	int				in;
 	int				out;
-	struct s_fd_lst	*next;
+	struct s_fd_lst	*next; // ! A enlever quand ce sera bon
 	struct s_fd_lst	*last_added;
 }	t_fd_lst;
 
