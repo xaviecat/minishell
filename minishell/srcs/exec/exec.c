@@ -73,6 +73,8 @@ void	redirect_fds_in(t_msh *msh, int *prev_pipe, int *curr_pipe)
 
 	if (msh->lst_n->heredoc)
 		handle_heredoc(msh, curr_pipe);
+	else if (msh->lst_n->fds && msh->lst_n->fds->in < 0)
+		return (exit(EXIT_FAILURE)); //! ERROR A GERER
 	else if (msh->lst_n->fds && msh->lst_n->fds->in > 0)
 	{
 		if (dup2(msh->lst_n->fds->in, STDIN_FILENO) < 0)
@@ -89,7 +91,9 @@ void	redirect_fds_in(t_msh *msh, int *prev_pipe, int *curr_pipe)
 
 void	redirect_fds_out(t_msh *msh, int *prev_pipe, int *curr_pipe)
 {
-	if (msh->lst_n->fds && msh->lst_n->fds->out > 1)
+	if (msh->lst_n->fds && msh->lst_n->fds->out < 0)
+		return (exit(EXIT_FAILURE)); //! ERROR A GERER
+	else if (msh->lst_n->fds && msh->lst_n->fds->out > 1)
 	{
 		if (dup2(msh->lst_n->fds->out, STDOUT_FILENO) < 0)
 			return; //! ERROR
@@ -116,7 +120,7 @@ void	builtin_execution(t_msh *msh)
 
 void	child(t_msh *msh, int *prev_pipe, int *curr_pipe)
 {
-	//dprintf(2, GREEN"child = [%d]\n"RESET, getpid());
+//	dprintf(2, GREEN"child = [%d]\n"RESET, getpid());
 	redirect_fds_in(msh, prev_pipe, curr_pipe);
 	redirect_fds_out(msh, prev_pipe, curr_pipe);
 	signal_hub_exec();
