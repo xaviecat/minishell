@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:36:42 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/22 11:36:44 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/22 17:28:12 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,19 @@ int	b_cd(t_msh *msh)
 		path = get_home_from_env(msh->envp, &(msh->garbage));
 	else
 		path = msh->lst_n->lst_cmd->next->cmd;
+	if (msh->lst_n->lst_cmd->next->next)
+	{
+		ft_fdprintf(2, "minishell: cd: too many arguments\n");
+		return (1);
+	}
 	if (ft_strncmp(path, ".", 2) == 0)
 		update_old_pwd(msh->envp, &(msh->garbage));
 	if (chdir(path) == -1)
 	{
-		printf(CD_FILE);
+		printf("cc");
+		ft_fdprintf(2, CD_FILE);
 		perror(path);
+		return (1);
 	}
 	else
 		update_pwd(msh->envp, &(msh->garbage));

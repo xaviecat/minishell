@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 13:05:10 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/20 13:08:41 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/22 17:26:07 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	verif_arg_exit(t_msh *msh)
 				if (ft_isalpha(msh->lst_n->lst_cmd->next->cmd[i]))
 				{
 					g_exit_status = 2;
-					printf("exit: %s: numeric argument required",
+					dprintf(2, "minishell: exit: %s: numeric argument required",
 						msh->lst_n->lst_cmd->next->cmd);
 					return (0);
 				}
@@ -40,12 +40,20 @@ static int	verif_arg_exit(t_msh *msh)
 
 int	b_exit(t_msh *msh)
 {
+	bool	ret;
+
+	ret = true;
 	if (verif_arg_exit(msh))
+	{
 		g_exit_status = ft_atoi(msh->lst_n->lst_cmd->next->cmd);
+		ret = false;
+	}
 	ft_free_all(&(msh->garbage));
 	free(msh->garbage);
 	msh->garbage = NULL;
 	free(msh);
 	msh = NULL;
-	exit(EXIT_SUCCESS);// ! a changer
+	if (ret == true)
+		exit(EXIT_SUCCESS);
+	exit(g_exit_status);
 }

@@ -115,7 +115,7 @@ void	builtin_execution(t_msh *msh)
 
 //	ret_val = 0;
 //	ft_fdprintf(2, RED"builtin = %d\n"RESET, msh->lst_n->builtin);
-	builtin_tab[msh->lst_n->builtin](msh);
+	g_exit_status = builtin_tab[msh->lst_n->builtin](msh);
 }
 
 void	child(t_msh *msh, int *prev_pipe, int *curr_pipe)
