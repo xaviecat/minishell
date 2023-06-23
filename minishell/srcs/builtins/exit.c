@@ -38,11 +38,14 @@ static int	verif_arg_exit(t_msh *msh)
 	return (0);
 }
 
+
 int	b_exit(t_msh *msh)
 {
 	bool	ret;
 
 	ret = true;
+	if (msh->lst_n->lst_cmd->next && msh->lst_n->lst_cmd->next->next)
+		return (ft_putendl_fd("minishell: exit: too many arguments", 2), 1);
 	if (verif_arg_exit(msh))
 	{
 		g_exit_status = ft_atoi(msh->lst_n->lst_cmd->next->cmd);
@@ -54,6 +57,6 @@ int	b_exit(t_msh *msh)
 	free(msh);
 	msh = NULL;
 	if (ret == true)
-		exit(EXIT_SUCCESS);
+		exit(2);
 	exit(g_exit_status);
 }

@@ -94,17 +94,23 @@ int	create_word_lst(t_msh **sh)
 {
 	t_word_lst	*new;
 	char		*word;
+	bool		in_s_quote;
+	bool		in_d_quote;
 
 	if (!(*sh)->lst_c)
 		return (0);
 	while ((*sh)->lst_c)
 	{
 		word = NULL;
+		in_s_quote = (*sh)->lst_c->s_quote;
+		in_d_quote = (*sh)->lst_c->d_quote;
 		word = reforme_word(sh, &((*sh)->garbage));
 		new = word_lst_new(word, &((*sh)->garbage));
 		if (!new)
 			return (free_error_word_lst(&((*sh)->garbage), &((*sh)->lst_w)), 0);
 		new->type = get_cat_of_word(new->word);
+		new->in_s_quote = in_s_quote;
+		new->in_d_quote = in_d_quote;
 		if ((*sh)->lst_w)
 		{
 			new->prev = (*sh)->lst_w->last_added;

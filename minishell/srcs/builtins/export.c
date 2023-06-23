@@ -141,19 +141,19 @@ int	add_new_var_to_envp(t_cmd_lst *cmd, char **save_envp, t_msh *msh)
 	return (1);
 }
 
-int	b_export(t_msh *msh, t_cmd_lst *cmd)
+int	b_export(t_msh *msh)
 {
 	char	**save_envp;
 	char	**modified_envp;
 
-	if (!cmd->next)
+	if (!msh->lst_n->lst_cmd->next)
 		return (export_print(msh));
-	if (!export_error_management(msh, cmd))
+	if (!export_error_management(msh, msh->lst_n->lst_cmd))
 		return (1);
 	save_envp = msh->envp;
-	if (!ft_alloc_envp(msh, cmd))
+	if (!ft_alloc_envp(msh, msh->lst_n->lst_cmd))
 		return (0);
-	if (!add_new_var_to_envp(cmd, save_envp, msh))
+	if (!add_new_var_to_envp(msh->lst_n->lst_cmd, save_envp, msh))
 		return (0);
 	modified_envp = ft_gbtabjoin(save_envp, msh->envp, &(msh->garbage));
 	if (!modified_envp && errno == ENOMEM)

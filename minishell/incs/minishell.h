@@ -85,6 +85,8 @@ int				check_pipe_and_redir(t_garbage **gb, t_word_lst **lst);
 char			**create_cmdtab(t_cmd_lst *lst, t_garbage **gb);
 int				ft_del_quotes(t_msh *msh);
 int				export_error_management(t_msh *msh, t_cmd_lst *cmd);
+size_t			get_newcmd_len(char *cmd);
+char			*modify_cmd(char *cmd, char *new_cmd, t_garbage **gb);
 
 
 /* redir */
@@ -101,6 +103,7 @@ void			print_fd(t_fd_lst *lst);
 void			free_error_fds(t_garbage **gb, t_fd_lst **lst);
 t_fd_lst		*new_fds(t_garbage **gb);
 void			fds_add_back(t_fd_lst **lst, t_fd_lst *new);
+int				del_quote_filename(t_redir_lst **lst, t_garbage **gb);
 
 /* error */
 bool			is_forbidden_char(t_char_lst *lst);
@@ -113,7 +116,7 @@ int				b_pwd(t_msh *msh);
 int				b_cd(t_msh *msh);
 int				b_echo(t_msh *msh);
 int				b_exit(t_msh *msh);
-int				b_export(t_msh *msh, t_cmd_lst *cmds);
+int				b_export(t_msh *msh);
 int				b_env(t_msh *msh);
 int				b_unset(t_msh *sh);
 int				find_builtin(t_msh *sh);

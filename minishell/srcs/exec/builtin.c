@@ -31,7 +31,7 @@ int	find_builtin(t_msh *sh)
 	else if (ft_strncmp(cp_cmd, "pwd", 4) == 0)
 		g_exit_status = b_pwd(sh);
 	else if (ft_strncmp(cp_cmd, "export", 7) == 0)
-		b_export(sh, sh->lst_n->lst_cmd);
+		g_exit_status = b_export(sh);
 	else if (ft_strncmp(cp_cmd, "unset", 6) == 0)
 		g_exit_status = b_unset(sh);
 	else if (ft_strncmp(cp_cmd, "env", 4) == 0)

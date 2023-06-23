@@ -31,11 +31,13 @@ t_fd_lst	*create_fds_list(t_redir_lst *redirs, t_garbage **gb)
 	fds = new_fds(gb);
 	if (!fds)
 		return (NULL);
+	if (!(del_quote_filename(&redirs, gb)))
+		return (NULL);
 	while (redirs)
 	{
-		if (fds->in != STDIN_FILENO)
+		if (fds->in != STDIN_FILENO && redirs->redir == in)
 			close(fds->in);
-		if (fds->out != STDOUT_FILENO)
+		if (fds->out != STDOUT_FILENO && (redirs->redir == out || redirs->redir == outout))
 			close(fds->out);
 		get_fds(&fds, redirs);
 		if (fds->in == -1)

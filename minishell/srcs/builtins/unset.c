@@ -86,7 +86,7 @@ int	b_unset(t_msh *sh)
 	{
 		name_var = ft_gbstrdup(sh->lst_n->lst_cmd->cmd, &(sh->garbage));
 		if (!check_var_exist_and_valid(name_var, sh->envp))
-			return (1);
+			return (0);
 		old_envp = ft_gbtabdup(sh->envp, &(sh->garbage));
 		if (!old_envp && errno == ENOMEM)
 			return (ENOMEM);
