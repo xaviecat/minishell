@@ -15,6 +15,7 @@ SRCS			:=	minishell.c\
 					\
 					fds/fds.c\
 					fds/fds_utils.c\
+					fds/remove_quotes_filename.c\
 					\
 					garbage/ft_free.c\
 					garbage/ft_malloc.c\

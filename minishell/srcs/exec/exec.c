@@ -109,7 +109,7 @@ void	redirect_fds_out(t_msh *msh, int *prev_pipe, int *curr_pipe)
 
 void	builtin_execution(t_msh *msh)
 {
-	static t_builtin_tab	builtin_tab[8] = {&b_echo, &b_env, &b_pwd, &b_cd, NULL
+	static t_builtin_tab	builtin_tab[8] = {&b_echo, &b_env, &b_pwd, &b_cd, b_export
 		/*&b_export*/, &b_unset, &b_exit, NULL};
 //	int ret_val;
 

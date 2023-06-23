@@ -131,6 +131,8 @@ typedef struct s_word_lst
 {
 	char				*word;
 	t_type_word			type;
+	bool				in_s_quote;
+	bool				in_d_quote;
 	struct s_word_lst	*next;
 	struct s_word_lst	*prev;
 	struct s_word_lst	*last_added;

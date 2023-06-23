@@ -37,7 +37,7 @@
 //	return (counter);
 //}
 
-static size_t	get_newcmd_len(char *cmd)
+size_t	get_newcmd_len(char *cmd)
 {
 	size_t	i;
 	size_t	counter;
@@ -62,7 +62,7 @@ static size_t	get_newcmd_len(char *cmd)
 	return (counter);
 }
 
-static char	*modify_cmd(char *cmd, char *new_cmd, t_garbage **gb)
+char	*modify_cmd(char *cmd, char *new_cmd, t_garbage **gb)
 {
 	size_t	i;
 	size_t	j;
