@@ -41,7 +41,7 @@ void	free_error_cmd(t_garbage **gb, t_node_lst **lst)
 		else
 			next = NULL;
 		free_error_redir(gb, &((*lst)->redirs));
-		free_error_fds(gb, &((*lst)->fds));
+		ft_free(gb, (*lst)->fds);
 		free_error_cmd_w(gb, &((*lst)->lst_cmd));
 		*lst = next;
 	}

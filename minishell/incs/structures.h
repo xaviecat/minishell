@@ -98,7 +98,6 @@ typedef struct s_fd_lst
 {
 	int				in;
 	int				out;
-	struct s_fd_lst	*next; // ! A enlever quand ce sera bon
 	struct s_fd_lst	*last_added;
 }	t_fd_lst;
 
