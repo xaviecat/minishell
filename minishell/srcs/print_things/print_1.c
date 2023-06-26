@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 16:54:48 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/15 17:18:26 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/19 15:07:11 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,19 +92,19 @@ void	print_tab(char **tabi)
 	}
 }
 
-void    print_heredoc(t_word_lst *hd)
+void	print_heredoc(t_word_lst *hd)
 {
-    t_word_lst  *first;
+	t_word_lst	*first;
 
-    if (!hd)
-        return ((void)printf("HD NULL\n"));
-    first = hd;
-    while (hd)
-    {
-        printf("%s", hd->word);
-        hd = hd->next;
-    }
-    hd = first;
+	if (!hd)
+		return ((void)dprintf(2, "heredoc : 0\n"));
+	first = hd;
+	while (hd)
+	{
+		dprintf(2, "%s\n", hd->word);
+		hd = hd->next;
+	}
+	hd = first;
 }
 
 void	print_lst_cmd(t_node_lst *lst)
@@ -138,7 +138,7 @@ void	print_lst_cmd(t_node_lst *lst)
 		dprintf(2,CYAN"\n");
 		print_fd(lst->fds);
 		print_redir(lst->redirs);
-        print_heredoc(lst->heredoc);
+		print_heredoc(lst->heredoc);
 		lst = lst->next;
 		i++;
 	}

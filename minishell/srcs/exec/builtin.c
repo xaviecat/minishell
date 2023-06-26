@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 16:44:20 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/21 17:23:44 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/26 10:03:28 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	find_builtin(t_msh *sh)
 	else if (ft_strncmp(cp_cmd, "pwd", 4) == 0)
 		g_exit_status = b_pwd(sh);
 	else if (ft_strncmp(cp_cmd, "export", 7) == 0)
-		b_export(sh);
+		g_exit_status = b_export(sh);
 	else if (ft_strncmp(cp_cmd, "unset", 6) == 0)
 		g_exit_status = b_unset(sh);
 	else if (ft_strncmp(cp_cmd, "env", 4) == 0)

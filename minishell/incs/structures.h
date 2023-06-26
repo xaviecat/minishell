@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:15:43 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/16 14:31:36 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/22 17:45:02 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@
 /* enum */
 typedef enum e_builtin
 {
-	e_none,
-	e_cd,
 	e_echo,
 	e_env,
-	e_exit,
-	e_export,
 	e_pwd,
+	e_cd,
+	e_export,
 	e_unset,
+	e_exit,
+	e_none,
 }	t_builtin;
 
 typedef enum e_position
@@ -92,14 +92,13 @@ typedef struct s_redir_lst
 	t_type_redir		redir;
 	char				*filename;
 	struct s_redir_lst	*next;
-	struct s_redir_lst	*last_added;
 }	t_redir_lst;
 
 typedef struct s_fd_lst
 {
 	int				in;
 	int				out;
-	struct s_fd_lst	*next;
+	struct s_fd_lst	*next; // ! A enlever quand ce sera bon
 	struct s_fd_lst	*last_added;
 }	t_fd_lst;
 
@@ -118,12 +117,11 @@ typedef struct s_node_lst
 	t_cmd_lst			*lst_cmd;
 	char				*cmdpath;
 	char				**cmdtab;
+	int					exit_code;
 	t_builtin			builtin;
 	pid_t				pid;
 	struct s_redir_lst	*redirs;
 	struct s_word_lst	*heredoc;
-	pid_t				hdpid;
-	int					pipehd[2];
 	struct s_fd_lst		*fds;
 	struct s_node_lst	*next;
 	struct s_node_lst	*previous;
@@ -135,6 +133,8 @@ typedef struct s_word_lst
 	char				*word;
 	bool				is_nill;
 	t_type_word			type;
+	bool				in_s_quote;
+	bool				in_d_quote;
 	struct s_word_lst	*next;
 	struct s_word_lst	*prev;
 	struct s_word_lst	*last_added;
@@ -155,12 +155,11 @@ typedef struct s_char_lst
 typedef struct s_msh
 {
 	char		**envp;
-	int			prev_pipe[2];
-	int			curr_pipe[2];
 	t_char_lst	*lst_c;
 	t_word_lst	*lst_w;
 	t_node_lst	*lst_n;
+	size_t		n_node;
 	t_garbage	*garbage;
-}	t_msh;
+}		t_msh;
 
 #endif

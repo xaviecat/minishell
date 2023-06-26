@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_msgs.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 13:34:42 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/15 17:12:21 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/21 15:48:28 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,11 @@
 # define CD_FILE	"minishell: cd: "
 
 # define UN_TKN(x)	"minishell: syntax error near unexpected token " #x "\n"
-# define IS_DIR(x)	"minishell: " #x ": Is a directory\n"
 # define NT_VAL_ID(x) "minishell: unset: " #x ": not a valid identifier\n"
 
 # define MSH		"minishell: "
 # define NO_SFD		": No such file or directory\n"
-# define IS_DI		": Is directory\n"
+# define IS_DIR		": Is a directory\n"
 # define NO_PERM	": Permission denied\n"
 
 #endif

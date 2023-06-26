@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 16:10:58 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/21 18:16:27 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/19 14:27:57 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,5 @@ int	export_error_management(t_msh *msh, t_cmd_lst *cmd)
 	if (!check_for_unexpected_char(cmd))
 		return (0);
 	(void) msh;
-	(void) cmd;
 	return (1);
 }

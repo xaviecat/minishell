@@ -29,6 +29,8 @@ t_word_lst	*word_lst_new(char *word, t_garbage **gb)
 	new->word = ft_gbstrdup(word, gb);
 	if (!new->word)
 		return (ft_free(gb, new), NULL);
+	new->in_s_quote = false;
+	new->in_d_quote = false;
 	new->type = not_define;
 	new->is_nill = false;
 	new->next = NULL;

@@ -15,6 +15,7 @@ SRCS			:=	minishell.c\
 					\
 					fds/fds.c\
 					fds/fds_utils.c\
+					fds/remove_quotes_filename.c\
 					\
 					garbage/ft_free.c\
 					garbage/ft_malloc.c\
@@ -55,6 +56,7 @@ SRCS			:=	minishell.c\
 					signal/signal.c\
 					signal/signal2.c\
 					\
+					utils/count_command.c\
 					utils/expand_utils.c\
 					utils/export_utils.c\
 					utils/ft_sort_str_arr.c\
@@ -99,7 +101,7 @@ CFLAGS			:=	-Wall -Wextra -Werror
 
 RDL				:=	-lreadline
 
-ASAN_F			:=	-g3 -fsanitize=address
+ASAN_F			:=	-g3 #-fsanitize=address
 
 #========================EXEC===============================#
 all				:	$(NAME)
@@ -133,6 +135,25 @@ $(OBJS_D)		:
 
 $(LIB_A)		:	FORCE
 				make -j -C $(LIB_D)
+
+leaks			:	all
+				echo "{" > valgrind_ignore_leaks.txt
+				echo "leak readline" >> valgrind_ignore_leaks.txt
+				echo "    Memcheck:Leak" >> valgrind_ignore_leaks.txt
+				echo "    ..." >> valgrind_ignore_leaks.txt
+				echo "    fun:readline" >> valgrind_ignore_leaks.txt
+				echo "}" >> valgrind_ignore_leaks.txt
+				echo "{" >> valgrind_ignore_leaks.txt
+				echo "    leak add_history" >> valgrind_ignore_leaks.txt
+				echo "    Memcheck:Leak" >> valgrind_ignore_leaks.txt
+				echo "    ..." >> valgrind_ignore_leaks.txt
+				echo "    fun:add_history" >> valgrind_ignore_leaks.txt
+				echo "}" >> valgrind_ignore_leaks.txt
+				valgrind --suppressions=valgrind_ignore_leaks.txt --leak-check=full \
+					--show-leak-kinds=all --track-fds=yes \
+					--show-mismatched-frees=yes --read-var-info=yes \
+					-s ./${NAME}
+					#--log-file=valgrind.txt \
 
 FORCE			:
 

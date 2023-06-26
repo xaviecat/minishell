@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 14:59:14 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/16 16:37:22 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/20 13:23:18 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static int	is_empty(char *line)
 	{
 		if (line[i] == '=')
 		{
+//			printf("%d\n", ft_strncmp(line + i, "=""", 3) == 0 || line[i + 1] == '\0');
 			if (ft_strncmp(line + i, "=""", 3) == 0 || line[i + 1] == '\0')
 				return (0);
 			else
