@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 19:25:52 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/21 19:03:06 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/26 11:22:20 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,8 @@ void	redirect_fds_out(t_msh *msh, int *prev_pipe, int *curr_pipe)
 
 void	builtin_execution(t_msh *msh)
 {
-	static t_builtin_tab	builtin_tab[8] = {&b_echo, &b_env, &b_pwd, &b_cd, b_export
-		/*&b_export*/, &b_unset, &b_exit, NULL};
+	static t_builtin_tab	builtin_tab[8] = {&b_echo, &b_env, &b_pwd, &b_cd,
+		b_export, &b_unset, &b_exit, NULL};
 //	int ret_val;
 
 //	ret_val = 0;
@@ -210,8 +210,9 @@ void	execution(t_msh *msh)
 {
 //	dprintf(2, GREEN"parents = [%d]\n"RESET, getpid());
 //	dprintf(2, GREEN"%zu\n"RESET, msh->n_node);
-	if (msh->n_node >= 1 && (msh->lst_n->builtin < e_cd
-			|| msh->lst_n->builtin == e_none))
+	if ((msh->n_node >= 1 && (msh->lst_n->builtin < e_cd
+				|| msh->lst_n->builtin == e_none))
+		|| msh->n_node > 1)
 		forking(msh);
 	else if (msh->n_node == 1 && msh->lst_n->builtin >= e_cd)
 		builtin_execution(msh);
