@@ -78,7 +78,7 @@ int	b_cd(t_msh *msh)
 	if (chdir(path) == -1)
 	{
 		printf("cc");
-		ft_fdprintf(2, CD_FILE);
+		ft_fdprintf(2, E_CD);
 		perror(path);
 		return (1);
 	}

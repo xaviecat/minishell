@@ -51,9 +51,9 @@ bool	is_smaller_bracket_error(t_char_lst **lst)
 		i++;
 	}
 	if (i == 3)
-		return (printf(RED S_SM_A_BRA RESET), true);
+		return (printf(RED MSH S_SM_A_BRA RESET), true);
 	else if (i > 3)
-		return (printf(RED D_SM_A_BRA RESET), true);
+		return (printf(RED MSH D_SM_A_BRA RESET), true);
 	return (false);
 }
 
@@ -68,9 +68,9 @@ bool	is_greater_bracket_error(t_char_lst **lst)
 		i++;
 	}
 	if (i == 3)
-		return (printf(RED S_GR_A_BRA RESET), true);
+		return (printf(RED MSH S_GR_A_BRA RESET), true);
 	else if (i > 3)
-		return (printf(RED D_GR_A_BRA RESET), true);
+		return (printf(RED MSH D_GR_A_BRA RESET), true);
 	return (false);
 }
 
