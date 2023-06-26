@@ -37,7 +37,8 @@ t_fd_lst	*create_fds_list(t_redir_lst *redirs, t_garbage **gb)
 	{
 		if (fds->in != STDIN_FILENO && redirs->redir == in)
 			close(fds->in);
-		if (fds->out != STDOUT_FILENO && (redirs->redir == out || redirs->redir == outout))
+		if (fds->out != STDOUT_FILENO && (redirs->redir == out
+				|| redirs->redir == outout))
 			close(fds->out);
 		get_fds(&fds, redirs);
 		if (fds->in == -1)
