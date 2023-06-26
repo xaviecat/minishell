@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 13:43:43 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/22 11:58:25 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/26 16:14:58 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static int	check_var_exist_and_valid(char *var, char **tabi)
 	{
 		if (!ft_isalnum(var[i]))
 		{
-			ft_fdprintf(2, NT_VAL_ID('%s'), var);
+			ft_fdprintf(2, MSH E_UNSET"'%s'"NT_VAL_ID, var);
 			return (0);
 		}
 		i++;

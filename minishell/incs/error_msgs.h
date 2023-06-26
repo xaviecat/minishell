@@ -3,45 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   error_msgs.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 13:34:42 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/21 15:48:28 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/26 16:16:06 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ERROR_MSGS_H
 # define ERROR_MSGS_H
 
+# define MSH			"minishell: "
 /* custom errors */
-# define UN_QUOTE		"minishell: unclosed quote\n"
-# define S_AMP			"minishell: feature not handled: '&'\n"
-# define D_AMP			"minishell: feature not handled: '&&'\n"
-# define D_PIPE			"minishell: feature not handled: '||'\n"
-# define SEMICOLON		"minishell: feature not handled: ';'\n"
-# define BACKSLASH		"minishell: feature not handled: '\\'\n"
-# define D_DOLLAR		"minishell: feature not handled: '$$'\n"
-# define S_DOLLAR(x)	"minishell: feature not handled: " #x "\n"
-# define MEXP			"minishell: export: '"
-# define NOVAL_ID		"': not a valid identifier\n"
+# define UN_QUOTE		"unclosed quote\n"
+# define S_AMP			"feature not handled: '&'\n"
+# define D_AMP			"feature not handled: '&&'\n"
+# define D_PIPE			"feature not handled: '||'\n"
+# define SEMICOLON		"feature not handled: ';'\n"
+# define BACKSLASH		"feature not handled: '\\'\n"
+# define D_DOLLAR		"feature not handled: '$$'\n"
+# define S_DOLLAR		"feature not handled: '$"
+
+# define E_EXPORT		"export: '"
+# define E_CD			"cd: "
+# define E_UNSET		"unset: "
 
 # define CMD_NOT_FOUND	": command not found\n"
+# define NT_VAL_ID		": not a valid identifier\n"
+# define NO_SFD			": No such file or directory\n"
+# define IS_DIR			": Is a directory\n"
+# define NO_PERM		": Permission denied\n"
 
 /* bash errors*/
-# define S_SM_A_BRA	"minishell: syntax error near unexpected token '<'\n"
-# define D_SM_A_BRA	"minishell: syntax error near unexpected token '<<'\n"
-# define S_GR_A_BRA	"minishell: syntax error near unexpected token '>'\n"
-# define D_GR_A_BRA	"minishell: syntax error near unexpected token '>>'\n"
-# define NL_TKN		"minishell: syntax error near unexpected token 'newline'\n"
-# define PIPE_TKN	"minishell: syntax error near unexpected token '|'\n"
-# define CD_FILE	"minishell: cd: "
-
-# define UN_TKN(x)	"minishell: syntax error near unexpected token " #x "\n"
-# define NT_VAL_ID(x) "minishell: unset: " #x ": not a valid identifier\n"
-
-# define MSH		"minishell: "
-# define NO_SFD		": No such file or directory\n"
-# define IS_DIR		": Is a directory\n"
-# define NO_PERM	": Permission denied\n"
+# define S_SM_A_BRA		"syntax error near unexpected token '<'\n"
+# define D_SM_A_BRA		"syntax error near unexpected token '<<'\n"
+# define S_GR_A_BRA		"syntax error near unexpected token '>'\n"
+# define D_GR_A_BRA		"syntax error near unexpected token '>>'\n"
+# define NL_TKN			"syntax error near unexpected token 'newline'\n"
+# define PIPE_TKN		"syntax error near unexpected token '|'\n"
+# define UN_TKN			"syntax error near unexpected token "
 
 #endif

@@ -48,7 +48,7 @@ void	*ft_memmove(void *mdst, const void *msrc, size_t n);
 void	*ft_memset(void *mem, int v, size_t n);
 
 /* String functions */
-int		ft_atoi(const char *nbr);
+long long int ft_atoi(const char *nbr);
 
 char	*ft_itoa(int n);
 /* Precision 15 max */

@@ -75,7 +75,7 @@ int	export_print(t_msh *msh)
 	i = 0;
 	while (envp_cpy[i])
 	{
-		ft_printf("declare -x ");
+		printf("declare -x ");
 		j = 0;
 		while (envp_cpy[i][j] && envp_cpy[i][j] != '=')
 			printf("%c", envp_cpy[i][j++]);
