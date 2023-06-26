@@ -59,6 +59,7 @@ SRCS			:=	minishell.c\
 					utils/count_command.c\
 					utils/expand_utils.c\
 					utils/export_utils.c\
+					utils/ft_atoi_custom.c\
 					utils/ft_sort_str_arr.c\
 					utils/ft_tabfree.c\
 					utils/reforme_d_tab_cmd.c\

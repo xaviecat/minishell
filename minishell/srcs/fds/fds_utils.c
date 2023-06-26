@@ -32,7 +32,6 @@ t_fd_lst	*new_fds(t_garbage **gb)
 		return (NULL);
 	fds->in = STDIN_FILENO;
 	fds->out = STDOUT_FILENO;
-	fds->last_added = NULL;
 	return (fds);
 }
 
