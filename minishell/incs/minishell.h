@@ -173,6 +173,7 @@ int				is_concat(char *cmd);
 char			*ft_gbitoa(int n, t_garbage **gb);
 //int				is_quote_quote(char *str, size_t i);
 size_t			count_command(t_node_lst *lst);
+bool			ft_atoi_custom(const char *nbr, int *nb_ret);
 
 /* list_char function */
 t_char_lst		*char_lst_new(char c, t_garbage **gb);

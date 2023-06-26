@@ -98,7 +98,6 @@ typedef struct s_fd_lst
 {
 	int				in;
 	int				out;
-	struct s_fd_lst	*last_added;
 }	t_fd_lst;
 
 typedef struct s_cmd_lst
