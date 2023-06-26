@@ -44,10 +44,6 @@ int	b_echo(t_msh *msh)
 {
 	bool	new_line;
 
-//	print_lst_cmd(msh->lst_n);
-//	ft_fdprintf(2, YELLOW"je passe la\n"RESET);
-//	for (t_cmd_lst *tmp = msh->lst_n->lst_cmd; tmp; tmp = tmp->next)
-//		ft_fdprintf(2, YELLOW"cmd = %s\n"RESET, tmp->cmd);
 	if (!msh->lst_n->lst_cmd)
 		return (1);
 	msh->lst_n->lst_cmd = msh->lst_n->lst_cmd->next;

@@ -13,7 +13,7 @@
 #include "../../incs/minishell.h"
 
 t_node_lst	*lst_cmd_new(t_cmd_lst *cmds, t_fd_lst *fds,
-						   t_redir_lst *redir, t_garbage **gb)
+				t_redir_lst *redir, t_garbage **gb)
 {
 	t_node_lst	*new;
 

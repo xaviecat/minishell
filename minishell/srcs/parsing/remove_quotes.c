@@ -12,31 +12,6 @@
 
 #include "../../incs/minishell.h"
 
-//static size_t	get_newcmd_len(char *cmd)
-//{
-//	size_t	i;
-//	size_t	counter;
-//	int		is_sq_opened;
-//	int		is_dq_opened;
-//
-//	i = 0;
-//	counter = 0;
-//	is_dq_opened = -1;
-//	is_sq_opened = -1;
-//	while (cmd[i])
-//	{
-//		if (cmd[i] == '"' && is_sq_opened < 0)
-//			is_dq_opened *= -1;
-//		else if (cmd[i] == '\'' && is_dq_opened < 0)
-//			is_sq_opened *= -1;
-//		if ((cmd[i] != '"' || is_sq_opened > 0)
-//			&& (cmd[i] != '\'' || is_dq_opened > 0))
-//			counter++;
-//		i++;
-//	}
-//	return (counter);
-//}
-
 size_t	get_newcmd_len(char *cmd)
 {
 	size_t	i;

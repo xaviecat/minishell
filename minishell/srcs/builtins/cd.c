@@ -70,7 +70,7 @@ int	b_cd(t_msh *msh)
 		path = msh->lst_n->lst_cmd->next->cmd;
 	if (msh->lst_n->lst_cmd->next->next)
 	{
-		ft_fdprintf(2, "minishell: cd: too many arguments\n");
+		ft_fdprintf(2, RED MSH E_CD TOO_MN_ARGS RESET);
 		return (1);
 	}
 	if (ft_strncmp(path, ".", 2) == 0)

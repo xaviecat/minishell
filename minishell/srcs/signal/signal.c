@@ -12,23 +12,6 @@
 
 #include "../../incs/minishell.h"
 
-/////* TEST SIGNAL */
-////
-////struct	sigaction	sa_quit;
-////struct	sigaction	sa_stop;
-//////Ctrl+C
-////sa_int.sa_handler = signal_handler;
-////sa_int.sa_flags = 0;
-////sigaction(SIGINT, &sa_int, NULL);
-//////(Ctrl+\)
-////sa_quit.sa_handler = signal_handler;
-////sa_quit.sa_flags = 0;
-//sigaction(SIGQUIT, &sa_quit, NULL);
-//////Ctrl+D
-////sa_stop.sa_handler = signal_handler;
-////sa_stop.sa_flags = 0;
-//sigaction(SIGTSTP, &sa_stop, NULL);
-
 void	signal_hub_term(void)
 {
 	struct sigaction	sa;
