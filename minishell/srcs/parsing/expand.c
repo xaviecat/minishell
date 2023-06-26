@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:08:17 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/19 14:57:11 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/26 01:23:20 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,6 +185,8 @@ int	expand_commands(t_msh *msh)
 	w_lst_cpy = msh->lst_w;
 	while (w_lst_cpy)
 	{
+		if (!ft_strncmp(w_lst_cpy->word, "\"\"", 3))
+			w_lst_cpy->is_nill = true;
 		if (w_lst_cpy->type != delimiteur)
 			w_lst_cpy->word = expand_vars(w_lst_cpy->word, msh);
 		if (!w_lst_cpy->word)
@@ -194,6 +196,7 @@ int	expand_commands(t_msh *msh)
 			&& ft_strchr(w_lst_cpy->word, '"') == NULL)
 			if (!cut_space_expand(&w_lst_cpy, &(msh->garbage)))
 				return (0);
+		printf("after expand : [%s]\n", w_lst_cpy->word);
 		w_lst_cpy = w_lst_cpy->next;
 	}
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:46:20 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/15 17:07:24 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/21 17:33:31 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,11 @@ int	add_new_var_to_envp(t_cmd_lst *cmd, char **save_envp, t_msh *msh)
 	i = 0;
 	while (cmd)
 	{
+		if (!export_error_management(msh, cmd))
+		{
+			cmd = cmd->next;
+			continue ;
+		}
 		if (not_in_env(cmd->cmd, save_envp))
 		{
 			if (!is_concat(cmd->cmd))
@@ -141,15 +146,15 @@ int	add_new_var_to_envp(t_cmd_lst *cmd, char **save_envp, t_msh *msh)
 	return (1);
 }
 
-int	b_export(t_msh *msh, t_cmd_lst *cmd)
+int	b_export(t_msh *msh)
 {
-	char	**save_envp;
-	char	**modified_envp;
+	char		**save_envp;
+	t_cmd_lst	*cmd;
+	char		**modified_envp;
 
+	cmd = msh->lst_n->lst_cmd;
 	if (!cmd->next)
 		return (export_print(msh));
-	if (!export_error_management(msh, cmd))
-		return (1);
 	save_envp = msh->envp;
 	if (!ft_alloc_envp(msh, cmd))
 		return (0);

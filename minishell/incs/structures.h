@@ -106,6 +106,7 @@ typedef struct s_fd_lst
 typedef struct s_cmd_lst
 {
 	char				*cmd;
+	bool				is_nill;
 	bool				s_quote;
 	bool				d_quote;
 	struct s_cmd_lst	*next;
@@ -122,7 +123,7 @@ typedef struct s_node_lst
 	struct s_redir_lst	*redirs;
 	struct s_word_lst	*heredoc;
 	pid_t				hdpid;
-	int 				pipehd[2];
+	int					pipehd[2];
 	struct s_fd_lst		*fds;
 	struct s_node_lst	*next;
 	struct s_node_lst	*previous;
@@ -132,6 +133,7 @@ typedef struct s_node_lst
 typedef struct s_word_lst
 {
 	char				*word;
+	bool				is_nill;
 	t_type_word			type;
 	struct s_word_lst	*next;
 	struct s_word_lst	*prev;

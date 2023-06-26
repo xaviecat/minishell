@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
+
 int	parsing_char(t_msh **minish, char *line, char **envp_sh)
 {
 	if (!(create_char_lst_with_c_inside(line, minish)))

@@ -112,7 +112,7 @@ int				b_pwd(t_msh *msh);
 int				b_cd(t_msh *msh);
 int				b_echo(t_msh *msh);
 void			b_exit(t_msh *msh);
-int				b_export(t_msh *msh, t_cmd_lst *cmds);
+int				b_export(t_msh *msh);
 int				b_env(t_msh *msh);
 int				b_unset(t_msh *sh);
 int				find_builtin(t_msh *sh);

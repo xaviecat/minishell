@@ -30,6 +30,7 @@ t_word_lst	*word_lst_new(char *word, t_garbage **gb)
 	if (!new->word)
 		return (ft_free(gb, new), NULL);
 	new->type = not_define;
+	new->is_nill = false;
 	new->next = NULL;
 	new->prev = NULL;
 	return (new);
