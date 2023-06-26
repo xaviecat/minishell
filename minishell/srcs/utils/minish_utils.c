@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minish_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 16:59:21 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/20 11:38:58 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/26 11:11:22 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	parsing_cmd(t_msh **minish, char **envp_sh)
 	get_access(minish);
 	(*minish)->n_node = count_command((*minish)->lst_n);
 //	printf("\nnombre commande:%zu\n", (*minish)->n_node);
-	//print_lst_cmd((*minish)->lst_n);
+//	print_lst_cmd((*minish)->lst_n);
 	return (1);
 }
 
