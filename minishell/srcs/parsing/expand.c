@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:08:17 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/19 14:57:11 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/26 13:30:23 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ static char	*expand_env_var(t_garbage **gb, char **envp, char *var)
 			return (var_expansion);
 		}
 	}
+	if (ft_strncmp(var, "$", 2) == 0)
+		return (ft_free(gb, var_expansion), ft_gbstrdup("$", gb));
 	return (ft_free(gb, var_expansion), ft_gbstrdup("", gb));
 }
 

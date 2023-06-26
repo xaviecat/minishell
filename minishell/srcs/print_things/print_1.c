@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 16:54:48 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/19 15:07:11 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/26 13:29:38 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,10 @@ void	print_fd(t_fd_lst *lst)
 	int			i;
 
 	i = 0;
-	while (lst)
-	{
-		printf("[%d] ", i);
-		printf("in : %-21d | ", lst->in);
-		printf("out : %-28d | ", lst->out);
-		printf("\n");
-		lst = lst->next;
-		i++;
-	}
+	printf("[%d] ", i);
+	printf("in : %-21d | ", lst->in);
+	printf("out : %-28d | ", lst->out);
+	printf("\n");
 }
 
 void	print_redir(t_redir_lst *lst)
