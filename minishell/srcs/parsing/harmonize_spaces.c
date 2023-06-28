@@ -39,7 +39,7 @@ void	remove_extra_spaces(t_char_lst **lst, t_garbage **gb)
 	t_char_lst	*first;
 
 	first = *lst;
-	while ((*lst) && (*lst)->c == ' ')
+	while ((*lst) && ((*lst)->c == ' ' || (*lst)->c == '\t'))
 	{
 		if ((*lst) == first)
 			first = (*lst)->next;

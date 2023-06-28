@@ -65,14 +65,14 @@ typedef bool	(*t_unhandled_tab)(t_char_lst *);
 typedef int		(*t_builtin_tab)(t_msh *msh);
 
 /* global */
-void			free_and_exit_minish(t_msh *minish, char ***envp_sh);
+void			free_and_exit_minish(t_msh *minish);
 void			free_end_loop(t_msh *msh);
 void			print_bannier(void);
 t_msh			*create_minishell(char **envp, char **envp_sh);
 /* parsing */
-int				parsing_char(t_msh **minish, char *line, char **envp_sh);
-int				parsing_word(t_msh **minish, char **envp_sh);
-int				parsing_cmd(t_msh **minish, char **envp_sh);
+int				parsing_char(t_msh **minish, char *line);
+int				parsing_word(t_msh **minish);
+int				parsing_cmd(t_msh **minish);
 char			**parsing_argu(char *arg_term);
 t_msh			*parsing_command(char *cmd_line, t_msh *sh);
 int				expand_commands(t_msh *msh);
