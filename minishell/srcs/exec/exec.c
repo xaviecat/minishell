@@ -111,10 +111,7 @@ void	builtin_execution(t_msh *msh)
 {
 	static t_builtin_tab	builtin_tab[8] = {&b_echo, &b_env, &b_pwd, &b_cd,
 		b_export, &b_unset, &b_exit, NULL};
-//	int ret_val;
 
-//	ret_val = 0;
-//	ft_fdprintf(2, RED"builtin = %d\n"RESET, msh->lst_n->builtin);
 	g_exit_status = builtin_tab[msh->lst_n->builtin](msh);
 }
 

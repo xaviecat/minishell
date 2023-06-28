@@ -13,7 +13,7 @@
 #include "../../incs/minishell.h"
 
 t_cmd_lst	*new_w_cmd_list(char *content, bool s_quote, bool d_quote,
-			t_garbage **gb)
+				t_garbage **gb)
 {
 	t_cmd_lst	*new;
 
@@ -44,8 +44,8 @@ t_cmd_lst	*get_cmd(t_word_lst **old_lst, t_garbage **gb)
 {
 	t_cmd_lst	*cmds;
 	t_cmd_lst	*new;
-	bool			two_quote;
-	bool			one_quote;
+	bool		two_quote;
+	bool		one_quote;
 
 	cmds = NULL;
 	two_quote = false;

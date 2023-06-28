@@ -50,8 +50,8 @@ void	free_error_cmd(t_garbage **gb, t_node_lst **lst)
 t_node_lst	*create_command(t_msh **sh)
 {
 	t_redir_lst	*redirs;
-	t_fd_lst		*fds;
-	t_node_lst		*new;
+	t_fd_lst	*fds;
+	t_node_lst	*new;
 
 	redirs = get_redir(&((*sh)->lst_w), &((*sh)->garbage));
 	if (errno == ENOMEM)

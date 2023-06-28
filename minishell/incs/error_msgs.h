@@ -6,7 +6,7 @@
 /*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 13:34:42 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/26 16:16:06 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/26 17:42:04 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,18 @@
 # define D_DOLLAR		"feature not handled: '$$'\n"
 # define S_DOLLAR		"feature not handled: '$"
 
-# define E_EXPORT		"export: '"
+# define E_EXPORT		"export: "
 # define E_CD			"cd: "
 # define E_UNSET		"unset: "
+# define E_EXIT			"exit: "
 
+# define TOO_MN_ARGS	"too many arguments\n"
 # define CMD_NOT_FOUND	": command not found\n"
 # define NT_VAL_ID		": not a valid identifier\n"
 # define NO_SFD			": No such file or directory\n"
 # define IS_DIR			": Is a directory\n"
 # define NO_PERM		": Permission denied\n"
+# define NUM_ARG		": numeric argument required\n"
 
 /* bash errors*/
 # define S_SM_A_BRA		"syntax error near unexpected token '<'\n"

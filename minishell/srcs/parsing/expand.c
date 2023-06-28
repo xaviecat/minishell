@@ -193,7 +193,9 @@ int	expand_commands(t_msh *msh)
 			return (0); // ? code d'erreur a ajouter
 		if (w_lst_cpy->in_d_quote == false && w_lst_cpy->in_s_quote == false)
 		{
-			if (w_lst_cpy->word[0] != '\0' && !cut_space_expand(&w_lst_cpy, &(msh->garbage))) {
+			if (w_lst_cpy->word[0] != '\0'
+				&& !cut_space_expand(&w_lst_cpy, &(msh->garbage)))
+			{
 				printf("cc");
 				return (0);
 			}

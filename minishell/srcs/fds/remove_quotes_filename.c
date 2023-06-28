@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   remove_quotes_filename.c                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nfaust <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/26 17:29:55 by nfaust            #+#    #+#             */
+/*   Updated: 2023/06/26 17:29:55 by nfaust           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../incs/minishell.h"
 
 static int	del_quote_redir(t_redir_lst **lst, t_garbage **gb)
@@ -20,7 +32,8 @@ int	del_quote_filename(t_redir_lst **lst, t_garbage **gb)
 	first = *lst;
 	while (*lst)
 	{
-		if (ft_strchr((*lst)->filename, '\'') != NULL || ft_strchr((*lst)->filename, '"')  != NULL)
+		if (ft_strchr((*lst)->filename, '\'') != NULL
+			|| ft_strchr((*lst)->filename, '"') != NULL)
 		{
 			if (!(del_quote_redir(lst, gb)))
 				return (0);

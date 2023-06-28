@@ -23,18 +23,3 @@ int	export_error_management(t_msh *msh, t_cmd_lst *cmd)
 	(void) msh;
 	return (1);
 }
-
-//
-//
-//export $fhsjd banane=test
-//
-//export
-//        $erfs=test
-//		banane=test;
-//export
-//		"=test"
-//		"banane=test";
-//
-//export =test banane="test  youpi";
-//
-//export =test banane =test NULL ;
