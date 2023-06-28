@@ -32,7 +32,7 @@ t_node_lst	*lst_cmd_new(t_cmd_lst *cmds, t_fd_lst *fds,
 	return (new);
 }
 
-t_builtin builtin_or_command(char *cmd)
+t_builtin	builtin_or_command(char *cmd)
 {
 	if (ft_strncmp(cmd, "exit", 5) == 0)
 		return (e_exit);

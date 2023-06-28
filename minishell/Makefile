@@ -156,6 +156,12 @@ leaks			:	all
 					-s ./${NAME}
 					#--log-file=valgrind.txt \
 
+envleaks			:	all
+				env -i valgrind --suppressions=valgrind_ignore_leaks.txt --leak-check=full \
+					--show-leak-kinds=all --track-fds=yes \
+					--show-mismatched-frees=yes --read-var-info=yes \
+					-s ./${NAME}
+
 FORCE			:
 
 clean			:

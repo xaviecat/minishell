@@ -3,74 +3,65 @@
 /*                                                        :::      ::::::::   */
 /*   minish_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 16:59:21 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/28 12:01:29 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/28 16:56:21 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
-int	parsing_char(t_msh **minish, char *line)
+int	parsing_char(t_msh **msh, char *line)
 {
-	if (!(create_char_lst_with_c_inside(line, minish)))
+	if (!(create_char_lst_with_c_inside(line, msh)))
 	{
 		g_exit_status = 128 + 12;
 		free(line);
-		free_and_exit_minish(*minish);
+		free_and_exit_minish(*msh);
 	}
-	give_type_in_lst(&(*minish)->lst_c);
-	if (unhandled_char((*minish)->lst_c))
+	give_type_in_lst(&(*msh)->lst_c);
+	if (unhandled_char((*msh)->lst_c))
 	{
 		g_exit_status = 2;
-		return (free_end_loop(*minish), 0);
+		return (free_end_loop(*msh), 0);
 	}
-	harmonize_spaces(&((*minish)->lst_c), &((*minish)->garbage));
-	//print_lst_char((*minish)->lst_c);
+	harmonize_spaces(&((*msh)->lst_c), &((*msh)->garbage));
+	//print_lst_char((*msh)->lst_c);
 	return (1);
 }
 
-int	parsing_word(t_msh **minish)
+int	parsing_word(t_msh **msh)
 {
 	int	ret;
 
-	ret = create_word_lst(minish);
+	ret = create_word_lst(msh);
 	if (ret == 1)
-		free_and_exit_minish(*minish);
+		free_and_exit_minish(*msh);
 	else if (ret == 2)
-		return (free_end_loop(*minish), 0);
-	if ((!check_pipe_and_redir(&((*minish)->garbage), &((*minish)->lst_w))))
-		return (free_end_loop(*minish), 0);
-	ret = expand_commands(*minish);
+		return (free_end_loop(*msh), 0);
+	if ((!check_pipe_and_redir(&((*msh)->garbage), &((*msh)->lst_w))))
+		return (free_end_loop(*msh), 0);
+	ret = expand_commands(*msh);
 	if (ret == 0)
-	{
-		ft_free_all(&((*minish)->garbage)),
-		free_and_exit_minish(*minish);
-	}
+		free_and_exit_minish(*msh);
 	if (ret == 2)
-		return (free_end_loop(*minish), 0);
-	//print_lst_word((*minish)->lst_w);
+		return (free_end_loop(*msh), 0);
+	//print_lst_word((*msh)->lst_w);
 	return (1);
 }
 
-int	parsing_cmd(t_msh **minish)
+int	parsing_cmd(t_msh **msh)
 {
-	if (!(sh_pars(minish)))
-		free_and_exit_minish(*minish);
-	if (!heredoc_handling(*minish))
-	{
-		ft_free_all(&((*minish)->garbage)),
-		free_and_exit_minish(*minish);
-	}
-	if (!ft_del_quotes(*minish))
-	{
-		ft_free_all(&((*minish)->garbage)),
-		free_and_exit_minish(*minish);
-	}
-	get_access(minish);
-	(*minish)->n_node = count_command((*minish)->lst_n);
-//	printf("\nnombre commande:%zu\n", (*minish)->n_node);
-	//print_lst_cmd((*minish)->lst_n);
+	if (!(sh_pars(msh)))
+		free_and_exit_minish(*msh);
+	if (!heredoc_handling(*msh))
+		free_and_exit_minish(*msh);
+	if (!ft_del_quotes(*msh))
+		free_and_exit_minish(*msh);
+	get_access(*msh);
+	(*msh)->n_node = count_command((*msh)->lst_n);
+//	printf("\nnombre commande:%zu\n", (*msh)->n_node);
+	print_lst_cmd((*msh)->lst_n);
 	return (1);
 }
 
