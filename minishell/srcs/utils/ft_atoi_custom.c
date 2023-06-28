@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 15:54:52 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/26 16:26:35 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/26 16:29:56 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,8 @@ bool	ft_atoi_custom(const char *nbr, int *nb_ret)
 	}
 	if (!real_atoi(nbr, nb_ret))
 	{
-		ft_fdprintf(2, "bash: exit: %s: numeric argument required", nbr);
+		ft_fdprintf(2, "minishell: exit: %s: numeric argument required", nbr);
 		return (false);
 	}
 	return (true);
 }
-
-
