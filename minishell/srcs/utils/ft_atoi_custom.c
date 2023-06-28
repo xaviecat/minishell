@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 15:54:52 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/26 16:26:35 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/26 16:29:56 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,3 @@ bool	ft_atoi_custom(const char *nbr, int *nb_ret)
 	}
 	return (true);
 }
-
-

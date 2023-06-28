@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/16 11:00:47 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/28 12:04:18 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 int g_exit_status = 0;
 
-void	free_and_exit_minish(t_msh *minish, char ***envp_sh)
+void	free_and_exit_minish(t_msh *minish)
 {
-	if (*envp_sh)
-		ft_gbtabfree(*envp_sh, &(minish->garbage));
-	envp_sh = NULL;
+	//if (*envp_sh)
+		//ft_gbtabfree(*envp_sh, &(minish->garbage));
+	//envp_sh = NULL;
 	free(minish->garbage);
 	free(minish);
 	rl_clear_history();
@@ -32,11 +32,10 @@ void	free_end_loop(t_msh *msh)
 	free(msh);
 }
 
-void	cp_envp_to_envp_sh(char ***envp_sh, char **envp_in_minish)
+char	**cp_envp_to_envp_sh(char **envp_sh, char **envp_in_minish)
 {
-	if (*envp_sh)
-		ft_tabfree(*envp_sh);
-	*envp_sh = ft_tabdup(envp_in_minish);
+	envp_sh = ft_tabdup(envp_in_minish);
+	return (envp_sh);
 }
 
 void	minishell(char **envp)
@@ -71,18 +70,18 @@ void	minishell(char **envp)
 		msh = create_minishell(envp, envp_sh);
 		if (!msh)
 			return (free(line));
-		if (!parsing_char(&msh, line, envp_sh))
+		if (!parsing_char(&msh, line))
 			continue ;
-		if (!parsing_word(&msh, envp_sh))
+		if (!parsing_word(&msh))
 			continue ;
-		parsing_cmd(&msh, envp_sh);
+		parsing_cmd(&msh);
 		if (!get_cmdtab(msh))
 		{
 			ft_free_all(&(msh->garbage)),
-			free_and_exit_minish(msh, &envp_sh);
+			free_and_exit_minish(msh);
 		}
 		execution(msh);
-		cp_envp_to_envp_sh(&envp_sh, msh->envp);
+		envp_sh = cp_envp_to_envp_sh(envp_sh, msh->envp);
 		free_end_loop(msh);
 	}
 }
