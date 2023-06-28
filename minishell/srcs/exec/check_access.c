@@ -6,7 +6,7 @@
 /*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 11:36:08 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/28 18:30:26 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/28 19:05:24 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ char	*explore_cmdpaths(char **cmdpaths, t_garbage **gb, bool *f_ok)
 			good_path = ft_gbstrdup(cmdpaths[i], gb);
 			if (!good_path)
 				return (NULL);
-			ft_gbtabfree(cmdpaths, gb);
 			return (good_path);
 		}
 		i++;
@@ -83,8 +82,7 @@ char	*explore_cmdpaths(char **cmdpaths, t_garbage **gb, bool *f_ok)
 	return (NULL);
 }
 
-char	*check_access(char **cmdpaths, char *cmd, t_node_lst *lst,
-			t_garbage **gb)
+char	*check_access(char **cmdpaths, char *cmd, t_garbage **gb)
 {
 	bool	f_ok;
 	char	*good_path;
@@ -93,12 +91,12 @@ char	*check_access(char **cmdpaths, char *cmd, t_node_lst *lst,
 	good_path = explore_cmdpaths(cmdpaths, gb, &f_ok);
 	if (!good_path && !f_ok)
 	{
-		lst->exit_code = 127;
+		g_exit_status = 127;
 		ft_fdprintf(2, RED MSH"%s"CMD_NOT_FOUND RESET, cmd);
 	}
 	else if (!good_path)
 	{
-		lst->exit_code = 126;
+		g_exit_status = 126;
 		ft_fdprintf(2, RED MSH"%s"NO_PERM RESET, cmd);
 	}
 	ft_gbtabfree(cmdpaths, gb);
@@ -111,20 +109,20 @@ void	cmd_in_current_dir(t_msh *msh, t_node_lst *lst, t_garbage **gb)
 
 	if (access(lst->lst_cmd->cmd, F_OK))
 	{
-		lst->exit_code = 127;
+		g_exit_status = 127;
 		ft_fdprintf(2, RED MSH"%s"NO_SFD RESET, lst->lst_cmd->cmd);
 		return ;
 	}
 	stat(lst->lst_cmd->cmd, &st);
 	if (S_ISDIR(st.st_mode))
 	{
-		lst->exit_code = 126;
+		g_exit_status = 126;
 		ft_fdprintf(2, RED MSH"%s"IS_DIR RESET, lst->lst_cmd->cmd);
 		return ;
 	}
 	if (access(lst->lst_cmd->cmd, X_OK))
 	{
-		lst->exit_code = 126;
+		g_exit_status = 126;
 		ft_fdprintf(2, RED MSH"%s"NO_PERM RESET, lst->lst_cmd->cmd);
 		return ;
 	}
@@ -158,7 +156,7 @@ void	give_access(t_msh *msh, char **path, t_node_lst *lst, t_garbage **gb)
 		else
 		{
 			cmdpaths = get_cmdpath(path, lst->lst_cmd->cmd, gb);
-			lst->cmdpath = check_access(cmdpaths, lst->lst_cmd->cmd, lst, gb);
+			lst->cmdpath = check_access(cmdpaths, lst->lst_cmd->cmd, gb);
 			if ((!cmdpaths || !(lst->cmdpath)) && errno == ENOMEM)
 				return (free_and_exit_minish(msh));
 		}

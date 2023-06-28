@@ -6,7 +6,7 @@
 /*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 19:25:52 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/26 11:22:20 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/28 18:48:56 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,17 +117,21 @@ void	builtin_execution(t_msh *msh)
 
 void	child(t_msh *msh, int *prev_pipe, int *curr_pipe)
 {
-//	dprintf(2, GREEN"child = [%d]\n"RESET, getpid());
+	dprintf(2, GREEN"child = [%d]\n"RESET, getpid());
 	redirect_fds_in(msh, prev_pipe, curr_pipe);
 	redirect_fds_out(msh, prev_pipe, curr_pipe);
 	signal_hub_exec();
-	close_pipe(prev_pipe);
-	close_pipe(curr_pipe);
+//	close_pipe(prev_pipe);
+//	close_pipe(curr_pipe);
 	if (msh->lst_n->builtin == e_none && msh->lst_n->cmdpath)
 		execve(msh->lst_n->cmdpath, msh->lst_n->cmdtab, msh->envp);
 	else if (msh->lst_n->builtin < e_none)
 		builtin_execution(msh);
-	exit(msh->lst_n->exit_code); //! en cas d'erreur set le exit code
+	ft_free_all(&(msh->garbage));
+	free(msh->garbage);
+	free(msh);
+	rl_clear_history();
+	exit(g_exit_status);
 }
 
 void	parent(t_msh *msh, int *prev_pipe, int *curr_pipe)
@@ -195,7 +199,6 @@ void	forking(t_msh *msh)
 		else //? Parent
 			parent(msh, prev_pipe, curr_pipe);
 		msh->lst_n = msh->lst_n->next;
-		usleep(1000);
 	}
 	if (prev_pipe[0] != -1)
 		close_pipe(prev_pipe);
@@ -205,7 +208,7 @@ void	forking(t_msh *msh)
 
 void	execution(t_msh *msh)
 {
-//	dprintf(2, GREEN"parents = [%d]\n"RESET, getpid());
+	dprintf(2, GREEN"parents = [%d]\n"RESET, getpid());
 //	dprintf(2, GREEN"%zu\n"RESET, msh->n_node);
 	if ((msh->n_node >= 1 && (msh->lst_n->builtin < e_cd
 				|| msh->lst_n->builtin == e_none))

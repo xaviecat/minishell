@@ -6,7 +6,7 @@
 /*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 16:59:21 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/28 16:56:21 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/28 18:17:41 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	parsing_cmd(t_msh **msh)
 	get_access(*msh);
 	(*msh)->n_node = count_command((*msh)->lst_n);
 //	printf("\nnombre commande:%zu\n", (*msh)->n_node);
-	print_lst_cmd((*msh)->lst_n);
+//	print_lst_cmd((*msh)->lst_n);
 	return (1);
 }
 
