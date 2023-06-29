@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/29 11:16:39 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/28 12:24:12 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	free_and_exit_minish(t_msh *minish)
 	//if (*envp_sh)
 		//ft_gbtabfree(*envp_sh, &(minish->garbage));
 	//envp_sh = NULL;
+	ft_free_all(&(minish->garbage));
 	free(minish->garbage);
 	free(minish);
 	rl_clear_history();
@@ -76,10 +77,7 @@ void	minishell(char **envp)
 			continue ;
 		parsing_cmd(&msh);
 		if (!get_cmdtab(msh))
-		{
-			ft_free_all(&(msh->garbage)),
 			free_and_exit_minish(msh);
-		}
 		execution(msh);
 		envp_sh = cp_envp_to_envp_sh(envp_sh, msh->envp);
 		free_end_loop(msh);

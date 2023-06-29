@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:15:43 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/22 17:45:02 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/29 10:27:15 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,13 @@
 # include "minishell.h"
 
 /* enum */
+enum
+{
+	PREV,
+	CURR,
+	HD,
+};
+
 typedef enum e_builtin
 {
 	e_echo,
@@ -114,14 +121,13 @@ typedef struct s_node_lst
 	t_cmd_lst			*lst_cmd;
 	char				*cmdpath;
 	char				**cmdtab;
-	int					exit_code;
 	t_builtin			builtin;
 	pid_t				pid;
 	struct s_redir_lst	*redirs;
 	struct s_word_lst	*heredoc;
 	struct s_fd_lst		*fds;
 	struct s_node_lst	*next;
-	struct s_node_lst	*previous;
+	struct s_node_lst	*prev;
 	struct s_node_lst	*last_added;
 }	t_node_lst;
 
