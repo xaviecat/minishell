@@ -219,6 +219,8 @@ bool			is_backslash_error(t_char_lst *lst);
 bool			is_dollar_error(t_char_lst *lst);
 bool			is_exclamation_error(t_char_lst *lst);
 bool			is_colon_error(t_char_lst *lst);
+bool			is_parenthese_error(t_char_lst *lst);
+bool			is_star_error(t_char_lst *lst);
 
 /* heredoc */
 int				heredoc_handling(t_msh *msh);
@@ -230,7 +232,7 @@ int				expand_heredoc(t_word_lst *heredoc, t_msh *msh);
 /* A RANGER LOL */
 char			*expand_vars(char *command, t_msh *msh);
 int				does_contain_quotes(char *str);
-
+void	print_tab(char **tabi);
 
 /* excution */
 void			execution(t_msh *msh);

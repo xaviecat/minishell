@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_msgs.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 13:34:42 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/26 17:42:04 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/29 11:36:55 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@
 # define BACKSLASH		"feature not handled: '\\'\n"
 # define D_DOLLAR		"feature not handled: '$$'\n"
 # define S_DOLLAR		"feature not handled: '$"
+# define P_OPEN			"feature not handled: '('\n"
+# define P_CLOSE		"feature not handled: ')'\n"
+# define STAR			"feature not handled '*'\n"
+
 
 # define E_EXPORT		"export: "
 # define E_CD			"cd: "

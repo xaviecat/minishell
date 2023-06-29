@@ -17,10 +17,13 @@ void	print_fd(t_fd_lst *lst)
 	int			i;
 
 	i = 0;
-	printf("[%d] ", i);
-	printf("in : %-21d | ", lst->in);
-	printf("out : %-28d | ", lst->out);
-	printf("\n");
+	if (lst)
+	{
+		printf("[%d] ", i);
+		printf("in : %-21d | ", lst->in);
+		printf("out : %-28d | ", lst->out);
+		printf("\n");
+	}
 }
 
 void	print_redir(t_redir_lst *lst)

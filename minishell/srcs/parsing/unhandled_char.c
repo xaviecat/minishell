@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unhandled_char.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 17:43:08 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/26 16:08:26 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/28 13:02:25 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,10 @@
  */
 bool	is_forbidden_char(t_char_lst *lst)
 {
-	static t_unhandled_tab	is_error_fct[8] = {&is_amp_error, &is_pipe_error,
+	static t_unhandled_tab	is_error_fct[10] = {&is_amp_error, &is_pipe_error,
 		&is_semicolon_error, &is_backslash_error, &is_dollar_error,
-		&is_exclamation_error, &is_colon_error, NULL};
+		&is_exclamation_error, &is_colon_error, &is_parenthese_error,
+		&is_star_error, NULL};
 	size_t					i;
 
 	while (lst)
@@ -78,6 +79,11 @@ bool	is_bad_redir(t_char_lst *lst)
 {
 	while (lst)
 	{
+		if (lst->next && lst->c == '<' && lst->next->c == '>')
+		{
+			ft_fdprintf(2, RED MSH NL_TKN RESET);
+			return (true);
+		}
 		if (lst->c == '<')
 		{
 			if (is_smaller_bracket_error(&lst))
