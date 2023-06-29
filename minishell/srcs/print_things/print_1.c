@@ -131,7 +131,8 @@ void	print_lst_cmd(t_node_lst *lst)
 			dprintf(2,"\ncmdpath : %s", lst->cmdpath);
 		lst->lst_cmd = first_w;
 		dprintf(2,CYAN"\n");
-		print_fd(lst->fds);
+		if (lst->fds)
+			print_fd(lst->fds);
 		print_redir(lst->redirs);
 		print_heredoc(lst->heredoc);
 		lst = lst->next;

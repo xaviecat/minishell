@@ -6,7 +6,7 @@
 /*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 19:25:52 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/26 11:22:20 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/29 15:08:23 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,68 +28,107 @@ int	get_cmdtab(t_msh *msh)
 	return (1);
 }
 
-void	close_pipe(int pipefd[2])
+void	init_pipe_fd(int pipe_fd[3][2])
 {
-	if (!pipefd)
-		return ;
-	if (pipefd[0] > 0)
-		close(pipefd[0]);
-	if (pipefd[1] > 0)
-		close(pipefd[1]);
+	pipe_fd[PREV][0] = -1;
+	pipe_fd[PREV][1] = -1;
+	pipe_fd[CURR][0] = -1;
+	pipe_fd[CURR][1] = -1;
+	pipe_fd[HD][0] = -1;
+	pipe_fd[HD][1] = -1;
 }
 
-void	handle_heredoc(t_msh *msh, int *curr_pipe)
+void	close_pipe(int pipe[2])
 {
-	int			pipe_hd[2];
+	if (!pipe)
+		return ;
+	if (pipe[0] > 0)
+		close(pipe[0]);
+	if (pipe[1] > 0)
+		close(pipe[1]);
+
+}
+
+void	close_all(int pipe_fd[3][2], t_msh *msh)
+{
+	t_node_lst	*current;
+
+	current = msh->lst_n;
+	close_pipe(pipe_fd[PREV]);
+	close_pipe(pipe_fd[CURR]);
+	close_pipe(pipe_fd[HD]);
+	while (msh->lst_n->prev)
+		msh->lst_n = msh->lst_n->prev;
+	while (msh->lst_n)
+	{
+		if (msh->lst_n->fds)
+		{
+			if (msh->lst_n->fds->in > 0)
+				close(msh->lst_n->fds->in);
+			if (msh->lst_n->fds->out > 1)
+				close(msh->lst_n->fds->out);
+		}
+		msh->lst_n = msh->lst_n->next;
+	}
+	msh->lst_n = current;
+}
+
+void	handle_heredoc(t_msh *msh, int pipe_fd[3][2])
+{
 	pid_t		hdpid;
 
-	if (pipe(pipe_hd) < 0)
+	if (pipe(pipe_fd[HD]) < 0)
 		return ; //! ERROR
+	dprintf(2, GREEN"pipe_hd[0] = [%d], pipe_hd[1] = [%d]\n"RESET, pipe_fd[HD][0], pipe_fd[HD][1]);
 	hdpid = fork();
 	if (hdpid < 0)
 		return ; //! ERROR
 	else if (hdpid == 0) //? Child heredoc
 	{
-//		dprintf(2, GREEN"hdchild = [%d]\n"RESET, getpid());
+		dprintf(2, GREEN"hdchild = [%d]\n"RESET, getpid());
 		while (msh->lst_n->heredoc)
 		{
-			ft_fdprintf(pipe_hd[1], "%s\n", msh->lst_n->heredoc->word);
+			ft_fdprintf(pipe_fd[HD][1], "%s\n", msh->lst_n->heredoc->word);
 			msh->lst_n->heredoc = msh->lst_n->heredoc->next;
 		}
-		close_pipe(curr_pipe);
-		close_pipe(pipe_hd);
+		close_all(pipe_fd, msh);
+		ft_free_all(&(msh->garbage));
+		free(msh->garbage);
+		free(msh);
+		rl_clear_history();
 		exit(EXIT_SUCCESS);
 	}
 	else //? Parents heredoc
 	{
-		if (dup2(pipe_hd[0], STDIN_FILENO) < 0)
+		if (dup2(pipe_fd[HD][0], STDIN_FILENO) < 0)
 			return ; //! ERROR
-		close_pipe(pipe_hd);
+//		close_pipe(pipe_fd[CURR]); //! HD CURR
+		close_pipe(pipe_fd[HD]); //! HD
 	}
 }
 
-void	redirect_fds_in(t_msh *msh, int *prev_pipe, int *curr_pipe)
+void	redirect_fds_in(t_msh *msh, int pipe_fd[3][2])
 {
-
 	if (msh->lst_n->heredoc)
-		handle_heredoc(msh, curr_pipe);
+		handle_heredoc(msh, pipe_fd);
 	else if (msh->lst_n->fds && msh->lst_n->fds->in < 0)
 		return (exit(EXIT_FAILURE)); //! ERROR A GERER
 	else if (msh->lst_n->fds && msh->lst_n->fds->in > 0)
 	{
 		if (dup2(msh->lst_n->fds->in, STDIN_FILENO) < 0)
 			return ; //! ERROR
-		close_pipe(prev_pipe);
+		close(msh->lst_n->fds->in);
+		close_pipe(pipe_fd[PREV]); //! PREV
 	}
-	else if (prev_pipe[0] != -1)
+	else if (pipe_fd[PREV][0] != -1)
 	{
-		if (dup2(prev_pipe[0], STDIN_FILENO) < 0)
+		if (dup2(pipe_fd[PREV][0], STDIN_FILENO) < 0)
 			return ; //! ERROR
-		close_pipe(prev_pipe);
+		close_pipe(pipe_fd[PREV]); //! PREV
 	}
 }
 
-void	redirect_fds_out(t_msh *msh, int *prev_pipe, int *curr_pipe)
+void	redirect_fds_out(t_msh *msh, int pipe_fd[3][2])
 {
 	if (msh->lst_n->fds && msh->lst_n->fds->out < 0)
 		return (exit(EXIT_FAILURE)); //! ERROR A GERER
@@ -97,13 +136,14 @@ void	redirect_fds_out(t_msh *msh, int *prev_pipe, int *curr_pipe)
 	{
 		if (dup2(msh->lst_n->fds->out, STDOUT_FILENO) < 0)
 			return; //! ERROR
-		close_pipe(prev_pipe);
+		close(msh->lst_n->fds->out);
+		close_pipe(pipe_fd[PREV]); //! PREV
 	}
 	else if (msh->lst_n->next)
 	{
-		if (dup2(curr_pipe[1], STDOUT_FILENO) < 0)
+		if (dup2(pipe_fd[CURR][1], STDOUT_FILENO) < 0)
 			return; //! ERROR
-		close_pipe(curr_pipe);
+		close_pipe(pipe_fd[PREV]); //! CURR
 	}
 }
 
@@ -115,32 +155,45 @@ void	builtin_execution(t_msh *msh)
 	g_exit_status = builtin_tab[msh->lst_n->builtin](msh);
 }
 
-void	child(t_msh *msh, int *prev_pipe, int *curr_pipe)
+void	child(t_msh *msh, int pipe_fd[3][2])
 {
-//	dprintf(2, GREEN"child = [%d]\n"RESET, getpid());
-	redirect_fds_in(msh, prev_pipe, curr_pipe);
-	redirect_fds_out(msh, prev_pipe, curr_pipe);
+	dprintf(2, GREEN"child = [%d]\n"RESET, getpid());
+	dprintf(2, GREEN"pipe_fd[PREV][0] = [%d], pipe_fd[PREV][1] = [%d]\n"RESET, pipe_fd[PREV][0], pipe_fd[PREV][1]);
+	dprintf(2, GREEN"pipe_fd[CURR][0] = [%d], pipe_fd[CURR][1] = [%d]\n"RESET, pipe_fd[CURR][0], pipe_fd[CURR][1]);
+	dprintf(2, GREEN"pipe_fd[HD][0] = [%d], pipe_fd[HD][1] = [%d]\n"RESET, pipe_fd[HD][0], pipe_fd[HD][1]);
+
+	redirect_fds_in(msh, pipe_fd);
+	redirect_fds_out(msh, pipe_fd);
 	signal_hub_exec();
-	close_pipe(prev_pipe);
-	close_pipe(curr_pipe);
 	if (msh->lst_n->builtin == e_none && msh->lst_n->cmdpath)
 		execve(msh->lst_n->cmdpath, msh->lst_n->cmdtab, msh->envp);
 	else if (msh->lst_n->builtin < e_none)
 		builtin_execution(msh);
-	exit(msh->lst_n->exit_code); //! en cas d'erreur set le exit code
+	close_all(pipe_fd, msh);
+	ft_free_all(&(msh->garbage));
+	free(msh->garbage);
+	free(msh);
+	rl_clear_history();
+	exit(g_exit_status);
 }
 
-void	parent(t_msh *msh, int *prev_pipe, int *curr_pipe)
+void	parent(t_msh *msh, int pipe_fd[3][2])
 {
-	if (prev_pipe[0] != -1)
-		close_pipe(prev_pipe);
+	if (pipe_fd[PREV][0] != -1)
+	{
+		close(pipe_fd[PREV][0]);
+		close(pipe_fd[PREV][1]);
+	}
 	if (msh->lst_n->next)
 	{
-		prev_pipe[0] = curr_pipe[0];
-		prev_pipe[1] = curr_pipe[1];
+		pipe_fd[PREV][0] = pipe_fd[CURR][0];
+		pipe_fd[PREV][1] = pipe_fd[CURR][1];
 	}
 	else
-		close_pipe(curr_pipe);
+	{
+		close(pipe_fd[CURR][0]);
+		close(pipe_fd[CURR][1]);
+	}
 	if (msh->lst_n->fds)
 	{
 		if (msh->lst_n->fds->in > 0)
@@ -175,37 +228,34 @@ void	forking(t_msh *msh)
 {
 	t_node_lst	*first;
 	int			status_pid;
-	int			prev_pipe[2];
-	int			curr_pipe[2];
+	int			pipe_fd[3][2];
 
 	status_pid = 0;
-	prev_pipe[0] = -1;
-	prev_pipe[1] = -1;
+	init_pipe_fd(pipe_fd);
 	first = msh->lst_n;
 	signal_hub_ign();
 	while (msh->lst_n)
 	{
-		if (pipe(curr_pipe) < 0)
+		if (pipe(pipe_fd[CURR]) < 0)
 			return (perror("pipe error")); //! ERROR A CHECK
 		msh->lst_n->pid = fork();
 		if (msh->lst_n->pid < 0)
 			return (perror("fork error")); //! ERROR A CHECK
 		else if (msh->lst_n->pid == 0) //? Child
-			child(msh, prev_pipe, curr_pipe);
+			child(msh, pipe_fd);
 		else //? Parent
-			parent(msh, prev_pipe, curr_pipe);
+			parent(msh, pipe_fd);
 		msh->lst_n = msh->lst_n->next;
-		usleep(1000);
 	}
-	if (prev_pipe[0] != -1)
-		close_pipe(prev_pipe);
+	if (pipe_fd[PREV][0] != -1)
+		close_pipe(pipe_fd[PREV]);
 	msh->lst_n = first;
 	wait_fork(msh, status_pid);
 }
 
 void	execution(t_msh *msh)
 {
-//	dprintf(2, GREEN"parents = [%d]\n"RESET, getpid());
+	dprintf(2, GREEN"parents = [%d]\n"RESET, getpid());
 //	dprintf(2, GREEN"%zu\n"RESET, msh->n_node);
 	if ((msh->n_node >= 1 && (msh->lst_n->builtin < e_cd
 				|| msh->lst_n->builtin == e_none))
@@ -214,3 +264,9 @@ void	execution(t_msh *msh)
 	else if (msh->n_node == 1 && msh->lst_n->builtin >= e_cd)
 		builtin_execution(msh);
 }
+
+/*
+ *
+ * <<eof cat | cat -e > out | cat <out1 < out2 < out
+ *
+ * */
