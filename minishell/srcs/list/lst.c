@@ -28,7 +28,7 @@ t_node_lst	*lst_cmd_new(t_cmd_lst *cmds, t_fd_lst *fds,
 	new->cmdtab = NULL;
 	new->heredoc = NULL;
 	new->next = NULL;
-	new->previous = NULL;
+	new->prev = NULL;
 	return (new);
 }
 

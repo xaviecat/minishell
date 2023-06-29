@@ -85,7 +85,7 @@ int	sh_pars(t_msh **msh)
 			new->builtin = builtin_or_command(new->lst_cmd->cmd);
 		if ((*msh)->lst_n)
 		{
-			new->previous = (*msh)->lst_n->last_added;
+			new->prev = (*msh)->lst_n->last_added;
 			(*msh)->lst_n->last_added->next = new;
 		}
 		else
