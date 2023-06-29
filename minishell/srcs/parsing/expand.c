@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:08:17 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/26 13:30:23 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/29 12:27:37 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ static char	*expand_env_var(t_garbage **gb, char **envp, char *var)
 			return (var_expansion);
 		}
 	}
-	if (ft_strncmp(var, "$", 2) == 0)
-		return (ft_free(gb, var_expansion), ft_gbstrdup("$", gb));
 	return (ft_free(gb, var_expansion), ft_gbstrdup("", gb));
 }
 
@@ -195,10 +193,7 @@ int	expand_commands(t_msh *msh)
 		{
 			if (w_lst_cpy->word[0] != '\0'
 				&& !cut_space_expand(&w_lst_cpy, &(msh->garbage)))
-			{
-				printf("cc");
 				return (0);
-			}
 		}
 		w_lst_cpy = w_lst_cpy->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 13:34:42 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/28 13:20:06 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/29 11:36:55 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # define S_DOLLAR		"feature not handled: '$"
 # define P_OPEN			"feature not handled: '('\n"
 # define P_CLOSE		"feature not handled: ')'\n"
+# define STAR			"feature not handled '*'\n"
 
 
 # define E_EXPORT		"export: "

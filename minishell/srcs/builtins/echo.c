@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 13:08:46 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/28 18:56:55 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/29 11:32:24 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ bool	is_n_param(t_cmd_lst *lst)
 	int	i;
 
 	i = 1;
+	if (!lst->cmd)
+		return (false);
 	if (lst->cmd[0] != '-')
 		return (false);
 	if (lst->cmd[i] == '\0')
@@ -81,6 +83,8 @@ int	b_echo(t_msh *msh)
 	bool	new_line;
 
 	new_line = true;
+	if (!msh->lst_n->lst_cmd->next)
+		return (printf("\n"), 0);
 	msh->lst_n->lst_cmd = msh->lst_n->lst_cmd->next;
 	while (is_n_param(msh->lst_n->lst_cmd))
 	{
