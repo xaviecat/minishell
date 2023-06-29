@@ -34,5 +34,6 @@ int	b_pwd(t_msh *msh)
 	if (!path)
 		path = get_pwd_from_envp(msh->envp);
 	printf("%s\n", path);
+	free(path);
 	return (0);
 }
