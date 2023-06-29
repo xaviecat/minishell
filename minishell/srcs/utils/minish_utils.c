@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 16:59:21 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/29 15:42:52 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/29 16:02:29 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,6 @@ int	parsing_cmd(t_msh **msh)
 		free_and_exit_minish(*msh);
 	get_access(*msh);
 	(*msh)->n_node = count_command((*msh)->lst_n);
-//	printf("\nnombre commande:%zu\n", (*msh)->n_node);
-//	print_lst_cmd((*msh)->lst_n);
 	return (1);
 }
 
@@ -88,10 +86,7 @@ t_msh	*create_minishell(char **envp, char **envp_sh)
 		return (NULL);
 	}
 	if (envp_sh)
-	{
 		sh->envp = ft_gbtabdup(envp_sh, &(sh->garbage));
-		ft_tabfree(envp_sh);
-	}
 	else
 		sh->envp = ft_gbtabdup(envp, &(sh->garbage));
 	return (sh);

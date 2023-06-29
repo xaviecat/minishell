@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 19:25:52 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/29 15:08:23 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/29 16:02:51 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,10 +157,10 @@ void	builtin_execution(t_msh *msh)
 
 void	child(t_msh *msh, int pipe_fd[3][2])
 {
-	dprintf(2, GREEN"child = [%d]\n"RESET, getpid());
-	dprintf(2, GREEN"pipe_fd[PREV][0] = [%d], pipe_fd[PREV][1] = [%d]\n"RESET, pipe_fd[PREV][0], pipe_fd[PREV][1]);
-	dprintf(2, GREEN"pipe_fd[CURR][0] = [%d], pipe_fd[CURR][1] = [%d]\n"RESET, pipe_fd[CURR][0], pipe_fd[CURR][1]);
-	dprintf(2, GREEN"pipe_fd[HD][0] = [%d], pipe_fd[HD][1] = [%d]\n"RESET, pipe_fd[HD][0], pipe_fd[HD][1]);
+	//dprintf(2, GREEN"child = [%d]\n"RESET, getpid());
+	//dprintf(2, GREEN"pipe_fd[PREV][0] = [%d], pipe_fd[PREV][1] = [%d]\n"RESET, pipe_fd[PREV][0], pipe_fd[PREV][1]);
+	//dprintf(2, GREEN"pipe_fd[CURR][0] = [%d], pipe_fd[CURR][1] = [%d]\n"RESET, pipe_fd[CURR][0], pipe_fd[CURR][1]);
+	//dprintf(2, GREEN"pipe_fd[HD][0] = [%d], pipe_fd[HD][1] = [%d]\n"RESET, pipe_fd[HD][0], pipe_fd[HD][1]);
 
 	redirect_fds_in(msh, pipe_fd);
 	redirect_fds_out(msh, pipe_fd);
@@ -255,7 +255,7 @@ void	forking(t_msh *msh)
 
 void	execution(t_msh *msh)
 {
-	dprintf(2, GREEN"parents = [%d]\n"RESET, getpid());
+	//dprintf(2, GREEN"parents = [%d]\n"RESET, getpid());
 //	dprintf(2, GREEN"%zu\n"RESET, msh->n_node);
 	if ((msh->n_node >= 1 && (msh->lst_n->builtin < e_cd
 				|| msh->lst_n->builtin == e_none))

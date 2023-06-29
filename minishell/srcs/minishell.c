@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/29 15:26:54 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/29 15:44:09 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	minishell(char **envp)
 			continue ;
 		if (!parsing_cmd(&msh))
 			continue ;
+		ft_tabfree(envp_sh);
 		if (!get_cmdtab(msh))
 			free_and_exit_minish(msh);
 		execution(msh);
