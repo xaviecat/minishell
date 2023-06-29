@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minish_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 16:59:21 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/28 18:17:41 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/29 15:42:52 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,15 @@ int	parsing_word(t_msh **msh)
 
 int	parsing_cmd(t_msh **msh)
 {
+	int ret;
+
 	if (!(sh_pars(msh)))
 		free_and_exit_minish(*msh);
-	if (!heredoc_handling(*msh))
+	ret = heredoc_handling(*msh);
+	if (ret == 0)
 		free_and_exit_minish(*msh);
+	if (ret == 2)
+		return (free_end_loop(*msh), 0);
 	if (!ft_del_quotes(*msh))
 		free_and_exit_minish(*msh);
 	get_access(*msh);
