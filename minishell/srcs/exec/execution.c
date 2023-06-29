@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec.c                                             :+:      :+:    :+:   */
+/*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 19:25:52 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/29 15:08:23 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/29 18:05:32 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,12 @@ void	close_all(int pipe_fd[3][2], t_msh *msh)
 	t_node_lst	*current;
 
 	current = msh->lst_n;
-	close_pipe(pipe_fd[PREV]);
-	close_pipe(pipe_fd[CURR]);
-	close_pipe(pipe_fd[HD]);
+	if (pipe_fd)
+	{
+		close_pipe(pipe_fd[PREV]);
+		close_pipe(pipe_fd[CURR]);
+		close_pipe(pipe_fd[HD]);
+	}
 	while (msh->lst_n->prev)
 		msh->lst_n = msh->lst_n->prev;
 	while (msh->lst_n)
@@ -73,37 +76,45 @@ void	close_all(int pipe_fd[3][2], t_msh *msh)
 	msh->lst_n = current;
 }
 
+void	clear_mem_fds(t_msh *msh, int pipe_fd[3][2], int mode, char *why)
+{
+	close_all(pipe_fd, msh);
+	ft_free_all(&(msh->garbage));
+	free(msh->garbage);
+	free(msh);
+	rl_clear_history();
+	if (why)
+		perror(why);
+	if (mode >= 0)
+		exit(mode);
+}
+
 void	handle_heredoc(t_msh *msh, int pipe_fd[3][2])
 {
 	pid_t		hdpid;
 
 	if (pipe(pipe_fd[HD]) < 0)
-		return ; //! ERROR
-	dprintf(2, GREEN"pipe_hd[0] = [%d], pipe_hd[1] = [%d]\n"RESET, pipe_fd[HD][0], pipe_fd[HD][1]);
+		return (clear_mem_fds(msh, pipe_fd, EXIT_FAILURE, "pipe"));
+//	dprintf(2, GREEN"pipe_hd[0] = [%d], pipe_hd[1] = [%d]\n"RESET, pipe_fd[HD][0], pipe_fd[HD][1]);
 	hdpid = fork();
 	if (hdpid < 0)
-		return ; //! ERROR
+		return (clear_mem_fds(msh, pipe_fd, EXIT_FAILURE, "fork"));
 	else if (hdpid == 0) //? Child heredoc
 	{
-		dprintf(2, GREEN"hdchild = [%d]\n"RESET, getpid());
+//		dprintf(2, GREEN"hdchild = [%d]\n"RESET, getpid());
 		while (msh->lst_n->heredoc)
 		{
 			ft_fdprintf(pipe_fd[HD][1], "%s\n", msh->lst_n->heredoc->word);
 			msh->lst_n->heredoc = msh->lst_n->heredoc->next;
 		}
-		close_all(pipe_fd, msh);
-		ft_free_all(&(msh->garbage));
-		free(msh->garbage);
-		free(msh);
-		rl_clear_history();
-		exit(EXIT_SUCCESS);
+		clear_mem_fds(msh, pipe_fd, EXIT_SUCCESS, NULL);
 	}
 	else //? Parents heredoc
 	{
 		if (dup2(pipe_fd[HD][0], STDIN_FILENO) < 0)
-			return ; //! ERROR
+			return (clear_mem_fds(msh, pipe_fd, EXIT_FAILURE, "dup2"));
 //		close_pipe(pipe_fd[CURR]); //! HD CURR
-		close_pipe(pipe_fd[HD]); //! HD
+		close_pipe(pipe_fd[HD]);
 	}
 }
 
@@ -112,38 +123,37 @@ void	redirect_fds_in(t_msh *msh, int pipe_fd[3][2])
 	if (msh->lst_n->heredoc)
 		handle_heredoc(msh, pipe_fd);
 	else if (msh->lst_n->fds && msh->lst_n->fds->in < 0)
-		return (exit(EXIT_FAILURE)); //! ERROR A GERER
+		return (clear_mem_fds(msh, pipe_fd, -1, NULL)); //! ERROR A GERER
 	else if (msh->lst_n->fds && msh->lst_n->fds->in > 0)
 	{
 		if (dup2(msh->lst_n->fds->in, STDIN_FILENO) < 0)
-			return ; //! ERROR
+			return (clear_mem_fds(msh, pipe_fd, EXIT_FAILURE, "dup2"));
 		close(msh->lst_n->fds->in);
-		close_pipe(pipe_fd[PREV]); //! PREV
 	}
 	else if (pipe_fd[PREV][0] != -1)
 	{
 		if (dup2(pipe_fd[PREV][0], STDIN_FILENO) < 0)
-			return ; //! ERROR
-		close_pipe(pipe_fd[PREV]); //! PREV
+			return (clear_mem_fds(msh, pipe_fd, EXIT_FAILURE, "dup2"));
+		close_pipe(pipe_fd[PREV]);
 	}
 }
 
 void	redirect_fds_out(t_msh *msh, int pipe_fd[3][2])
 {
 	if (msh->lst_n->fds && msh->lst_n->fds->out < 0)
-		return (exit(EXIT_FAILURE)); //! ERROR A GERER
+		return (clear_mem_fds(msh, pipe_fd, -1, NULL)); //! ERROR A GERER
 	else if (msh->lst_n->fds && msh->lst_n->fds->out > 1)
 	{
 		if (dup2(msh->lst_n->fds->out, STDOUT_FILENO) < 0)
-			return; //! ERROR
+			return (clear_mem_fds(msh, pipe_fd, EXIT_FAILURE, "dup2"));
 		close(msh->lst_n->fds->out);
-		close_pipe(pipe_fd[PREV]); //! PREV
+		close_pipe(pipe_fd[PREV]);
 	}
 	else if (msh->lst_n->next)
 	{
 		if (dup2(pipe_fd[CURR][1], STDOUT_FILENO) < 0)
-			return; //! ERROR
-		close_pipe(pipe_fd[PREV]); //! CURR
+			return (clear_mem_fds(msh, pipe_fd, EXIT_FAILURE, "dup2"));
+		close_pipe(pipe_fd[CURR]);
 	}
 }
 
@@ -157,11 +167,6 @@ void	builtin_execution(t_msh *msh)
 
 void	child(t_msh *msh, int pipe_fd[3][2])
 {
-	dprintf(2, GREEN"child = [%d]\n"RESET, getpid());
-	dprintf(2, GREEN"pipe_fd[PREV][0] = [%d], pipe_fd[PREV][1] = [%d]\n"RESET, pipe_fd[PREV][0], pipe_fd[PREV][1]);
-	dprintf(2, GREEN"pipe_fd[CURR][0] = [%d], pipe_fd[CURR][1] = [%d]\n"RESET, pipe_fd[CURR][0], pipe_fd[CURR][1]);
-	dprintf(2, GREEN"pipe_fd[HD][0] = [%d], pipe_fd[HD][1] = [%d]\n"RESET, pipe_fd[HD][0], pipe_fd[HD][1]);
-
 	redirect_fds_in(msh, pipe_fd);
 	redirect_fds_out(msh, pipe_fd);
 	signal_hub_exec();
@@ -169,12 +174,7 @@ void	child(t_msh *msh, int pipe_fd[3][2])
 		execve(msh->lst_n->cmdpath, msh->lst_n->cmdtab, msh->envp);
 	else if (msh->lst_n->builtin < e_none)
 		builtin_execution(msh);
-	close_all(pipe_fd, msh);
-	ft_free_all(&(msh->garbage));
-	free(msh->garbage);
-	free(msh);
-	rl_clear_history();
-	exit(g_exit_status);
+	clear_mem_fds(msh, pipe_fd, g_exit_status, NULL);
 }
 
 void	parent(t_msh *msh, int pipe_fd[3][2])
@@ -210,14 +210,13 @@ void	wait_fork(t_msh *msh, int status_pid)
 	first = msh->lst_n;
 	while (msh->lst_n)
 	{
-		//	if (msh->lst_n->next)
 		waitpid(msh->lst_n->pid, &status_pid, 0);
 		if (WIFSIGNALED(status_pid))
 			signal_exec(WTERMSIG(status_pid));
 		else
 			g_exit_status = WEXITSTATUS(status_pid);
-		//if (g_exit_status == EXIT_FAILURE)
-		//return ; //TOUT FREE AND EXIT avec code failure
+//		if (g_exit_status == EXIT_FAILURE)
+//			return (clear_mem_fds(msh, NULL, EXIT_FAILURE, NULL));
 		msh->lst_n = msh->lst_n->next;
 	}
 	signal_hub_exec();
@@ -237,13 +236,13 @@ void	forking(t_msh *msh)
 	while (msh->lst_n)
 	{
 		if (pipe(pipe_fd[CURR]) < 0)
-			return (perror("pipe error")); //! ERROR A CHECK
+			return (clear_mem_fds(msh, pipe_fd, EXIT_FAILURE, "pipe"));
 		msh->lst_n->pid = fork();
 		if (msh->lst_n->pid < 0)
-			return (perror("fork error")); //! ERROR A CHECK
-		else if (msh->lst_n->pid == 0) //? Child
+			return (clear_mem_fds(msh, pipe_fd, EXIT_FAILURE, "fork"));
+		else if (msh->lst_n->pid == 0)
 			child(msh, pipe_fd);
-		else //? Parent
+		else
 			parent(msh, pipe_fd);
 		msh->lst_n = msh->lst_n->next;
 	}
@@ -255,11 +254,10 @@ void	forking(t_msh *msh)
 
 void	execution(t_msh *msh)
 {
-	dprintf(2, GREEN"parents = [%d]\n"RESET, getpid());
+//	dprintf(2, GREEN"parents = [%d]\n"RESET, getpid());
 //	dprintf(2, GREEN"%zu\n"RESET, msh->n_node);
 	if ((msh->n_node >= 1 && (msh->lst_n->builtin < e_cd
-				|| msh->lst_n->builtin == e_none))
-		|| msh->n_node > 1)
+				|| msh->lst_n->builtin == e_none)) || msh->n_node > 1)
 		forking(msh);
 	else if (msh->n_node == 1 && msh->lst_n->builtin >= e_cd)
 		builtin_execution(msh);

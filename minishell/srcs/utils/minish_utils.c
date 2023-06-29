@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minish_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 16:59:21 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/29 15:42:52 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/29 16:17:27 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,7 @@ t_msh	*create_minishell(char **envp, char **envp_sh)
 		return (NULL);
 	}
 	if (envp_sh)
-	{
 		sh->envp = ft_gbtabdup(envp_sh, &(sh->garbage));
-		ft_tabfree(envp_sh);
-	}
 	else
 		sh->envp = ft_gbtabdup(envp, &(sh->garbage));
 	return (sh);

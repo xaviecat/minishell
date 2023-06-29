@@ -77,7 +77,6 @@ int	b_cd(t_msh *msh)
 		update_old_pwd(msh->envp, &(msh->garbage));
 	if (chdir(path) == -1)
 	{
-		printf("cc");
 		ft_fdprintf(2, E_CD);
 		perror(path);
 		return (1);
