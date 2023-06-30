@@ -80,6 +80,7 @@ t_msh	*create_minishell(char **envp, char **envp_sh)
 	sh->lst_c = NULL;
 	sh->lst_w = NULL;
 	sh->garbage = NULL;
+	sh->n_node = 0;
 	sh->garbage = create_garbage_container();
 	if (!sh->garbage)
 	{
