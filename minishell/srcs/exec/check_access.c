@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 11:36:08 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/30 12:13:01 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/30 12:14:48 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ char	*check_access(char **cmdpaths, char *cmd, t_garbage **gb)
 
 	f_ok = false;
 	good_path = explore_cmdpaths(cmdpaths, gb, &f_ok);
-	if (!good_path && !f_ok)
+	if ((!good_path && !f_ok) || ft_strncmp(cmd, "..", 2) == 0)
 	{
 		g_exit_status = 127;
 		ft_fdprintf(2, RED MSH"%s"CMD_NOT_FOUND RESET, cmd);
