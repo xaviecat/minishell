@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 16:10:58 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/29 17:38:18 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/30 18:39:28 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,9 @@ int	verif_first_arg(t_msh *msh, t_cmd_lst *cmd)
 	return (1);
 }
 
-//int	verif_total_arg(t_cmd_lst *cmd)
-//{
-//
-//}
-
 int	export_error_management(t_msh *msh, t_cmd_lst *cmd)
 {
+	cmd = cmd->next;
 	while (cmd)
 	{
 		if (ft_strncmp(cmd->cmd, "=", 2) == 0)

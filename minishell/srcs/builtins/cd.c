@@ -45,16 +45,17 @@ static void	update_old_pwd(char **envp, t_garbage **gb)
 
 static void	update_pwd(char **envp, t_garbage **gb)
 {
-	int	i;
-
+	int		i;
+	char	*new_pwd;
 	i = 0;
 	while (envp[i])
 	{
 		if (ft_strncmp(envp[i], "PWD=", 4) == 0)
 		{
 			ft_free(gb, envp[i]);
-			envp[i] = ft_gbstrjoin("PWD=",
-					ft_gbstrdup(getcwd(NULL, 0), gb), gb);
+			new_pwd = getcwd(NULL, 0);
+			envp[i] = ft_gbstrjoin("PWD=", new_pwd, gb);
+			free(new_pwd);
 		}
 		i++;
 	}
