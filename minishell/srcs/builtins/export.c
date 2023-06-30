@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:46:20 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/30 18:54:28 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/30 19:06:10 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,11 +145,14 @@ int	b_export(t_msh *msh)
 {
 	char	**save_envp;
 	char	**modified_envp;
-
+	int		ret;
 	if (!msh->lst_n->lst_cmd->next)
 		return (export_print(msh));
-	if (!export_error_management(msh, msh->lst_n->lst_cmd))
-		return (ft_fdprintf(2, RED MSH E_EXPORT"'%s'"NT_VAL_ID RESET, msh->lst_n->lst_cmd->cmd), 1);
+	ret = export_error_management(msh, msh->lst_n->lst_cmd);
+	if (ret == 0 && errno == ENOMEM)
+		return (0);
+	else if (ret == 0)
+		return (ft_fdprintf(2, RED MSH E_EXPORT"'%s'"NT_VAL_ID RESET, msh->lst_n->lst_cmd->next->cmd), 1);
 	save_envp = msh->envp;
 	if (!ft_alloc_envp(msh, msh->lst_n->lst_cmd))
 		return (0);
