@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 19:25:52 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/30 10:17:11 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/30 10:26:09 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,7 @@ void	builtin_execution(t_msh *msh)
 
 void	child(t_msh *msh, int pipe_fd[3][2])
 {
+	dprintf(2, GREEN"child = [%d]\n"RESET, getpid());
 	redirect_fds_in(msh, pipe_fd);
 	redirect_fds_out(msh, pipe_fd);
 	signal_hub_exec();
@@ -254,7 +255,7 @@ void	forking(t_msh *msh)
 
 void	execution(t_msh *msh)
 {
-//	dprintf(2, GREEN"parents = [%d]\n"RESET, getpid());
+	dprintf(2, GREEN"parents = [%d]\n"RESET, getpid());
 //	dprintf(2, GREEN"%zu\n"RESET, msh->n_node);
 	if ((msh->n_node >= 1 && (msh->lst_n->builtin < e_cd
 				|| msh->lst_n->builtin == e_none)) || msh->n_node > 1)
