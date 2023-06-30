@@ -44,6 +44,7 @@ bool	is_parenthese_error(t_char_lst *lst)
 
 bool	is_dot_error(t_char_lst *lst)
 {
+	/*salut*/
 	if (lst->c == '.' && !lst->s_quote && !lst->d_quote && !lst->next && !lst->prev)
 		return (ft_fdprintf(2, RED MSH DOT RESET), true);
 	return (false);
