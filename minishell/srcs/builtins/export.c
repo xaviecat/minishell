@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:46:20 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/29 16:50:07 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/30 17:01:56 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,6 @@ int	b_export(t_msh *msh)
 
 	if (!msh->lst_n->lst_cmd->next)
 		return (export_print(msh));
-	msh->lst_n->lst_cmd = msh->lst_n->lst_cmd->next;
 	if (!export_error_management(msh, msh->lst_n->lst_cmd))
 		return (ft_fdprintf(2, RED MSH E_EXPORT"'%s'"NT_VAL_ID RESET, msh->lst_n->lst_cmd->cmd), 1);
 	save_envp = msh->envp;
@@ -160,6 +159,7 @@ int	b_export(t_msh *msh)
 	if (!modified_envp && errno == ENOMEM)
 		return (ft_free(&(msh->garbage), msh->envp), 0);
 	ft_free(&(msh->garbage), msh->envp);
-	msh->envp = modified_envp;
+	msh->envp = ft_gbtabdup(modified_envp, &(msh->garbage));
+	ft_gbtabfree(modified_envp, &(msh->garbage));
 	return (ft_free(&(msh->garbage), save_envp), 0);
 }

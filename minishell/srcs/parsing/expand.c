@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:08:17 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/30 11:36:10 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/30 11:12:49 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,12 +190,12 @@ int	expand_commands(t_msh *msh)
 			w_lst_cpy->word = expand_vars(w_lst_cpy->word, msh);
 		if (!w_lst_cpy->word)
 			return (0); // ? code d'erreur a ajouter
-		if (w_lst_cpy->in_d_quote == false && w_lst_cpy->in_s_quote == false)
-		{
-			if (w_lst_cpy->word[0] != '\0'
-				&& !cut_space_expand(&w_lst_cpy, &(msh->garbage)))
-				return (0);
-		}
+		//if (w_lst_cpy->in_d_quote == false && w_lst_cpy->in_s_quote == false)
+		//{
+		//	if (w_lst_cpy->word[0] != '\0'
+			//	&& !cut_space_expand(&w_lst_cpy, &(msh->garbage)))
+				//return (0);
+		//}
 		w_lst_cpy = w_lst_cpy->next;
 	}
 	return (1);
