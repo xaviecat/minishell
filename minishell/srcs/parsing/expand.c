@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:08:17 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/30 16:09:56 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/30 11:12:49 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,9 +182,7 @@ int	cut_space_expand(t_word_lst **lst ,t_garbage **gb)
 int	expand_commands(t_msh *msh)
 {
 	t_word_lst	*w_lst_cpy;
-	//bool		had_expd;
 
-	//had_expd = false;
 	w_lst_cpy = msh->lst_w;
 	while (w_lst_cpy)
 	{
