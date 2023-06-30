@@ -6,7 +6,7 @@
 /*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 19:25:52 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/29 18:05:32 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/30 10:17:11 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ void	redirect_fds_in(t_msh *msh, int pipe_fd[3][2])
 	if (msh->lst_n->heredoc)
 		handle_heredoc(msh, pipe_fd);
 	else if (msh->lst_n->fds && msh->lst_n->fds->in < 0)
-		return (clear_mem_fds(msh, pipe_fd, -1, NULL)); //! ERROR A GERER
+		return (clear_mem_fds(msh, pipe_fd, EXIT_FAILURE, NULL)); //! ERROR A GERER
 	else if (msh->lst_n->fds && msh->lst_n->fds->in > 0)
 	{
 		if (dup2(msh->lst_n->fds->in, STDIN_FILENO) < 0)
@@ -141,7 +141,7 @@ void	redirect_fds_in(t_msh *msh, int pipe_fd[3][2])
 void	redirect_fds_out(t_msh *msh, int pipe_fd[3][2])
 {
 	if (msh->lst_n->fds && msh->lst_n->fds->out < 0)
-		return (clear_mem_fds(msh, pipe_fd, -1, NULL)); //! ERROR A GERER
+		return (clear_mem_fds(msh, pipe_fd, EXIT_FAILURE, NULL)); //! ERROR A GERER
 	else if (msh->lst_n->fds && msh->lst_n->fds->out > 1)
 	{
 		if (dup2(msh->lst_n->fds->out, STDOUT_FILENO) < 0)
