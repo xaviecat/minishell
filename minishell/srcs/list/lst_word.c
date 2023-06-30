@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_word.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 12:00:52 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/05 11:48:36 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/30 14:50:00 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ int	get_number_c_of_word(t_char_lst **lst_c)
 	while (*lst_c)
 	{
 		if ((*lst_c)->next && (*lst_c)->type == space \
-		&& ((*lst_c)->d_quote == false && (*lst_c)->s_quote == false))
-			break ;
+ 			&& ((*lst_c)->d_quote == false && (*lst_c)->s_quote == false))
+			break;
 		nb_c_word++;
 		if ((*lst_c)->next)
 			*lst_c = (*lst_c)->next;
 		else
-			break ;
+			break;
 	}
 	while ((*lst_c)->prev)
 		*lst_c = (*lst_c)->prev;

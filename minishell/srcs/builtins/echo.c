@@ -63,7 +63,7 @@ bool	is_n_param(t_cmd_lst *lst)
 	int	i;
 
 	i = 1;
-	if (!lst->cmd)
+	if (!lst || !lst->cmd)
 		return (false);
 	if (lst->cmd[0] != '-')
 		return (false);

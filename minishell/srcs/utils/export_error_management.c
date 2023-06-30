@@ -46,9 +46,13 @@ int	verif_first_arg(t_msh *msh, t_cmd_lst *cmd)
 
 int	export_error_management(t_msh *msh, t_cmd_lst *cmd)
 {
-	if (ft_strncmp(cmd->cmd, "=", 2) == 0)
-		return (0);
-	if (!verif_first_arg(msh, cmd))
-		return (0);
+	while (cmd)
+	{
+		if (ft_strncmp(cmd->cmd, "=", 2) == 0)
+			return (0);
+		if (!verif_first_arg(msh, cmd))
+			return (0);
+		cmd = cmd->next;
+	}
 	return (1);
 }

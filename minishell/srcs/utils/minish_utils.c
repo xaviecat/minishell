@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minish_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 16:59:21 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/30 10:24:41 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/30 16:10:24 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	parsing_char(t_msh **msh, char *line)
 		return (free_end_loop(*msh), 0);
 	}
 	harmonize_spaces(&((*msh)->lst_c), &((*msh)->garbage));
-	print_lst_char((*msh)->lst_c);
+	//print_lst_char((*msh)->lst_c);
 	return (1);
 }
 
@@ -46,7 +46,7 @@ int	parsing_word(t_msh **msh)
 		free_and_exit_minish(*msh);
 	if (ret == 2)
 		return (free_end_loop(*msh), 0);
-	print_lst_word((*msh)->lst_w);
+	//print_lst_word((*msh)->lst_w);
 	return (1);
 }
 
@@ -65,7 +65,7 @@ int	parsing_cmd(t_msh **msh)
 		free_and_exit_minish(*msh);
 	get_access(*msh);
 	(*msh)->n_node = count_command((*msh)->lst_n);
-	print_lst_cmd((*msh)->lst_n);
+	//print_lst_cmd((*msh)->lst_n);
 	return (1);
 }
 
