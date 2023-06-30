@@ -11,7 +11,7 @@ SRCS			:=	minishell.c\
 					\
 					exec/builtin.c\
 					exec/check_access.c\
-					exec/exec.c\
+					exec/execution.c\
 					\
 					fds/fds.c\
 					fds/fds_utils.c\

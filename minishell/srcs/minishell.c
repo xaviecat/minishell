@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/29 15:44:09 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/29 15:26:54 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void	minishell(char **envp)
 
 int	main(int argc, char **argv, char **envp)
 {
+//	exit(0);
 	(void) argv;
 	if (argc == 1)
 		minishell(envp);
