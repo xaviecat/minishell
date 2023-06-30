@@ -41,3 +41,10 @@ bool	is_parenthese_error(t_char_lst *lst)
 		return (ft_fdprintf(2, RED MSH P_CLOSE RESET), true);
 	return (false);
 }
+
+bool	is_dot_error(t_char_lst *lst)
+{
+	if (lst->c == '.' && !lst->s_quote && !lst->d_quote && !lst->next && !lst->prev)
+		return (ft_fdprintf(2, RED MSH DOT RESET), true);
+	return (false);
+}
