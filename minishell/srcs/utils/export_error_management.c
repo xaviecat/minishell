@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 16:10:58 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/30 18:39:28 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/30 18:58:01 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,19 @@ int	verif_first_arg(t_msh *msh, t_cmd_lst *cmd)
 	cmd_split = ft_gbsplit(cmd->cmd, '=', &(msh->garbage));
 	if (ft_isdigit(cmd_split[0][0]))
 	{
-		ft_free(&(msh->garbage), cmd_split[0]);
-		ft_free(&(msh->garbage), cmd_split[1]);
-		ft_free(&(msh->garbage), cmd_split);
+		ft_gbtabfree(cmd_split, &(msh->garbage));
 		return (0);
 	}
 	while (cmd_split[0][i])
 	{
 		if (!ft_isalnum(cmd_split[0][i]))
+		{
+			ft_gbtabfree(cmd_split, &(msh->garbage));
 			return (0);
+		}
 		i++;
 	}
-	ft_free(&(msh->garbage), cmd_split[0]);
-	ft_free(&(msh->garbage), cmd_split[1]);
-	ft_free(&(msh->garbage), cmd_split);
+	ft_gbtabfree(cmd_split, &(msh->garbage));
 	return (1);
 }
 
