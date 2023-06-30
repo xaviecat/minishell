@@ -221,7 +221,6 @@ bool			is_exclamation_error(t_char_lst *lst);
 bool			is_colon_error(t_char_lst *lst);
 bool			is_parenthese_error(t_char_lst *lst);
 bool			is_star_error(t_char_lst *lst);
-bool			is_dot_error(t_char_lst *lst);
 
 /* heredoc */
 int				heredoc_handling(t_msh *msh);
