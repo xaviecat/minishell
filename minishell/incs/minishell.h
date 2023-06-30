@@ -148,7 +148,7 @@ void			ft_free_all(t_garbage **lst);
 void			ft_free(t_garbage **lst, void *content);
 t_garbage_lst	*new_garbage(void *content);
 t_garbage		*create_garbage_container(void);
-void			garbage_add_back(t_garbage_lst **lst, t_garbage_lst *new);
+void			add_to_garbage(t_garbage **gb, void *content);
 char			*ft_gbstrdup(const char *src, t_garbage **gb);
 void			get_first_garbage(t_garbage **lst);
 char			*ft_gbstrjoin(char const *s1, char const *s2, t_garbage **gb);
