@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 19:25:52 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/30 10:17:11 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/30 12:06:25 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,15 +258,9 @@ void	execution(t_msh *msh)
 //	dprintf(2, GREEN"%zu\n"RESET, msh->n_node);
 	if ((msh->n_node >= 1 && (msh->lst_n->builtin < e_cd
 				|| msh->lst_n->builtin == e_none)) || msh->n_node > 1)
-	{
-		dprintf(2, "je fork\n");
 		forking(msh);
-	}
 	else if (msh->n_node == 1 && msh->lst_n->builtin >= e_cd)
-	{
-		dprintf(2, "builtin\n");
 		builtin_execution(msh);
-	}
 }
 
 /*
