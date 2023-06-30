@@ -6,7 +6,7 @@
 /*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 11:36:08 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/28 19:05:24 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/30 11:52:39 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,12 @@ char	*check_access(char **cmdpaths, char *cmd, t_garbage **gb)
 
 	f_ok = false;
 	good_path = explore_cmdpaths(cmdpaths, gb, &f_ok);
-	if (!good_path && !f_ok)
+	if (cmd && !cmd[0])
+	{
+		g_exit_status = 127;
+		ft_fdprintf(2, RED MSH"''"CMD_NOT_FOUND RESET, cmd);
+	}
+	else if (!good_path && !f_ok)
 	{
 		g_exit_status = 127;
 		ft_fdprintf(2, RED MSH"%s"CMD_NOT_FOUND RESET, cmd);
