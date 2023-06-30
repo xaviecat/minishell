@@ -52,7 +52,7 @@ t_cmd_lst	*get_cmd(t_word_lst **old_lst, t_garbage **gb)
 	one_quote = false;
 	while (*old_lst && (*old_lst)->type != w_pipe)
 	{
-		if (!(*old_lst)->word[0] == '\0')
+		if (!((*old_lst)->word[0] == '\0'))
 		{
 			if ((*old_lst)->type == in_d_quote)
 				two_quote = true;
