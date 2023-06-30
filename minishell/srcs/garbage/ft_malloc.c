@@ -54,6 +54,15 @@ t_garbage_lst	*garbage_last(t_garbage_lst *lst)
 	return (lst);
 }
 
+void	add_to_garbage(t_garbage **gb, void *content)
+{
+	t_garbage_lst	*new;
+
+	new = new_garbage(content);
+	(*gb)->last->next = new;
+	(*gb)->last = new;
+}
+
 void	*ft_malloc(t_garbage **garbage, int the_size, int number)
 {
 	t_garbage_lst	*new;

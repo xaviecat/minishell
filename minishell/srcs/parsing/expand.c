@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:08:17 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/29 12:27:37 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/30 11:12:49 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ static char	*modify_command(char *cmd, t_msh *msh,
 		return (ft_free(&(msh->garbage), env_var),
 			ft_free(&(msh->garbage), cmd), NULL);
 	m_cmd = fill_mdcmd(cmd, start, exp_env_v, env_var);
+	add_to_garbage(&(msh->garbage), m_cmd);
 	return (ft_free_mcmd(env_var, cmd, exp_env_v, &(msh->garbage)), m_cmd);
 }
 
