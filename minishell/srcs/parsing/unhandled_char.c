@@ -20,10 +20,10 @@
  */
 bool	is_forbidden_char(t_char_lst *lst)
 {
-	static t_unhandled_tab	is_error_fct[10] = {&is_amp_error, &is_pipe_error,
+	static t_unhandled_tab	is_error_fct[11] = {&is_amp_error, &is_pipe_error,
 		&is_semicolon_error, &is_backslash_error, &is_dollar_error,
 		&is_exclamation_error, &is_colon_error, &is_parenthese_error,
-		&is_star_error, NULL};
+		&is_star_error, &is_dot_error, NULL};
 	size_t					i;
 
 	while (lst)

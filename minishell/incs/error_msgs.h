@@ -26,6 +26,7 @@
 # define P_OPEN			"feature not handled: '('\n"
 # define P_CLOSE		"feature not handled: ')'\n"
 # define STAR			"feature not handled '*'\n"
+# define DOT			"feature not handled: '.'\n"
 
 
 # define E_EXPORT		"export: "
