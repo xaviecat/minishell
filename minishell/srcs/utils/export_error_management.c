@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 16:10:58 by nfaust            #+#    #+#             */
-/*   Updated: 2023/09/16 16:07:39 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/09/16 16:15:34 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	verif_first_arg(t_msh *msh, t_cmd_lst *cmd)
 
 int	export_error_management(t_msh *msh, t_cmd_lst *cmd)
 {
-	(void) msh;
 	cmd = cmd->next;
 	while (cmd)
 	{
