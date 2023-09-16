@@ -6,7 +6,7 @@
 /*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 11:36:08 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/22 12:15:17 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/30 17:03:34 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ char	**get_path(char **envp, t_garbage **gb)
 		{
 			path = ft_gbsplit(ft_strchr(envp[i], '=') + 1, ':', gb);
 			if (!path)
-				return (NULL); //! echec de malloc
+				return (NULL);
 			return (path);
 		}
 		i++;
 	}
-	return (NULL); //! pas de path dans l'env
+	return (NULL);
 }
 
 char	**get_cmdpath(char **path, char *cmd, t_garbage **gb)
@@ -42,15 +42,17 @@ char	**get_cmdpath(char **path, char *cmd, t_garbage **gb)
 	while (path[i])
 		i++;
 	scmd = ft_gbstrjoin("/", cmd, gb);
+	if (!scmd)
+		return (NULL);
 	cmdpath = ft_malloc(gb, sizeof(char *), i + 1);
 	if (!cmdpath)
-		return (NULL); //!ERROR
+		return (NULL);
 	i = 0;
 	while (path[i])
 	{
 		cmdpath[i] = ft_gbstrjoin(path[i], scmd, gb);
 		if (!cmdpath[i])
-			return (NULL); //!ERROR
+			return (NULL);
 		i++;
 	}
 	ft_free(gb, scmd);
@@ -58,120 +60,125 @@ char	**get_cmdpath(char **path, char *cmd, t_garbage **gb)
 	return (cmdpath);
 }
 
-char	*check_access(char **cmdpaths, char *cmd, t_node_lst *lst, t_garbage **gb)
+char	*explore_cmdpaths(char **cmdpaths, t_garbage **gb, bool *f_ok)
 {
 	size_t		i;
-	bool		f_ok;
 	char		*good_path;
 
 	i = 0;
-	f_ok = false;
 	while (cmdpaths[i])
 	{
 		if (!access(cmdpaths[i], F_OK))
-			f_ok = true;
+			*f_ok = true;
 		if (!access(cmdpaths[i], X_OK))
 		{
 			good_path = ft_gbstrdup(cmdpaths[i], gb);
 			if (!good_path)
-				return (NULL); //! MALLOC ERROR
-			ft_gbtabfree(cmdpaths, gb);
+				return (NULL);
 			return (good_path);
 		}
 		i++;
 	}
-	if (!f_ok)
-	{
-		lst->exit_code = 127;
-		ft_fdprintf(2, RED"%s"CMD_NOT_FOUND RESET, cmd);
-		return (NULL); //! cmd not found
-	}
-	perror(cmd);
-	return (NULL); //! pas sur d'atteindre
+	return (NULL);
 }
 
-void	cmd_in_current_dir(t_node_lst **lst, t_garbage **gb)
+char	*check_access(char **cmdpaths, char *cmd, t_garbage **gb)
+{
+	bool	f_ok;
+	char	*good_path;
+
+	f_ok = false;
+	good_path = explore_cmdpaths(cmdpaths, gb, &f_ok);
+	if (cmd && !cmd[0])
+	{
+		g_exit_status = 127;
+		ft_fdprintf(2, RED MSH"''"CMD_NOT_FOUND RESET, cmd);
+	}
+	else if ((!good_path && !f_ok) || ft_strncmp(cmd, "..", 2) == 0)
+	{
+		g_exit_status = 127;
+		ft_fdprintf(2, RED MSH"%s"CMD_NOT_FOUND RESET, cmd);
+	}
+	else if (!good_path)
+	{
+		g_exit_status = 126;
+		ft_fdprintf(2, RED MSH"%s"NO_PERM RESET, cmd);
+	}
+	ft_gbtabfree(cmdpaths, gb);
+	return (good_path);
+}
+
+void	cmd_in_current_dir(t_msh *msh, t_node_lst *lst, t_garbage **gb)
 {
 	struct stat	st;
 
-	if (access((*lst)->lst_cmd->cmd, F_OK))
+	if (access(lst->lst_cmd->cmd, F_OK))
 	{
-		(*lst)->exit_code = 127;
-		ft_fdprintf(2, RED MSH "%s" NO_SFD RESET, (*lst)->lst_cmd->cmd);
+		g_exit_status = 127;
+		ft_fdprintf(2, RED MSH"%s"NO_SFD RESET, lst->lst_cmd->cmd);
 		return ;
 	}
-	stat((*lst)->lst_cmd->cmd, &st);
+	stat(lst->lst_cmd->cmd, &st);
 	if (S_ISDIR(st.st_mode))
 	{
-		(*lst)->exit_code = 126;
-		ft_fdprintf(2, RED MSH"%s" IS_DIR RESET, (*lst)->lst_cmd->cmd);
+		g_exit_status = 126;
+		ft_fdprintf(2, RED MSH"%s"IS_DIR RESET, lst->lst_cmd->cmd);
 		return ;
 	}
-	if (access((*lst)->lst_cmd->cmd, X_OK))
+	if (access(lst->lst_cmd->cmd, X_OK))
 	{
-		(*lst)->exit_code = 126;
-		ft_fdprintf(2, RED MSH"%s" NO_PERM RESET, (*lst)->lst_cmd->cmd);
+		g_exit_status = 126;
+		ft_fdprintf(2, RED MSH"%s"NO_PERM RESET, lst->lst_cmd->cmd);
 		return ;
 	}
-	(*lst)->cmdpath = ft_gbstrdup((*lst)->lst_cmd->cmd, gb);
-	if (!((*lst)->cmdpath))
-		return ; //!ERROR
+	lst->cmdpath = ft_gbstrdup(lst->lst_cmd->cmd, gb);
+	if (!(lst->cmdpath) && errno == ENOMEM)
+		return (free_and_exit_minish(msh));
 }
 
-void	give_access(char **path, t_node_lst **lst, t_garbage **gb)
+bool	is_absolute_path(t_node_lst *lst, char **path)
+{
+	if (!ft_strncmp(lst->lst_cmd->cmd, "./", 2)
+		|| !ft_strncmp(lst->lst_cmd->cmd, "/", 1)
+		|| ft_strchr(lst->lst_cmd->cmd, '/')
+		|| !path)
+		return (true);
+	return (false);
+}
+
+void	give_access(t_msh *msh, char **path, t_node_lst *lst, t_garbage **gb)
 {
 	t_node_lst	*first;
 	char		**cmdpaths;
 
-	first = *lst;
-	while (*lst)
+	first = lst;
+	while (lst)
 	{
-		if ((*lst)->builtin < e_none)
+		if (lst->builtin < e_none || !(lst->lst_cmd))
+			lst->cmdpath = NULL;
+		else if (is_absolute_path(lst, path))
+			cmd_in_current_dir(msh, lst, gb);
+		else
 		{
-			(*lst) = (*lst)->next;
-			continue ;
+			cmdpaths = get_cmdpath(path, lst->lst_cmd->cmd, gb);
+			lst->cmdpath = check_access(cmdpaths, lst->lst_cmd->cmd, gb);
+			if ((!cmdpaths || !(lst->cmdpath)) && errno == ENOMEM)
+				return (free_and_exit_minish(msh));
 		}
-		if (!((*lst)->lst_cmd))
-		{
-			(*lst)->cmdpath = NULL;
-			(*lst) = (*lst)->next;
-			continue ;
-		}
-		if (!ft_strncmp((*lst)->lst_cmd->cmd, "./", 2)
-			|| !ft_strncmp((*lst)->lst_cmd->cmd, "/", 1)
-			|| ft_strchr((*lst)->lst_cmd->cmd, '/'))
-		{
-			cmd_in_current_dir(lst, gb);
-			(*lst) = (*lst)->next;
-			continue ;
-		}
-		cmdpaths = get_cmdpath(path, (*lst)->lst_cmd->cmd, gb);
-		(*lst)->cmdpath = check_access(cmdpaths, (*lst)->lst_cmd->cmd, *lst, gb); //! error a gerer
-		if (!((*lst)->cmdpath))
-		{
-			(*lst) = (*lst)->next;
-			continue ;//! //! ERROR A GERER
-		}
-		(*lst) = (*lst)->next;
+		lst = lst->next;
 	}
 	ft_gbtabfree(path, gb);
-	(*lst) = first;
-	return ;
+	lst = first;
 }
 
-void	get_access(t_msh **sh)
+void	get_access(t_msh *msh)
 {
 	char	**path;
 
-	path = get_path((*sh)->envp, &((*sh)->garbage));
-	if (!path)
-	{
-		if (errno == ENOMEM)
-			return ((void)ft_fdprintf(2, RED"malloc error in get_path\n"RESET));
-		else
-			return ((void)ft_fdprintf(2, RED"no path in env\n"RESET));
-	}
-	give_access(path, &((*sh)->lst_n), &((*sh)->garbage));
+	path = get_path(msh->envp, &(msh->garbage));
+	if (!path && errno == ENOMEM)
+		return (free_and_exit_minish(msh));
+	give_access(msh, path, msh->lst_n, &(msh->garbage));
 }
 
 

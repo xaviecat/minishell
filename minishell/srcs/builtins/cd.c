@@ -45,16 +45,17 @@ static void	update_old_pwd(char **envp, t_garbage **gb)
 
 static void	update_pwd(char **envp, t_garbage **gb)
 {
-	int	i;
-
+	int		i;
+	char	*new_pwd;
 	i = 0;
 	while (envp[i])
 	{
 		if (ft_strncmp(envp[i], "PWD=", 4) == 0)
 		{
 			ft_free(gb, envp[i]);
-			envp[i] = ft_gbstrjoin("PWD=",
-					ft_gbstrdup(getcwd(NULL, 0), gb), gb);
+			new_pwd = getcwd(NULL, 0);
+			envp[i] = ft_gbstrjoin("PWD=", new_pwd, gb);
+			free(new_pwd);
 		}
 		i++;
 	}
@@ -70,15 +71,14 @@ int	b_cd(t_msh *msh)
 		path = msh->lst_n->lst_cmd->next->cmd;
 	if (msh->lst_n->lst_cmd->next->next)
 	{
-		ft_fdprintf(2, "minishell: cd: too many arguments\n");
+		ft_fdprintf(2, RED MSH E_CD TOO_MN_ARGS RESET);
 		return (1);
 	}
 	if (ft_strncmp(path, ".", 2) == 0)
 		update_old_pwd(msh->envp, &(msh->garbage));
 	if (chdir(path) == -1)
 	{
-		printf("cc");
-		ft_fdprintf(2, CD_FILE);
+		ft_fdprintf(2, E_CD);
 		perror(path);
 		return (1);
 	}

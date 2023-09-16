@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 17:01:30 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/19 14:42:21 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/29 12:24:50 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	*str_cpy_to_x(char *src, char *dst, char x)
  */
 int	is_dollar_alone(char *env_var, char *cmd, size_t start)
 {
-	if (ft_strlen(env_var) == 1 && !(cmd[start + 1]
+	if (ft_strlen(env_var) == 1 && (!cmd[start + 1]
 			&& (cmd[start + 1] != '"' || cmd[start + 1] != '\'')))
 		return (1);
 	return (0);

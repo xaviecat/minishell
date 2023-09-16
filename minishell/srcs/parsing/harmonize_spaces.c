@@ -12,7 +12,7 @@
 
 #include "../../incs/minishell.h"
 
-void	char_lst_add_in(t_char_lst **lst, t_position pos, t_char_lst	*new) //! securiser en cas de debut ou de fin de luiste
+void	char_lst_add_in(t_char_lst **lst, t_position pos, t_char_lst	*new)
 {
 	t_char_lst	*new_prev;
 	t_char_lst	*new_next;
@@ -23,7 +23,7 @@ void	char_lst_add_in(t_char_lst **lst, t_position pos, t_char_lst	*new) //! secu
 		new_prev = (*lst)->prev;
 		new_next = *lst;
 	}
-	else/* if (pos == next && *lst)*/
+	else
 	{
 		new_prev = *lst;
 		new_next = (*lst)->next;
@@ -39,7 +39,7 @@ void	remove_extra_spaces(t_char_lst **lst, t_garbage **gb)
 	t_char_lst	*first;
 
 	first = *lst;
-	while ((*lst) && (*lst)->c == ' ')
+	while ((*lst) && ((*lst)->c == ' ' || (*lst)->c == '\t'))
 	{
 		if ((*lst) == first)
 			first = (*lst)->next;
@@ -101,11 +101,3 @@ void	harmonize_spaces(t_char_lst **lst, t_garbage **gb)
 	add_some_space_near_a_brackets(*lst, gb, '<');
 	add_some_space_near_a_brackets(*lst, gb, '>');
 }
-
-/*
- *
- * salut| cat
- * salut|
- * echo hello world > salut| cat salut    |   echo "                  salut                   "
- * echo hello world > salut| cat -en |cat salut|echo "|sal|ut| |"
- */

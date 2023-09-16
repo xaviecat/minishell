@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_is_valid.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:14:27 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/12 17:20:57 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/26 16:08:26 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	pipe_is_valid(t_word_lst **lst, t_garbage **gb)
 		{
 			if (!(*lst)->next || !(*lst)->prev)
 			{
-				ft_fdprintf(2, RED PIPE_TKN RESET);
+				ft_fdprintf(2, RED MSH PIPE_TKN RESET);
 				free_error_word_lst(gb, lst);
 				return (0);
 			}
@@ -52,9 +52,9 @@ int	redir_is_valid(t_word_lst **lst, t_garbage **gb)
 				|| ft_is_redir((*lst)->next->type))
 			{
 				if (!(*lst)->next)
-					ft_fdprintf(2, RED NL_TKN RESET);
+					ft_fdprintf(2, RED MSH NL_TKN RESET);
 				else
-					ft_fdprintf(2, RED UN_TKN('%s') RESET,
+					ft_fdprintf(2, RED MSH UN_TKN"'%s'\n" RESET,
 						(*lst)->next->word);
 				free_error_word_lst(gb, lst);
 				return (0);

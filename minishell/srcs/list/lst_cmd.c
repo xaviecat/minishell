@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 17:16:51 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/21 17:23:26 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/19 14:04:01 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ t_cmd_lst	*get_cmd(t_word_lst **old_lst, t_garbage **gb)
 	one_quote = false;
 	while (*old_lst && (*old_lst)->type != w_pipe)
 	{
-		if (!(*old_lst)->word[0] == '\0')
+		if (!((*old_lst)->word[0] == '\0'))
 		{
 			if ((*old_lst)->type == in_d_quote)
 				two_quote = true;

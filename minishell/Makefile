@@ -11,7 +11,7 @@ SRCS			:=	minishell.c\
 					\
 					exec/builtin.c\
 					exec/check_access.c\
-					exec/exec.c\
+					exec/execution.c\
 					\
 					fds/fds.c\
 					fds/fds_utils.c\
@@ -59,6 +59,7 @@ SRCS			:=	minishell.c\
 					utils/count_command.c\
 					utils/expand_utils.c\
 					utils/export_utils.c\
+					utils/ft_atoi_custom.c\
 					utils/ft_sort_str_arr.c\
 					utils/ft_tabfree.c\
 					utils/reforme_d_tab_cmd.c\
@@ -154,6 +155,12 @@ leaks			:	all
 					--show-mismatched-frees=yes --read-var-info=yes \
 					-s ./${NAME}
 					#--log-file=valgrind.txt \
+
+envleaks			:	all
+				env -i valgrind --suppressions=valgrind_ignore_leaks.txt --leak-check=full \
+					--show-leak-kinds=all --track-fds=yes \
+					--show-mismatched-frees=yes --read-var-info=yes \
+					-s ./${NAME}
 
 FORCE			:
 

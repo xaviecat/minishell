@@ -3,44 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   export_error_management.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 16:10:58 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/19 14:27:57 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/19 15:21:53 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-static int	does_contain_spaces(char *str)
+int	verif_first_arg(t_msh *msh, t_cmd_lst *cmd)
 {
-	size_t	i;
+	char	**cmd_split;
+	int		i;
 
 	i = 0;
-	while (str[i] && str[i] != '=')
-		if (ft_isspace(str[i++]))
-			return (1);
-	return (0);
-}
-
-static int	does_contain_forbidden_char(char *str)
-{
-	size_t	i;
-
-	i = 0;
-	while (str[i])
-		if (!ft_isalnum(str[i]) && str[i] != '_')
+	cmd_split = NULL;
+	cmd_split = ft_gbsplit(cmd->cmd, '=', &(msh->garbage));
+	if (ft_isdigit(cmd_split[0][0]))
+	{
+		ft_gbtabfree(cmd_split, &(msh->garbage));
+		return (0);
+	}
+	while (cmd_split[0][i])
+	{
+		if (!ft_isalnum(cmd_split[0][i]))
+		{
+			ft_gbtabfree(cmd_split, &(msh->garbage));
 			return (0);
-	return (1);
-}
-
-int	check_for_unexpected_char(t_cmd_lst *cmd)
-{
-	if (cmd->is_nill == true || does_contain_spaces(cmd->cmd))
-		return (printf(MEXP"%s"NOVAL_ID, cmd->cmd), 0);
-	if ((*(cmd->cmd) && !ft_isalpha(*(cmd->cmd))) || ((cmd->cmd) + 1
-			&& !does_contain_forbidden_char(cmd->cmd + 1)))
-		return (printf(MEXP"%s"NOVAL_ID, cmd->cmd), 0);
+		}
+		i++;
+	}
+	ft_gbtabfree(cmd_split, &(msh->garbage));
 	return (1);
 }
 
@@ -49,5 +43,14 @@ int	export_error_management(t_msh *msh, t_cmd_lst *cmd)
 	if (!check_for_unexpected_char(cmd))
 		return (0);
 	(void) msh;
+	cmd = cmd->next;
+	while (cmd)
+	{
+		if (ft_strncmp(cmd->cmd, "=", 2) == 0)
+			return (0);
+		if (!verif_first_arg(msh, cmd))
+			return (0);
+		cmd = cmd->next;
+	}
 	return (1);
 }

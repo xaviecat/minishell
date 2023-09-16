@@ -17,6 +17,8 @@ void	ft_tabfree(char **tbl)
 	size_t	i;
 
 	i = 0;
+	if (!tbl)
+		return ;
 	while (tbl[i])
 	{
 		free(tbl[i]);

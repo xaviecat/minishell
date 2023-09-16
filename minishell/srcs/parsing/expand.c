@@ -97,6 +97,7 @@ static char	*modify_command(char *cmd, t_msh *msh,
 		return (ft_free(&(msh->garbage), env_var),
 			ft_free(&(msh->garbage), cmd), NULL);
 	m_cmd = fill_mdcmd(cmd, start, exp_env_v, env_var);
+	add_to_garbage(&(msh->garbage), m_cmd);
 	return (ft_free_mcmd(env_var, cmd, exp_env_v, &(msh->garbage)), m_cmd);
 }
 
@@ -191,13 +192,12 @@ int	expand_commands(t_msh *msh)
 			w_lst_cpy->word = expand_vars(w_lst_cpy->word, msh);
 		if (!w_lst_cpy->word)
 			return (0); // ? code d'erreur a ajouter
-		if (w_lst_cpy->in_d_quote == false && w_lst_cpy->in_s_quote == false)
-		{
-			if (w_lst_cpy->word[0] != '\0' && !cut_space_expand(&w_lst_cpy, &(msh->garbage))) {
-				printf("cc");
-				return (0);
-			}
-		}
+		//if (w_lst_cpy->in_d_quote == false && w_lst_cpy->in_s_quote == false)
+		//{
+		//	if (w_lst_cpy->word[0] != '\0'
+			//	&& !cut_space_expand(&w_lst_cpy, &(msh->garbage)))
+				//return (0);
+		//}
 		w_lst_cpy = w_lst_cpy->next;
 	}
 	return (1);

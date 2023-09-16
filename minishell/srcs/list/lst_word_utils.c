@@ -61,7 +61,7 @@ void	word_lst_delone(t_word_lst **lst, t_garbage **gb)
 		*lst = prev;
 }
 
-t_word_lst *word_lst_add_back(t_word_lst *wlst, t_garbage **gb, char *word)
+t_word_lst	*word_lst_add_back(t_word_lst *wlst, t_garbage **gb, char *word)
 {
 	if (!wlst)
 		return (word_lst_new(word, gb));

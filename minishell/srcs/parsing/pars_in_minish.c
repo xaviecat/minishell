@@ -41,7 +41,7 @@ void	free_error_cmd(t_garbage **gb, t_node_lst **lst)
 		else
 			next = NULL;
 		free_error_redir(gb, &((*lst)->redirs));
-		free_error_fds(gb, &((*lst)->fds));
+		ft_free(gb, (*lst)->fds);
 		free_error_cmd_w(gb, &((*lst)->lst_cmd));
 		*lst = next;
 	}
@@ -50,8 +50,8 @@ void	free_error_cmd(t_garbage **gb, t_node_lst **lst)
 t_node_lst	*create_command(t_msh **sh)
 {
 	t_redir_lst	*redirs;
-	t_fd_lst		*fds;
-	t_node_lst		*new;
+	t_fd_lst	*fds;
+	t_node_lst	*new;
 
 	redirs = get_redir(&((*sh)->lst_w), &((*sh)->garbage));
 	if (errno == ENOMEM)
@@ -85,7 +85,7 @@ int	sh_pars(t_msh **msh)
 			new->builtin = builtin_or_command(new->lst_cmd->cmd);
 		if ((*msh)->lst_n)
 		{
-			new->previous = (*msh)->lst_n->last_added;
+			new->prev = (*msh)->lst_n->last_added;
 			(*msh)->lst_n->last_added->next = new;
 		}
 		else

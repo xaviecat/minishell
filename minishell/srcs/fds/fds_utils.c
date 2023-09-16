@@ -12,17 +12,6 @@
 
 #include "../../incs/minishell.h"
 
-void	fds_add_back(t_fd_lst **lst, t_fd_lst *new)
-{
-	if (!lst)
-		return ;
-	if ((*lst)->last_added)
-		(*lst)->last_added->next = new;
-	else
-		*lst = new;
-	(*lst)->last_added = new;
-}
-
 t_fd_lst	*new_fds(t_garbage **gb)
 {
 	t_fd_lst	*fds;
@@ -32,23 +21,5 @@ t_fd_lst	*new_fds(t_garbage **gb)
 		return (NULL);
 	fds->in = STDIN_FILENO;
 	fds->out = STDOUT_FILENO;
-	fds->next = NULL;
-	fds->last_added = NULL;
 	return (fds);
-}
-
-void	free_error_fds(t_garbage **gb, t_fd_lst **lst)
-{
-	t_fd_lst	*next;
-
-	next = NULL;
-	while (*lst)
-	{
-		if ((*lst)->next)
-			next = (*lst)->next;
-		else
-			next = NULL;
-		ft_free(gb, *lst);
-		*lst = next;
-	}
 }

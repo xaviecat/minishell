@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:46:20 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/21 17:33:31 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/06/30 18:54:28 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	export_print(t_msh *msh)
 	i = 0;
 	while (envp_cpy[i])
 	{
-		ft_printf("declare -x ");
+		printf("declare -x ");
 		j = 0;
 		while (envp_cpy[i][j] && envp_cpy[i][j] != '=')
 			printf("%c", envp_cpy[i][j++]);
@@ -164,6 +164,7 @@ int	b_export(t_msh *msh)
 	if (!modified_envp && errno == ENOMEM)
 		return (ft_free(&(msh->garbage), msh->envp), 0);
 	ft_free(&(msh->garbage), msh->envp);
-	msh->envp = modified_envp;
-	return (ft_free(&(msh->garbage), save_envp), 1);
+	msh->envp = ft_gbtabdup(modified_envp, &(msh->garbage));
+	ft_gbtabfree(modified_envp, &(msh->garbage));
+	return (ft_free(&(msh->garbage), save_envp), 0);
 }

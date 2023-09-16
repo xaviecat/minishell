@@ -17,6 +17,8 @@ void	ft_gbtabfree(char **tbl, t_garbage **gb)
 	size_t	i;
 
 	i = 0;
+	if (!tbl)
+		return ;
 	while (tbl[i])
 	{
 		ft_free(gb, tbl[i]);
