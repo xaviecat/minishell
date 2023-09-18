@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 15:54:52 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/26 16:29:56 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/09/19 00:51:47 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	verif_arg_exit(char *nbr)
 	i = 0;
 	while (nbr[i])
 	{
-		if (nbr[0] == '-' || nbr[0] == '+')
+		if (nbr[i] == '-' || nbr[i] == '+')
 			i++;
 		if (!ft_isdigit(nbr[i]))
 		{
@@ -60,14 +60,14 @@ bool	real_atoi(const char *nbr, int *nb_ret)
 	return (true);
 }
 
-bool	ft_atoi_custom(const char *nbr, int *nb_ret)
+bool	ft_atoi_custom(const char *nbr, unsigned int *nb_ret)
 {
 	if (!(verif_arg_exit((char *)nbr)))
 	{
 		ft_fdprintf(2, MSH E_EXIT"%s"NUM_ARG, nbr);
 		return (false);
 	}
-	if (!real_atoi(nbr, nb_ret))
+	if (!real_atoi(nbr, (int *)nb_ret))
 	{
 		ft_fdprintf(2, MSH E_EXIT"%s"NUM_ARG, nbr);
 		return (false);

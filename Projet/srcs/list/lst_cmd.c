@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 17:16:51 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/19 14:04:01 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/09/19 00:48:06 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_cmd_lst	*new_w_cmd_list(t_word_lst *w_lst, bool s_quote, bool d_quote,
 		return (NULL);
 	new->cmd = ft_gbstrtrim(content, " ", gb);
 	new->is_nill = w_lst->is_nill;
-	printf("{%d}\n", w_lst->is_nill);
+	//printf("{%d}\n", w_lst->is_nill);
 	if (!new->cmd && errno == ENOMEM)
 		return (NULL);
 	if (*(new->cmd) == 0)
