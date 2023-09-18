@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:46:20 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/30 19:06:24 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/06/30 18:54:28 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,11 @@ int	add_new_var_to_envp(t_cmd_lst *cmd, char **save_envp, t_msh *msh)
 	i = 0;
 	while (cmd)
 	{
+		if (!export_error_management(msh, cmd))
+		{
+			cmd = cmd->next;
+			continue ;
+		}
 		if (not_in_env(cmd->cmd, save_envp))
 		{
 			if (!is_concat(cmd->cmd))
@@ -143,18 +148,17 @@ int	add_new_var_to_envp(t_cmd_lst *cmd, char **save_envp, t_msh *msh)
 
 int	b_export(t_msh *msh)
 {
-	char	**save_envp;
-	char	**modified_envp;
+	char		**save_envp;
+	t_cmd_lst	*cmd;
+	char		**modified_envp;
 
-	if (!msh->lst_n->lst_cmd->next)
+	cmd = msh->lst_n->lst_cmd;
+	if (!cmd->next)
 		return (export_print(msh));
-	if (!export_error_management(msh, msh->lst_n->lst_cmd))
-		return (ft_fdprintf(2, RED MSH E_EXPORT"'%s'"NT_VAL_ID RESET,
-				msh->lst_n->lst_cmd->next->cmd), 1);
 	save_envp = msh->envp;
-	if (!ft_alloc_envp(msh, msh->lst_n->lst_cmd))
+	if (!ft_alloc_envp(msh, cmd))
 		return (0);
-	if (!add_new_var_to_envp(msh->lst_n->lst_cmd, save_envp, msh))
+	if (!add_new_var_to_envp(cmd, save_envp, msh))
 		return (0);
 	modified_envp = ft_gbtabjoin(save_envp, msh->envp, &(msh->garbage));
 	if (!modified_envp && errno == ENOMEM)

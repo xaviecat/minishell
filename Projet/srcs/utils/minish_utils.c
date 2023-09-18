@@ -11,12 +11,12 @@
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
+
 int	parsing_char(t_msh **msh, char *line)
 {
 	if (!(create_char_lst_with_c_inside(line, msh)))
 	{
-		g_exit_status = 128 + 12;
-		free(line);
+		g_exit_status = 128 + 12;free(line);
 		free_and_exit_minish(*msh);
 	}
 	give_type_in_lst(&(*msh)->lst_c);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:08:17 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/30 11:12:49 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/26 01:23:20 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,8 @@ int	expand_commands(t_msh *msh)
 	w_lst_cpy = msh->lst_w;
 	while (w_lst_cpy)
 	{
+		if (!ft_strncmp(w_lst_cpy->word, "\"\"", 3))
+			w_lst_cpy->is_nill = true;
 		if (w_lst_cpy->type != delimiteur)
 			w_lst_cpy->word = expand_vars(w_lst_cpy->word, msh);
 		if (!w_lst_cpy->word)
