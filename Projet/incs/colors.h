@@ -85,55 +85,5 @@ _/    |__|  |__| |_______||_______||_______|"
 # define REDPROMPT	" \001\033[4;91m\002TRI_SH $>\001\033[0m\002 "
 # define GREPROMPT	" \001\033[4;92m\002TRI_SH $>\001\033[0m\002 "
 # define YELPROMPT	" \001\033[4;93m\002TRI_SH $>\001\033[0m\002 "
-/*
-	printf(BOLD     "Salut\n" RESET);
-	printf(FAINT    "Salut\n" RESET);
-	printf(ITALIC   "Salut\n" RESET);
-	printf(UNDERLINE"Salut\n" RESET);
-	printf(SBLINK   "Salut\n" RESET);
-	printf(FBLINK   "Salut\n" RESET);
-	printf(REVERSE  "Salut\n" RESET);
-	printf(HIDE     "Salut\n" RESET);
-	printf(STRIKE   "Salut\n" RESET);
-	printf("\n");
 
-	printf(LBLACK "Salut\n" RESET);
-	printf(LRED   "Salut\n" RESET);
-	printf(LGREEN "Salut\n" RESET);
-	printf(LYELLOW"Salut\n" RESET);
-	printf(LBLUE  "Salut\n" RESET);
-	printf(LPURPLE"Salut\n" RESET);
-	printf(LCYAN  "Salut\n" RESET);
-	printf(LWHITE "Salut\n" RESET);
-	printf("\n");
-
-	printf(BLACK "Salut\n" RESET);
-	printf(RED   "Salut\n" RESET);
-	printf(GREEN "Salut\n" RESET);
-	printf(YELLOW"Salut\n" RESET);
-	printf(BLUE  "Salut\n" RESET);
-	printf(PURPLE"Salut\n" RESET);
-	printf(CYAN  "Salut\n" RESET);
-	printf(GREY  "Salut\n" RESET);
-	printf("\n");
-
-	printf(BGBLACK "Salut\n" RESET);
-	printf(BGRED   "Salut\n" RESET);
-	printf(BGGREEN "Salut\n" RESET);
-	printf(BGYELLOW"Salut\n" RESET);
-	printf(BGBLUE  "Salut\n" RESET);
-	printf(BGPURPLE"Salut\n" RESET);
-	printf(BGCYAN  "Salut\n" RESET);
-	printf(BGGREY  "Salut\n" RESET);
-	printf("\n");
-
-	printf(LBGBLACK "Salut\n" RESET);
-	printf(LBGRED   "Salut\n" RESET);
-	printf(LBGGREEN "Salut\n" RESET);
-	printf(LBGYELLOW"Salut\n" RESET);
-	printf(LBGBLUE  "Salut\n" RESET);
-	printf(LBGPURPLE"Salut\n" RESET);
-	printf(LBGCYAN  "Salut\n" RESET);
-	printf(LBGGREY  "Salut\n" RESET);
-*/
 #endif

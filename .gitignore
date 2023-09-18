@@ -3,6 +3,6 @@
 **.idea
 **.vscode
 **.nfs*
-minishell/minishell
-minishell/minishell*
+Projet/minishell
+Projet/minishell*
 .clang-format

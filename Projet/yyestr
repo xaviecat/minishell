@@ -1,0 +1,14 @@
+if [[ $1 ]]; then
+	test_lists=(
+		$1
+	)
+else
+	test_lists=(
+		"builtins"
+		"pipes"
+		"redirects"
+		"extras"
+		"extras2_le_retour"
+		"extras3_la_vengance"
+	)
+fi
