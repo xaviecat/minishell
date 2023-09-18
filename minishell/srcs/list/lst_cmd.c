@@ -12,17 +12,23 @@
 
 #include "../../incs/minishell.h"
 
-t_cmd_lst	*new_w_cmd_list(char *content, bool s_quote, bool d_quote,
-				t_garbage **gb)
+t_cmd_lst	*new_w_cmd_list(t_word_lst *w_lst, bool s_quote, bool d_quote,
+			t_garbage **gb)
 {
 	t_cmd_lst	*new;
+	char		*content;
 
+	content = w_lst->word;
 	new = ft_malloc(gb, sizeof(t_cmd_lst), 1);
 	if (!new)
 		return (NULL);
 	new->cmd = ft_gbstrtrim(content, " ", gb);
+	new->is_nill = w_lst->is_nill;
+	printf("{%d}\n", w_lst->is_nill);
 	if (!new->cmd && errno == ENOMEM)
 		return (NULL);
+	if (*(new->cmd) == 0)
+		new->is_nill = true;
 	new->s_quote = s_quote;
 	new->d_quote = d_quote;
 	new->next = NULL;
@@ -58,7 +64,7 @@ t_cmd_lst	*get_cmd(t_word_lst **old_lst, t_garbage **gb)
 				two_quote = true;
 			if ((*old_lst)->type == in_s_quote)
 				one_quote = true;
-			new = new_w_cmd_list((*old_lst)->word, one_quote, two_quote, gb);
+			new = new_w_cmd_list(*old_lst, one_quote, two_quote, gb);
 			if (cmds)
 				cmds->last_added->next = new;
 			else

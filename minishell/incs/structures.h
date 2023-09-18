@@ -110,6 +110,7 @@ typedef struct s_fd_lst
 typedef struct s_cmd_lst
 {
 	char				*cmd;
+	bool				is_nill;
 	bool				s_quote;
 	bool				d_quote;
 	struct s_cmd_lst	*next;
@@ -134,6 +135,7 @@ typedef struct s_node_lst
 typedef struct s_word_lst
 {
 	char				*word;
+	bool				is_nill;
 	t_type_word			type;
 	bool				in_s_quote;
 	bool				in_d_quote;
