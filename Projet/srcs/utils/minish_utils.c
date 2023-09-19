@@ -16,7 +16,8 @@ int	parsing_char(t_msh **msh, char *line)
 {
 	if (!(create_char_lst_with_c_inside(line, msh)))
 	{
-		g_exit_status = 128 + 12;free(line);
+		g_exit_status = 128 + 12;
+		free(line);
 		free_and_exit_minish(*msh);
 	}
 	give_type_in_lst(&(*msh)->lst_c);
@@ -26,7 +27,7 @@ int	parsing_char(t_msh **msh, char *line)
 		return (free_end_loop(*msh), 0);
 	}
 	harmonize_spaces(&((*msh)->lst_c), &((*msh)->garbage));
-	//print_lst_char((*msh)->lst_c);
+//	print_lst_char((*msh)->lst_c);
 	return (1);
 }
 
@@ -46,7 +47,7 @@ int	parsing_word(t_msh **msh)
 		free_and_exit_minish(*msh);
 	if (ret == 2)
 		return (free_end_loop(*msh), 0);
-	//print_lst_word((*msh)->lst_w);
+//	print_lst_word((*msh)->lst_w);
 	return (1);
 }
 
