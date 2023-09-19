@@ -29,16 +29,16 @@ bool	is_colon_error(t_char_lst *lst)
 bool	is_star_error(t_char_lst *lst)
 {
 	if (lst->c == '*' && !lst->s_quote && !lst->d_quote)
-		return (ft_fdprintf(2, RED MSH STAR RESET), true);
+		return (ft_fdprintf(2, MSH STAR), true);
 	return (false);
 }
 
 bool	is_parenthese_error(t_char_lst *lst)
 {
 	if (lst->c == '(' && !lst->s_quote && !lst->d_quote)
-		return (ft_fdprintf(2, RED MSH P_OPEN RESET), true);
+		return (ft_fdprintf(2, MSH P_OPEN), true);
 	else if (lst->c == ')' && !lst->s_quote && !lst->d_quote)
-		return (ft_fdprintf(2, RED MSH P_CLOSE RESET), true);
+		return (ft_fdprintf(2, MSH P_CLOSE), true);
 	return (false);
 }
 
@@ -46,6 +46,6 @@ bool	is_dot_error(t_char_lst *lst)
 {
 	if (lst->c == '.' && !lst->s_quote
 		&& !lst->d_quote && !lst->next && !lst->prev)
-		return (ft_fdprintf(2, RED MSH DOT RESET), true);
+		return (ft_fdprintf(2, MSH DOT), true);
 	return (false);
 }
