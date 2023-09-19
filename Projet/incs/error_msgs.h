@@ -15,7 +15,7 @@
 
 # define MSH			"minishell: "
 /* custom errors */
-# define UN_QUOTE		"unexpected EOF while looking for matching `'' or `\"'"
+# define UN_QUOTE		"unexpected EOF while looking for matching `'' or `\"'\n"
 # define S_AMP			"feature not handled: '&'\n"
 # define D_AMP			"feature not handled: '&&'\n"
 # define D_PIPE			"feature not handled: '||'\n"

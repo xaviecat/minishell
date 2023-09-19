@@ -142,7 +142,8 @@ void			signal_hub_default(void);
 char			*ft_cut_var(char *str, t_garbage **gb);
 int				ft_isspace(char c);
 char			*str_cpy_to_x(char *src, char *dst, char x);
-int				is_dollar_alone(char *env_var, char *cmd, size_t start);
+int				is_dollar_alone(char *env_var, char *cmd, size_t start,
+					int double_not_closed);
 void			*ft_malloc(t_garbage **garbage, int the_size, int number);
 void			ft_free_all(t_garbage **lst);
 void			ft_free(t_garbage **lst, void *content);
