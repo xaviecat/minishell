@@ -52,9 +52,9 @@ bool	is_smaller_bracket_error(t_char_lst **lst)
 		i++;
 	}
 	if (i == 3)
-		return (printf(RED MSH S_SM_A_BRA RESET), true);
+		return (printf(MSH S_SM_A_BRA), true);
 	else if (i > 3)
-		return (printf(RED MSH D_SM_A_BRA RESET), true);
+		return (printf(MSH D_SM_A_BRA), true);
 	return (false);
 }
 
@@ -69,9 +69,9 @@ bool	is_greater_bracket_error(t_char_lst **lst)
 		i++;
 	}
 	if (i == 3)
-		return (printf(RED MSH S_GR_A_BRA RESET), true);
+		return (ft_fdprintf(2, MSH S_GR_A_BRA), true);
 	else if (i > 3)
-		return (printf(RED MSH D_GR_A_BRA RESET), true);
+		return (ft_fdprintf(2, MSH D_GR_A_BRA), true);
 	return (false);
 }
 
@@ -81,7 +81,7 @@ bool	is_bad_redir(t_char_lst *lst)
 	{
 		if (lst->next && lst->c == '<' && lst->next->c == '>')
 		{
-			ft_fdprintf(2, RED MSH NL_TKN RESET);
+			ft_fdprintf(2, MSH NL_TKN);
 			return (true);
 		}
 		if (lst->c == '<')

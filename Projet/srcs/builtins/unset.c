@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 13:43:43 by syluiset          #+#    #+#             */
-/*   Updated: 2023/09/19 13:23:01 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/09/19 13:24:14 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,17 +86,13 @@ static int	check_var_exist_and_valid(char *var, char **tabi)
 	i = 0;
 	if (ft_strncmp(var, "-", 1) == 0)
 		return (ft_fdprintf(2, MSH E_UNSET INV_OPT), 2);
-	if (!char_autorized(var))// marche pas
+	if (!char_autorized(var))
 		return (0);
-//	while (var[i])
-//	{
 	if (!ft_isalnum(var[0]))
 	{
 		ft_fdprintf(2, MSH E_UNSET"'%s'"NT_VAL_ID, var);
 		return (0);
 	}
-	//	i++;
-	//}
 	i = 0;
 	while (tabi[i])
 	{

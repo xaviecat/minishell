@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:00:59 by xcharra           #+#    #+#             */
-/*   Updated: 2023/09/19 13:00:39 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/09/19 13:05:05 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	b_pwd(t_msh *msh)
 	if (msh->lst_n->lst_cmd->next
 		&& ft_strchr(msh->lst_n->lst_cmd->next->cmd, '-') != NULL
 		&& !msh->lst_n->lst_cmd->next->next)
-		return (ft_fdprintf(2, RED MSH E_PWD INV_OPT RESET), 2);
+		return (ft_fdprintf(2, MSH E_PWD INV_OPT), 2);
 	path = getcwd(NULL, 0);
 	//if (!path)
 		//path = get_pwd_from_envp(msh->envp);

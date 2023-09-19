@@ -76,7 +76,7 @@ bool	process_quotes(t_char_lst *lst)
 			tmp = tmp->next;
 	}
 	if (q == true)
-		return (ft_fdprintf(2, RED MSH UN_QUOTE RESET), true);
+		return (ft_fdprintf(2, MSH UN_QUOTE), true);
 	else
 		return (false);
 }

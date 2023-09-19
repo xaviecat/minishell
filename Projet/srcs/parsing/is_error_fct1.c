@@ -17,8 +17,8 @@ bool	is_amp_error(t_char_lst *lst)
 	if (lst->c == '&' && !lst->s_quote && !lst->d_quote)
 	{
 		if (lst->next && lst->next->c == '&')
-			return (ft_fdprintf(2, RED MSH D_AMP RESET), true);
-		return (ft_fdprintf(2, RED MSH S_AMP RESET), true);
+			return (ft_fdprintf(2, MSH D_AMP), true);
+		return (ft_fdprintf(2, MSH S_AMP), true);
 	}
 	return (false);
 }
@@ -27,30 +27,30 @@ bool	is_pipe_error(t_char_lst *lst)
 {
 	if (lst->c == '|' && lst->next && lst->next->c == '|'
 		&& !lst->s_quote && !lst->d_quote)
-		return (ft_fdprintf(2, RED MSH D_PIPE RESET), true);
+		return (ft_fdprintf(2, MSH D_PIPE), true);
 	return (false);
 }
 
 bool	is_semicolon_error(t_char_lst *lst)
 {
 	if (lst->c == ';' && !lst->s_quote && !lst->d_quote)
-		return (ft_fdprintf(2, RED MSH SEMICOLON RESET), true);
+		return (ft_fdprintf(2, MSH SEMICOLON), true);
 	return (false);
 }
 
 bool	is_backslash_error(t_char_lst *lst)
 {
 	if (lst->c == '\\' && !lst->s_quote && !lst->d_quote)
-		return (ft_fdprintf(2, RED MSH BACKSLASH RESET), true);
+		return (ft_fdprintf(2, MSH BACKSLASH), true);
 	return (false);
 }
 
 bool	is_dollar_error(t_char_lst *lst)
 {
 	if (lst->c == '$' && lst->next && lst->next->c == '$' && !lst->s_quote)
-		return (ft_fdprintf(2, RED MSH D_DOLLAR RESET), true);
+		return (ft_fdprintf(2, MSH D_DOLLAR), true);
 	if (lst->c == '$' && lst->next && ft_isdigit(lst->next->c) && !lst->s_quote)
 		return (ft_fdprintf(
-				2, RED MSH S_DOLLAR"%c'\n"RESET, lst->next->c), true);
+				2, MSH S_DOLLAR"%c'\n", lst->next->c), true);
 	return (false);
 }

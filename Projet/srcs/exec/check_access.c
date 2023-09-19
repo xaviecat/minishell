@@ -92,17 +92,17 @@ char	*check_access(char **cmdpaths, char *cmd, t_garbage **gb)
 	if (cmd && !cmd[0])
 	{
 		g_exit_status = 127;
-		ft_fdprintf(2, RED MSH"''"CMD_NOT_FOUND RESET, cmd);
+		ft_fdprintf(2, MSH"''"CMD_NOT_FOUND, cmd);
 	}
 	else if ((!good_path && !f_ok) || ft_strncmp(cmd, "..", 2) == 0)
 	{
 		g_exit_status = 127;
-		ft_fdprintf(2, RED MSH"%s"CMD_NOT_FOUND RESET, cmd);
+		ft_fdprintf(2, MSH"%s"CMD_NOT_FOUND, cmd);
 	}
 	else if (!good_path)
 	{
 		g_exit_status = 126;
-		ft_fdprintf(2, RED MSH"%s"NO_PERM RESET, cmd);
+		ft_fdprintf(2, MSH"%s"NO_PERM, cmd);
 	}
 	ft_gbtabfree(cmdpaths, gb);
 	return (good_path);
@@ -115,20 +115,20 @@ void	cmd_in_current_dir(t_msh *msh, t_node_lst *lst, t_garbage **gb)
 	if (access(lst->lst_cmd->cmd, F_OK))
 	{
 		g_exit_status = 127;
-		ft_fdprintf(2, RED MSH"%s"NO_SFD RESET, lst->lst_cmd->cmd);
+		ft_fdprintf(2, MSH"%s"NO_SFD, lst->lst_cmd->cmd);
 		return ;
 	}
 	stat(lst->lst_cmd->cmd, &st);
 	if (S_ISDIR(st.st_mode))
 	{
 		g_exit_status = 126;
-		ft_fdprintf(2, RED MSH"%s"IS_DIR RESET, lst->lst_cmd->cmd);
+		ft_fdprintf(2, MSH"%s"IS_DIR, lst->lst_cmd->cmd);
 		return ;
 	}
 	if (access(lst->lst_cmd->cmd, X_OK))
 	{
 		g_exit_status = 126;
-		ft_fdprintf(2, RED MSH"%s"NO_PERM RESET, lst->lst_cmd->cmd);
+		ft_fdprintf(2, MSH"%s"NO_PERM, lst->lst_cmd->cmd);
 		return ;
 	}
 	lst->cmdpath = ft_gbstrdup(lst->lst_cmd->cmd, gb);

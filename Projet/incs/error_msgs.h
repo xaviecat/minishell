@@ -44,11 +44,11 @@
 # define NUM_ARG		": numeric argument required\n"
 
 /* bash errors*/
-# define S_SM_A_BRA		"syntax error near unexpected token '<'\n"
-# define D_SM_A_BRA		"syntax error near unexpected token '<<'\n"
-# define S_GR_A_BRA		"syntax error near unexpected token '>'\n"
-# define D_GR_A_BRA		"syntax error near unexpected token '>>'\n"
-# define NL_TKN			"syntax error near unexpected token 'newline'\n"
+# define S_SM_A_BRA		"syntax error near unexpected token `<'\n"
+# define D_SM_A_BRA		"syntax error near unexpected token `<<'\n"
+# define S_GR_A_BRA		"syntax error near unexpected token `>'\n"
+# define D_GR_A_BRA		"syntax error near unexpected token `>>'\n"
+# define NL_TKN			"syntax error near unexpected token `newline'\n"
 # define PIPE_TKN		"syntax error near unexpected token '|'\n"
 # define UN_TKN			"syntax error near unexpected token\n"
 # define INV_OPT		"invalid option\n"

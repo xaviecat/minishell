@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:54:13 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/29 15:30:26 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/09/19 14:37:01 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	signal_heredoc(int signum)
 	ioctl(STDIN_FILENO, TIOCSTI, "\n");
 	rl_replace_line("", 0);
 	rl_on_new_line();
-	//rl_redisplay();
 	g_exit_status = 128 + signum;
 }
 
