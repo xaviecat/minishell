@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 13:43:43 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/26 16:14:58 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/09/19 13:07:55 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,17 @@ static int	check_var_exist_and_valid(char *var, char **tabi)
 	int	i;
 
 	i = 0;
-	while (var[i])
+	if (ft_strncmp(var, "-", 1) == 0)
+		return (ft_fdprintf(2, MSH E_UNSET INV_OPT), 2);
+//	while (var[i])
+//	{
+	if (!ft_isalnum(var[0]))
 	{
-		if (!ft_isalnum(var[i]))
-		{
-			ft_fdprintf(2, MSH E_UNSET"'%s'"NT_VAL_ID, var);
-			return (0);
-		}
-		i++;
+		ft_fdprintf(2, MSH E_UNSET"'%s'"NT_VAL_ID, var);
+		return (0);
 	}
+	//	i++;
+	//}
 	i = 0;
 	while (tabi[i])
 	{

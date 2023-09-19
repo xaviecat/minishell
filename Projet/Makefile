@@ -103,7 +103,7 @@ CFLAGS			:=	-Wall -Wextra -Werror
 
 RDL				:=	-lreadline
 
-ASAN_F			:=	-g3 #-fsanitize=address
+ASAN_F			:=	-g3 -fsanitize=address
 
 #========================EXEC===============================#
 all				:	$(NAME)
