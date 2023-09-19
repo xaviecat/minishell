@@ -24,7 +24,7 @@ t_cmd_lst	*new_w_cmd_list(t_word_lst *w_lst, bool s_quote, bool d_quote,
 		return (NULL);
 	new->cmd = ft_gbstrtrim(content, " ", gb);
 	new->is_nill = w_lst->is_nill;
-	printf("{%d}\n", w_lst->is_nill);
+//	printf("{%d}\n", w_lst->is_nill);
 	if (!new->cmd && errno == ENOMEM)
 		return (NULL);
 	if (*(new->cmd) == 0)

@@ -33,6 +33,7 @@
 # define E_CD			"cd: "
 # define E_UNSET		"unset: "
 # define E_EXIT			"exit: "
+# define E_PWD			"pwd: "
 
 # define TOO_MN_ARGS	"too many arguments\n"
 # define CMD_NOT_FOUND	": command not found\n"
@@ -49,6 +50,7 @@
 # define D_GR_A_BRA		"syntax error near unexpected token '>>'\n"
 # define NL_TKN			"syntax error near unexpected token 'newline'\n"
 # define PIPE_TKN		"syntax error near unexpected token '|'\n"
-# define UN_TKN			"syntax error near unexpected token "
+# define UN_TKN			"syntax error near unexpected token\n"
+# define INV_OPT		"invalid option\n"
 
 #endif

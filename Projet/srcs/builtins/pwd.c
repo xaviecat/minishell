@@ -6,11 +6,11 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:00:59 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/30 18:07:32 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/09/19 11:34:06 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../incs/minishell.h"
 
 //static char	*get_pwd_from_envp(char **envp)
 //{
@@ -30,7 +30,10 @@ int	b_pwd(t_msh *msh)
 {
 	char	*path;
 
-	(void) msh;
+	if (ft_strchr(msh->lst_n->lst_cmd->next->cmd, '-') != NULL)
+	{
+		return (ft_fdprintf(2, RED MSH E_PWD INV_OPT RESET), 2);
+	}
 	path = getcwd(NULL, 0);
 	//if (!path)
 		//path = get_pwd_from_envp(msh->envp);

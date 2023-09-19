@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 15:54:52 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/26 16:29:56 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/09/18 17:45:29 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ static int	verif_arg_exit(char *nbr)
 	int	i;
 
 	i = 0;
-	while (nbr[i])
+	while (nbr[i] != '\0')
 	{
-		if (nbr[0] == '-' || nbr[0] == '+')
+		if (nbr[i] == '-' || nbr[i] == '+')
 			i++;
 		if (!ft_isdigit(nbr[i]))
 		{
