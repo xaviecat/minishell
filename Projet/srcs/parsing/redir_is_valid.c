@@ -20,7 +20,7 @@ int	pipe_is_valid(t_word_lst **lst, t_garbage **gb)
 		{
 			if (!(*lst)->next || !(*lst)->prev)
 			{
-				ft_fdprintf(2, RED MSH PIPE_TKN RESET);
+				ft_fdprintf(2, MSH PIPE_TKN);
 				free_error_word_lst(gb, lst);
 				return (0);
 			}
@@ -52,9 +52,9 @@ int	redir_is_valid(t_word_lst **lst, t_garbage **gb)
 				|| ft_is_redir((*lst)->next->type))
 			{
 				if (!(*lst)->next)
-					ft_fdprintf(2, RED MSH NL_TKN RESET);
+					ft_fdprintf(2, MSH NL_TKN);
 				else
-					ft_fdprintf(2, RED MSH UN_TKN"'%s'\n" RESET,
+					ft_fdprintf(2, MSH UN_TKN"'%s'\n",
 						(*lst)->next->word);
 				free_error_word_lst(gb, lst);
 				return (0);
