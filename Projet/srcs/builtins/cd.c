@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:36:42 by xcharra           #+#    #+#             */
-/*   Updated: 2023/09/19 11:54:22 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/09/19 11:57:53 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,11 @@ int	b_cd(t_msh *msh)
 	{
 		path = msh->lst_n->lst_cmd->next->cmd;
 		if (msh->lst_n->lst_cmd->next->next)
-			return (ft_fdprintf(2, RED MSH E_CD TOO_MN_ARGS RESET), 1);
+			return (ft_fdprintf(2, MSH E_CD TOO_MN_ARGS), 1);
 
 		//printf("%d", g_exit_status);
 		if (ft_strncmp(msh->lst_n->lst_cmd->next->cmd, "---", 4) == 0)
-			return (ft_fdprintf(2, RED MSH E_CD INV_OPT RESET), 2);
+			return (ft_fdprintf(2, MSH E_CD INV_OPT), 2);
 	}
 	//printf("%d", g_exit_status);
 	if (ft_strncmp(path, ".", 2) == 0)

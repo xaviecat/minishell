@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_quotes.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:10:59 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/13 16:51:21 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/09/19 13:50:36 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ bool	process_quotes(t_char_lst *lst)
 			tmp = tmp->next;
 	}
 	if (q == true)
-		return (ft_fdprintf(2, RED MSH UN_QUOTE RESET), true);
+		return (ft_fdprintf(2, MSH UN_QUOTE), true);
 	else
 		return (false);
 }
