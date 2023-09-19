@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 13:43:43 by syluiset          #+#    #+#             */
-/*   Updated: 2023/09/19 13:07:55 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/09/19 13:23:01 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,35 @@ static int	unset_tab(char **new_tab, char **old_tab, t_garbage **gb, char *var)
 	return (0);
 }
 
+static bool	char_autorized(char *var)
+{
+	int	i;
+
+	i = 0;
+	if (var[i] == '+')
+	{
+		while (var[i] == '+')
+			i++;
+		if (var[i] != '+')
+			return (false);
+	}
+	if (var[i] == '_')
+	{
+		while (var[i] == '_')
+			i++;
+		if (var[i] != '_')
+			return (false);
+	}
+	if (var[i] == '=')
+	{
+		while (var[i] == '=')
+			i++;
+		if (var[i] != '=')
+			return (false);
+	}
+	return (true);
+}
+
 static int	check_var_exist_and_valid(char *var, char **tabi)
 {
 	int	i;
@@ -57,6 +86,8 @@ static int	check_var_exist_and_valid(char *var, char **tabi)
 	i = 0;
 	if (ft_strncmp(var, "-", 1) == 0)
 		return (ft_fdprintf(2, MSH E_UNSET INV_OPT), 2);
+	if (!char_autorized(var))// marche pas
+		return (0);
 //	while (var[i])
 //	{
 	if (!ft_isalnum(var[0]))
@@ -94,7 +125,7 @@ int	b_unset(t_msh *sh)
 			return (ENOMEM);
 		ft_gbtabfree(sh->envp, &(sh->garbage));
 		sh->envp = ft_malloc(&(sh->garbage), sizeof(char *),
-				length_char_tab(old_envp));
+				length_char_tab(old_envp) + 1);
 		unset_tab(sh->envp, old_envp, &(sh->garbage), name_var);
 		ft_free(&(sh->garbage), name_var);
 		sh->lst_n->lst_cmd = sh->lst_n->lst_cmd->next;
