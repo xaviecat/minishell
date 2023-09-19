@@ -6,10 +6,10 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/05 16:14:07 by syluiset         ###   ########.fr       */
-/*   Updated: 2023/06/05 13:50:24 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/09/19 00:51:09 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -173,7 +173,7 @@ int				is_concat(char *cmd);
 char			*ft_gbitoa(int n, t_garbage **gb);
 //int				is_quote_quote(char *str, size_t i);
 size_t			count_command(t_node_lst *lst);
-bool			ft_atoi_custom(const char *nbr, int *nb_ret);
+bool			ft_atoi_custom(const char *nbr, unsigned int *nb_ret);
 
 /* list_char function */
 t_char_lst		*char_lst_new(char c, t_garbage **gb);

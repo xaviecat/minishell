@@ -6,11 +6,11 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:36:42 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/21 18:21:45 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/09/19 11:54:22 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../incs/minishell.h"
 
 static char	*get_home_from_env(char **envp, t_garbage **gb)
 {
@@ -28,16 +28,19 @@ static char	*get_home_from_env(char **envp, t_garbage **gb)
 
 static void	update_old_pwd(char **envp, t_garbage **gb)
 {
-	int	i;
+	int		i;
+	char	*temp;
 
 	i = 0;
 	while (envp[i])
 	{
 		if (ft_strncmp(envp[i], "OLDPWD=", 7) == 0)
 		{
+			temp = getcwd(NULL, 0);
 			ft_free(gb, envp[i]);
 			envp[i] = ft_gbstrjoin("OLDPWD=",
-					ft_gbstrdup(getcwd(NULL, 0), gb), gb);
+					ft_gbstrdup(temp, gb), gb);
+			free(temp);
 		}
 		i++;
 	}
@@ -47,6 +50,7 @@ static void	update_pwd(char **envp, t_garbage **gb)
 {
 	int		i;
 	char	*new_pwd;
+
 	i = 0;
 	while (envp[i])
 	{
@@ -61,21 +65,37 @@ static void	update_pwd(char **envp, t_garbage **gb)
 	}
 }
 
+static char	*get_path_from_env(t_msh *msh)
+{
+	if (msh->lst_n->lst_cmd->next == NULL
+		|| (msh->lst_n->lst_cmd->next != NULL
+			&& msh->lst_n->lst_cmd->next->cmd != NULL
+			&& (ft_strncmp(msh->lst_n->lst_cmd->next->cmd, "~", 2) == 0
+				|| ft_strncmp(msh->lst_n->lst_cmd->next->cmd, "~/", 3) == 0)))
+		return (get_home_from_env(msh->envp, &(msh->garbage)));
+	return (NULL);
+}
+
 int	b_cd(t_msh *msh)
 {
 	char	*path;
 
-	if (msh->lst_n->lst_cmd->next == NULL)
-		path = get_home_from_env(msh->envp, &(msh->garbage));
-	else
-		path = msh->lst_n->lst_cmd->next->cmd;
-	if (msh->lst_n->lst_cmd->next->next)
+	path = get_path_from_env(msh);
+//	printf("%d", g_exit_status);
+	if (path == NULL)
 	{
-		ft_fdprintf(2, RED MSH E_CD TOO_MN_ARGS RESET);
-		return (1);
+		path = msh->lst_n->lst_cmd->next->cmd;
+		if (msh->lst_n->lst_cmd->next->next)
+			return (ft_fdprintf(2, RED MSH E_CD TOO_MN_ARGS RESET), 1);
+
+		//printf("%d", g_exit_status);
+		if (ft_strncmp(msh->lst_n->lst_cmd->next->cmd, "---", 4) == 0)
+			return (ft_fdprintf(2, RED MSH E_CD INV_OPT RESET), 2);
 	}
+	//printf("%d", g_exit_status);
 	if (ft_strncmp(path, ".", 2) == 0)
 		update_old_pwd(msh->envp, &(msh->garbage));
+	//printf("%d", g_exit_status);
 	if (chdir(path) == -1)
 	{
 		ft_fdprintf(2, E_CD);
@@ -84,5 +104,6 @@ int	b_cd(t_msh *msh)
 	}
 	else
 		update_pwd(msh->envp, &(msh->garbage));
+	//printf("%d", g_exit_status);
 	return (0);
 }
