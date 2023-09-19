@@ -31,9 +31,7 @@ int	b_pwd(t_msh *msh)
 	char	*path;
 
 	if (ft_strchr(msh->lst_n->lst_cmd->next->cmd, '-') != NULL)
-	{
 		return (ft_fdprintf(2, RED MSH E_PWD INV_OPT RESET), 2);
-	}
 	path = getcwd(NULL, 0);
 	//if (!path)
 		//path = get_pwd_from_envp(msh->envp);

@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:36:42 by xcharra           #+#    #+#             */
-/*   Updated: 2023/09/19 11:30:39 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/09/19 11:45:32 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,19 @@ static char	*get_home_from_env(char **envp, t_garbage **gb)
 
 static void	update_old_pwd(char **envp, t_garbage **gb)
 {
-	int	i;
+	int		i;
+	char	*temp;
 
 	i = 0;
 	while (envp[i])
 	{
 		if (ft_strncmp(envp[i], "OLDPWD=", 7) == 0)
 		{
+			temp = getcwd(NULL, 0);
 			ft_free(gb, envp[i]);
 			envp[i] = ft_gbstrjoin("OLDPWD=",
-					ft_gbstrdup(getcwd(NULL, 0), gb), gb);
+					ft_gbstrdup(temp, gb), gb);
+			free(temp);
 		}
 		i++;
 	}
@@ -47,6 +50,7 @@ static void	update_pwd(char **envp, t_garbage **gb)
 {
 	int		i;
 	char	*new_pwd;
+
 	i = 0;
 	while (envp[i])
 	{

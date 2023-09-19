@@ -17,7 +17,7 @@ static int	verif_arg_exit(char *nbr)
 	int	i;
 
 	i = 0;
-	while (nbr[i] != '\0')
+	while (nbr[i])
 	{
 		if (nbr[i] == '-' || nbr[i] == '+')
 			i++;
@@ -60,14 +60,14 @@ bool	real_atoi(const char *nbr, int *nb_ret)
 	return (true);
 }
 
-bool	ft_atoi_custom(const char *nbr, int *nb_ret)
+bool	ft_atoi_custom(const char *nbr, unsigned int *nb_ret)
 {
 	if (!(verif_arg_exit((char *)nbr)))
 	{
 		ft_fdprintf(2, MSH E_EXIT"%s"NUM_ARG, nbr);
 		return (false);
 	}
-	if (!real_atoi(nbr, nb_ret))
+	if (!real_atoi(nbr, (int *)nb_ret))
 	{
 		ft_fdprintf(2, MSH E_EXIT"%s"NUM_ARG, nbr);
 		return (false);

@@ -14,7 +14,7 @@
 
 int	b_exit(t_msh *msh)
 {
-	int	ret;
+	unsigned int	ret;
 
 	ret = 0;
 	if (!(ft_atoi_custom(msh->lst_n->lst_cmd->next->cmd, &ret)))
