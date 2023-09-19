@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:36:42 by xcharra           #+#    #+#             */
-/*   Updated: 2023/09/19 11:45:32 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/09/19 11:54:22 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,16 +81,21 @@ int	b_cd(t_msh *msh)
 	char	*path;
 
 	path = get_path_from_env(msh);
+//	printf("%d", g_exit_status);
 	if (path == NULL)
 	{
 		path = msh->lst_n->lst_cmd->next->cmd;
 		if (msh->lst_n->lst_cmd->next->next)
 			return (ft_fdprintf(2, RED MSH E_CD TOO_MN_ARGS RESET), 1);
+
+		//printf("%d", g_exit_status);
+		if (ft_strncmp(msh->lst_n->lst_cmd->next->cmd, "---", 4) == 0)
+			return (ft_fdprintf(2, RED MSH E_CD INV_OPT RESET), 2);
 	}
-	if (ft_strncmp(msh->lst_n->lst_cmd->next->cmd, "---", 4) == 0)
-		return (ft_fdprintf(2, RED MSH E_CD INV_OPT RESET), 2);
+	//printf("%d", g_exit_status);
 	if (ft_strncmp(path, ".", 2) == 0)
 		update_old_pwd(msh->envp, &(msh->garbage));
+	//printf("%d", g_exit_status);
 	if (chdir(path) == -1)
 	{
 		ft_fdprintf(2, E_CD);
@@ -99,5 +104,6 @@ int	b_cd(t_msh *msh)
 	}
 	else
 		update_pwd(msh->envp, &(msh->garbage));
+	//printf("%d", g_exit_status);
 	return (0);
 }
