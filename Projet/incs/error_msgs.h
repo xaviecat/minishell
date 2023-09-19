@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 13:34:42 by xcharra           #+#    #+#             */
-/*   Updated: 2023/09/19 11:46:54 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/09/19 16:05:15 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # define MSH			"minishell: "
 /* custom errors */
-# define UN_QUOTE		"unclosed quote\n"
+# define UN_QUOTE		"unexpected EOF while looking for matching `'' or `\"'"
 # define S_AMP			"feature not handled: '&'\n"
 # define D_AMP			"feature not handled: '&&'\n"
 # define D_PIPE			"feature not handled: '||'\n"
@@ -27,7 +27,8 @@
 # define P_CLOSE		"feature not handled: ')'\n"
 # define STAR			"feature not handled '*'\n"
 # define DOT			"feature not handled: '.'\n"
-
+# define EXCL			"feature not handled: '!'\n"
+# define COLON			"feature not handled: ':'\n"
 
 # define E_EXPORT		"export: "
 # define E_CD			"cd: "
