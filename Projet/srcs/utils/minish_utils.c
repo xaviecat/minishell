@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minish_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 16:59:21 by syluiset          #+#    #+#             */
-/*   Updated: 2023/09/19 16:12:53 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/06/30 10:24:41 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	parsing_char(t_msh **msh, char *line)
 		return (free_end_loop(*msh), 0);
 	}
 	harmonize_spaces(&((*msh)->lst_c), &((*msh)->garbage));
+//	print_lst_char((*msh)->lst_c);
 	return (1);
 }
 
@@ -46,7 +47,7 @@ int	parsing_word(t_msh **msh)
 		free_and_exit_minish(*msh);
 	if (ret == 2)
 		return (free_end_loop(*msh), 0);
-	//print_lst_word((*msh)->lst_w);
+//	print_lst_word((*msh)->lst_w);
 	return (1);
 }
 

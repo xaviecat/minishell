@@ -36,7 +36,7 @@ int	b_pwd(t_msh *msh)
 		return (ft_fdprintf(2, MSH E_PWD INV_OPT), 2);
 	path = getcwd(NULL, 0);
 	//if (!path)
-		//path = get_pwd_from_envp(msh->envp);
+//		path = get_pwd_from_envp(msh->envp);
 	printf("%s\n", path);
 	free(path);
 	return (0);

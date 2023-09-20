@@ -224,9 +224,6 @@ cd '$PWD/sources'
 cd minishell Docs crashtest.c
 cd ~
 cd ~/
-cd *
-cd *
-cd *
 ls hola
 ./Makefile
 ./minishell

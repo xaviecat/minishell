@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:36:42 by xcharra           #+#    #+#             */
-/*   Updated: 2023/09/19 11:57:53 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/09/20 21:14:28 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,10 @@ static void	update_old_pwd(char **envp, t_garbage **gb)
 		if (ft_strncmp(envp[i], "OLDPWD=", 7) == 0)
 		{
 			temp = getcwd(NULL, 0);
+			if (!temp)
+				return ;
 			ft_free(gb, envp[i]);
-			envp[i] = ft_gbstrjoin("OLDPWD=",
-					ft_gbstrdup(temp, gb), gb);
+			envp[i] = ft_gbstrjoin("OLDPWD=", temp, gb); //! protect malloc
 			free(temp);
 		}
 		i++;
@@ -57,7 +58,7 @@ static void	update_pwd(char **envp, t_garbage **gb)
 		if (ft_strncmp(envp[i], "PWD=", 4) == 0)
 		{
 			ft_free(gb, envp[i]);
-			new_pwd = getcwd(NULL, 0);
+			new_pwd = getcwd(NULL, 0); //!
 			envp[i] = ft_gbstrjoin("PWD=", new_pwd, gb);
 			free(new_pwd);
 		}
