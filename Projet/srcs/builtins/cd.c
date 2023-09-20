@@ -6,7 +6,7 @@
 /*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:36:42 by xcharra           #+#    #+#             */
-/*   Updated: 2023/09/20 21:14:28 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/09/20 21:18:03 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	b_cd(t_msh *msh)
 	if (chdir(path) == -1)
 	{
 		ft_fdprintf(2, E_CD);
-		perror(path);
+		perror(path); //! maybe changer par NO_SFD
 		return (1);
 	}
 	else
