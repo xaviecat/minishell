@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 17:01:30 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/29 12:24:50 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/09/19 21:42:14 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incs/minishell.h"
+#include "../../incs/minishell.h"
 
 /***
  * @brief duplicate str until one char is not alnum
@@ -69,10 +69,10 @@ char	*str_cpy_to_x(char *src, char *dst, char x)
  * @param start the start index ($pos)
  * @return 1 if the $ sybol is alone \n 0 if not
  */
-int	is_dollar_alone(char *env_var, char *cmd, size_t start)
+int	is_dollar_alone(char *env_var, char *cmd, size_t start, int double_not_closed)
 {
 	if (ft_strlen(env_var) == 1 && (!cmd[start + 1]
-			&& (cmd[start + 1] != '"' || cmd[start + 1] != '\'')))
+			|| double_not_closed == 1))
 		return (1);
 	return (0);
 }

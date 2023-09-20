@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 13:43:43 by syluiset          #+#    #+#             */
-/*   Updated: 2023/09/19 13:24:14 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/09/19 16:39:58 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static bool	char_autorized(char *var)
 	return (true);
 }
 
-static int	check_var_exist_and_valid(char *var, char **tabi)
+static int	var_exist_and_valid(char *var, char **tabi)
 {
 	int	i;
 
@@ -88,12 +88,6 @@ static int	check_var_exist_and_valid(char *var, char **tabi)
 		return (ft_fdprintf(2, MSH E_UNSET INV_OPT), 2);
 	if (!char_autorized(var))
 		return (0);
-	if (!ft_isalnum(var[0]))
-	{
-		ft_fdprintf(2, MSH E_UNSET"'%s'"NT_VAL_ID, var);
-		return (0);
-	}
-	i = 0;
 	while (tabi[i])
 	{
 		if (ft_strncmp(var, tabi[i], ft_strlen(var)) == 0)
@@ -107,6 +101,7 @@ int	b_unset(t_msh *sh)
 {
 	char	**old_envp;
 	char	*name_var;
+	int		ret_exist;
 
 	if (!sh->lst_n->lst_cmd->next)
 		return (0);
@@ -114,8 +109,9 @@ int	b_unset(t_msh *sh)
 	while (sh->lst_n->lst_cmd)
 	{
 		name_var = ft_gbstrdup(sh->lst_n->lst_cmd->cmd, &(sh->garbage));
-		if (!check_var_exist_and_valid(name_var, sh->envp))
-			return (0);
+		ret_exist = var_exist_and_valid(name_var, sh->envp);
+		if (ret_exist == 0 || ret_exist == 2)
+			return (ret_exist);
 		old_envp = ft_gbtabdup(sh->envp, &(sh->garbage));
 		if (!old_envp && errno == ENOMEM)
 			return (ENOMEM);
