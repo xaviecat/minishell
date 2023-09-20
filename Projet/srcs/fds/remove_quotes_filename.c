@@ -17,7 +17,7 @@ static int	del_quote_redir(t_redir_lst **lst, t_garbage **gb)
 	char	*new_filename;
 	size_t	new_filename_len;
 
-	new_filename_len = get_newcmd_len((*lst)->filename);
+	new_filename_len = get_newcmd_len((*lst)->filename) + 1;
 	new_filename = ft_malloc(gb, sizeof(char), new_filename_len);
 	if (!new_filename)
 		return (0);
