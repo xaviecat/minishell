@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 13:17:59 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/15 15:15:01 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/09/20 10:31:27 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	concat_var(char *cmd, size_t var_name_len, t_garbage **gb, char **envp)
 			break ;
 		i++;
 	}
-	if (envp[i][var_name_len] && envp[i][var_name_len + 1])
+	if (envp[i][var_name_len])
 		var_name_len++;
 	envp[i] = ft_gbstrjoin(envp[i], cmd + var_name_len + 1, gb);
 	if (!envp[i])
@@ -51,9 +51,8 @@ int	modify_envp(char *cmd, char **envp, t_garbage **gb)
 	if (cmd[var_name_len] == '+')
 		return (concat_var(cmd, var_name_len, gb, envp));
 	i = 0;
-	while (ft_strncmp(cmd, envp[i++], var_name_len))
+	while (ft_strncmp(cmd, envp[i], var_name_len))
 		i++;
-	i--;
 	ft_free(gb, envp[i]);
 	envp[i] = ft_gbstrdup(cmd, gb);
 	if (!envp[i])
