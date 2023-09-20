@@ -74,7 +74,7 @@ char	*explore_cmdpaths(char **cmdpaths, t_garbage **gb, bool *f_ok)
 		{
 			good_path = ft_gbstrdup(cmdpaths[i], gb);
 			if (!good_path)
-				return (NULL);
+				return (NULL); //! error a gerer
 			return (good_path);
 		}
 		i++;
