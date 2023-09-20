@@ -1,12 +1,12 @@
-/* ************************************************************************** */
+	/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   error_msgs.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 13:34:42 by xcharra           #+#    #+#             */
-/*   Updated: 2023/09/19 16:05:15 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/09/20 11:43:26 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@
 # define IS_DIR			": Is a directory\n"
 # define NO_PERM		": Permission denied\n"
 # define NUM_ARG		": numeric argument required\n"
+# define INVALID_OPT	": invalid option\n"
 
 /* bash errors*/
 # define S_SM_A_BRA		"syntax error near unexpected token `<'\n"
