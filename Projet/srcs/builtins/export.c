@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:46:20 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/30 18:54:28 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/09/20 11:14:06 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ int	export_print(t_msh *msh)
 	size_t	j;
 
 	envp_cpy = ft_gbtabdup(msh->envp, &(msh->garbage));
+	if (!envp_cpy)
+		return (1);
 	ft_sort_str_arr(envp_cpy);
 	i = 0;
 	while (envp_cpy[i])
@@ -87,7 +89,7 @@ int	export_print(t_msh *msh)
 			printf("\n");
 		i++;
 	}
-	return (1);
+	return (0);
 }
 
 char *dup_without_plus(char *cmd, t_garbage **gb)
@@ -116,7 +118,7 @@ char *dup_without_plus(char *cmd, t_garbage **gb)
 	return (new_cmd);
 }
 
-int	add_new_var_to_envp(t_cmd_lst *cmd, char **save_envp, t_msh *msh)
+int	add_new_var_to_envp(t_cmd_lst *cmd, char **save_envp, t_msh *msh, int *error_code)
 {
 	size_t	i;
 
@@ -124,7 +126,7 @@ int	add_new_var_to_envp(t_cmd_lst *cmd, char **save_envp, t_msh *msh)
 	i = 0;
 	while (cmd)
 	{
-		if (!export_error_management(msh, cmd))
+		if (!export_error_management(msh, cmd, error_code))
 		{
 			cmd = cmd->next;
 			continue ;
@@ -142,8 +144,7 @@ int	add_new_var_to_envp(t_cmd_lst *cmd, char **save_envp, t_msh *msh)
 			return (0);
 		cmd = cmd->next;
 	}
-	msh->envp[i] = NULL;
-	return (1);
+	return (msh->envp[i] = NULL, 1);
 }
 
 int	b_export(t_msh *msh)
@@ -151,20 +152,22 @@ int	b_export(t_msh *msh)
 	char		**save_envp;
 	t_cmd_lst	*cmd;
 	char		**modified_envp;
+	int			error_code;
 
+	error_code = 0;
 	cmd = msh->lst_n->lst_cmd;
 	if (!cmd->next)
 		return (export_print(msh));
 	save_envp = msh->envp;
 	if (!ft_alloc_envp(msh, cmd))
-		return (0);
-	if (!add_new_var_to_envp(cmd, save_envp, msh))
-		return (0);
+		return (1);
+	if (!add_new_var_to_envp(cmd, save_envp, msh, &error_code))
+		return (1);
 	modified_envp = ft_gbtabjoin(save_envp, msh->envp, &(msh->garbage));
 	if (!modified_envp && errno == ENOMEM)
 		return (ft_free(&(msh->garbage), msh->envp), 0);
 	ft_free(&(msh->garbage), msh->envp);
 	msh->envp = ft_gbtabdup(modified_envp, &(msh->garbage));
 	ft_gbtabfree(modified_envp, &(msh->garbage));
-	return (ft_free(&(msh->garbage), save_envp), 0);
+	return (ft_free(&(msh->garbage), save_envp), error_code);
 }

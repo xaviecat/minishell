@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 16:10:58 by nfaust            #+#    #+#             */
-/*   Updated: 2023/09/20 13:48:02 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/09/20 12:42:30 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,20 @@ char	*trim_plus_sign(char *str, t_garbage **gb)
 	return (new_str[j - 1] = 0, new_str);
 }
 
+int	check_concat(char *str)
+{
+	size_t	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '+' && str[i + 1] && str[i + 1] == '=')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 static int	verif_first_arg(t_garbage **gb, t_cmd_lst *cmd)
 {
 	char	**cmd_split;
@@ -46,34 +60,34 @@ static int	verif_first_arg(t_garbage **gb, t_cmd_lst *cmd)
 	cmd_split = ft_gbsplit(cmd->cmd, '=', gb);
 	if (!cmd_split)
 		return (0);
-	cmd_split[0] = trim_plus_sign(cmd_split[0], gb);
+	if (check_concat(cmd->cmd))
+		cmd_split[0] = trim_plus_sign(cmd_split[0], gb);
 	if (!cmd_split[0])
 		return (ft_gbtabfree(cmd_split, gb), 0);
 	if (ft_isdigit(cmd_split[0][0]))
 		return (ft_gbtabfree(cmd_split, gb),
-			printf(MSH E_EXPORT"'%s'%s", cmd->cmd, NT_VAL_ID), 0);
+			ft_fdprintf(2, MSH E_EXPORT"'%s'"NT_VAL_ID, cmd->cmd), 0);
 	while (cmd_split[0][i])
 	{
 		if (!ft_isalnum(cmd_split[0][i]))
 		{
-			printf(MSH E_EXPORT"'%s'%s", cmd->cmd, NT_VAL_ID);
+			ft_fdprintf(2, MSH E_EXPORT"'%s'"NT_VAL_ID, cmd->cmd);
 			return (ft_gbtabfree(cmd_split, gb), 0);
 		}
 		i++;
 	}
-	ft_gbtabfree(cmd_split, gb);
-	return (1);
+	return (ft_gbtabfree(cmd_split, gb), 1);
 }
 
-int	export_error_management(t_msh *msh, t_cmd_lst *cmd)
+int	export_error_management(t_msh *msh, t_cmd_lst *cmd, int *error_code)
 {
-	if (ft_strncmp(cmd->cmd, "=", 2) == 0)
-		return (0);
+	if (ft_strncmp(cmd->cmd, "=", 1) == 0)
+		return (*error_code = 1,
+			ft_fdprintf(2, MSH E_EXPORT"'%s'"NT_VAL_ID, cmd->cmd), 0);
+	if (ft_strncmp(cmd->cmd, "-", 1) == 0)
+		return (*error_code = 2,
+			ft_fdprintf(2, MSH E_EXPORT"'%s'"INVALID_OPT, cmd->cmd), 0);
 	if (!verif_first_arg(&(msh->garbage), cmd))
-		return (0);
+		return (*error_code = 1, 0);
 	return (1);
 }
-
-// ab+ ne doit pas marcher
-// ab+= doit marcher
-//

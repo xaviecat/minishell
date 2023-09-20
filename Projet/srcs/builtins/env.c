@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 14:59:14 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/20 13:23:18 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/09/20 08:42:12 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,10 @@ static int	is_empty(char *line)
 	while (line[i])
 	{
 		if (line[i] == '=')
-		{
-			if (ft_strncmp(line + i, "=""", 3) == 0 || line[i + 1] == '\0')
-				return (0);
-			else
-				return (1);
-		}
+			return (0);
 		i++;
 	}
-	return (0);
+	return (1);
 }
 
 int	b_env(t_msh *msh)
@@ -38,7 +33,7 @@ int	b_env(t_msh *msh)
 	i = 0;
 	while (msh->envp[i])
 	{
-		if (is_empty(msh->envp[i]))
+		if (!is_empty(msh->envp[i]))
 			printf("%s\n", msh->envp[i]);
 		i++;
 	}
