@@ -3,15 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   fds.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 17:45:12 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/15 17:17:57 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/09/21 14:49:53 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
+/**
+ * @brief create a new node of fd_lst
+ * @param gb
+ * @return the new node
+ */
+t_fd_lst	*new_fds(t_garbage **gb)
+{
+	t_fd_lst	*fds;
 
+	fds = ft_malloc(gb, sizeof(t_fd_lst), 1);
+	if (!fds)
+		return (NULL);
+	fds->in = STDIN_FILENO;
+	fds->out = STDOUT_FILENO;
+	return (fds);
+}
+
+/**
+ * @brief get the correct fds and stock it in the struct
+ * @param fds
+ * @param redirs
+ */
 void	get_fds(t_fd_lst **fds, t_redir_lst *redirs)
 {
 	if (redirs->redir == in)
@@ -22,6 +43,12 @@ void	get_fds(t_fd_lst **fds, t_redir_lst *redirs)
 		(*fds)->out = open(redirs->filename, O_RDWR | O_CREAT | O_APPEND, 0644);
 }
 
+/**
+ * @brief create the list of all fds in the command
+ * @param redirs
+ * @param gb
+ * @return the fd list created
+ */
 t_fd_lst	*create_fds_list(t_redir_lst *redirs, t_garbage **gb)
 {
 	t_fd_lst		*fds;

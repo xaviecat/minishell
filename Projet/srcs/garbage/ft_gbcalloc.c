@@ -12,6 +12,13 @@
 
 #include "minishell.h"
 
+/**
+ * @brief alloc memory of size, count times and stock it in gb
+ * @param count
+ * @param size
+ * @param gb
+ * @return the adress of the new malloc variable
+ */
 void	*ft_gbcalloc(size_t count, size_t size, t_garbage **gb)
 {
 	void	*mem;

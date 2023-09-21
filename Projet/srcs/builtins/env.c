@@ -12,6 +12,11 @@
 
 #include "../../incs/minishell.h"
 
+/**
+ * @brief Checking if variable has content
+ * @param line
+ * @return 0 if it has content, 1 if not
+ */
 static int	is_empty(char *line)
 {
 	int	i;
@@ -26,6 +31,11 @@ static int	is_empty(char *line)
 	return (1);
 }
 
+/**
+ * @brief display variable from envp if has content
+ * @param msh
+ * @return 0 to set the exit status to 0
+ */
 int	b_env(t_msh *msh)
 {
 	int	i;

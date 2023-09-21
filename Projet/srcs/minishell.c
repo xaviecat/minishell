@@ -16,9 +16,6 @@ int g_exit_status = 0;
 
 void	free_and_exit_minish(t_msh *minish)
 {
-	//if (*envp_sh)
-		//ft_gbtabfree(*envp_sh, &(minish->garbage));
-	//envp_sh = NULL;
 	ft_free_all(&(minish->garbage));
 	free(minish->garbage);
 	free(minish);
@@ -46,7 +43,6 @@ void	minishell(char **envp)
 	char		**envp_sh;
 
 	envp_sh = NULL;
-//	print_bannier();
 	while (1)
 	{
 		signal_hub_term();
@@ -88,7 +84,6 @@ void	minishell(char **envp)
 
 int	main(int argc, char **argv, char **envp)
 {
-//	exit(0);
 	(void) argv;
 	if (argc == 1)
 		minishell(envp);
