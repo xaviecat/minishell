@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 13:59:02 by syluiset          #+#    #+#             */
-/*   Updated: 2023/09/21 14:17:34 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/09/21 15:48:31 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ int	check_var_exist(char *var, char **tabi)
 	int	i;
 
 	i = 0;
-
 	while (tabi[i])
 	{
 		if (ft_strncmp(var, tabi[i], ft_strlen(var)) == 0)

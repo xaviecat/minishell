@@ -6,12 +6,16 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 11:28:44 by syluiset          #+#    #+#             */
-/*   Updated: 2023/09/21 11:28:44 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/09/21 15:48:04 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @brief
+ * @param lst
+ */
 void	get_first_garbage(t_garbage **lst)
 {
 	while ((*lst)->first->prev)
