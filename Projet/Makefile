@@ -14,7 +14,6 @@ SRCS			:=	minishell.c\
 					exec/execution.c\
 					\
 					fds/fds.c\
-					fds/fds_utils.c\
 					fds/remove_quotes_filename.c\
 					\
 					garbage/ft_free.c\
@@ -68,6 +67,7 @@ SRCS			:=	minishell.c\
 					utils/export_error_management.c\
 					utils/minish_utils.c\
 					utils/ft_malloc_utils.c\
+					utils/unset_utils.c\
 
 SRCS_D			:=	srcs/
 

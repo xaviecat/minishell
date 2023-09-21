@@ -12,6 +12,14 @@
 
 #include "../../incs/minishell.h"
 
+/**
+ * @brief transform positiv int n in string of length len
+ * @param n
+ * @param len
+ * @param i
+ * @param gb
+ * @return the string which contain the number
+ */
 static char	*ifpos(int n, int len, int i, t_garbage **gb)
 {
 	char	*nbr;
@@ -37,6 +45,14 @@ static char	*ifpos(int n, int len, int i, t_garbage **gb)
 	return (nbr);
 }
 
+/**
+ * @brief transform negativ int n in string of length len
+ * @param n
+ * @param len
+ * @param i
+ * @param gb
+ * @return the string which contain the number
+ */
 static char	*ifneg(int n, int len, int i, t_garbage **gb)
 {
 	char	*nbr;
@@ -57,6 +73,12 @@ static char	*ifneg(int n, int len, int i, t_garbage **gb)
 	return (nbr);
 }
 
+/**
+ * @brief choose the correct method to transform the int n in a string
+ * @param n
+ * @param gb
+ * @return the number n in a string
+ */
 char	*ft_gbitoa(int n, t_garbage **gb)
 {
 	int	ntmp;

@@ -6,13 +6,18 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 15:17:00 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/12 17:12:12 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/09/21 14:59:10 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-t_type_word	is_a_bultin(char *word)
+/**
+ * @brief checking if word is equal to an builtin
+ * @param word
+ * @return builtin if it is, otherwise command
+ */
+t_type_word	is_a_builtin(char *word)
 {
 	if (ft_strncmp(word, "exit", 5) == 0)
 		return (builtin);
@@ -124,7 +129,7 @@ void	get_other_type_word(t_word_lst **lst)
 				(*lst)->type = infile;
 		}
 		if ((*lst)->type == not_define)
-			(*lst)->type = is_a_bultin((*lst)->word);
+			(*lst)->type = is_a_builtin((*lst)->word);
 		*lst = (*lst)->next;
 	}
 	*lst = first;
