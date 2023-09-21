@@ -72,7 +72,6 @@ t_word_lst	*run_heredoc(char *delimiter, t_garbage **gb)
 	delimiter_len = ft_strlen(delimiter);
 	heredoc = NULL;
 	signal_hub_heredoc();
-	//g_exit_status = 0;
 	while (g_exit_status != 130)
 	{
 		line = readline("> ");
@@ -84,9 +83,7 @@ t_word_lst	*run_heredoc(char *delimiter, t_garbage **gb)
 		free(line);
 	}
 	if (g_exit_status == 130 || g_exit_status == 131)
-	{
 		return (NULL);
-	}
 	free(line);
 	while (heredoc && heredoc->prev)
 		heredoc = heredoc->prev;

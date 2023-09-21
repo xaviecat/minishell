@@ -3,15 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   minish_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 16:59:21 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/30 10:24:41 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/09/21 16:00:32 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
+/**
+ * @brief split all caractere in node
+ * @param msh
+ * @param line
+ * @return 0 if failed, 1 if it work
+ */
 int	parsing_char(t_msh **msh, char *line)
 {
 	if (!(create_char_lst_with_c_inside(line, msh)))
@@ -27,10 +33,14 @@ int	parsing_char(t_msh **msh, char *line)
 		return (free_end_loop(*msh), 0);
 	}
 	harmonize_spaces(&((*msh)->lst_c), &((*msh)->garbage));
-//	print_lst_char((*msh)->lst_c);
 	return (1);
 }
 
+/**
+ * @brief reforme word in word node
+ * @param msh
+ * @return 0 if fail, 1 if it work
+ */
 int	parsing_word(t_msh **msh)
 {
 	int	ret;
@@ -47,10 +57,14 @@ int	parsing_word(t_msh **msh)
 		free_and_exit_minish(*msh);
 	if (ret == 2)
 		return (free_end_loop(*msh), 0);
-//	print_lst_word((*msh)->lst_w);
 	return (1);
 }
 
+/**
+ * @brief reforme command from word in node
+ * @param msh
+ * @return 0 if failed, 1 if it work
+ */
 int	parsing_cmd(t_msh **msh)
 {
 	int	ret;
@@ -66,10 +80,15 @@ int	parsing_cmd(t_msh **msh)
 		free_and_exit_minish(*msh);
 	get_access(*msh);
 	(*msh)->n_node = count_command((*msh)->lst_n);
-//	print_lst_cmd((*msh)->lst_n);
 	return (1);
 }
 
+/**
+ * @brief pars content in an new msh struct
+ * @param envp
+ * @param envp_sh
+ * @return
+ */
 t_msh	*create_minishell(char **envp, char **envp_sh)
 {
 	t_msh		*sh;
@@ -93,4 +112,24 @@ t_msh	*create_minishell(char **envp, char **envp_sh)
 	else
 		sh->envp = ft_gbtabdup(envp, &(sh->garbage));
 	return (sh);
+}
+
+int	line_empty_or_exit(char *line, char **envp_sh)
+{
+	if (!line || *line == '\0')
+	{
+		if (line)
+		{
+			free(line);
+			return (1);
+		}
+		else
+		{
+			printf("exit\n");
+			if (envp_sh)
+				ft_tabfree(envp_sh);
+			return (2);
+		}
+	}
+	return (0);
 }

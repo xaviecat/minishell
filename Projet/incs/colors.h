@@ -63,7 +63,6 @@ _/    |__|  |__| |_______||_______||_______|"
 # define LCYAN		"\001\033[96m\002"
 # define LWHITE		"\001\033[97m\002"
 
-
 # define BGBLACK	"\001\033[40m\002"
 # define BGRED		"\001\033[41m\002"
 # define BGGREEN	"\001\033[42m\002"

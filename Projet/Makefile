@@ -1,5 +1,6 @@
 #===========================VARIABLE===============================#
 SRCS			:=	minishell.c\
+					minishell_routine_and_end.c\
 					\
 					builtins/cd.c\
 					builtins/echo.c\
@@ -51,8 +52,6 @@ SRCS			:=	minishell.c\
 					parsing/remove_quotes.c\
 					parsing/unhandled_char.c\
 					\
-					print_things/print_1.c\
-					\
 					redir/redir.c\
 					redir/redir_utils.c\
 					redir/heredoc.c\
@@ -70,6 +69,8 @@ SRCS			:=	minishell.c\
 					utils/heredoc_utils.c\
 					utils/export_error_management.c\
 					utils/minish_utils.c\
+					utils/more_expand_utils.c\
+					utils/more_export_utils.c\
 					utils/ft_malloc_utils.c\
 					utils/unset_utils.c\
 
