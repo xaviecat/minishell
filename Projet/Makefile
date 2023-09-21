@@ -66,6 +66,7 @@ SRCS			:=	minishell.c\
 					utils/heredoc_utils.c\
 					utils/export_error_management.c\
 					utils/minish_utils.c\
+					utils/more_expand_utils.c\
 					utils/ft_malloc_utils.c\
 					utils/unset_utils.c\
 
@@ -104,7 +105,7 @@ CFLAGS			:=	-Wall -Wextra -Werror
 
 RDL				:=	-lreadline
 
-ASAN_F			:=	-g3 -fsanitize=address
+ASAN_F			:=	-g3 #-fsanitize=address
 
 #========================EXEC===============================#
 all				:	$(NAME)

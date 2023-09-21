@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/09/21 14:16:34 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/09/21 16:33:58 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ int				parsing_cmd(t_msh **msh);
 char			**parsing_argu(char *arg_term);
 t_msh			*parsing_command(char *cmd_line, t_msh *sh);
 int				expand_commands(t_msh *msh);
+char			*set_expanded_env_var(char *env_var, t_msh *msh,
+					int double_not_closed);
 char			*cut_whitespaces(char *str, t_garbage **gb);
 bool			process_quotes(t_char_lst *lst);
 void			harmonize_spaces(t_char_lst **lst, t_garbage **gb);
@@ -84,7 +86,8 @@ int				check_pipe_and_redir(t_garbage **gb, t_word_lst **lst);
 //char			**reforme_d_tab_cmd(t_cmd_lst **lst, char *cmd, t_garbage **gb);
 char			**create_cmdtab(t_cmd_lst *lst, t_garbage **gb);
 int				ft_del_quotes(t_msh *msh);
-int				export_error_management(t_msh *msh, t_cmd_lst *cmd, int *error_code);
+int				export_error_management(t_msh *msh, t_cmd_lst *cmd,
+					int *error_code);
 size_t			get_newcmd_len(char *cmd);
 char			*modify_cmd(char *cmd, char *new_cmd, t_garbage **gb);
 
