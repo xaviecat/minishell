@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/09/19 00:51:09 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/09/21 14:16:34 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,6 +175,12 @@ char			*ft_gbitoa(int n, t_garbage **gb);
 //int				is_quote_quote(char *str, size_t i);
 size_t			count_command(t_node_lst *lst);
 bool			ft_atoi_custom(const char *nbr, unsigned int *nb_ret);
+int				string_is_valid(t_cmd_lst *lst);
+int				check_var_exist(char *var, char **tabi);
+int				verif_char_in_var(char *var);
+int				unset_tab(char **new_tab, char **old_tab, t_garbage **gb,
+					char *var);
+int				length_char_tab(char **tabi);
 
 /* list_char function */
 t_char_lst		*char_lst_new(char c, t_garbage **gb);
@@ -189,7 +195,7 @@ void			char_lst_delone(t_char_lst **lst, t_garbage **gb);
 /* lst_word function */
 int				create_word_lst(t_msh **sh);
 void			print_lst_word(t_word_lst *lst);
-t_type_word		is_a_bultin(char *word);
+t_type_word		is_a_builtin(char *word);
 t_type_word		get_cat_of_word(char *word);
 void			word_lst_delone(t_word_lst **lst, t_garbage **gb);
 t_word_lst		*word_lst_first(t_word_lst *lst);
@@ -219,7 +225,6 @@ bool			is_semicolon_error(t_char_lst *lst);
 bool			is_backslash_error(t_char_lst *lst);
 bool			is_dollar_error(t_char_lst *lst);
 bool			is_exclamation_error(t_char_lst *lst);
-bool			is_colon_error(t_char_lst *lst);
 bool			is_parenthese_error(t_char_lst *lst);
 bool			is_star_error(t_char_lst *lst);
 bool			is_dot_error(t_char_lst *lst);

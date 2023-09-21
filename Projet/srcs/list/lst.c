@@ -32,6 +32,11 @@ t_node_lst	*lst_cmd_new(t_cmd_lst *cmds, t_fd_lst *fds,
 	return (new);
 }
 
+/**
+ * @brief find the good builtin if cmd is a builtin
+ * @param cmd
+ * @return the type of builtin of e_none if it is a non builtin command
+ */
 t_builtin	builtin_or_command(char *cmd)
 {
 	if (ft_strncmp(cmd, "exit", 5) == 0)

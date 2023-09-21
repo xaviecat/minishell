@@ -12,6 +12,10 @@
 
 #include "../../incs/minishell.h"
 
+/**
+ * @brief free the first node in the garbage collector
+ * @param lst
+ */
 void	ft_free_first(t_garbage **lst)
 {
 	t_garbage_lst	*first;
@@ -25,6 +29,10 @@ void	ft_free_first(t_garbage **lst)
 	(*lst)->first = first;
 }
 
+/**
+ * @brief free the last node of the garbage collector
+ * @param lst
+ */
 void	ft_free_last(t_garbage **lst)
 {
 	t_garbage_lst	*last;
@@ -38,6 +46,10 @@ void	ft_free_last(t_garbage **lst)
 	(*lst)->last = last;
 }
 
+/**
+ * @brief free a node in the garbage collector
+ * @param lst
+ */
 void	ft_free_other(t_garbage **lst)
 {
 	t_garbage_lst	*prev;
@@ -60,6 +72,11 @@ void	ft_free_other(t_garbage **lst)
 	get_first_garbage(lst);
 }
 
+/**
+ * @brief find and free the node pointed by content
+ * @param lst
+ * @param content
+ */
 void	ft_free(t_garbage **lst, void *content)
 {
 	if (content == (*lst)->first->content)
@@ -80,6 +97,10 @@ void	ft_free(t_garbage **lst, void *content)
 	}
 }
 
+/**
+ * @brief free all nodes in garbage collector
+ * @param lst
+ */
 void	ft_free_all(t_garbage **lst)
 {
 	t_garbage_lst	*next;

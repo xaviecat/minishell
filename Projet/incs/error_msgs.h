@@ -28,7 +28,6 @@
 # define STAR			"feature not handled '*'\n"
 # define DOT			"feature not handled: '.'\n"
 # define EXCL			"feature not handled: '!'\n"
-# define COLON			"feature not handled: ':'\n"
 
 # define E_EXPORT		"export: "
 # define E_CD			"cd: "

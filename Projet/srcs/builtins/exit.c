@@ -12,6 +12,12 @@
 
 #include "../../incs/minishell.h"
 
+/**
+ * @brief Exit the minishell and give the number (if there is one) to
+ * the exit status
+ * @param msh
+ * @return 2 or 1 if there is an error
+ */
 int	b_exit(t_msh *msh)
 {
 	unsigned int	ret;
