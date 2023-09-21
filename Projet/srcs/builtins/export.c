@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:46:20 by nfaust            #+#    #+#             */
-/*   Updated: 2023/09/21 18:56:51 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/09/21 18:58:27 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,14 +103,16 @@ int	b_export(t_msh *msh)
 		return (export_print(msh));
 	save_envp = msh->envp;
 	if (!ft_alloc_envp(msh, cmd))
-		return (1);
+		free_and_exit_minish(msh);
 	if (!add_new_var_to_envp(cmd, save_envp, msh, &error_code))
-		return (1);
+		free_and_exit_minish(msh);
 	modified_envp = ft_gbtabjoin(save_envp, msh->envp, &(msh->garbage));
 	if (!modified_envp && errno == ENOMEM)
-		return (ft_free(&(msh->garbage), msh->envp), 0);
+		free_and_exit_minish(msh);
 	ft_free(&(msh->garbage), msh->envp);
 	msh->envp = ft_gbtabdup(modified_envp, &(msh->garbage));
+	if (!msh->envp)
+		free_and_exit_minish(msh);
 	ft_gbtabfree(modified_envp, &(msh->garbage));
 	return (ft_free(&(msh->garbage), save_envp), error_code);
 }

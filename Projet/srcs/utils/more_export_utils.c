@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 18:51:51 by nfaust            #+#    #+#             */
-/*   Updated: 2023/09/21 18:54:56 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/09/21 19:08:34 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	export_print(t_msh *msh)
 
 	envp_cpy = ft_gbtabdup(msh->envp, &(msh->garbage));
 	if (!envp_cpy)
-		return (1);
+		free_and_exit_minish(msh);
 	ft_sort_str_arr(envp_cpy);
 	i = 0;
 	while (envp_cpy[i])
