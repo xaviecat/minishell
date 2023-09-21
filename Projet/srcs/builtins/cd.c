@@ -82,21 +82,16 @@ int	b_cd(t_msh *msh)
 	char	*path;
 
 	path = get_path_from_env(msh);
-//	printf("%d", g_exit_status);
 	if (path == NULL)
 	{
 		path = msh->lst_n->lst_cmd->next->cmd;
 		if (msh->lst_n->lst_cmd->next->next)
 			return (ft_fdprintf(2, MSH E_CD TOO_MN_ARGS), 1);
-
-		//printf("%d", g_exit_status);
 		if (ft_strncmp(msh->lst_n->lst_cmd->next->cmd, "---", 4) == 0)
 			return (ft_fdprintf(2, MSH E_CD INV_OPT), 2);
 	}
-	//printf("%d", g_exit_status);
 	if (ft_strncmp(path, ".", 2) == 0)
 		update_old_pwd(msh->envp, &(msh->garbage));
-	//printf("%d", g_exit_status);
 	if (chdir(path) == -1)
 	{
 		ft_fdprintf(2, E_CD);
@@ -105,6 +100,5 @@ int	b_cd(t_msh *msh)
 	}
 	else
 		update_pwd(msh->envp, &(msh->garbage));
-	//printf("%d", g_exit_status);
 	return (0);
 }

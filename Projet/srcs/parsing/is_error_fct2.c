@@ -19,13 +19,6 @@ bool	is_exclamation_error(t_char_lst *lst)
 	return (false);
 }
 
-bool	is_colon_error(t_char_lst *lst)
-{
-	if (lst->c == ':' && !lst->s_quote && !lst->d_quote)
-		return (ft_fdprintf(2, MSH COLON), true);
-	return (false);
-}
-
 bool	is_star_error(t_char_lst *lst)
 {
 	if (lst->c == '*' && !lst->s_quote && !lst->d_quote)
