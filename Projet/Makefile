@@ -1,5 +1,6 @@
 #===========================VARIABLE===============================#
 SRCS			:=	minishell.c\
+					minishell_routine_and_end.c\
 					\
 					builtins/cd.c\
 					builtins/echo.c\
@@ -44,8 +45,6 @@ SRCS			:=	minishell.c\
 					parsing/redir_is_valid.c\
 					parsing/remove_quotes.c\
 					parsing/unhandled_char.c\
-					\
-					print_things/print_1.c\
 					\
 					redir/redir.c\
 					redir/redir_utils.c\
@@ -103,7 +102,7 @@ CFLAGS			:=	-Wall -Wextra -Werror
 
 RDL				:=	-lreadline
 
-ASAN_F			:=	-g3 -fsanitize=address
+ASAN_F			:=	-g3 #-fsanitize=address
 
 #========================EXEC===============================#
 all				:	$(NAME)

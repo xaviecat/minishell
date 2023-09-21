@@ -13,7 +13,8 @@
 #include "../incs/minishell.h"
 
 /**
- * @brief check if a char is a whitespace (space, \\t, \\n, \\v, \\f, \\r)
+ * @brief check if a char is a whitespace
+ * (space, \\t, \\n, \\v, \\f, \\r)
  * @param c the char to check
  * @return 1 if the char is a whitespace, \n 0 if not
  */
@@ -88,4 +89,3 @@ int	does_contain_quotes(char *str)
 	}
 	return (0);
 }
-

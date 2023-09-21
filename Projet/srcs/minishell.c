@@ -6,77 +6,38 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/09/19 16:11:44 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/09/21 16:42:48 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-int g_exit_status = 0;
-
-void	free_and_exit_minish(t_msh *minish)
-{
-	ft_free_all(&(minish->garbage));
-	free(minish->garbage);
-	free(minish);
-	rl_clear_history();
-	exit(EXIT_FAILURE);
-}
-
-void	free_end_loop(t_msh *msh)
-{
-	ft_free_all(&msh->garbage);
-	free(msh->garbage);
-	free(msh);
-}
-
-char	**cp_envp_to_envp_sh(char **envp_sh, char **envp_in_minish)
-{
-	envp_sh = ft_tabdup(envp_in_minish);
-	return (envp_sh);
-}
+int	g_exit_status = 0;
 
 void	minishell(char **envp)
 {
 	char		*line;
 	t_msh		*msh;
 	char		**envp_sh;
+	int			ret_line;
 
 	envp_sh = NULL;
 	while (1)
 	{
 		signal_hub_term();
 		line = readline(GREEN UNDERLINE"TRI_SH $>"RESET" ");
-		if (!line || *line == '\0')
-		{
-			if (line)
-			{
-				free(line);
-				continue ;
-			}
-			else
-			{
-				printf("exit\n");
-				if (envp_sh)
-					ft_tabfree(envp_sh);
-				break ;
-			}
-		}
+		ret_line = line_empty_or_exit(line, envp_sh);
+		if (ret_line == 1)
+			continue ;
+		if (ret_line == 2)
+			break ;
 		if (line && *line)
 			add_history(line);
 		msh = create_minishell(envp, envp_sh);
 		if (!msh)
 			return (free(line));
-		if (!parsing_char(&msh, line))
+		if (routine_minishell(msh, line, envp_sh))
 			continue ;
-		if (!parsing_word(&msh))
-			continue ;
-		if (!parsing_cmd(&msh))
-			continue ;
-		ft_tabfree(envp_sh);
-		if (!get_cmdtab(msh))
-			free_and_exit_minish(msh);
-		execution(msh);
 		envp_sh = cp_envp_to_envp_sh(envp_sh, msh->envp);
 		free_end_loop(msh);
 	}
