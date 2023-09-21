@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:08:17 by nfaust            #+#    #+#             */
-/*   Updated: 2023/09/19 21:54:45 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/09/21 15:27:02 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,10 +128,8 @@ char	*expand_vars(char *command, t_msh *msh)
 				return (NULL);
 		}
 		if (command[i] && command[i++] == '\'' && double_not_closed < 0)
-			while (command[i] && command[i] != '\'')
+			while (command[i] && (command[i] != '\'' || !i++))
 				i++;
-		if (command[i] && command[i] == '\'')
-			i++;
 	}
 	return (command);
 }
@@ -195,12 +193,6 @@ int	expand_commands(t_msh *msh)
 			w_lst_cpy->word = expand_vars(w_lst_cpy->word, msh);
 		if (!w_lst_cpy->word)
 			return (0); // ? code d'erreur a ajouter
-		//if (w_lst_cpy->in_d_quote == false && w_lst_cpy->in_s_quote == false)
-		//{
-		//	if (w_lst_cpy->word[0] != '\0'
-			//	&& !cut_space_expand(&w_lst_cpy, &(msh->garbage)))
-				//return (0);
-		//}
 		w_lst_cpy = w_lst_cpy->next;
 	}
 	return (1);
