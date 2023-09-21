@@ -6,93 +6,35 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:46:20 by nfaust            #+#    #+#             */
-/*   Updated: 2023/09/20 11:14:06 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/09/21 18:56:51 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-size_t	get_arg_count(t_cmd_lst *curr, char **envp)
+int	not_in_env(char *cmd, char **envp)
 {
-	size_t	size;
+	size_t	i;
+	size_t	var_name_len;
 
-	size = 0;
-	curr = curr->next;
-	while (curr)
+	if (is_concat(cmd))
+		return (cmp_concat(envp, cmd));
+	var_name_len = get_var_name_len(cmd);
+	i = 0;
+	while (envp[i])
 	{
-		if (not_in_env(curr->cmd, envp))
-			size += 1;
-		curr = curr->next;
+		if (ft_strlen(envp[i]) == var_name_len)
+		{
+			if (!ft_strncmp(cmd, envp[i++], var_name_len))
+				return (0);
+		}
+		else if (!ft_strncmp(cmd, envp[i++], var_name_len + 1))
+			return (0);
 	}
-	return (size);
-}
-
-int	ft_alloc_envp(t_msh *msh, t_cmd_lst *curr)
-{
-	msh->envp = ft_malloc(&(msh->garbage), sizeof(char *),
-			get_arg_count(curr, msh->envp) + 1);
-	if (!(msh->envp))
-		return (0);
 	return (1);
 }
 
-int	contain_dquote(char *str)
-{
-	size_t	i;
-
-	i = 0;
-	while (str[i])
-		if (str[i++] == '"')
-			return (1);
-	return (0);
-}
-
-void	print_with_backslash(char *str)
-{
-	size_t	i;
-
-	i = 0;
-	printf("=\"");
-	while (str[i])
-	{
-		if (str[i] == '"')
-			printf("\\%c", str[i]);
-		else
-			printf("%c", str[i]);
-		i++;
-	}
-	printf("\"\n");
-}
-
-int	export_print(t_msh *msh)
-{
-	char	**envp_cpy;
-	size_t	i;
-	size_t	j;
-
-	envp_cpy = ft_gbtabdup(msh->envp, &(msh->garbage));
-	if (!envp_cpy)
-		return (1);
-	ft_sort_str_arr(envp_cpy);
-	i = 0;
-	while (envp_cpy[i])
-	{
-		printf("declare -x ");
-		j = 0;
-		while (envp_cpy[i][j] && envp_cpy[i][j] != '=')
-			printf("%c", envp_cpy[i][j++]);
-		if (envp_cpy[i][j] && contain_dquote(envp_cpy[i] + j))
-			print_with_backslash(envp_cpy[i] + j + 1);
-		else if (envp_cpy[i][j++])
-			printf("=\"%s\"\n", envp_cpy[i] + j);
-		else
-			printf("\n");
-		i++;
-	}
-	return (0);
-}
-
-char *dup_without_plus(char *cmd, t_garbage **gb)
+char	*dup_without_plus(char *cmd, t_garbage **gb)
 {
 	size_t	i;
 	size_t	j;
@@ -118,7 +60,8 @@ char *dup_without_plus(char *cmd, t_garbage **gb)
 	return (new_cmd);
 }
 
-int	add_new_var_to_envp(t_cmd_lst *cmd, char **save_envp, t_msh *msh, int *error_code)
+int	add_new_var_to_envp(t_cmd_lst *cmd, char **save_envp,
+				t_msh *msh, int *error_code)
 {
 	size_t	i;
 
