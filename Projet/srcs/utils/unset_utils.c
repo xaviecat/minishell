@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 13:59:02 by syluiset          #+#    #+#             */
-/*   Updated: 2023/09/21 15:48:31 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/09/21 15:52:30 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  * @param tabi
  * @return length of the tabi
  */
-int	length_char_tab(char **tabi)
+int	length_c_tab(char **tabi)
 {
 	int	i;
 
