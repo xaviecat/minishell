@@ -12,7 +12,7 @@
 
 #include "../../incs/minishell.h"
 
-static size_t	get_var_name_len(char *arg)
+size_t	get_var_name_len(char *arg)
 {
 	size_t	i;
 
@@ -91,28 +91,6 @@ int	cmp_concat(char **envp, char *cmd)
 			if (!envp[i][var_len] || envp[i][var_len] == '=')
 				return (0);
 		i++;
-	}
-	return (1);
-}
-
-int	not_in_env(char *cmd, char **envp)
-{
-	size_t	i;
-	size_t	var_name_len;
-
-	if (is_concat(cmd))
-		return (cmp_concat(envp, cmd));
-	var_name_len = get_var_name_len(cmd);
-	i = 0;
-	while (envp[i])
-	{
-		if (ft_strlen(envp[i]) == var_name_len)
-		{
-			if (!ft_strncmp(cmd, envp[i++], var_name_len))
-				return (0);
-		}
-		else if (!ft_strncmp(cmd, envp[i++], var_name_len + 1))
-			return (0);
 	}
 	return (1);
 }

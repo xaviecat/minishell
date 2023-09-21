@@ -6,70 +6,11 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:08:17 by nfaust            #+#    #+#             */
-/*   Updated: 2023/09/21 15:27:02 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/09/21 16:49:48 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
-
-/**
- * @brief collect the content of the environnement variable
- * @param envp
- * @param var the environnement variable
- * @return the content of the environnement variable, \n\n
- * an allocated string containing "" if the variable is not set
- */
-static char	*expand_env_var(t_garbage **gb, char **envp, char *var)
-{
-	size_t	i;
-	size_t	var_len;
-	char	*var_expansion;
-
-	if (!envp || !var)
-		return (NULL);
-	var_len = ft_strlen(var);
-	if (var_len == 0)
-		return (NULL);
-	if (!ft_strncmp("$?", var, 3))
-		return (ft_gbitoa(g_exit_status, gb));
-	var_expansion = ft_gbstrjoin(var + 1, "=", gb);
-	if (!var_expansion)
-		return (NULL);
-	i = 0;
-	while (envp[i])
-	{
-		if (ft_strncmp(envp[i++], var_expansion, var_len) == 0)
-		{
-			ft_free(gb, var_expansion);
-			var_expansion = ft_gbstrdup(envp[i - 1] + var_len, gb);
-			if (!var_expansion)
-				return (NULL);
-			return (var_expansion);
-		}
-	}
-	return (ft_free(gb, var_expansion), ft_gbstrdup("", gb));
-}
-
-/**
- * @brief collect the content of the environnement
- * variable and cut spaces in it if needed
- * @param env_var the environnement variable
- * @param double_not_closed 1 if a double quote is opened, \n 0 if not
- * @param envp
- * @return the content of the environnement variable
- */
-static char	*set_expanded_env_var(char *env_var, t_msh *msh,
-								int double_not_closed)
-{
-	char	*expanded_env_var;
-
-	expanded_env_var = expand_env_var(&(msh->garbage), msh->envp, env_var);
-	if (double_not_closed < 0)
-		expanded_env_var = cut_whitespaces(expanded_env_var, &((*msh).garbage));
-	if (!expanded_env_var)
-		return (ft_free(&(msh->garbage), env_var), NULL);
-	return (expanded_env_var);
-}
 
 /**
  * @brief modify a lst_cmd from start to whitespace by replacing
@@ -150,31 +91,6 @@ void	word_lst_add_in(t_word_lst **lst, t_word_lst *new)
 		new_next->prev = new;
 }
 
-int	cut_space_expand(t_word_lst **lst ,t_garbage **gb)
-{
-	char		**splt;
-	int			i;
-	t_word_lst	*new;
-
-	splt = NULL;
-	splt = ft_gbsplit((*lst)->word, ' ', gb);
-	if (!splt && errno == ENOMEM)
-		return (0);
-	ft_free(gb, (*lst)->word);
-	(*lst)->word = ft_gbstrdup(splt[0], gb);
-	i = 1;
-	while (splt[i])
-	{
-		new = word_lst_new(splt[i], gb);
-		if (!new && errno == ENOMEM)
-			return (0);
-		word_lst_add_in(lst, new);
-		i++;
-	}
-	return (1);
-}
-
-
 /**
  * @brief expand parts of commands that needs to be expanded
  * @param w_lst command word list
@@ -192,7 +108,7 @@ int	expand_commands(t_msh *msh)
 		if (w_lst_cpy->type != delimiteur)
 			w_lst_cpy->word = expand_vars(w_lst_cpy->word, msh);
 		if (!w_lst_cpy->word)
-			return (0); // ? code d'erreur a ajouter
+			free_and_exit_minish(msh);
 		w_lst_cpy = w_lst_cpy->next;
 	}
 	return (1);

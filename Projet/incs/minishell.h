@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/09/21 16:53:26 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/09/21 18:56:36 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
 
 # include "colors.h"
 # include "error_msgs.h"
@@ -77,6 +79,8 @@ int				parsing_cmd(t_msh **msh);
 char			**parsing_argu(char *arg_term);
 t_msh			*parsing_command(char *cmd_line, t_msh *sh);
 int				expand_commands(t_msh *msh);
+char			*set_expanded_env_var(char *env_var, t_msh *msh,
+					int double_not_closed);
 char			*cut_whitespaces(char *str, t_garbage **gb);
 bool			process_quotes(t_char_lst *lst);
 void			harmonize_spaces(t_char_lst **lst, t_garbage **gb);
@@ -87,6 +91,10 @@ char			**create_cmdtab(t_cmd_lst *lst, t_garbage **gb, t_msh *msh);
 int				ft_del_quotes(t_msh *msh);
 int				export_error_management(t_msh *msh, t_cmd_lst *cmd,
 					int *error_code);
+int				export_print(t_msh *msh);
+int				cmp_concat(char **envp, char *cmd);
+size_t			get_var_name_len(char *arg);
+int				ft_alloc_envp(t_msh *msh, t_cmd_lst *curr);
 size_t			get_newcmd_len(char *cmd);
 char			*modify_cmd(char *cmd, char *new_cmd, t_garbage **gb);
 /* redir */
