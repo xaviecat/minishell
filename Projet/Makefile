@@ -9,8 +9,14 @@ SRCS			:=	minishell.c\
 					builtins/pwd.c\
 					builtins/unset.c\
 					\
-					exec/check_access.c\
 					exec/execution.c\
+					exec/fds_redirection.c\
+					exec/fork_management.c\
+					exec/get_access.c\
+					exec/get_access_utils.c\
+					exec/get_cmdtab.c\
+					exec/mem_fds_management.c\
+					exec/process_management.c\
 					\
 					fds/fds.c\
 					fds/remove_quotes_filename.c\
@@ -55,7 +61,6 @@ SRCS			:=	minishell.c\
 					signal/signal2.c\
 					\
 					utils/count_command.c\
-					utils/create_cmdtab.c\
 					utils/expand_utils.c\
 					utils/export_utils.c\
 					utils/ft_atoi_custom.c\
@@ -103,7 +108,7 @@ CFLAGS			:=	-Wall -Wextra -Werror
 
 RDL				:=	-lreadline
 
-ASAN_F			:=	-g3 -fsanitize=address
+ASAN_F			:=	-g3 #-fsanitize=address
 
 #========================EXEC===============================#
 all				:	$(NAME)
