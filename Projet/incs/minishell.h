@@ -69,6 +69,9 @@ void			free_and_exit_minish(t_msh *minish);
 void			free_end_loop(t_msh *msh);
 void			print_bannier(void);
 t_msh			*create_minishell(char **envp, char **envp_sh);
+int				line_empty_or_exit(char *line, char **envp_sh);
+char			**cp_envp_to_envp_sh(char **envp_sh, char **envp_in_minish);
+int				routine_minishell(t_msh *msh, char *line, char **envp_sh);
 /* parsing */
 int				parsing_char(t_msh **msh, char *line);
 int				parsing_word(t_msh **msh);
@@ -84,14 +87,12 @@ void			harmonize_spaces(t_char_lst **lst, t_garbage **gb);
 int				redir_is_valid(t_word_lst **lst, t_garbage **gb);
 int				check_pipe_and_redir(t_garbage **gb, t_word_lst **lst);
 //char			**reforme_d_tab_cmd(t_cmd_lst **lst, char *cmd, t_garbage **gb);
-char			**create_cmdtab(t_cmd_lst *lst, t_garbage **gb);
+char			**create_cmdtab(t_cmd_lst *lst, t_garbage **gb, t_msh *msh);
 int				ft_del_quotes(t_msh *msh);
 int				export_error_management(t_msh *msh, t_cmd_lst *cmd,
 					int *error_code);
 size_t			get_newcmd_len(char *cmd);
 char			*modify_cmd(char *cmd, char *new_cmd, t_garbage **gb);
-
-
 /* redir */
 t_redir_lst		*get_redir(t_word_lst **lst, t_garbage **gb);
 void			print_redir(t_redir_lst *lst);
@@ -99,7 +100,6 @@ void			free_error_redir(t_garbage **gb, t_redir_lst **lst);
 void			redir_add_back(t_redir_lst **lst, t_redir_lst *new);
 t_redir_lst		*redir_last(t_redir_lst *lst);
 t_redir_lst		*new_redir(t_type_redir type_red, t_garbage **gb);
-
 /* fds */
 t_fd_lst		*create_fds_list(t_redir_lst *redirs, t_garbage **gb);
 void			print_fd(t_fd_lst *lst);
@@ -107,27 +107,22 @@ void			free_error_fds(t_garbage **gb, t_fd_lst **lst);
 t_fd_lst		*new_fds(t_garbage **gb);
 void			fds_add_back(t_fd_lst **lst, t_fd_lst *new);
 int				del_quote_filename(t_redir_lst **lst, t_garbage **gb);
-
 /* error */
 bool			is_forbidden_char(t_char_lst *lst);
 bool			unhandled_char(t_char_lst *lst);
 bool			is_bad_redir(t_char_lst *lst);
 void			free_error_word_lst(t_garbage **gb, t_word_lst **lst);
-
 /* builtins */
 int				b_pwd(t_msh *msh);
 int				b_cd(t_msh *msh);
 int				b_echo(t_msh *msh);
-int 			b_exit(t_msh *msh);
+int				b_exit(t_msh *msh);
 int				b_export(t_msh *msh);
 int				b_env(t_msh *msh);
 int				b_unset(t_msh *sh);
-int				find_builtin(t_msh *sh);
-
 /* exec */
 int				get_cmdtab(t_msh *msh);
 void			get_access(t_msh *msh);
-
 /* signal */
 void			signal_handler(int signum);
 void			signal_term(int signum);
@@ -140,7 +135,6 @@ void			signal_hub_ign(void);
 void			signal_sigquit(int signum);
 void			signal_sigint(int signum);
 void			signal_hub_default(void);
-
 /* utils */
 char			*ft_cut_var(char *str, t_garbage **gb);
 int				ft_isspace(char c);
@@ -166,7 +160,6 @@ char			**ft_gbtabdup(char **dbtab, t_garbage **gb);
 void			ft_tabfree(char **tbl);
 void			ft_gbtabfree(char **tbl, t_garbage **gb);
 char			**ft_gbtabjoin(char **tab1, char **tab2, t_garbage **gb);
-//void			ft_gbfree_tab(char **tab_to_free, t_garbage **gb); //! supprimer remplacer par ft_gbtabfree
 int				not_in_env(char *cmd, char **envp);
 int				modify_envp(char *cmd, char **envp, t_garbage **gb);
 void			ft_sort_str_arr(char **str_arr);
@@ -175,7 +168,6 @@ char			*ft_gbsubstr(char const *s,
 					unsigned int start, size_t len, t_garbage **gb);
 int				is_concat(char *cmd);
 char			*ft_gbitoa(int n, t_garbage **gb);
-//int				is_quote_quote(char *str, size_t i);
 size_t			count_command(t_node_lst *lst);
 bool			ft_atoi_custom(const char *nbr, unsigned int *nb_ret);
 int				string_is_valid(t_cmd_lst *lst);
@@ -183,8 +175,7 @@ int				check_var_exist(char *var, char **tabi);
 int				verif_char_in_var(char *var);
 int				unset_tab(char **new_tab, char **old_tab, t_garbage **gb,
 					char *var);
-int				length_char_tab(char **tabi);
-
+int				length_c_tab(char **tabi);
 /* list_char function */
 t_char_lst		*char_lst_new(char c, t_garbage **gb);
 t_char_lst		*char_lst_last(t_char_lst *lst);
@@ -194,7 +185,6 @@ int				create_char_lst_with_c_inside(char *cmd_line, t_msh **sh);
 void			give_type_in_lst(t_char_lst **lst);
 void			print_lst_char(t_char_lst *lst);
 void			char_lst_delone(t_char_lst **lst, t_garbage **gb);
-
 /* lst_word function */
 int				create_word_lst(t_msh **sh);
 void			print_lst_word(t_word_lst *lst);
@@ -206,7 +196,6 @@ void			get_other_type_word(t_word_lst **lst);
 t_word_lst		*word_lst_new(char *word, t_garbage **gb);
 t_word_lst		*word_lst_add_back(t_word_lst *wlst, t_garbage **gb,
 					char *word);
-
 /* list command maybe not useful */
 t_node_lst		*lst_cmd_new(t_cmd_lst *cmds,
 					t_fd_lst *fds, t_redir_lst *redir, t_garbage **gb);
@@ -216,12 +205,9 @@ void			lst_clear(t_node_lst **lst);
 t_node_lst		*create_lst_cmd(t_word_lst **old_lst,
 					t_fd_lst *fds, t_redir_lst *redirs);
 int				sh_pars(t_msh **msh);
-
 t_builtin		builtin_or_command(char *cmd);
-
 /* lst_w_cmd function */
 t_cmd_lst		*get_cmd(t_word_lst **old_lst, t_garbage **gb);
-
 bool			is_amp_error(t_char_lst *lst);
 bool			is_pipe_error(t_char_lst *lst);
 bool			is_semicolon_error(t_char_lst *lst);
@@ -231,20 +217,14 @@ bool			is_exclamation_error(t_char_lst *lst);
 bool			is_parenthese_error(t_char_lst *lst);
 bool			is_star_error(t_char_lst *lst);
 bool			is_dot_error(t_char_lst *lst);
-
 /* heredoc */
 int				heredoc_handling(t_msh *msh);
 t_word_lst		*display_heredoc(t_word_lst *heredoc,
 					t_msh *msh, t_redir_lst *redirs);
 int				expand_heredoc(t_word_lst *heredoc, t_msh *msh);
-
-
 /* A RANGER LOL */
 char			*expand_vars(char *command, t_msh *msh);
 int				does_contain_quotes(char *str);
-void	print_tab(char **tabi);
-
 /* excution */
 void			execution(t_msh *msh);
-
 #endif

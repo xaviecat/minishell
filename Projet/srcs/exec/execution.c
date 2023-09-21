@@ -6,12 +6,18 @@
 /*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 19:25:52 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/30 10:26:09 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/09/21 15:31:38 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
+/**
+ * @brief
+ * @param
+ * @return
+ * @return
+ */
 int	get_cmdtab(t_msh *msh)
 {
 	t_node_lst	*first;
@@ -21,13 +27,19 @@ int	get_cmdtab(t_msh *msh)
 	{
 		if (msh->lst_n->lst_cmd)
 			msh->lst_n->cmdtab = create_cmdtab(msh->lst_n->lst_cmd,
-					&(msh->garbage));
+					&(msh->garbage), msh);
 		msh->lst_n = msh->lst_n->next;
 	}
 	msh->lst_n = first;
 	return (1);
 }
 
+
+/**
+ * @brief Init the each boxes of pipe_fd tab at -1 to facilitate error
+ * management and closing of fds
+ * @param pipe_fd[3][2] int tab with 3 pipe fds
+ */
 void	init_pipe_fd(int pipe_fd[3][2])
 {
 	pipe_fd[PREV][0] = -1;
@@ -38,6 +50,10 @@ void	init_pipe_fd(int pipe_fd[3][2])
 	pipe_fd[HD][1] = -1;
 }
 
+/**
+ * @brief Close each end of a pipe if there are > 0
+ * @param pipe[2] a pipe
+ */
 void	close_pipe(int pipe[2])
 {
 	if (!pipe)
@@ -49,6 +65,12 @@ void	close_pipe(int pipe[2])
 
 }
 
+/**
+ * @brief Close all open fds which come from pipe or file opening
+ * @param pipe_fd[3][2] ] int tab with 3 pipe fds
+ * @param msh global struct that contain all of command and other stuff
+ * necessary to the execution
+ */
 void	close_all(int pipe_fd[3][2], t_msh *msh)
 {
 	t_node_lst	*current;
@@ -76,6 +98,16 @@ void	close_all(int pipe_fd[3][2], t_msh *msh)
 	msh->lst_n = current;
 }
 
+/**
+ * @brief Close all fds and free all the malloc'd memory, and may display an
+ * error message and can exit the minishell
+ * @param msh global struct that contain all of command and other stuff
+ * necessary to the execution
+ * @param pipe_fd[3][2] int tab with 3 pipe fds
+ * @param mode if there are mode > 0 this function exit minishell and set an
+ * exit  code
+ * @param why if why is non null then perror display the adequate error
+ */
 void	clear_mem_fds(t_msh *msh, int pipe_fd[3][2], int mode, char *why)
 {
 	close_all(pipe_fd, msh);
@@ -89,6 +121,12 @@ void	clear_mem_fds(t_msh *msh, int pipe_fd[3][2], int mode, char *why)
 		exit(mode);
 }
 
+/**
+ * @brief
+ * @param
+ * @return
+ * @return
+ */
 void	handle_heredoc(t_msh *msh, int pipe_fd[3][2])
 {
 	pid_t		hdpid;
@@ -118,6 +156,12 @@ void	handle_heredoc(t_msh *msh, int pipe_fd[3][2])
 	}
 }
 
+/**
+ * @brief redirects all fds that go to a node thanks to dup2
+ * @param msh global struct that contain all of command and other stuff
+ * necessary to the execution
+ * @param pipe_fd[3][2] int tab with 3 pipe fds
+ */
 void	redirect_fds_in(t_msh *msh, int pipe_fd[3][2])
 {
 	if (msh->lst_n->heredoc)
@@ -138,6 +182,12 @@ void	redirect_fds_in(t_msh *msh, int pipe_fd[3][2])
 	}
 }
 
+/**
+ * @brief redirects all fds that leave a node, thanks to dup2
+ * @param msh global struct that contain all of command and other stuff
+ * necessary to the execution
+ * @param pipe_fd[3][2] int tab with 3 pipe fds
+ */
 void	redirect_fds_out(t_msh *msh, int pipe_fd[3][2])
 {
 	if (msh->lst_n->fds && msh->lst_n->fds->out < 0)
@@ -157,6 +207,12 @@ void	redirect_fds_out(t_msh *msh, int pipe_fd[3][2])
 	}
 }
 
+/**
+ * @brief execute the correct builtin in a function pointer array, and set the
+ * right exit code
+ * @param msh global struct that contain all of command and other stuff
+ * necessary to the execution
+ */
 void	builtin_execution(t_msh *msh)
 {
 	static t_builtin_tab	builtin_tab[8] = {&b_echo, &b_env, &b_pwd, &b_cd,
@@ -165,6 +221,14 @@ void	builtin_execution(t_msh *msh)
 	g_exit_status = builtin_tab[msh->lst_n->builtin](msh);
 }
 
+/**
+ * @brief In child process : call redirection functions and execute command by
+ * execve or by builtins execution, in case of execve return the memory and the
+ * fds are free and closed
+ * @param msh global struct that contain all of command and other stuff
+ * necessary to the execution
+ * @param pipe_fd[3][2] int tab with 3 pipe fds
+ */
 void	child(t_msh *msh, int pipe_fd[3][2])
 {
 //	dprintf(2, GREEN"child = [%d]\n"RESET, getpid());
@@ -178,23 +242,26 @@ void	child(t_msh *msh, int pipe_fd[3][2])
 	clear_mem_fds(msh, pipe_fd, g_exit_status, NULL);
 }
 
+/**
+ * @brief In parent process : close the previous pipe if there one, if there is
+ * a next node moves the fds from the current pipe to the previous pipe and if
+ * there are not next node close the current pipe. If the actual node have fds
+ * they are closed.
+ * @param msh global struct that contain all of command and other stuff
+ * necessary to the execution
+ * @param pipe_fd[3][2] int tab with 3 pipe fds
+ */
 void	parent(t_msh *msh, int pipe_fd[3][2])
 {
 	if (pipe_fd[PREV][0] != -1)
-	{
-		close(pipe_fd[PREV][0]);
-		close(pipe_fd[PREV][1]);
-	}
+		close_pipe(pipe_fd[PREV]);
 	if (msh->lst_n->next)
 	{
 		pipe_fd[PREV][0] = pipe_fd[CURR][0];
 		pipe_fd[PREV][1] = pipe_fd[CURR][1];
 	}
 	else
-	{
-		close(pipe_fd[CURR][0]);
-		close(pipe_fd[CURR][1]);
-	}
+		close_pipe(pipe_fd[CURR]);
 	if (msh->lst_n->fds)
 	{
 		if (msh->lst_n->fds->in > 0)
@@ -204,6 +271,12 @@ void	parent(t_msh *msh, int pipe_fd[3][2])
 	}
 }
 
+/**
+ * @brief wait for the fork, and get their status_pid
+ * @param msh global struct that contain all of command and other stuff
+ * necessary to the execution
+ * @param status_pid
+ */
 void	wait_fork(t_msh *msh, int status_pid)
 {
 	t_node_lst	*first;
@@ -224,6 +297,12 @@ void	wait_fork(t_msh *msh, int status_pid)
 	msh->lst_n = first;
 }
 
+/**
+ * @brief
+ * @param
+ * @return
+ * @return
+ */
 void	forking(t_msh *msh)
 {
 	t_node_lst	*first;
@@ -253,6 +332,12 @@ void	forking(t_msh *msh)
 	wait_fork(msh, status_pid);
 }
 
+/**
+ * @brief
+ * @param
+ * @return
+ * @return
+ */
 void	execution(t_msh *msh)
 {
 //	dprintf(2, GREEN"parents = [%d]\n"RESET, getpid());
@@ -263,9 +348,3 @@ void	execution(t_msh *msh)
 	else if (msh->n_node == 1 && msh->lst_n->builtin >= e_cd)
 		builtin_execution(msh);
 }
-
-/*
- *
- * <<eof cat | cat -e > out | cat <out1 < out2 < out
- *
- * */

@@ -1,5 +1,6 @@
 #===========================VARIABLE===============================#
 SRCS			:=	minishell.c\
+					minishell_routine_and_end.c\
 					\
 					builtins/cd.c\
 					builtins/echo.c\
@@ -9,7 +10,6 @@ SRCS			:=	minishell.c\
 					builtins/pwd.c\
 					builtins/unset.c\
 					\
-					exec/builtin.c\
 					exec/check_access.c\
 					exec/execution.c\
 					\
@@ -46,8 +46,6 @@ SRCS			:=	minishell.c\
 					parsing/remove_quotes.c\
 					parsing/unhandled_char.c\
 					\
-					print_things/print_1.c\
-					\
 					redir/redir.c\
 					redir/redir_utils.c\
 					redir/heredoc.c\
@@ -56,12 +54,12 @@ SRCS			:=	minishell.c\
 					signal/signal2.c\
 					\
 					utils/count_command.c\
+					utils/create_cmdtab.c\
 					utils/expand_utils.c\
 					utils/export_utils.c\
 					utils/ft_atoi_custom.c\
 					utils/ft_sort_str_arr.c\
 					utils/ft_tabfree.c\
-					utils/reforme_d_tab_cmd.c\
 					utils/utils.c\
 					utils/heredoc_utils.c\
 					utils/export_error_management.c\
