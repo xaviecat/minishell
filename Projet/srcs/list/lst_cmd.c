@@ -90,7 +90,7 @@ t_cmd_lst	*get_cmd(t_word_lst **old_lst, t_garbage **gb)
 	one_quote = false;
 	while (*old_lst && (*old_lst)->type != w_pipe)
 	{
-		if (!((*old_lst)->word[0] == '\0'))
+		if ((*old_lst)->word[0] != '\0')
 		{
 			in_double_or_single(*old_lst, &two_quote, &one_quote);
 			new = new_w_cmd_list(*old_lst, one_quote, two_quote, gb);

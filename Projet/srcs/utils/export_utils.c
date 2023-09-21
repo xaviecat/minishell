@@ -6,12 +6,17 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 13:17:59 by nfaust            #+#    #+#             */
-/*   Updated: 2023/09/20 10:31:27 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/09/21 19:37:52 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
+/***
+ * @brief gets the length of the variable name
+ * @param arg
+ * @return
+ */
 size_t	get_var_name_len(char *arg)
 {
 	size_t	i;
@@ -22,6 +27,15 @@ size_t	get_var_name_len(char *arg)
 	return (i);
 }
 
+/***
+ * @brief concatenates the content to be added into the
+ * variable with the old content
+ * @param cmd the variable (name+content)
+ * @param var_name_len the length of the variable name
+ * @param gb
+ * @param envp
+ * @return 0 on failure, 1 on success
+ */
 int	concat_var(char *cmd, size_t var_name_len, t_garbage **gb, char **envp)
 {
 	size_t	i;
@@ -42,6 +56,13 @@ int	concat_var(char *cmd, size_t var_name_len, t_garbage **gb, char **envp)
 	return (1);
 }
 
+/***
+ * @brief modifies the current envp to add or concatenate the new variables
+ * @param cmd the entire variable (name+content)
+ * @param envp
+ * @param gb
+ * @return 0 on failure, 1 on success
+ */
 int	modify_envp(char *cmd, char **envp, t_garbage **gb)
 {
 	size_t	i;
@@ -60,6 +81,11 @@ int	modify_envp(char *cmd, char **envp, t_garbage **gb)
 	return (1);
 }
 
+/***
+ * @brief checks whether a variable change is a concatenation or not
+ * @param cmd
+ * @return 0 if it's an assignation, 1 if it's a concatenation
+ */
 int	is_concat(char *cmd)
 {
 	size_t	i;
@@ -76,6 +102,12 @@ int	is_concat(char *cmd)
 	return (0);
 }
 
+/***
+ * @brief checks whether a concatenation is in env or not
+ * @param envp
+ * @param cmd the entire command (name+content)
+ * @return 0 if found in envp, else 1
+ */
 int	cmp_concat(char **envp, char *cmd)
 {
 	size_t	i;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_routine_and_end.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 16:46:50 by syluiset          #+#    #+#             */
-/*   Updated: 2023/09/21 16:48:23 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/09/21 21:40:59 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
