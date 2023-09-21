@@ -1,18 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_access.c                                     :+:      :+:    :+:   */
+/*   get_access.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 11:36:08 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/30 17:03:34 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/09/21 21:49:37 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-char	**get_path(char **envp, t_garbage **gb)
+/**
+ * @brief Iterate trough the environnement variables to find the path
+ * @param envp environnement variables
+ * @return all paths extracted from env or NULL if error or no path in
+ * env
+ */
+static char	**get_path(char **envp, t_garbage **gb)
 {
 	size_t	i;
 	char	**path;
@@ -32,83 +38,14 @@ char	**get_path(char **envp, t_garbage **gb)
 	return (NULL);
 }
 
-char	**get_cmdpath(char **path, char *cmd, t_garbage **gb)
-{
-	char	**cmdpath;
-	char	*scmd;
-	size_t	i;
-
-	i = 0;
-	while (path[i])
-		i++;
-	scmd = ft_gbstrjoin("/", cmd, gb);
-	if (!scmd)
-		return (NULL);
-	cmdpath = ft_malloc(gb, sizeof(char *), i + 1);
-	if (!cmdpath)
-		return (NULL);
-	i = 0;
-	while (path[i])
-	{
-		cmdpath[i] = ft_gbstrjoin(path[i], scmd, gb);
-		if (!cmdpath[i])
-			return (NULL);
-		i++;
-	}
-	ft_free(gb, scmd);
-	cmdpath[i] = NULL;
-	return (cmdpath);
-}
-
-char	*explore_cmdpaths(char **cmdpaths, t_garbage **gb, bool *f_ok)
-{
-	size_t		i;
-	char		*good_path;
-
-	i = 0;
-	while (cmdpaths[i])
-	{
-		if (!access(cmdpaths[i], F_OK))
-			*f_ok = true;
-		if (!access(cmdpaths[i], X_OK))
-		{
-			good_path = ft_gbstrdup(cmdpaths[i], gb);
-			if (!good_path)
-				return (NULL); //! error a gerer
-			return (good_path);
-		}
-		i++;
-	}
-	return (NULL);
-}
-
-char	*check_access(char **cmdpaths, char *cmd, t_garbage **gb)
-{
-	bool	f_ok;
-	char	*good_path;
-
-	f_ok = false;
-	good_path = explore_cmdpaths(cmdpaths, gb, &f_ok);
-	if (cmd && !cmd[0])
-	{
-		g_exit_status = 127;
-		ft_fdprintf(2, MSH"''"CMD_NOT_FOUND, cmd);
-	}
-	else if ((!good_path && !f_ok) || ft_strncmp(cmd, "..", 2) == 0)
-	{
-		g_exit_status = 127;
-		ft_fdprintf(2, MSH"%s"CMD_NOT_FOUND, cmd);
-	}
-	else if (!good_path)
-	{
-		g_exit_status = 126;
-		ft_fdprintf(2, MSH"%s"NO_PERM, cmd);
-	}
-	ft_gbtabfree(cmdpaths, gb);
-	return (good_path);
-}
-
-void	cmd_in_current_dir(t_msh *msh, t_node_lst *lst, t_garbage **gb)
+/**
+ * @brief Check access of the command written with a path and if none returns
+ * an error then returns the native command
+ * @param msh global struct that contain all of command and other stuff
+ * necessary to the execution
+ * @param lst actual command node of the list
+ */
+static void	cmd_in_current_dir(t_msh *msh, t_node_lst *lst, t_garbage **gb)
 {
 	struct stat	st;
 
@@ -136,7 +73,12 @@ void	cmd_in_current_dir(t_msh *msh, t_node_lst *lst, t_garbage **gb)
 		return (free_and_exit_minish(msh));
 }
 
-bool	is_absolute_path(t_node_lst *lst, char **path)
+/**
+ * @brief Check if the command is written with a path
+ * @param lst actual command node of the list
+ * @param path all command path extracted from env
+ */
+static bool	is_absolute_path(t_node_lst *lst, char **path)
 {
 	if (!ft_strncmp(lst->lst_cmd->cmd, "./", 2)
 		|| !ft_strncmp(lst->lst_cmd->cmd, "/", 1)
@@ -146,7 +88,16 @@ bool	is_absolute_path(t_node_lst *lst, char **path)
 	return (false);
 }
 
-void	give_access(t_msh *msh, char **path, t_node_lst *lst, t_garbage **gb)
+/**
+ * @brief Iterate through the node list to get command paths and send them to
+ * check access function
+ * @param msh global struct that contain all of command and other stuff
+ * necessary to the execution
+ * @param path all command path extracted from env
+ * @param lst list of nodes which contain command
+ */
+static void	give_access(t_msh *msh, char **path, t_node_lst *lst,
+	t_garbage **gb)
 {
 	t_node_lst	*first;
 	char		**cmdpaths;
@@ -171,6 +122,11 @@ void	give_access(t_msh *msh, char **path, t_node_lst *lst, t_garbage **gb)
 	lst = first;
 }
 
+/**
+ * @brief Get the path in the env and give it to give access function
+ * @param msh global struct that contain all of command and other stuff
+ * necessary to the execution
+ */
 void	get_access(t_msh *msh)
 {
 	char	**path;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/09/21 18:56:36 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/09/21 14:16:34 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ void			harmonize_spaces(t_char_lst **lst, t_garbage **gb);
 int				redir_is_valid(t_word_lst **lst, t_garbage **gb);
 int				check_pipe_and_redir(t_garbage **gb, t_word_lst **lst);
 //char			**reforme_d_tab_cmd(t_cmd_lst **lst, char *cmd, t_garbage **gb);
-char			**create_cmdtab(t_cmd_lst *lst, t_garbage **gb, t_msh *msh);
 int				ft_del_quotes(t_msh *msh);
 int				export_error_management(t_msh *msh, t_cmd_lst *cmd,
 					int *error_code);
@@ -124,9 +123,7 @@ int				b_exit(t_msh *msh);
 int				b_export(t_msh *msh);
 int				b_env(t_msh *msh);
 int				b_unset(t_msh *sh);
-/* exec */
-int				get_cmdtab(t_msh *msh);
-void			get_access(t_msh *msh);
+
 /* signal */
 void			signal_handler(int signum);
 void			signal_term(int signum);
@@ -229,6 +226,35 @@ int				expand_heredoc(t_word_lst *heredoc, t_msh *msh);
 /* A RANGER LOL */
 char			*expand_vars(char *command, t_msh *msh);
 int				does_contain_quotes(char *str);
-/* excution */
+void			print_tab(char **tabi);
+/* execution */
+
+char			**get_cmdpath(char **path, char *cmd, t_garbage **gb);
+
+void			get_access(t_msh *msh);
+char			*check_access(char **cmdpaths, char *cmd, t_garbage **gb);
+
+void			builtin_execution(t_msh *msh);
 void			execution(t_msh *msh);
+
+void			redirect_fds_in(t_msh *msh, int pipe_fd[3][2]);
+void			redirect_fds_out(t_msh *msh, int pipe_fd[3][2]);
+
+void			forking(t_msh *msh);
+
+int				get_cmdtab(t_msh *msh);
+
+void			init_pipe_fd(int pipe_fd[3][2]);
+void			close_pipe(int pipe[2]);
+void			close_all(int pipe_fd[3][2], t_msh *msh);
+void			clear_mem_fds(t_msh *msh, int pipe_fd[3][2],
+					int mode, char *why);
+
+void			child(t_msh *msh, int pipe_fd[3][2]);
+void			parent(t_msh *msh, int pipe_fd[3][2]);
+
+
+
+
+
 #endif
