@@ -136,17 +136,3 @@ void	get_access(t_msh *msh)
 		return (free_and_exit_minish(msh));
 	give_access(msh, path, msh->lst_n, &(msh->garbage));
 }
-
-
-/*
- * error when permission denied but no when is dir
- * cat | grep | ls | awk | sleep | bash
- * grep | ./cat | ls | awk | sleep | bash
- * cat | grep | ls | awk | ./sleep | bash
- * cat | grep | ls | awk | ./sleep | ./grep
- * ./cat | grep | ls | awk | ./sleep | ./grep
- * ./cat | grep | ls | awk | ./sleep | ./grep -F
- * cat -en << EOF | cat -en | ./grep 'salut' >> "$USER"
- *
- * env | grep 'PATH=' | awk -F: '{gsub(/:/,"\n"); print}'
- */

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unhandled_char.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 17:43:08 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/28 13:02:25 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/09/25 11:56:27 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ bool	is_forbidden_char(t_char_lst *lst)
 {
 	static t_unhandled_tab	is_error_fct[11] = {&is_amp_error, &is_pipe_error,
 		&is_semicolon_error, &is_backslash_error, &is_dollar_error,
-		&is_exclamation_error, &is_parenthese_error,
+		&is_exclamation_error, &is_parenthesis_error,
 		&is_star_error, &is_dot_error, NULL};
 	size_t					i;
 
@@ -41,6 +41,11 @@ bool	is_forbidden_char(t_char_lst *lst)
 	return (false);
 }
 
+/**
+ * @brief Check if there are a < error in char list
+ * @param lst list of char create from the command line
+ * @return true if there is an error and false otherwise
+ */
 bool	is_smaller_bracket_error(t_char_lst **lst)
 {
 	int	i;
@@ -58,6 +63,11 @@ bool	is_smaller_bracket_error(t_char_lst **lst)
 	return (false);
 }
 
+/**
+ * @brief Check if there are a > error in char list
+ * @param lst list of char create from the command line
+ * @return true if there is an error and false otherwise
+ */
 bool	is_greater_bracket_error(t_char_lst **lst)
 {
 	int	i;
@@ -75,6 +85,11 @@ bool	is_greater_bracket_error(t_char_lst **lst)
 	return (false);
 }
 
+/**
+ * @brief Check if there are a bad redirection error in char list
+ * @param lst list of char create from the command line
+ * @return true if there is an error and false otherwise
+ */
 bool	is_bad_redir(t_char_lst *lst)
 {
 	while (lst)
@@ -100,6 +115,12 @@ bool	is_bad_redir(t_char_lst *lst)
 	return (false);
 }
 
+/**
+ * @brief Check if there are a some unhandled char or features error in char
+ * list
+ * @param lst list of char create from the command line
+ * @return true if there is an error and false otherwise
+ */
 bool	unhandled_char(t_char_lst *lst)
 {
 	if (process_quotes(lst))

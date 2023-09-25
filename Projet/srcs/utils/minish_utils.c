@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minish_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 16:59:21 by syluiset          #+#    #+#             */
-/*   Updated: 2023/09/21 16:00:32 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/09/25 19:07:35 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int	parsing_char(t_msh **msh, char *line)
 		g_exit_status = 2;
 		return (free_end_loop(*msh), 0);
 	}
-	harmonize_spaces(&((*msh)->lst_c), &((*msh)->garbage));
+	if (harmonize_spaces(&((*msh)->lst_c), &((*msh)->garbage)))
+		return (free_and_exit_minish(*msh), 0); //handle the return of harmonize space
 	return (1);
 }
 
@@ -108,7 +109,10 @@ t_msh	*create_minishell(char **envp, char **envp_sh)
 		return (NULL);
 	}
 	if (envp_sh)
+	{
 		sh->envp = ft_gbtabdup(envp_sh, &(sh->garbage));
+//		ft_tabfree(envp_sh);
+	}
 	else
 		sh->envp = ft_gbtabdup(envp, &(sh->garbage));
 	return (sh);

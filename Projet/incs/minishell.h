@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/09/21 14:16:34 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/09/25 19:07:35 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
 
 # include "colors.h"
 # include "error_msgs.h"
@@ -83,7 +81,7 @@ char			*set_expanded_env_var(char *env_var, t_msh *msh,
 					int double_not_closed);
 char			*cut_whitespaces(char *str, t_garbage **gb);
 bool			process_quotes(t_char_lst *lst);
-void			harmonize_spaces(t_char_lst **lst, t_garbage **gb);
+int				harmonize_spaces(t_char_lst **lst, t_garbage **gb);
 int				redir_is_valid(t_word_lst **lst, t_garbage **gb);
 int				check_pipe_and_redir(t_garbage **gb, t_word_lst **lst);
 //char			**reforme_d_tab_cmd(t_cmd_lst **lst, char *cmd, t_garbage **gb);
@@ -215,7 +213,7 @@ bool			is_semicolon_error(t_char_lst *lst);
 bool			is_backslash_error(t_char_lst *lst);
 bool			is_dollar_error(t_char_lst *lst);
 bool			is_exclamation_error(t_char_lst *lst);
-bool			is_parenthese_error(t_char_lst *lst);
+bool			is_parenthesis_error(t_char_lst *lst);
 bool			is_star_error(t_char_lst *lst);
 bool			is_dot_error(t_char_lst *lst);
 /* heredoc */
@@ -252,9 +250,5 @@ void			clear_mem_fds(t_msh *msh, int pipe_fd[3][2],
 
 void			child(t_msh *msh, int pipe_fd[3][2]);
 void			parent(t_msh *msh, int pipe_fd[3][2]);
-
-
-
-
 
 #endif
