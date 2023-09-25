@@ -14,7 +14,6 @@
 
 /**
  * @brief Connect the single quotes together
- * @author xcharra
  */
 void	process_single_quotes(t_char_lst **tmp, bool *q)
 {
@@ -31,7 +30,6 @@ void	process_single_quotes(t_char_lst **tmp, bool *q)
 
 /**
  * @brief Connect the double quotes together
- * @author xcharra
  */
 void	process_double_quotes(t_char_lst **tmp, bool *q)
 {
@@ -51,7 +49,6 @@ void	process_double_quotes(t_char_lst **tmp, bool *q)
  * @param lst Contain the whole command line characters in chained list
  * @return true if there are a non closed quote
  * @return false if all quotes are closed
- * @author xcharra
  */
 bool	process_quotes(t_char_lst *lst)
 {

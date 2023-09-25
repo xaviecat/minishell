@@ -6,12 +6,17 @@
 /*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 12:19:56 by xcharra           #+#    #+#             */
-/*   Updated: 2023/06/26 16:08:26 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/09/25 11:53:35 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
+/**
+ * @brief Check if there are a ampersand error in char list
+ * @param lst list of char create from the command line
+ * @return true if there is an error and false otherwise
+ */
 bool	is_amp_error(t_char_lst *lst)
 {
 	if (lst->c == '&' && !lst->s_quote && !lst->d_quote)
@@ -23,6 +28,11 @@ bool	is_amp_error(t_char_lst *lst)
 	return (false);
 }
 
+/**
+ * @brief Check if there are a double pipe error in char list
+ * @param lst list of char create from the command line
+ * @return true if there is an error and false otherwise
+ */
 bool	is_pipe_error(t_char_lst *lst)
 {
 	if (lst->c == '|' && lst->next && lst->next->c == '|'
@@ -31,6 +41,11 @@ bool	is_pipe_error(t_char_lst *lst)
 	return (false);
 }
 
+/**
+ * @brief Check if there are a semicolon error in char list
+ * @param lst list of char create from the command line
+ * @return true if there is an error and false otherwise
+ */
 bool	is_semicolon_error(t_char_lst *lst)
 {
 	if (lst->c == ';' && !lst->s_quote && !lst->d_quote)
@@ -38,6 +53,11 @@ bool	is_semicolon_error(t_char_lst *lst)
 	return (false);
 }
 
+/**
+ * @brief Check if there are a backslash error in char list
+ * @param lst list of char create from the command line
+ * @return true if there is an error and false otherwise
+ */
 bool	is_backslash_error(t_char_lst *lst)
 {
 	if (lst->c == '\\' && !lst->s_quote && !lst->d_quote)
@@ -45,6 +65,11 @@ bool	is_backslash_error(t_char_lst *lst)
 	return (false);
 }
 
+/**
+ * @brief Check if there are a double dollar error in char list
+ * @param lst list of char create from the command line
+ * @return true if there is an error and false otherwise
+ */
 bool	is_dollar_error(t_char_lst *lst)
 {
 	if (lst->c == '$' && lst->next && lst->next->c == '$' && !lst->s_quote)
