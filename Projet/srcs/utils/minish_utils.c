@@ -6,7 +6,7 @@
 /*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 16:59:21 by syluiset          #+#    #+#             */
-/*   Updated: 2023/09/26 11:43:03 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/09/26 14:08:08 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,10 +104,7 @@ t_msh	*create_minishell(char **envp, char **envp_sh)
 	sh->n_node = 0;
 	sh->garbage = create_garbage_container();
 	if (!sh->garbage)
-	{
-		free(sh);
-		return (NULL);
-	}
+		return (free(sh), NULL);
 	if (envp_sh)
 	{
 		sh->envp = ft_gbtabdup(envp_sh, &(sh->garbage));
