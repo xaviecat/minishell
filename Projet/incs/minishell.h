@@ -82,6 +82,7 @@ char			*set_expanded_env_var(char *env_var, t_msh *msh,
 char			*cut_whitespaces(char *str, t_garbage **gb);
 bool			process_quotes(t_char_lst *lst);
 int				harmonize_spaces(t_char_lst **lst, t_garbage **gb);
+int				add_space(t_char_lst *lst, t_position pos, t_garbage **gb);
 int				redir_is_valid(t_word_lst **lst, t_garbage **gb);
 int				check_pipe_and_redir(t_garbage **gb, t_word_lst **lst);
 //char			**reforme_d_tab_cmd(t_cmd_lst **lst, char *cmd, t_garbage **gb);
@@ -225,6 +226,7 @@ int				expand_heredoc(t_word_lst *heredoc, t_msh *msh);
 char			*expand_vars(char *command, t_msh *msh);
 int				does_contain_quotes(char *str);
 void			print_tab(char **tabi);
+
 /* execution */
 
 char			**get_cmdpath(char **path, char *cmd, t_garbage **gb);
