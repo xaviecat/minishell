@@ -36,7 +36,7 @@ void	minishell(char **envp)
 		msh = create_minishell(envp, envp_sh);
 		if (!msh)
 			return (free(line));
-		if (routine_minishell(msh, line, envp_sh))
+		if (routine_minishell(msh, line))
 			continue ;
 		envp_sh = cp_envp_to_envp_sh(envp_sh, msh->envp);
 		free_end_loop(msh);

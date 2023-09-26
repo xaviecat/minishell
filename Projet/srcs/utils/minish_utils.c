@@ -6,7 +6,7 @@
 /*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 16:59:21 by syluiset          #+#    #+#             */
-/*   Updated: 2023/09/25 19:07:35 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/09/26 10:28:34 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
  * @param line
  * @return 0 if failed, 1 if it work
  */
-int	parsing_char(t_msh **msh, char *line)
+int parsing_char(t_msh **msh, char *line)
 {
 	if (!(create_char_lst_with_c_inside(line, msh)))
 	{
@@ -33,7 +33,7 @@ int	parsing_char(t_msh **msh, char *line)
 		return (free_end_loop(*msh), 0);
 	}
 	if (harmonize_spaces(&((*msh)->lst_c), &((*msh)->garbage)))
-		return (free_and_exit_minish(*msh), 0); //handle the return of harmonize space
+		return (free_and_exit_minish(*msh), 0);
 	return (1);
 }
 
@@ -111,7 +111,9 @@ t_msh	*create_minishell(char **envp, char **envp_sh)
 	if (envp_sh)
 	{
 		sh->envp = ft_gbtabdup(envp_sh, &(sh->garbage));
-//		ft_tabfree(envp_sh);
+		ft_tabfree(envp_sh);
+		if (!sh->envp)
+			return (free(sh->garbage), free(sh), NULL);
 	}
 	else
 		sh->envp = ft_gbtabdup(envp, &(sh->garbage));

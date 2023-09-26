@@ -87,14 +87,14 @@ static int	add_some_space_near_pipes(t_char_lst *lst, t_garbage **gb)
 			lst = lst->next;
 		if (lst && lst->prev && lst->c == '|' && lst->prev->c != ' ')
 		{
-			new = char_lst_new(' ', gb), new = NULL;//
+			new = char_lst_new(' ', gb);
 			if (!new)
 				return (1);
 			char_lst_add_in(&lst, prev, new);
 		}
 		if (lst && lst->next && lst->c == '|' && lst->next->c != ' ')
 		{
-			new = char_lst_new(' ', gb), new = NULL;//
+			new = char_lst_new(' ', gb);
 			if (!new)
 				return (1);
 			char_lst_add_in(&lst, next, new);
@@ -123,7 +123,7 @@ static int	add_some_space_near_a_brackets(t_char_lst *lst, t_garbage **gb,
 		if (lst && lst->prev && lst->c == c
 			&& lst->prev->c != c && lst->prev->c != ' ')
 		{
-			new = char_lst_new(' ', gb), new = NULL;//
+			new = char_lst_new(' ', gb);
 			if (!new)
 				return (1);
 			char_lst_add_in(&lst, prev, char_lst_new(' ', gb));
@@ -131,7 +131,7 @@ static int	add_some_space_near_a_brackets(t_char_lst *lst, t_garbage **gb,
 		if (lst && lst->next && lst->c == c
 			&& lst->next->c != c && lst->next->c != ' ')
 		{
-			new = char_lst_new(' ', gb), new = NULL;//
+			new = char_lst_new(' ', gb);
 			if (!new)
 				return (1);
 			char_lst_add_in(&lst, next, char_lst_new(' ', gb));
