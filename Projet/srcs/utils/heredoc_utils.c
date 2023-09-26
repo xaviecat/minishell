@@ -3,15 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:57:11 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/19 14:12:18 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/09/26 11:32:38 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
+/***
+ * @brief removes quotes from the delimiter
+ * @param str
+ * @param gb
+ * @return the delimiter without quotes
+ */
 char	*remove_quotes(char *str, t_garbage **gb)
 {
 	size_t	i;
@@ -41,6 +47,11 @@ char	*remove_quotes(char *str, t_garbage **gb)
 	return (str_without_quotes[j] = 0, str_without_quotes);
 }
 
+/***
+ * @brief destroys and frees the heredoc
+ * @param heredoc
+ * @param gb
+ */
 void	destroy_heredoc(t_word_lst *heredoc, t_garbage **gb)
 {
 	if (!heredoc)
@@ -60,6 +71,13 @@ void	destroy_heredoc(t_word_lst *heredoc, t_garbage **gb)
 	ft_free(gb, heredoc);
 }
 
+/***
+ * @brief executes the heredoc and displays a new line while delimiter
+ * is not entered
+ * @param delimiter
+ * @param gb
+ * @return the heredoc content. NULL if nothing is inputted
+ */
 t_word_lst	*run_heredoc(char *delimiter, t_garbage **gb)
 {
 	t_word_lst	*heredoc;
@@ -89,6 +107,12 @@ t_word_lst	*run_heredoc(char *delimiter, t_garbage **gb)
 	return (free(line), heredoc);
 }
 
+/***
+ * @brief expands the content of the heredoc if needed
+ * @param heredoc
+ * @param msh
+ * @return 1 on success, 0 on failure
+ */
 int	expand_heredoc(t_word_lst *heredoc, t_msh *msh)
 {
 	t_word_lst	*heredoc_cpy;
@@ -104,6 +128,14 @@ int	expand_heredoc(t_word_lst *heredoc, t_msh *msh)
 	return (1);
 }
 
+/***
+ * @brief displays the heredoc
+ * @param heredoc
+ * @param msh
+ * @param redirs
+ * @return the word list containing heredoc lines.
+ * if no lines are entered returns null
+ */
 t_word_lst	*display_heredoc(t_word_lst *heredoc,
 							t_msh *msh, t_redir_lst *redirs)
 {
