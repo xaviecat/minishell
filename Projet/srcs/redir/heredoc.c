@@ -3,15 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:35:07 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/29 15:41:47 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/09/26 11:32:38 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
+/***
+ * @brief displays and catches heredoc content
+ * @param msh
+ * @return 0 on malloc issue, 2 if signals caught, 1 on success
+ */
 int	heredoc_handling(t_msh *msh)
 {
 	t_node_lst		*first;
@@ -38,6 +43,5 @@ int	heredoc_handling(t_msh *msh)
 		msh->lst_n->heredoc = heredoc;
 		msh->lst_n = msh->lst_n->next;
 	}
-	msh->lst_n = first;
-	return (1);
+	return (msh->lst_n = first, 1);
 }
