@@ -6,7 +6,7 @@
 /*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/09/25 19:07:35 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/09/26 10:31:01 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void			print_bannier(void);
 t_msh			*create_minishell(char **envp, char **envp_sh);
 int				line_empty_or_exit(char *line, char **envp_sh);
 char			**cp_envp_to_envp_sh(char **envp_sh, char **envp_in_minish);
-int				routine_minishell(t_msh *msh, char *line, char **envp_sh);
+int				routine_minishell(t_msh *msh, char *line);
 /* parsing */
 int				parsing_char(t_msh **msh, char *line);
 int				parsing_word(t_msh **msh);

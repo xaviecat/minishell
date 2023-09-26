@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_routine_and_end.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 16:46:50 by syluiset          #+#    #+#             */
 /*   Updated: 2023/09/21 21:40:59 by nfaust           ###   ########.fr       */
@@ -34,7 +34,7 @@ char	**cp_envp_to_envp_sh(char **envp_sh, char **envp_in_minish)
 	return (envp_sh);
 }
 
-int	routine_minishell(t_msh *msh, char *line, char **envp_sh)
+int	routine_minishell(t_msh *msh, char *line)
 {
 	if (!parsing_char(&msh, line))
 		return (1);
@@ -42,7 +42,6 @@ int	routine_minishell(t_msh *msh, char *line, char **envp_sh)
 		return (1);
 	if (!parsing_cmd(&msh))
 		return (1);
-	ft_tabfree(envp_sh);
 	if (!get_cmdtab(msh))
 		free_and_exit_minish(msh);
 	execution(msh);

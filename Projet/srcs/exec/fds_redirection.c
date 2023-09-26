@@ -6,7 +6,7 @@
 /*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 16:54:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/09/21 17:09:01 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/09/26 10:57:27 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	handle_heredoc(t_msh *msh, int pipe_fd[3][2])
  */
 void	redirect_fds_in(t_msh *msh, int pipe_fd[3][2])
 {
-	if (msh->lst_n->heredoc)
+	if (msh->lst_n->redirs && msh->lst_n->redirs->redir == inin)
 		handle_heredoc(msh, pipe_fd);
 	else if (msh->lst_n->fds && msh->lst_n->fds->in < 0)
 		return (clear_mem_fds(msh, pipe_fd, EXIT_FAILURE, NULL));
