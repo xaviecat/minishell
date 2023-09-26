@@ -111,7 +111,7 @@ t_msh	*create_minishell(char **envp, char **envp_sh)
 	if (envp_sh)
 	{
 		sh->envp = ft_gbtabdup(envp_sh, &(sh->garbage));
-//		ft_tabfree(envp_sh);
+		ft_tabfree(envp_sh);
 	}
 	else
 		sh->envp = ft_gbtabdup(envp, &(sh->garbage));
