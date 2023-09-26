@@ -38,6 +38,5 @@ int	heredoc_handling(t_msh *msh)
 		msh->lst_n->heredoc = heredoc;
 		msh->lst_n = msh->lst_n->next;
 	}
-	msh->lst_n = first;
-	return (1);
+	return (msh->lst_n = first, 1);
 }

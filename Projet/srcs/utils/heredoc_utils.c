@@ -84,10 +84,9 @@ t_word_lst	*run_heredoc(char *delimiter, t_garbage **gb)
 	}
 	if (g_exit_status == 130 || g_exit_status == 131)
 		return (NULL);
-	free(line);
 	while (heredoc && heredoc->prev)
 		heredoc = heredoc->prev;
-	return (heredoc);
+	return (free(line), heredoc);
 }
 
 int	expand_heredoc(t_word_lst *heredoc, t_msh *msh)
