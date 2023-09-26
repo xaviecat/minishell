@@ -44,6 +44,7 @@ SRCS			:=	minishell.c\
 					\
 					parsing/expand.c\
 					parsing/harmonize_spaces.c\
+					parsing/harmonize_spaces_utils.c\
 					parsing/is_error_fct1.c\
 					parsing/is_error_fct2.c\
 					parsing/pars_in_minish.c\
