@@ -3,15 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   is_error_fct2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 12:19:56 by xcharra           #+#    #+#             */
-/*   Updated: 2023/09/19 16:14:09 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/09/25 11:55:36 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
+/**
+ * @brief Check if there are a exclamation point error in char list
+ * @param lst list of char create from the command line
+ * @return true if there is an error and false otherwise
+ */
 bool	is_exclamation_error(t_char_lst *lst)
 {
 	if (lst->c == '!' && !lst->s_quote && !lst->d_quote)
@@ -19,6 +24,11 @@ bool	is_exclamation_error(t_char_lst *lst)
 	return (false);
 }
 
+/**
+ * @brief Check if there are a star error in char list
+ * @param lst list of char create from the command line
+ * @return true if there is an error and false otherwise
+ */
 bool	is_star_error(t_char_lst *lst)
 {
 	if (lst->c == '*' && !lst->s_quote && !lst->d_quote)
@@ -26,7 +36,12 @@ bool	is_star_error(t_char_lst *lst)
 	return (false);
 }
 
-bool	is_parenthese_error(t_char_lst *lst)
+/**
+ * @brief Check if there are a parenthesis error in char list
+ * @param lst list of char create from the command line
+ * @return true if there is an error and false otherwise
+ */
+bool	is_parenthesis_error(t_char_lst *lst)
 {
 	if (lst->c == '(' && !lst->s_quote && !lst->d_quote)
 		return (ft_fdprintf(2, MSH P_OPEN), true);
@@ -35,6 +50,11 @@ bool	is_parenthese_error(t_char_lst *lst)
 	return (false);
 }
 
+/**
+ * @brief Check if there are a dot error in char list
+ * @param lst list of char create from the command line
+ * @return true if there is an error and false otherwise
+ */
 bool	is_dot_error(t_char_lst *lst)
 {
 	if (lst->c == '.' && !lst->s_quote
