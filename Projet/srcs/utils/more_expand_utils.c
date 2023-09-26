@@ -25,7 +25,7 @@ static char	*get_var_value(char **envp, char *var_expansion,
 			ft_free(gb, var_expansion);
 			var_expansion = ft_gbstrdup(envp[i - 1] + var_len, gb);
 			if (!var_expansion)
-				return (NULL); //! mettre un free and exit
+				return (NULL);
 			return (var_expansion);
 		}
 	}
