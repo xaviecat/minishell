@@ -6,12 +6,18 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 18:51:51 by nfaust            #+#    #+#             */
-/*   Updated: 2023/09/21 19:08:34 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/09/21 19:12:20 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
+/***
+ * @brief counts how many new variables export needs to append to envp
+ * @param curr the current command (export)
+ * @param envp
+ * @return the counter
+ */
 static size_t	get_arg_count(t_cmd_lst *curr, char **envp)
 {
 	size_t	size;
@@ -27,6 +33,11 @@ static size_t	get_arg_count(t_cmd_lst *curr, char **envp)
 	return (size);
 }
 
+/***
+ * @brief check if a string contains double quotes
+ * @param str
+ * @return 1 if there are quotes in str, else 0
+ */
 static int	contain_dquote(char *str)
 {
 	size_t	i;
@@ -38,6 +49,10 @@ static int	contain_dquote(char *str)
 	return (0);
 }
 
+/***
+ * @brief print the backslashes before chars when needed by export print
+ * @param str
+ */
 static void	print_with_backslash(char *str)
 {
 	size_t	i;
@@ -55,6 +70,12 @@ static void	print_with_backslash(char *str)
 	printf("\"\n");
 }
 
+/***
+ * @brief allocates a new string tab that can stock new variables
+ * @param msh
+ * @param curr the current command
+ * @return 1 on success 0 on failure
+ */
 int	ft_alloc_envp(t_msh *msh, t_cmd_lst *curr)
 {
 	msh->envp = ft_malloc(&(msh->garbage), sizeof(char *),
@@ -64,6 +85,11 @@ int	ft_alloc_envp(t_msh *msh, t_cmd_lst *curr)
 	return (1);
 }
 
+/***
+ * @brief print the env in the right format as bash : with declare -x
+ * @param msh
+ * @return 0 on success, otherwise, exits minishell
+ */
 int	export_print(t_msh *msh)
 {
 	char	**envp_cpy;

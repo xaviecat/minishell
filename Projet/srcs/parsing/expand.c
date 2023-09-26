@@ -6,11 +6,24 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:08:17 by nfaust            #+#    #+#             */
-/*   Updated: 2023/09/21 16:49:48 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/09/26 10:13:06 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
+
+void	negativization(char *str)
+{
+	size_t	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\'' || str[i] == '"')
+			str[i] = (char)((int) str[i] * -1);
+		i++;
+	}
+}
 
 /**
  * @brief modify a lst_cmd from start to whitespace by replacing
@@ -37,6 +50,7 @@ static char	*modify_command(char *cmd, t_msh *msh,
 	if (!exp_env_v)
 		return (ft_free(&(msh->garbage), env_var),
 			ft_free(&(msh->garbage), cmd), NULL);
+	negativization(exp_env_v);
 	m_cmd = fill_mdcmd(cmd, start, exp_env_v, env_var);
 	add_to_garbage(&(msh->garbage), m_cmd);
 	return (ft_free_mcmd(env_var, cmd, exp_env_v, &(msh->garbage)), m_cmd);
@@ -73,22 +87,6 @@ char	*expand_vars(char *command, t_msh *msh)
 				i++;
 	}
 	return (command);
-}
-
-void	word_lst_add_in(t_word_lst **lst, t_word_lst *new)
-{
-	t_word_lst	*new_prev;
-	t_word_lst	*new_next;
-
-	new->type = param;
-	new_prev = *lst;
-	new_next = (*lst)->next;
-	new->next = new_next;
-	new->prev = new_prev;
-	if (new_prev)
-		new_prev->next = new;
-	if (new_next)
-		new_next->prev = new;
 }
 
 /**

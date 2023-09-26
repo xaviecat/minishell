@@ -6,12 +6,18 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:46:20 by nfaust            #+#    #+#             */
-/*   Updated: 2023/09/21 18:58:27 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/09/21 19:37:52 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
+/***
+ * @brief checks whether or not a variable is already in envp
+ * @param cmd
+ * @param envp
+ * @return 0 if the variable is already in envp, else 1
+ */
 int	not_in_env(char *cmd, char **envp)
 {
 	size_t	i;
@@ -34,6 +40,14 @@ int	not_in_env(char *cmd, char **envp)
 	return (1);
 }
 
+/***
+ * @brief deletes the plus sign in a concatenation
+ * request to add the variable to envp
+ * @param cmd
+ * @param gb
+ * @return the variable and content without the plus
+ * sign between name and =
+ */
 char	*dup_without_plus(char *cmd, t_garbage **gb)
 {
 	size_t	i;
@@ -59,6 +73,17 @@ char	*dup_without_plus(char *cmd, t_garbage **gb)
 	new_cmd[j] = 0;
 	return (new_cmd);
 }
+
+/***
+ * @brief modify or add to envp the new variable and
+ * content (also handles user errors)
+ * @param cmd
+ * @param save_envp
+ * @param msh
+ * @param error_code pointer to an int that will be modified to
+ * match bash error codes
+ * @return 1 on success, 0 on failure
+ */
 
 int	add_new_var_to_envp(t_cmd_lst *cmd, char **save_envp,
 				t_msh *msh, int *error_code)
@@ -90,6 +115,11 @@ int	add_new_var_to_envp(t_cmd_lst *cmd, char **save_envp,
 	return (msh->envp[i] = NULL, 1);
 }
 
+/***
+ * @brief handles the export builtin
+ * @param msh
+ * @return the error code corresponding to bash export error code
+ */
 int	b_export(t_msh *msh)
 {
 	char		**save_envp;

@@ -3,14 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   remove_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 13:56:29 by nfaust            #+#    #+#             */
-/*   Updated: 2023/09/19 13:27:27 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/09/21 22:15:04 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
+
+size_t	positivization(char *str, int count)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	while (str[i])
+	{
+		j = 0;
+		if (str[i] == '\'' * -1 || str[i] == '"' * -1)
+		{
+			if (!count)
+				str[i] = (char)((int)str[i] * -1);
+			j++;
+		}
+		i++;
+	}
+	return (j);
+}
 
 size_t	get_newcmd_len(char *cmd)
 {
@@ -34,7 +54,7 @@ size_t	get_newcmd_len(char *cmd)
 			counter++;
 		i++;
 	}
-	return (counter);
+	return (counter + positivization(cmd, 1));
 }
 
 char	*modify_cmd(char *cmd, char *new_cmd, t_garbage **gb)
@@ -61,6 +81,7 @@ char	*modify_cmd(char *cmd, char *new_cmd, t_garbage **gb)
 	}
 	new_cmd[j] = 0;
 	ft_free(gb, cmd);
+	positivization(new_cmd, 0);
 	return (new_cmd);
 }
 
