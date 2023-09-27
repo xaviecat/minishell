@@ -6,7 +6,7 @@
 /*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 16:54:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/09/26 10:57:27 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/09/27 17:17:30 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,6 @@ void	redirect_fds_out(t_msh *msh, int pipe_fd[3][2])
 	{
 		if (dup2(pipe_fd[CURR][1], STDOUT_FILENO) < 0)
 			return (clear_mem_fds(msh, pipe_fd, EXIT_FAILURE, "dup2"));
-		close_pipe(pipe_fd[CURR]);
 	}
+	close_pipe(pipe_fd[CURR]);
 }
