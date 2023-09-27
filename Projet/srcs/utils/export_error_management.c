@@ -81,7 +81,7 @@ static int	verif_first_arg(t_garbage **gb, t_cmd_lst *cmd)
 
 int	export_error_management(t_msh *msh, t_cmd_lst *cmd, int *error_code)
 {
-	if (ft_strncmp(cmd->cmd, "=", 1) == 0)
+	if (ft_strncmp(cmd->cmd, "=", 1) == 0 || cmd->is_nill)
 		return (*error_code = 1,
 			ft_fdprintf(2, MSH E_EXPORT"'%s'"NT_VAL_ID, cmd->cmd), 0);
 	if (ft_strncmp(cmd->cmd, "-", 1) == 0)

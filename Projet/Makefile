@@ -44,6 +44,7 @@ SRCS			:=	minishell.c\
 					\
 					parsing/expand.c\
 					parsing/harmonize_spaces.c\
+					parsing/harmonize_spaces_utils.c\
 					parsing/is_error_fct1.c\
 					parsing/is_error_fct2.c\
 					parsing/pars_in_minish.c\
@@ -142,7 +143,7 @@ $(OBJS_D)		:
 				mkdir -p $(OBJS_D)utils
 
 $(LIB_A)		:	FORCE
-				make -j -C $(LIB_D)
+				make -C $(LIB_D)
 
 leaks			:	all
 				echo "{" > valgrind_ignore_leaks.txt

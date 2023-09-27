@@ -42,7 +42,6 @@ static int	lst_size(t_cmd_lst *lst)
 static char	**create_cmdtab(t_cmd_lst *lst, t_garbage **gb)
 {
 	size_t		i;
-	t_cmd_lst	*first;
 	char		**cmdtab;
 
 	i = lst_size(lst);
@@ -50,7 +49,6 @@ static char	**create_cmdtab(t_cmd_lst *lst, t_garbage **gb)
 	if (!cmdtab)
 		return (NULL);
 	i = 0;
-	first = lst;
 	while (lst)
 	{
 		cmdtab[i] = ft_gbstrdup(lst->cmd, gb);
@@ -60,7 +58,6 @@ static char	**create_cmdtab(t_cmd_lst *lst, t_garbage **gb)
 		lst = lst->next;
 	}
 	cmdtab[i] = NULL;
-	first = lst;
 	return (cmdtab);
 }
 

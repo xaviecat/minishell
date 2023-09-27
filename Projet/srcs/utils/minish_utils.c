@@ -6,7 +6,7 @@
 /*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 16:59:21 by syluiset          #+#    #+#             */
-/*   Updated: 2023/09/26 10:28:34 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/09/26 14:08:08 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
  * @param line
  * @return 0 if failed, 1 if it work
  */
-int parsing_char(t_msh **msh, char *line)
+int	parsing_char(t_msh **msh, char *line)
 {
 	if (!(create_char_lst_with_c_inside(line, msh)))
 	{
@@ -104,10 +104,7 @@ t_msh	*create_minishell(char **envp, char **envp_sh)
 	sh->n_node = 0;
 	sh->garbage = create_garbage_container();
 	if (!sh->garbage)
-	{
-		free(sh);
-		return (NULL);
-	}
+		return (free(sh), NULL);
 	if (envp_sh)
 	{
 		sh->envp = ft_gbtabdup(envp_sh, &(sh->garbage));
