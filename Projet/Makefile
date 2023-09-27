@@ -143,7 +143,7 @@ $(OBJS_D)		:
 				mkdir -p $(OBJS_D)utils
 
 $(LIB_A)		:	FORCE
-				make -j -C $(LIB_D)
+				make -C $(LIB_D)
 
 leaks			:	all
 				echo "{" > valgrind_ignore_leaks.txt

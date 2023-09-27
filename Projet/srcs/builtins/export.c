@@ -133,16 +133,16 @@ int	b_export(t_msh *msh)
 		return (export_print(msh));
 	save_envp = msh->envp;
 	if (!ft_alloc_envp(msh, cmd))
-		free_and_exit_minish(msh);
+		free_and_exit_minish(msh, NULL);
 	if (!add_new_var_to_envp(cmd, save_envp, msh, &error_code))
-		free_and_exit_minish(msh);
+		free_and_exit_minish(msh, NULL);
 	modified_envp = ft_gbtabjoin(save_envp, msh->envp, &(msh->garbage));
 	if (!modified_envp && errno == ENOMEM)
-		free_and_exit_minish(msh);
+		free_and_exit_minish(msh, NULL);
 	ft_free(&(msh->garbage), msh->envp);
 	msh->envp = ft_gbtabdup(modified_envp, &(msh->garbage));
 	if (!msh->envp)
-		free_and_exit_minish(msh);
+		free_and_exit_minish(msh, NULL);
 	ft_gbtabfree(modified_envp, &(msh->garbage));
 	return (ft_free(&(msh->garbage), save_envp), error_code);
 }

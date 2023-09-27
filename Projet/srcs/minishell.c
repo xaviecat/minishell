@@ -6,13 +6,20 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/09/21 16:42:48 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/09/27 13:24:52 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
 int	g_exit_status = 0;
+
+void	exit_msh_malloc_prob(char *line, char **envp_sh)
+{
+	if (envp_sh)
+		ft_tabfree(envp_sh);
+	return (free(line));
+}
 
 void	minishell(char **envp)
 {
@@ -35,11 +42,10 @@ void	minishell(char **envp)
 			add_history(line);
 		msh = create_minishell(envp, envp_sh);
 		if (!msh)
-			return (free(line));
-		if (routine_minishell(msh, line))
+			return (exit_msh_malloc_prob(line, envp_sh));
+		if (routine_minishell(msh, line, &envp_sh))
 			continue ;
-		envp_sh = cp_envp_to_envp_sh(envp_sh, msh->envp);
-		free_end_loop(msh);
+		free_end_loop(msh, &envp_sh);
 	}
 }
 

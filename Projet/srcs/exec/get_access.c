@@ -70,7 +70,7 @@ static void	cmd_in_current_dir(t_msh *msh, t_node_lst *lst, t_garbage **gb)
 	}
 	lst->cmdpath = ft_gbstrdup(lst->lst_cmd->cmd, gb);
 	if (!(lst->cmdpath) && errno == ENOMEM)
-		return (free_and_exit_minish(msh));
+		return (free_and_exit_minish(msh, NULL));
 }
 
 /**
@@ -114,7 +114,7 @@ static void	give_access(t_msh *msh, char **path, t_node_lst *lst,
 			cmdpaths = get_cmdpath(path, lst->lst_cmd->cmd, gb);
 			lst->cmdpath = check_access(cmdpaths, lst->lst_cmd->cmd, gb);
 			if ((!cmdpaths || !(lst->cmdpath)) && errno == ENOMEM)
-				return (free_and_exit_minish(msh));
+				return (free_and_exit_minish(msh, NULL));
 		}
 		lst = lst->next;
 	}
@@ -133,6 +133,6 @@ void	get_access(t_msh *msh)
 
 	path = get_path(msh->envp, &(msh->garbage));
 	if (!path && errno == ENOMEM)
-		return (free_and_exit_minish(msh));
+		return (free_and_exit_minish(msh, NULL));
 	give_access(msh, path, msh->lst_n, &(msh->garbage));
 }
