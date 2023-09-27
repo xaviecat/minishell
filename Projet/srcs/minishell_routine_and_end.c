@@ -30,7 +30,7 @@ void	free_end_loop(t_msh *msh)
 
 char	**cp_envp_to_envp_sh(char **envp_sh, char **envp_in_minish)
 {
-	envp_sh = ft_tabdup(envp_in_minish);
+	envp_sh = ft_tabdup(envp_in_minish); //! faut proteger ca svp
 	return (envp_sh);
 }
 
