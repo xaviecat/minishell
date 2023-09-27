@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/09/26 10:31:01 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/09/27 12:44:59 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,17 +63,17 @@ typedef bool	(*t_unhandled_tab)(t_char_lst *);
 typedef int		(*t_builtin_tab)(t_msh *msh);
 
 /* global */
-void			free_and_exit_minish(t_msh *minish);
-void			free_end_loop(t_msh *msh);
+void			free_and_exit_minish(t_msh *minish, char **envp_sh);
+void			free_end_loop(t_msh *msh, char ***envp_sh);
 void			print_bannier(void);
 t_msh			*create_minishell(char **envp, char **envp_sh);
 int				line_empty_or_exit(char *line, char **envp_sh);
-char			**cp_envp_to_envp_sh(char **envp_sh, char **envp_in_minish);
-int				routine_minishell(t_msh *msh, char *line);
+char			**cp_envp_to_envp_sh(char **envp_sh, t_msh *msh);
+int				routine_minishell(t_msh *msh, char *line, char ***envp_sh);
 /* parsing */
-int				parsing_char(t_msh **msh, char *line);
-int				parsing_word(t_msh **msh);
-int				parsing_cmd(t_msh **msh);
+int				parsing_char(t_msh **msh, char *line, char ***envp_sh);
+int				parsing_word(t_msh **msh, char ***envp_sh);
+int				parsing_cmd(t_msh **msh, char ***envp_sh);
 char			**parsing_argu(char *arg_term);
 t_msh			*parsing_command(char *cmd_line, t_msh *sh);
 int				expand_commands(t_msh *msh);
