@@ -30,7 +30,7 @@ char	**ft_gbtabdup(char **dbtab, t_garbage **gb)
 	{
 		new_tab[i] = ft_gbstrdup(dbtab[i], gb);
 		if (!new_tab[i])
-			return (ft_gbtabfree(dbtab, gb), NULL);
+			return (ft_gbtabfree(new_tab, gb), NULL);
 		i++;
 	}
 	new_tab[i] = NULL;
