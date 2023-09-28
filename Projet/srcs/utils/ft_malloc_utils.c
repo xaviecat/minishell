@@ -6,11 +6,11 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 11:28:44 by syluiset          #+#    #+#             */
-/*   Updated: 2023/09/21 15:48:04 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/09/28 16:52:43 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../incs/minishell.h"
 
 /**
  * @brief
@@ -58,11 +58,22 @@ t_garbage_lst	*garbage_last(t_garbage_lst *lst)
 	return (lst);
 }
 
-void	add_to_garbage(t_garbage **gb, void *content)
+void	add_to_garbage(t_garbage **gb, void *content)// passer en int pour securiser
 {
 	t_garbage_lst	*new;
 
 	new = new_garbage(content);
-	(*gb)->last->next = new;
-	(*gb)->last = new;
+	if (!new)
+		return ;
+	if (!(*gb)->first)
+	{
+		(*gb)->first = new;
+		(*gb)->last = new;
+	}
+	else
+	{
+		new->prev = (*gb)->last;
+		(*gb)->last->next = new;
+		(*gb)->last = new;
+	}
 }
