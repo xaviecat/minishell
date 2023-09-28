@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   more_expand_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 15:37:58 by nfaust            #+#    #+#             */
-/*   Updated: 2023/09/26 10:18:19 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/09/28 17:27:01 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static char	*expand_env_var(t_garbage **gb, char **envp, char *var)
 	var_expansion = get_var_value(envp, var_expansion, var_len, gb);
 	if (var_expansion)
 		return (var_expansion);
-	return (ft_free(gb, var_expansion), ft_gbstrdup("", gb));
+	return (ft_gbstrdup("", gb));
 }
 
 /**
@@ -75,7 +75,7 @@ char	*set_expanded_env_var(char *env_var, t_msh *msh,
 
 	expanded_env_var = expand_env_var(&(msh->garbage), msh->envp, env_var);
 	if (double_not_closed < 0)
-		expanded_env_var = cut_whitespaces(expanded_env_var, &((*msh).garbage));
+		expanded_env_var = cut_whitespaces(expanded_env_var, &(msh->garbage));
 	if (!expanded_env_var)
 		return (NULL);
 	return (expanded_env_var);
