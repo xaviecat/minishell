@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:17:09 by syluiset          #+#    #+#             */
-/*   Updated: 2023/09/28 12:08:40 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/09/28 17:27:10 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ void	ft_free_other(t_garbage **lst)
  */
 void	ft_free(t_garbage **lst, void *content)
 {
+	if (content == NULL)
+		return ;
 	if (content == (*lst)->first->content)
 		return (ft_free_first(lst));
 	if (content == (*lst)->last->content)
