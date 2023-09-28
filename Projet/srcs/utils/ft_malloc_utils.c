@@ -6,11 +6,11 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 11:28:44 by syluiset          #+#    #+#             */
-/*   Updated: 2023/09/21 15:48:04 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/09/28 11:07:33 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../incs/minishell.h"
 
 /**
  * @brief
