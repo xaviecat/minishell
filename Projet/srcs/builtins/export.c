@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:46:20 by nfaust            #+#    #+#             */
-/*   Updated: 2023/09/21 19:37:52 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/09/27 18:25:52 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,12 @@ int	not_in_env(char *cmd, char **envp)
 			if (!ft_strncmp(cmd, envp[i++], var_name_len))
 				return (0);
 		}
-		else if (!ft_strncmp(cmd, envp[i++], var_name_len + 1))
+		else if (!ft_strncmp(cmd, envp[i], var_name_len + 1)
+			|| (!ft_strncmp(cmd, envp[i], var_name_len)
+				&& envp[i][var_name_len]
+			&& envp[i][var_name_len] == '='))
 			return (0);
+		i++;
 	}
 	return (1);
 }

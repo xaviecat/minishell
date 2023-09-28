@@ -74,6 +74,8 @@ int	modify_envp(char *cmd, char **envp, t_garbage **gb)
 	i = 0;
 	while (ft_strncmp(cmd, envp[i], var_name_len))
 		i++;
+	if (envp[i][var_name_len] && !cmd[var_name_len])
+		return (1);
 	ft_free(gb, envp[i]);
 	envp[i] = ft_gbstrdup(cmd, gb);
 	if (!envp[i])

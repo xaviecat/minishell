@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 14:59:14 by syluiset          #+#    #+#             */
-/*   Updated: 2023/09/20 08:42:12 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/09/28 17:57:23 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,21 @@ int	b_env(t_msh *msh)
 	int	i;
 
 	i = 0;
+	if (msh->lst_n->lst_cmd->next)
+	{
+		if (msh->lst_n->lst_cmd->next->cmd[0]
+			&& msh->lst_n->lst_cmd->next->cmd[0] == '-')
+			ft_fdprintf(2, MSH E_ENV"%s"INVALID_OPT,
+				msh->lst_n->lst_cmd->next->cmd);
+		else
+			ft_fdprintf(2, MSH E_ENV"%s"NO_SFD,
+				msh->lst_n->lst_cmd->next->cmd);
+		return (127);
+	}
 	while (msh->envp[i])
 	{
 		if (!is_empty(msh->envp[i]))
-			printf("%s\n", msh->envp[i]);
+			ft_fdprintf(1, "%s\n", msh->envp[i]);
 		i++;
 	}
 	return (0);

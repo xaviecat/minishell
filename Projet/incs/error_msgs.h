@@ -34,6 +34,7 @@
 # define E_UNSET		"unset: "
 # define E_EXIT			"exit: "
 # define E_PWD			"pwd: "
+# define E_ENV			"env: "
 
 # define TOO_MN_ARGS	"too many arguments\n"
 # define CMD_NOT_FOUND	": command not found\n"
