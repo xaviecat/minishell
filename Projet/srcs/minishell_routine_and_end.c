@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../incs/minishell.h"
 
 void	free_and_exit_minish(t_msh *minish, char **envp_sh)
 {
@@ -27,8 +27,11 @@ void	free_end_loop(t_msh *msh, char ***envp_sh)
 {
 	*envp_sh = cp_envp_to_envp_sh(*envp_sh, msh);
 	ft_free_all(&msh->garbage);
+	msh->lst_n = NULL;
 	free(msh->garbage);
+	msh->garbage = NULL;
 	free(msh);
+	msh = NULL;
 }
 
 char	**cp_envp_to_envp_sh(char **envp_sh, t_msh *msh)
