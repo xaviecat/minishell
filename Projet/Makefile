@@ -123,10 +123,10 @@ all				:	$(NAME)
 				@echo -e '\001\033[34m\002    |__|     | _| `._____||__| |__| \__| |__| |_______/    |__|  |__| |_______||_______||_______|\001\033[0m\002'
 				@echo -e '\001\033[34m\002                                                                                                 \001\033[0m\002'
 				@echo -e '\001\033[1;34m\002                                                               🍦    by nfaust, syluiset & xcharra\001\033[0m\002'
-$(NAME)			:	$(OBJS_D) $(OBJS)
+$(NAME)			:	$(OBJS_D) $(OBJS) $(LIB_A)
 				$(CC) $(CFLAGS) $(ASAN_F) -o $(NAME) $(OBJS) $(LIB_A) $(RDL)
 
-$(OBJS)			:	$(OBJS_D)%.o: $(SRCS_D)%.c $(HEAD_A) $(LIB_A)
+$(OBJS)			:	$(OBJS_D)%.o: $(SRCS_D)%.c $(HEAD_A) $(LIB_H)libft.h
 				$(CC) $(CFLAGS) $(ASAN_F) -I$(HEAD_D) -I$(LIB_H) -c $< -o $@
 
 $(OBJS_D)		:

@@ -1,0 +1,14 @@
+relink touch un objet de la lib
+
+
+
+
+minishell quand exit exit avec la value du g ret val
+
+
+
+
+0TRI_SH $> export a="echo coucou"
+0TRI_SH $> $a
+minishell: echo coucou: command not found
+
