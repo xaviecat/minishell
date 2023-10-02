@@ -140,6 +140,7 @@ t_word_lst	*display_heredoc(t_word_lst *heredoc,
 							t_msh *msh, t_redir_lst *redirs)
 {
 	destroy_heredoc(heredoc, &(msh->garbage));
+	g_exit_status = 0;
 	heredoc = run_heredoc(redirs->filename, &(msh->garbage));
 	if ((!heredoc && errno == ENOMEM)
 		|| (!does_contain_quotes(redirs->filename)
