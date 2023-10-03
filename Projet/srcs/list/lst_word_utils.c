@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:12:14 by syluiset          #+#    #+#             */
-/*   Updated: 2023/06/15 11:56:50 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/10/03 14:05:49 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,24 @@ t_word_lst	*word_lst_add_back(t_word_lst *wlst, t_garbage **gb, char *word)
 	wlst->next = word_lst_new(word, gb);
 	if (!(wlst->next))
 		return (NULL);
+	wlst->next->prev = wlst;
+	while (wlst->prev)
+		wlst = wlst->prev;
+	return (wlst);
+}
+
+t_word_lst	*word_lst_insert(t_word_lst* wlst, t_garbage **gb, char *word)
+{
+	t_word_lst	*save_next;
+
+	if (!wlst->next)
+		return (word_lst_add_back(wlst, gb, word));
+	save_next = wlst->next;
+	if (!word_lst_add_back(wlst, gb, word))
+		return (NULL);
+	while (wlst->next)
+		wlst = wlst->next;
+	wlst->next = save_next;
 	wlst->next->prev = wlst;
 	while (wlst->prev)
 		wlst = wlst->prev;

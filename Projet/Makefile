@@ -51,6 +51,7 @@ SRCS			:=	minishell.c\
 					parsing/redir_is_valid.c\
 					parsing/remove_quotes.c\
 					parsing/unhandled_char.c\
+					parsing/reform_word_list.c\
 					\
 					redir/redir.c\
 					redir/redir_utils.c\
