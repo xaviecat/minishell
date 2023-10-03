@@ -1,5 +1,6 @@
 #===========================VARIABLE===============================#
-SRCS			:=	minishell.c\
+SRCS			:=	\
+					minishell.c\
 					\
 					builtins/cd.c\
 					builtins/echo.c\
@@ -81,6 +82,8 @@ OBJS_D			:=	objs/
 
 OBJS			:=	$(SRCS:%.c=$(OBJS_D)%.o)
 
+DEPS			:=	$(SRCS:%.c=$(OBJS_D)%.d)
+
 HEAD			:=	\
 					minishell.h\
 					error_msgs.h\
@@ -108,69 +111,82 @@ RM				:=	rm -rf
 
 CFLAGS			:=	-Wall -Wextra -Werror
 
+DFLAGS			:=	-MP -MMD
+
 RDL				:=	-lreadline
 
-ASAN_F			:=	-g3 #-fsanitize=address
+#=========================DEBUG==============================#
+ASAN_F			:=	#-g3 -fsanitize=address
+
+ENV				:=	env -i
+
+IGN_TXT			:=	valgrind_ignore_leaks.txt
+
+LEAKS			:=	valgrind --suppressions=valgrind_ignore_leaks.txt --leak-check=full --show-leak-kinds=all\
+					--track-fds=yes --show-mismatched-frees=yes --read-var-info=yes -s
+
+#=========================COLOR==============================#
+BLUE			:= \001\033[34m\002
+
+BOLD			:= \001\033[1m\002
+
+RESET			:= \001\033[0m\002
 
 #========================EXEC===============================#
-all				:	$(NAME)
-				@echo
-				@echo -e '\001\033[34m\002.___________..______       __  .__   __.  __       _______. __    __   _______  __       __      \001\033[0m\002'
-				@echo -e '\001\033[34m\002|           ||   _  \     |  | |  \ |  | |  |     /       ||  |  |  | |   ____||  |     |  |     \001\033[0m\002'
-				@echo -e '\001\033[34m\002`---|  |----`|  |_)  |    |  | |   \|  | |  |    |   (----`|  |__|  | |  |__   |  |     |  |     \001\033[0m\002'
-				@echo -e '\001\033[34m\002    |  |     |      /     |  | |  . `  | |  |     \   \    |   __   | |   __|  |  |     |  |     \001\033[0m\002'
-				@echo -e '\001\033[34m\002    |  |     |  |\  \----.|  | |  |\   | |  | .----)   |   |  |  |  | |  |____ |  `----.|  `----.\001\033[0m\002'
-				@echo -e '\001\033[34m\002    |__|     | _| `._____||__| |__| \__| |__| |_______/    |__|  |__| |_______||_______||_______|\001\033[0m\002'
-				@echo -e '\001\033[34m\002                                                                                                 \001\033[0m\002'
-				@echo -e '\001\033[1;34m\002                                                               🍦    by nfaust, syluiset & xcharra\001\033[0m\002'
+all				:	banner $(NAME)
+
 $(NAME)			:	$(OBJS_D) $(OBJS) $(LIB_A)
 				$(CC) $(CFLAGS) $(ASAN_F) -o $(NAME) $(OBJS) $(LIB_A) $(RDL)
 
 $(OBJS)			:	$(OBJS_D)%.o: $(SRCS_D)%.c $(HEAD_A) $(LIB_H)libft.h
-				$(CC) $(CFLAGS) $(ASAN_F) -I$(HEAD_D) -I$(LIB_H) -c $< -o $@
+				$(CC) $(CFLAGS) $(ASAN_F) $(DFLAGS) -I$(HEAD_D) -I$(LIB_H) -c $< -o $@
 
 $(OBJS_D)		:
-				mkdir -p $(OBJS_D)
-				mkdir -p $(OBJS_D)builtins
-				mkdir -p $(OBJS_D)exec
-				mkdir -p $(OBJS_D)fds
-				mkdir -p $(OBJS_D)garbage
-				mkdir -p $(OBJS_D)list
-				mkdir -p $(OBJS_D)parsing
-				mkdir -p $(OBJS_D)print_things
-				mkdir -p $(OBJS_D)redir
-				mkdir -p $(OBJS_D)signal
-				mkdir -p $(OBJS_D)utils
+				@mkdir -p $(OBJS_D)
+				@mkdir -p $(OBJS_D)builtins
+				@mkdir -p $(OBJS_D)exec
+				@mkdir -p $(OBJS_D)fds
+				@mkdir -p $(OBJS_D)garbage
+				@mkdir -p $(OBJS_D)list
+				@mkdir -p $(OBJS_D)parsing
+				@mkdir -p $(OBJS_D)redir
+				@mkdir -p $(OBJS_D)signal
+				@mkdir -p $(OBJS_D)utils
 
-$(LIB_A)		:	FORCE
+$(LIB_A)		:	$(LIB_D)
 				make -C $(LIB_D)
 
-leaks			:	all
-				echo "{" > valgrind_ignore_leaks.txt
-				echo "leak readline" >> valgrind_ignore_leaks.txt
-				echo "    Memcheck:Leak" >> valgrind_ignore_leaks.txt
-				echo "    ..." >> valgrind_ignore_leaks.txt
-				echo "    fun:readline" >> valgrind_ignore_leaks.txt
-				echo "}" >> valgrind_ignore_leaks.txt
-				echo "{" >> valgrind_ignore_leaks.txt
-				echo "    leak add_history" >> valgrind_ignore_leaks.txt
-				echo "    Memcheck:Leak" >> valgrind_ignore_leaks.txt
-				echo "    ..." >> valgrind_ignore_leaks.txt
-				echo "    fun:add_history" >> valgrind_ignore_leaks.txt
-				echo "}" >> valgrind_ignore_leaks.txt
-				valgrind --suppressions=valgrind_ignore_leaks.txt --leak-check=full \
-					--show-leak-kinds=all --track-fds=yes \
-					--show-mismatched-frees=yes --read-var-info=yes \
-					-s ./${NAME}
-					#--log-file=valgrind.txt \
+$(IGN_TXT)		:
+				@echo "{"					> $(IGN_TXT)
+				@echo "leak readline"		>> $(IGN_TXT)
+				@echo "    Memcheck:Leak"	>> $(IGN_TXT)
+				@echo "    ..."				>> $(IGN_TXT)
+				@echo "    fun:readline" 	>> $(IGN_TXT)
+				@echo "}" 					>> $(IGN_TXT)
+				@echo "{" 					>> $(IGN_TXT)
+				@echo "    leak add_history"	>> $(IGN_TXT)
+				@echo "    Memcheck:Leak"	>> $(IGN_TXT)
+				@echo "    ..."				>> $(IGN_TXT)
+				@echo "    fun:add_history"	>> $(IGN_TXT)
+				@echo "}"					>> $(IGN_TXT)
 
-envleaks			:	all
-				env -i valgrind --suppressions=valgrind_ignore_leaks.txt --leak-check=full \
-					--show-leak-kinds=all --track-fds=yes \
-					--show-mismatched-frees=yes --read-var-info=yes \
-					-s ./${NAME}
+leaks			:	all $(IGN_TXT)
+				$(LEAKS) ./$(NAME)
 
-FORCE			:
+env_leaks		:	all $(IGN_TXT)
+				 $(ENV) $(LEAKS) ./$(NAME)
+
+banner			:
+				@echo -e '$(BLUE)'
+				@echo -e '.___________..______       __  .__   __.  __       _______. __    __   _______  __       __      '
+				@echo -e '|           ||   _  \     |  | |  \ |  | |  |     /       ||  |  |  | |   ____||  |     |  |     '
+				@echo -e '`---|  |----`|  |_)  |    |  | |   \|  | |  |    |   (----`|  |__|  | |  |__   |  |     |  |     '
+				@echo -e '    |  |     |      /     |  | |  . `  | |  |     \   \    |   __   | |   __|  |  |     |  |     '
+				@echo -e '    |  |     |  |\  \----.|  | |  |\   | |  | .----)   |   |  |  |  | |  |____ |  `----.|  `----.'
+				@echo -e '    |__|     | _| `._____||__| |__| \__| |__| |_______/    |__|  |__| |_______||_______||_______|'
+				@echo -e '$(BOLD)'
+				@echo -e '                                                              🍦    by nfaust, syluiset & xcharra'
+				@echo -e '$(RESET)'
 
 clean			:
 				$(RM) $(OBJS) $(OBJS_D) $(OBJSB_D)
@@ -179,7 +195,8 @@ clean			:
 fclean			:	clean
 				$(RM) $(NAME) $(BONUS)
 				make fclean -C $(LIB_D)
+				$(RM) $(IGN_TXT)
 
 re				:	fclean all
 
-.PHONY			:	all clean fclean re FORCE
+.PHONY			:	all clean fclean re leaks env_leaks
