@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 11:28:44 by syluiset          #+#    #+#             */
-/*   Updated: 2023/09/28 16:52:43 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/10/03 13:39:54 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,13 @@ t_garbage_lst	*garbage_last(t_garbage_lst *lst)
 	return (lst);
 }
 
-void	add_to_garbage(t_garbage **gb, void *content)// passer en int pour securiser
+int	add_to_garbage(t_garbage **gb, void *content)
 {
 	t_garbage_lst	*new;
 
 	new = new_garbage(content);
 	if (!new)
-		return ;
+		return (1);
 	if (!(*gb)->first)
 	{
 		(*gb)->first = new;
@@ -76,4 +76,5 @@ void	add_to_garbage(t_garbage **gb, void *content)// passer en int pour securise
 		(*gb)->last->next = new;
 		(*gb)->last = new;
 	}
+	return (0);
 }

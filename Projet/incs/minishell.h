@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/09/27 12:44:59 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/10/03 13:35:20 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ void			ft_free_all(t_garbage **lst);
 void			ft_free(t_garbage **lst, void *content);
 t_garbage_lst	*new_garbage(void *content);
 t_garbage		*create_garbage_container(void);
-void			add_to_garbage(t_garbage **gb, void *content);
+int				add_to_garbage(t_garbage **gb, void *content);
 char			*ft_gbstrdup(const char *src, t_garbage **gb);
 void			get_first_garbage(t_garbage **lst);
 char			*ft_gbstrjoin(char const *s1, char const *s2, t_garbage **gb);
