@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:08:17 by nfaust            #+#    #+#             */
-/*   Updated: 2023/09/26 10:13:06 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/10/03 13:38:58 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ static char	*modify_command(char *cmd, t_msh *msh,
 			ft_free(&(msh->garbage), cmd), NULL);
 	negativization(exp_env_v);
 	m_cmd = fill_mdcmd(cmd, start, exp_env_v, env_var);
-	add_to_garbage(&(msh->garbage), m_cmd);
+	if (add_to_garbage(&(msh->garbage), m_cmd))
+		return (free(m_cmd), NULL);
 	return (ft_free_mcmd(env_var, cmd, exp_env_v, &(msh->garbage)), m_cmd);
 }
 
