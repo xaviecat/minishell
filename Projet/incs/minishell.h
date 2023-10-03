@@ -146,7 +146,7 @@ void			ft_free_all(t_garbage **lst);
 void			ft_free(t_garbage **lst, void *content);
 t_garbage_lst	*new_garbage(void *content);
 t_garbage		*create_garbage_container(void);
-void			add_to_garbage(t_garbage **gb, void *content);
+int				add_to_garbage(t_garbage **gb, void *content);
 char			*ft_gbstrdup(const char *src, t_garbage **gb);
 void			get_first_garbage(t_garbage **lst);
 char			*ft_gbstrjoin(char const *s1, char const *s2, t_garbage **gb);
@@ -188,7 +188,6 @@ void			char_lst_delone(t_char_lst **lst, t_garbage **gb);
 /* lst_word function */
 int				create_word_lst(t_msh **sh);
 void			print_lst_word(t_word_lst *lst);
-int				reform_word_list(t_msh *msh);
 t_type_word		is_a_builtin(char *word);
 t_type_word		get_cat_of_word(char *word);
 void			word_lst_delone(t_word_lst **lst, t_garbage **gb);
