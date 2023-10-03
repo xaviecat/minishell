@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/10/03 14:05:49 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/10/03 16:26:48 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,7 +193,6 @@ t_type_word		is_a_builtin(char *word);
 t_type_word		get_cat_of_word(char *word);
 void			word_lst_delone(t_word_lst **lst, t_garbage **gb);
 t_word_lst		*word_lst_first(t_word_lst *lst);
-t_word_lst		*word_lst_insert(t_word_lst* wlst, t_garbage **gb, char *word);
 void			get_other_type_word(t_word_lst **lst);
 t_word_lst		*word_lst_new(char *word, t_garbage **gb);
 t_word_lst		*word_lst_add_back(t_word_lst *wlst, t_garbage **gb,
