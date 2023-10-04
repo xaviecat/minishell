@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:36:42 by xcharra           #+#    #+#             */
-/*   Updated: 2023/09/21 13:45:38 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/10/04 17:13:55 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int	b_cd(t_msh *msh)
 	char	*path;
 
 	path = get_path_from_env(msh);
-	if (path == NULL)
+	if (path == NULL && msh->lst_n->lst_cmd->next)
 	{
 		path = msh->lst_n->lst_cmd->next->cmd;
 		if (msh->lst_n->lst_cmd->next->next)
@@ -127,6 +127,8 @@ int	b_cd(t_msh *msh)
 		if (ft_strncmp(msh->lst_n->lst_cmd->next->cmd, "---", 4) == 0)
 			return (ft_fdprintf(2, MSH E_CD INV_OPT), 2);
 	}
+	if (!path)
+		return (ft_fdprintf(2, MSH E_CD"HOME not set\n"), 1);
 	if (ft_strncmp(path, ".", 2) == 0)
 		if (update_old_pwd(msh->envp, &(msh->garbage)))
 			free_and_exit_minish(msh, NULL, EXIT_FAILURE);
@@ -136,8 +138,7 @@ int	b_cd(t_msh *msh)
 		perror(path);
 		return (1);
 	}
-	else
-		if (update_pwd(msh->envp, &(msh->garbage)))
-			free_and_exit_minish(msh, NULL, EXIT_FAILURE);
+	else if (update_pwd(msh->envp, &(msh->garbage)))
+		free_and_exit_minish(msh, NULL, EXIT_FAILURE);
 	return (0);
 }
