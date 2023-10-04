@@ -12,15 +12,17 @@
 
 #include "../incs/minishell.h"
 
-void	free_and_exit_minish(t_msh *minish, char **envp_sh)
+void	free_and_exit_minish(t_msh *msh, char **envp_sh, int exit_code)
 {
 	if (envp_sh)
 		ft_tabfree(envp_sh);
-	ft_free_all(&(minish->garbage));
-	free(minish->garbage);
-	free(minish);
+	ft_free_all(&(msh->garbage));
+	free(msh->garbage);
+	msh->garbage = NULL;
+	free(msh);
+	msh = NULL;
 	rl_clear_history();
-	exit(EXIT_FAILURE);
+	exit(exit_code);
 }
 
 void	free_end_loop(t_msh *msh, char ***envp_sh)
@@ -40,7 +42,7 @@ char	**cp_envp_to_envp_sh(char **envp_sh, t_msh *msh)
 		ft_tabfree(envp_sh);
 	envp_sh = ft_tabdup(msh->envp);
 	if (!envp_sh)
-		free_and_exit_minish(msh, envp_sh);
+		free_and_exit_minish(msh, envp_sh, EXIT_FAILURE);
 	return (envp_sh);
 }
 
@@ -53,7 +55,7 @@ int	routine_minishell(t_msh *msh, char *line, char ***envp_sh)
 	if (!parsing_cmd(&msh, envp_sh))
 		return (1);
 	if (!get_cmdtab(msh))
-		free_and_exit_minish(msh, *envp_sh);
+		free_and_exit_minish(msh, *envp_sh, EXIT_FAILURE);
 	ft_tabfree(*envp_sh);
 	*envp_sh = NULL;
 	execution(msh);

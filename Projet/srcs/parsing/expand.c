@@ -107,7 +107,7 @@ int	expand_commands(t_msh *msh)
 		if (w_lst_cpy->type != delimiteur)
 			w_lst_cpy->word = expand_vars(w_lst_cpy->word, msh);
 		if (!w_lst_cpy->word)
-			free_and_exit_minish(msh, NULL);
+			free_and_exit_minish(msh, NULL, EXIT_FAILURE);
 		w_lst_cpy = w_lst_cpy->next;
 	}
 	return (1);

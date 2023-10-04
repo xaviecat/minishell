@@ -98,7 +98,7 @@ int	export_print(t_msh *msh)
 
 	envp_cpy = ft_gbtabdup(msh->envp, &(msh->garbage));
 	if (!envp_cpy)
-		free_and_exit_minish(msh, NULL);
+		free_and_exit_minish(msh, NULL, EXIT_FAILURE);
 	ft_sort_str_arr(envp_cpy);
 	i = 0;
 	while (envp_cpy[i])

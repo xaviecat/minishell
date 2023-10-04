@@ -24,7 +24,7 @@ int	parsing_char(t_msh **msh, char *line, char ***envp_sh)
 	{
 		g_exit_status = 128 + 12;
 		free(line);
-		free_and_exit_minish(*msh, *envp_sh);
+		free_and_exit_minish(*msh, *envp_sh, EXIT_FAILURE);
 	}
 	give_type_in_lst(&(*msh)->lst_c);
 	if (unhandled_char((*msh)->lst_c))
@@ -33,7 +33,7 @@ int	parsing_char(t_msh **msh, char *line, char ***envp_sh)
 		return (free_end_loop(*msh, envp_sh), 0);
 	}
 	if (harmonize_spaces(&((*msh)->lst_c), &((*msh)->garbage)))
-		return (free_and_exit_minish(*msh, *envp_sh), 0);
+		return (free_and_exit_minish(*msh, *envp_sh, EXIT_FAILURE), 0);
 	return (1);
 }
 
@@ -48,14 +48,14 @@ int	parsing_word(t_msh **msh, char ***envp_sh)
 
 	ret = create_word_lst(msh);
 	if (ret == 1)
-		free_and_exit_minish(*msh, *envp_sh);
+		free_and_exit_minish(*msh, *envp_sh, EXIT_FAILURE);
 	else if (ret == 2)
 		return (free_end_loop(*msh, envp_sh), 0);
 	if ((!check_pipe_and_redir(&((*msh)->garbage), &((*msh)->lst_w))))
 		return (free_end_loop(*msh, envp_sh), 0);
 	ret = expand_commands(*msh);
 	if (ret == 0)
-		free_and_exit_minish(*msh, *envp_sh);
+		free_and_exit_minish(*msh, *envp_sh, EXIT_FAILURE);
 	if (ret == 2)
 		return (free_end_loop(*msh, envp_sh), 0);
 	return (1);
@@ -71,14 +71,14 @@ int	parsing_cmd(t_msh **msh, char ***envp_sh)
 	int	ret;
 
 	if (!(sh_pars(msh)))
-		free_and_exit_minish(*msh, *envp_sh);
+		free_and_exit_minish(*msh, *envp_sh, EXIT_FAILURE);
 	ret = heredoc_handling(*msh);
 	if (ret == 0)
-		free_and_exit_minish(*msh, *envp_sh);
+		free_and_exit_minish(*msh, *envp_sh, EXIT_FAILURE);
 	if (ret == 2)
 		return (free_end_loop(*msh, envp_sh), 0);
 	if (!ft_del_quotes(*msh))
-		free_and_exit_minish(*msh, *envp_sh);
+		free_and_exit_minish(*msh, *envp_sh, EXIT_FAILURE);
 	get_access(*msh);
 	(*msh)->n_node = count_command((*msh)->lst_n);
 	return (1);

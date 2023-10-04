@@ -62,7 +62,7 @@ typedef bool	(*t_unhandled_tab)(t_char_lst *);
 typedef int		(*t_builtin_tab)(t_msh *msh);
 
 /* global */
-void			free_and_exit_minish(t_msh *minish, char **envp_sh);
+void			free_and_exit_minish(t_msh *msh, char **envp_sh, int exit_code);
 void			free_end_loop(t_msh *msh, char ***envp_sh);
 t_msh			*create_minishell(char **envp, char **envp_sh);
 int				line_empty_or_exit(char *line, char **envp_sh);

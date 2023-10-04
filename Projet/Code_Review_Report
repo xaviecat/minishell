@@ -1,10 +1,10 @@
 BRIEUC:
+        CHECK
 
-TRI_SH $> export a="echo coucou"
-TRI_SH $> $a
-minishell: echo coucou: command not found
+LOUISA: <3
 
+TRI_SH $> echo test | | echo lol
+lol
+-> c pas cense marcher
 
-
-LOUISA:
 

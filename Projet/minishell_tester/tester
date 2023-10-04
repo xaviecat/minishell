@@ -9,6 +9,7 @@ if [[ $1 ]]; then
 	)
 else
 	test_lists=(
+#	  exit_test
 		"builtins"
 		"pipes"
 		"redirects"
