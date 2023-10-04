@@ -3,19 +3,4 @@ BRIEUC:
 
 LOUISA: <3
 
-TRI_SH $> echo test | | echo lol
-lol
--> c pas cense marcher
-
-espace detecte apres redirection
-
-TRI_SH $> wc -l <test
-test : No such file or directory
-
-TRI_SH $> wc -l <test <<wof
-> test
-> test
-> test
-> wof
-(heredoc pas considere comme redir)
-
+TOUT regle !!

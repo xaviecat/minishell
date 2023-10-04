@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:14:27 by syluiset          #+#    #+#             */
-/*   Updated: 2023/09/21 21:26:59 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/10/04 18:30:48 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	pipe_is_valid(t_word_lst **lst, t_garbage **gb)
 	{
 		if ((*lst)->type == w_pipe)
 		{
-			if (!(*lst)->next || !(*lst)->prev)
+			if (!(*lst)->next || !(*lst)->prev || (*lst)->next->type == w_pipe)
 			{
 				ft_fdprintf(2, MSH PIPE_TKN);
 				free_error_word_lst(gb, lst);
