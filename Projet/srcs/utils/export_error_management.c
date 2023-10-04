@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 16:10:58 by nfaust            #+#    #+#             */
-/*   Updated: 2023/09/20 12:42:30 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/10/04 15:36:00 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static int	verif_first_arg(t_garbage **gb, t_cmd_lst *cmd)
 			ft_fdprintf(2, MSH E_EXPORT"'%s'"NT_VAL_ID, cmd->cmd), 0);
 	while (cmd_split[0][i])
 	{
-		if (!ft_isalnum(cmd_split[0][i]))
+		if (!ft_isalnum(cmd_split[0][i]) && cmd_split[0][i] != '_')
 		{
 			ft_fdprintf(2, MSH E_EXPORT"'%s'"NT_VAL_ID, cmd->cmd);
 			return (ft_gbtabfree(cmd_split, gb), 0);

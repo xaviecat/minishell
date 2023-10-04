@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
 /*   Updated: 2023/09/27 12:44:59 by syluiset         ###   ########.fr       */
@@ -234,6 +234,8 @@ void			close_pipe(int pipe[2]);
 void			close_all(int pipe_fd[3][2], t_msh *msh);
 void			clear_mem_fds(t_msh *msh, int pipe_fd[3][2],
 					int mode, char *why);
+
+void			recheck_builtin(t_msh *msh);
 
 void			child(t_msh *msh, int pipe_fd[3][2]);
 void			parent(t_msh *msh, int pipe_fd[3][2]);

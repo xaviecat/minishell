@@ -79,6 +79,7 @@ int	parsing_cmd(t_msh **msh, char ***envp_sh)
 		return (free_end_loop(*msh, envp_sh), 0);
 	if (!ft_del_quotes(*msh))
 		free_and_exit_minish(*msh, *envp_sh, EXIT_FAILURE);
+	recheck_builtin(*msh);
 	get_access(*msh);
 	(*msh)->n_node = count_command((*msh)->lst_n);
 	return (1);
