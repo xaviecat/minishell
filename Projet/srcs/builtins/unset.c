@@ -26,7 +26,7 @@ static int	unset_name_var(t_msh *sh)
 	sh->envp = ft_malloc(&(sh->garbage), sizeof(char *),
 			length_c_tab(old_envp) + 1);
 	if (!sh->envp)
-		free_and_exit_minish(sh, NULL);
+		free_and_exit_minish(sh, NULL, EXIT_FAILURE);
 	unset_tab(sh->envp, old_envp, &(sh->garbage), name_var);
 	ft_free(&(sh->garbage), name_var);
 	return (0);
