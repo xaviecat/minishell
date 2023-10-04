@@ -120,7 +120,7 @@ int	expand_heredoc(t_word_lst *heredoc, t_msh *msh)
 	heredoc_cpy = heredoc;
 	while (heredoc_cpy)
 	{
-		heredoc_cpy->word = expand_vars(heredoc_cpy->word, msh);
+		heredoc_cpy->word = expand_vars(heredoc_cpy->word, msh, 1);
 		if (!heredoc_cpy->word)
 			return (0);
 		heredoc_cpy = heredoc_cpy->next;

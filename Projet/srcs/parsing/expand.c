@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:08:17 by nfaust            #+#    #+#             */
-/*   Updated: 2023/10/03 13:38:58 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/10/04 16:33:06 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static char	*modify_command(char *cmd, t_msh *msh,
  * @param envp
  * @return the modified string
  */
-char	*expand_vars(char *command, t_msh *msh)
+char	*expand_vars(char *command, t_msh *msh, int heredoc)
 {
 	size_t	i;
 	int		double_not_closed;
@@ -83,7 +83,8 @@ char	*expand_vars(char *command, t_msh *msh)
 			if (!command)
 				return (NULL);
 		}
-		if (command[i] && command[i++] == '\'' && double_not_closed < 0)
+		if (command[i] && command[i++] == '\''
+			&& !heredoc && double_not_closed < 0)
 			while (command[i] && (command[i] != '\'' || !i++))
 				i++;
 	}
@@ -105,7 +106,7 @@ int	expand_commands(t_msh *msh)
 		if (!ft_strncmp(w_lst_cpy->word, "\"\"", 3))
 			w_lst_cpy->is_nill = true;
 		if (w_lst_cpy->type != delimiteur)
-			w_lst_cpy->word = expand_vars(w_lst_cpy->word, msh);
+			w_lst_cpy->word = expand_vars(w_lst_cpy->word, msh, 0);
 		if (!w_lst_cpy->word)
 			free_and_exit_minish(msh, NULL, EXIT_FAILURE);
 		w_lst_cpy = w_lst_cpy->next;
