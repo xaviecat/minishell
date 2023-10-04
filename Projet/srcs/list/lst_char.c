@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_char.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:39:55 by syluiset          #+#    #+#             */
-/*   Updated: 2023/09/28 10:32:41 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/10/04 17:48:28 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,30 +92,28 @@ void	free_error_char_lst(t_garbage **gb, t_char_lst **lst_c)
  * @param cmd_line
  * @return the char list create
  */
-int	create_char_lst_with_c_inside(char *cmd_line, t_msh **sh)
+int	create_char_lst_with_c_inside(char *cmd_line, t_msh **msh)
 {
 	int			i;
 	t_char_lst	*new;
-	size_t		taille;
 
 	i = 0;
-	taille = ft_strlen(cmd_line);
-	(void)taille;
 	while (cmd_line[i])
 	{
-		new = char_lst_new(cmd_line[i], &((*sh)->garbage));
+		new = char_lst_new(cmd_line[i], &((*msh)->garbage));
 		if (!new)
-			return (free_error_char_lst(&((*sh)->garbage), &((*sh)->lst_c)), 0);
-		if ((*sh)->lst_c)
+			return (free_error_char_lst(&((*msh)->garbage),
+					&((*msh)->lst_c)), 0);
+		if ((*msh)->lst_c)
 		{
-			new->prev = (*sh)->lst_c->last_added;
-			(*sh)->lst_c->last_added->next = new;
+			new->prev = (*msh)->lst_c->last_added;
+			(*msh)->lst_c->last_added->next = new;
 		}
 		else
-			(*sh)->lst_c = new;
-		(*sh)->lst_c->last_added = new;
+			(*msh)->lst_c = new;
+		(*msh)->lst_c->last_added = new;
 		i++;
 	}
-	free(cmd_line);
+	ft_free(&((*msh)->garbage), cmd_line);
 	return (1);
 }
