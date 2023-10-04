@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 17:16:51 by syluiset          #+#    #+#             */
-/*   Updated: 2023/10/03 18:31:32 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/10/04 14:06:38 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,16 +71,20 @@ void	in_double_or_single(t_word_lst *old_lst, bool *two_q, bool *one_q)
 	i = 0;
 	while (old_lst->word[i])
 	{
-		if (old_lst->word[i] =='"')
+		if (old_lst->word[i] == '"')
 			*two_q = true;
-		if (old_lst->word[i++] == '\'')
+		else if (old_lst->word[i++] == '\'')
 			*one_q = true;
+		else
+			continue ;
+		return ;
 	}
 	*two_q = false;
 	*one_q = false;
 }
 
-t_cmd_lst	*new_splitted_cmd_lst(t_word_lst *old_lst, bool two_quote, bool one_quote, t_garbage **gb)
+t_cmd_lst	*new_splitted_cmd_lst(t_word_lst *old_lst, bool two_quote,
+					bool one_quote, t_garbage **gb)
 {
 	char		**splitted_word;
 	size_t		i;
@@ -93,7 +97,7 @@ t_cmd_lst	*new_splitted_cmd_lst(t_word_lst *old_lst, bool two_quote, bool one_qu
 	new = NULL;
 	while (splitted_word[i])
 	{
-		old_lst->word = splitted_word[i];
+		old_lst->word = splitted_word[i++];
 		if (!new)
 		{
 			new = new_w_cmd_list(old_lst, one_quote, two_quote, gb);
@@ -101,10 +105,10 @@ t_cmd_lst	*new_splitted_cmd_lst(t_word_lst *old_lst, bool two_quote, bool one_qu
 		}
 		else
 		{
-			new->last_added->next = new_w_cmd_list(old_lst, one_quote, two_quote, gb);
+			new->last_added->next = new_w_cmd_list(old_lst,
+					one_quote, two_quote, gb);
 			new->last_added = new->last_added->next;
 		}
-		i++;
 	}
 	return (new);
 }
