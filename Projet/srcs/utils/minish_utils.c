@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minish_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 16:59:21 by syluiset          #+#    #+#             */
-/*   Updated: 2023/10/02 00:29:38 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/10/04 17:49:18 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,14 @@
  */
 int	parsing_char(t_msh **msh, char *line, char ***envp_sh)
 {
-	if (!(create_char_lst_with_c_inside(line, msh)))
+	char	*newline;
+
+	newline = ft_gbstrtrim(line, " 	", &((*msh)->garbage));
+	free(line);
+	if (!(create_char_lst_with_c_inside(newline, msh)))
 	{
 		g_exit_status = 128 + 12;
-		free(line);
+		ft_free(&((*msh)->garbage), newline);
 		free_and_exit_minish(*msh, *envp_sh, EXIT_FAILURE);
 	}
 	give_type_in_lst(&(*msh)->lst_c);

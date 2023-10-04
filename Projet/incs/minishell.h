@@ -174,7 +174,7 @@ int				length_c_tab(char **tabi);
 
 /* list_char function */
 t_char_lst		*char_lst_new(char c, t_garbage **gb);
-int				create_char_lst_with_c_inside(char *cmd_line, t_msh **sh);
+int				create_char_lst_with_c_inside(char *cmd_line, t_msh **msh);
 void			give_type_in_lst(t_char_lst **lst);
 void			char_lst_delone(t_char_lst **lst, t_garbage **gb);
 
