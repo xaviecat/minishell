@@ -129,7 +129,7 @@ int	b_cd(t_msh *msh)
 	}
 	if (ft_strncmp(path, ".", 2) == 0)
 		if (update_old_pwd(msh->envp, &(msh->garbage)))
-			free_and_exit_minish(msh, NULL);
+			free_and_exit_minish(msh, NULL, EXIT_FAILURE);
 	if (chdir(path) == -1)
 	{
 		ft_fdprintf(2, E_CD);
@@ -138,6 +138,6 @@ int	b_cd(t_msh *msh)
 	}
 	else
 		if (update_pwd(msh->envp, &(msh->garbage)))
-			free_and_exit_minish(msh, NULL);
+			free_and_exit_minish(msh, NULL, EXIT_FAILURE);
 	return (0);
 }

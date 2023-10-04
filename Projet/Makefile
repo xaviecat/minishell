@@ -1,185 +1,209 @@
 #===========================VARIABLE===============================#
-SRCS			:=	minishell.c\
-					\
-					builtins/cd.c\
-					builtins/echo.c\
-					builtins/env.c\
-					builtins/exit.c\
-					builtins/export.c\
-					builtins/pwd.c\
-					builtins/unset.c\
-					\
-					exec/execution.c\
-					exec/fds_redirection.c\
-					exec/fork_management.c\
-					exec/get_access.c\
-					exec/get_access_utils.c\
-					exec/get_cmdtab.c\
-					exec/mem_fds_management.c\
-					exec/process_management.c\
-					\
-					fds/fds.c\
-					fds/remove_quotes_filename.c\
-					\
-					garbage/ft_free.c\
-					garbage/ft_malloc.c\
-					garbage/ft_gbcalloc.c\
-					garbage/ft_gbsplit.c\
-					garbage/ft_gbstrdup.c\
-					garbage/ft_gbstrjoin.c\
-					garbage/ft_gbstrtrim.c\
-					garbage/ft_gbsubstr.c\
-					garbage/ft_gbtabdup.c\
-					garbage/ft_gbtabfree.c\
-					garbage/ft_gbtabjoin.c\
-					garbage/ft_gbitoa.c\
-					\
-					list/find_type.c\
-					list/lst.c\
-					list/lst_char.c\
-					list/lst_cmd.c\
-					list/lst_word.c\
-					list/lst_word_utils.c\
-					\
-					parsing/expand.c\
-					parsing/harmonize_spaces.c\
-					parsing/harmonize_spaces_utils.c\
-					parsing/is_error_fct1.c\
-					parsing/is_error_fct2.c\
-					parsing/pars_in_minish.c\
-					parsing/process_quotes.c\
-					parsing/redir_is_valid.c\
-					parsing/remove_quotes.c\
-					parsing/unhandled_char.c\
-					\
-					redir/redir.c\
-					redir/redir_utils.c\
-					redir/heredoc.c\
-					\
-					signal/signal.c\
-					signal/signal2.c\
-					\
-					utils/count_command.c\
-					utils/expand_utils.c\
-					utils/export_utils.c\
-					utils/ft_atoi_custom.c\
-					utils/ft_sort_str_arr.c\
-					utils/ft_tabfree.c\
-					utils/utils.c\
-					utils/heredoc_utils.c\
-					utils/export_error_management.c\
-					utils/minish_utils.c\
-					utils/minishell_routine_and_end.c\
-					utils/more_expand_utils.c\
-					utils/more_export_utils.c\
-					utils/ft_malloc_utils.c\
-					utils/unset_utils.c\
+SRCS		:=	\
+				minishell.c\
+				\
+				builtins/cd.c\
+				builtins/echo.c\
+				builtins/env.c\
+				builtins/exit.c\
+				builtins/export.c\
+				builtins/pwd.c\
+				builtins/unset.c\
+				\
+				exec/execution.c\
+				exec/fds_redirection.c\
+				exec/fork_management.c\
+				exec/get_access.c\
+				exec/get_access_utils.c\
+				exec/get_cmdtab.c\
+				exec/mem_fds_management.c\
+				exec/process_management.c\
+				\
+				fds/fds.c\
+				fds/remove_quotes_filename.c\
+				\
+				garbage/ft_free.c\
+				garbage/ft_malloc.c\
+				garbage/ft_gbcalloc.c\
+				garbage/ft_gbsplit.c\
+				garbage/ft_gbstrdup.c\
+				garbage/ft_gbstrjoin.c\
+				garbage/ft_gbstrtrim.c\
+				garbage/ft_gbsubstr.c\
+				garbage/ft_gbtabdup.c\
+				garbage/ft_gbtabfree.c\
+				garbage/ft_gbtabjoin.c\
+				garbage/ft_gbitoa.c\
+				\
+				list/find_type.c\
+				list/lst.c\
+				list/lst_char.c\
+				list/lst_cmd.c\
+				list/lst_word.c\
+				list/lst_word_utils.c\
+				\
+				parsing/expand.c\
+				parsing/harmonize_spaces.c\
+				parsing/harmonize_spaces_utils.c\
+				parsing/is_error_fct1.c\
+				parsing/is_error_fct2.c\
+				parsing/pars_in_minish.c\
+				parsing/process_quotes.c\
+				parsing/redir_is_valid.c\
+				parsing/remove_quotes.c\
+				parsing/unhandled_char.c\
+				\
+				redir/redir.c\
+				redir/redir_utils.c\
+				redir/heredoc.c\
+				\
+				signal/signal.c\
+				signal/signal2.c\
+				\
+				utils/count_command.c\
+				utils/expand_utils.c\
+				utils/export_utils.c\
+				utils/ft_atoi_custom.c\
+				utils/ft_sort_str_arr.c\
+				utils/ft_tabfree.c\
+				utils/utils.c\
+				utils/heredoc_utils.c\
+				utils/export_error_management.c\
+				utils/minish_utils.c\
+				utils/minishell_routine_and_end.c\
+				utils/more_expand_utils.c\
+				utils/more_export_utils.c\
+				utils/ft_malloc_utils.c\
+				utils/unset_utils.c\
 
-SRCS_D			:=	srcs/
+SRCS_D		:=	srcs/
 
-OBJS_D			:=	objs/
+OBJS_D		:=	objs/
 
-OBJS			:=	$(SRCS:%.c=$(OBJS_D)%.o)
+OBJS		:=	$(SRCS:%.c=$(OBJS_D)%.o)
 
-HEAD			:=	\
-					minishell.h\
-					error_msgs.h\
-					colors.h\
-					structures.h\
+DEPS		:=	$(SRCS:%.c=$(OBJS_D)%.d)
 
-HEAD_D			:=	incs/
+HEAD		:=	\
+				minishell.h\
+				error_msgs.h\
+				colors.h\
+				structures.h\
 
-HEAD_A			:=	$(addprefix $(HEAD_D), $(HEAD))
+HEAD_D		:=	incs/
 
-NAME			:=	minishell
+HEAD_A		:=	$(addprefix $(HEAD_D), $(HEAD))
 
-LIB				:=	libft.a
+NAME		:=	minishell
 
-LIB_D			:=	libft/
+LIB			:=	libft.a
 
-LIB_H			:=	$(LIB_D)$(HEAD_D)
+LIB_D		:=	libft/
 
-LIB_A			:=	$(LIB_D)$(LIB)
+LIB_H		:=	$(LIB_D)$(HEAD_D)
+
+LIB_A		:=	$(LIB_D)$(LIB)
 
 #=========================FLAG===============================#
-CC				:=	cc
+CC			:=	cc
 
-RM				:=	rm -rf
+RM			:=	rm -rf
 
-CFLAGS			:=	-Wall -Wextra -Werror
+CFLAGS		:=	-Wall -Wextra -Werror
 
-RDL				:=	-lreadline
+DFLAGS		:=	-MP -MMD
 
-ASAN_F			:=	-g3 #-fsanitize=address
+RDL			:=	-lreadline
+
+#=========================DEBUG==============================#
+ASAN_F		:=	-g3 #-fsanitize=address
+
+ENV			:=	env -i
+
+IGN_TXT		:=	valgrind_ignore_leaks.txt
+
+VALGRIND	:=	valgrind --suppressions=valgrind_ignore_leaks.txt --leak-check=full --show-leak-kinds=all\
+				--track-fds=yes --show-mismatched-frees=yes --read-var-info=yes -s
+
+#=========================COLOR==============================#
+BLUE		:=	\001\033[34m\002
+
+BOLD		:=	\001\033[1m\002
+
+RESET		:=	\001\033[0m\002
 
 #========================EXEC===============================#
-all				:	$(NAME)
-				@echo
-				@echo -e '\001\033[34m\002.___________..______       __  .__   __.  __       _______. __    __   _______  __       __      \001\033[0m\002'
-				@echo -e '\001\033[34m\002|           ||   _  \     |  | |  \ |  | |  |     /       ||  |  |  | |   ____||  |     |  |     \001\033[0m\002'
-				@echo -e '\001\033[34m\002`---|  |----`|  |_)  |    |  | |   \|  | |  |    |   (----`|  |__|  | |  |__   |  |     |  |     \001\033[0m\002'
-				@echo -e '\001\033[34m\002    |  |     |      /     |  | |  . `  | |  |     \   \    |   __   | |   __|  |  |     |  |     \001\033[0m\002'
-				@echo -e '\001\033[34m\002    |  |     |  |\  \----.|  | |  |\   | |  | .----)   |   |  |  |  | |  |____ |  `----.|  `----.\001\033[0m\002'
-				@echo -e '\001\033[34m\002    |__|     | _| `._____||__| |__| \__| |__| |_______/    |__|  |__| |_______||_______||_______|\001\033[0m\002'
-				@echo -e '\001\033[34m\002                                                                                                 \001\033[0m\002'
-				@echo -e '\001\033[1;34m\002                                                               🍦    by nfaust, syluiset & xcharra\001\033[0m\002'
-$(NAME)			:	$(OBJS_D) $(OBJS) $(LIB_A)
-				$(CC) $(CFLAGS) $(ASAN_F) -o $(NAME) $(OBJS) $(LIB_A) $(RDL)
 
-$(OBJS)			:	$(OBJS_D)%.o: $(SRCS_D)%.c $(HEAD_A) $(LIB_H)libft.h
-				$(CC) $(CFLAGS) $(ASAN_F) -I$(HEAD_D) -I$(LIB_H) -c $< -o $@
+all			:	$(NAME) banner
 
-$(OBJS_D)		:
-				mkdir -p $(OBJS_D)
-				mkdir -p $(OBJS_D)builtins
-				mkdir -p $(OBJS_D)exec
-				mkdir -p $(OBJS_D)fds
-				mkdir -p $(OBJS_D)garbage
-				mkdir -p $(OBJS_D)list
-				mkdir -p $(OBJS_D)parsing
-				mkdir -p $(OBJS_D)print_things
-				mkdir -p $(OBJS_D)redir
-				mkdir -p $(OBJS_D)signal
-				mkdir -p $(OBJS_D)utils
+$(NAME)		:	$(OBJS_D) $(OBJS) $(LIB_A)
+			$(CC) $(CFLAGS) $(ASAN_F) -o $(NAME) $(OBJS) $(LIB_A) $(RDL)
 
-$(LIB_A)		:	FORCE
-				make -C $(LIB_D)
+$(OBJS)		:	$(OBJS_D)%.o: $(SRCS_D)%.c $(HEAD_A) $(LIB_H)libft.h
+			$(CC) $(CFLAGS) $(ASAN_F) $(DFLAGS) -I$(HEAD_D) -I$(LIB_H) -c $< -o $@
 
-leaks			:	all
-				echo "{" > valgrind_ignore_leaks.txt
-				echo "leak readline" >> valgrind_ignore_leaks.txt
-				echo "    Memcheck:Leak" >> valgrind_ignore_leaks.txt
-				echo "    ..." >> valgrind_ignore_leaks.txt
-				echo "    fun:readline" >> valgrind_ignore_leaks.txt
-				echo "}" >> valgrind_ignore_leaks.txt
-				echo "{" >> valgrind_ignore_leaks.txt
-				echo "    leak add_history" >> valgrind_ignore_leaks.txt
-				echo "    Memcheck:Leak" >> valgrind_ignore_leaks.txt
-				echo "    ..." >> valgrind_ignore_leaks.txt
-				echo "    fun:add_history" >> valgrind_ignore_leaks.txt
-				echo "}" >> valgrind_ignore_leaks.txt
-				valgrind --suppressions=valgrind_ignore_leaks.txt --leak-check=full \
-					--show-leak-kinds=all --track-fds=yes \
-					--show-mismatched-frees=yes --read-var-info=yes \
-					-s ./${NAME}
-					#--log-file=valgrind.txt \
+$(OBJS_D)	:
+			@mkdir -p $(OBJS_D)
+			@mkdir -p $(OBJS_D)builtins
+			@mkdir -p $(OBJS_D)exec
+			@mkdir -p $(OBJS_D)fds
+			@mkdir -p $(OBJS_D)garbage
+			@mkdir -p $(OBJS_D)list
+			@mkdir -p $(OBJS_D)parsing
+			@mkdir -p $(OBJS_D)redir
+			@mkdir -p $(OBJS_D)signal
+			@mkdir -p $(OBJS_D)utils
 
-envleaks			:	all
-				env -i valgrind --suppressions=valgrind_ignore_leaks.txt --leak-check=full \
-					--show-leak-kinds=all --track-fds=yes \
-					--show-mismatched-frees=yes --read-var-info=yes \
-					-s ./${NAME}
+$(LIB_A)	:	$(LIB_D)
+			make -C $(LIB_D)
 
-FORCE			:
+$(IGN_TXT)	:
+			@echo "{"								> $(IGN_TXT)
+			@echo "	leak readline"					>> $(IGN_TXT)
+			@echo "		Memcheck:Leak"				>> $(IGN_TXT)
+			@echo "		..."						>> $(IGN_TXT)
+			@echo "		fun:readline" 				>> $(IGN_TXT)
+			@echo "}" 								>> $(IGN_TXT)
+			@echo "{" 								>> $(IGN_TXT)
+			@echo "	leak add_history"				>> $(IGN_TXT)
+			@echo "		Memcheck:Leak"				>> $(IGN_TXT)
+			@echo "		..."						>> $(IGN_TXT)
+			@echo "		fun:add_history"			>> $(IGN_TXT)
+			@echo "}"								>> $(IGN_TXT)
+			@echo "{"								>> $(IGN_TXT)
+			@echo "	leak readline_internal_char"	>> $(IGN_TXT)
+			@echo "		Memcheck:Leak"				>> $(IGN_TXT)
+			@echo "		..."						>> $(IGN_TXT)
+			@echo "		fun:readline_internal_char"	>> $(IGN_TXT)
+			@echo "}" 								>> $(IGN_TXT)
 
-clean			:
-				$(RM) $(OBJS) $(OBJS_D) $(OBJSB_D)
-				make clean -C $(LIB_D)
+leaks		:	all $(IGN_TXT)
+			$(VALGRIND) ./$(NAME)
 
-fclean			:	clean
-				$(RM) $(NAME) $(BONUS)
-				make fclean -C $(LIB_D)
+env_leaks	:	all $(IGN_TXT)
+			 $(ENV) $(LEAKS) ./$(NAME)
 
-re				:	fclean all
+banner		:
+			@echo -e '$(BLUE)'
+			@echo -e '.___________..______       __  .__   __.  __       _______. __    __   _______  __       __      '
+			@echo -e '|           ||   _  \     |  | |  \ |  | |  |     /       ||  |  |  | |   ____||  |     |  |     '
+			@echo -e '`---|  |----`|  |_)  |    |  | |   \|  | |  |    |   (----`|  |__|  | |  |__   |  |     |  |     '
+			@echo -e '    |  |     |      /     |  | |  . `  | |  |     \   \    |   __   | |   __|  |  |     |  |     '
+			@echo -e '    |  |     |  |\  \----.|  | |  |\   | |  | .----)   |   |  |  |  | |  |____ |  `----.|  `----.'
+			@echo -e '    |__|     | _| `._____||__| |__| \__| |__| |_______/    |__|  |__| |_______||_______||_______|'
+			@echo -e '$(BOLD)'
+			@echo -e '                                                              🍦    by nfaust, syluiset & xcharra'
+			@echo -e '$(RESET)'
 
-.PHONY			:	all clean fclean re FORCE
+clean		:
+			$(RM) $(OBJS) $(OBJS_D) $(OBJSB_D)
+			make clean -C $(LIB_D)
+
+fclean		:	clean
+			$(RM) $(NAME) $(BONUS)
+			make fclean -C $(LIB_D)
+			$(RM) $(IGN_TXT)
+
+re			:	fclean all
+
+.PHONY		:	all clean fclean re leaks env_leaks

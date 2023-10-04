@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_access.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 11:36:08 by xcharra           #+#    #+#             */
-/*   Updated: 2023/09/21 21:49:37 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/10/03 13:32:51 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static void	cmd_in_current_dir(t_msh *msh, t_node_lst *lst, t_garbage **gb)
 	}
 	lst->cmdpath = ft_gbstrdup(lst->lst_cmd->cmd, gb);
 	if (!(lst->cmdpath) && errno == ENOMEM)
-		return (free_and_exit_minish(msh, NULL));
+		return (free_and_exit_minish(msh, NULL, EXIT_FAILURE));
 }
 
 /**
@@ -114,7 +114,7 @@ static void	give_access(t_msh *msh, char **path, t_node_lst *lst,
 			cmdpaths = get_cmdpath(path, lst->lst_cmd->cmd, gb);
 			lst->cmdpath = check_access(cmdpaths, lst->lst_cmd->cmd, gb);
 			if ((!cmdpaths || !(lst->cmdpath)) && errno == ENOMEM)
-				return (free_and_exit_minish(msh, NULL));
+				return (free_and_exit_minish(msh, NULL, EXIT_FAILURE));
 		}
 		lst = lst->next;
 	}
@@ -133,6 +133,6 @@ void	get_access(t_msh *msh)
 
 	path = get_path(msh->envp, &(msh->garbage));
 	if (!path && errno == ENOMEM)
-		return (free_and_exit_minish(msh, NULL));
+		return (free_and_exit_minish(msh, NULL, EXIT_FAILURE));
 	give_access(msh, path, msh->lst_n, &(msh->garbage));
 }

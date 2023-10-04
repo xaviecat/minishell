@@ -64,12 +64,12 @@ bool	ft_atoi_custom(const char *nbr, unsigned int *nb_ret)
 {
 	if (!(verif_arg_exit((char *)nbr)))
 	{
-		ft_fdprintf(2, MSH E_EXIT"%s"NUM_ARG, nbr);
+		ft_fdprintf(2, "exit\n"MSH E_EXIT"%s"NUM_ARG, nbr);
 		return (false);
 	}
 	if (!real_atoi(nbr, (int *)nb_ret))
 	{
-		ft_fdprintf(2, MSH E_EXIT"%s"NUM_ARG, nbr);
+		ft_fdprintf(2, "exit\n"MSH E_EXIT"%s"NUM_ARG, nbr);
 		return (false);
 	}
 	return (true);

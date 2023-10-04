@@ -47,13 +47,13 @@ char	**create_cmdtab(t_cmd_lst *lst, t_garbage **gb, t_msh *msh)
 	i = lst_size(lst);
 	cmdtab = ft_malloc(gb, sizeof(char *), i + 1);
 	if (!cmdtab)
-		return (free_and_exit_minish(msh, NULL), NULL);
+		return (free_and_exit_minish(msh, NULL, EXIT_FAILURE), NULL);
 	i = 0;
 	while (lst)
 	{
 		cmdtab[i] = ft_gbstrdup(lst->cmd, gb);
 		if (!cmdtab[i])
-			return (free_and_exit_minish(msh, NULL), NULL);
+			return (free_and_exit_minish(msh, NULL, EXIT_FAILURE), NULL);
 		i++;
 		lst = lst->next;
 	}

@@ -3,19 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/10/03 16:26:48 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/10/04 15:59:52 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
-# include "colors.h"
-# include "error_msgs.h"
-# include "../libft/incs/libft.h"
 
 /* malloc, free, exit, getenv, tcsetattr, tcgetattr, */
 # include <stdlib.h>
@@ -45,38 +41,40 @@
 /* opendir,readdir, closedir */
 # include <dirent.h>
 
-/* ioctl,  */
+/* ioctl */
 # include <sys/ioctl.h>
 
-/* tgetent, tgetflag, tgetnum, tgetstrr, tgoto, tputs */
-# include <curses.h>
-# include <term.h>
+/* booleans */
+# include <stdbool.h>
 
 /* errno */
 # include <errno.h>
 
+# include "colors.h"
+# include "error_msgs.h"
+# include "../libft/incs/libft.h"
 # include "structures.h"
 
 extern int		g_exit_status;
 
+/* pointer function array */
 typedef bool	(*t_unhandled_tab)(t_char_lst *);
 typedef int		(*t_builtin_tab)(t_msh *msh);
 
 /* global */
-void			free_and_exit_minish(t_msh *minish, char **envp_sh);
+void			free_and_exit_minish(t_msh *msh, char **envp_sh, int exit_code);
 void			free_end_loop(t_msh *msh, char ***envp_sh);
-void			print_bannier(void);
 t_msh			*create_minishell(char **envp, char **envp_sh);
 int				line_empty_or_exit(char *line, char **envp_sh);
 char			**cp_envp_to_envp_sh(char **envp_sh, t_msh *msh);
 int				routine_minishell(t_msh *msh, char *line, char ***envp_sh);
+
 /* parsing */
 int				parsing_char(t_msh **msh, char *line, char ***envp_sh);
 int				parsing_word(t_msh **msh, char ***envp_sh);
 int				parsing_cmd(t_msh **msh, char ***envp_sh);
-char			**parsing_argu(char *arg_term);
-t_msh			*parsing_command(char *cmd_line, t_msh *sh);
 int				expand_commands(t_msh *msh);
+char			*expand_vars(char *command, t_msh *msh);
 char			*set_expanded_env_var(char *env_var, t_msh *msh,
 					int double_not_closed);
 char			*cut_whitespaces(char *str, t_garbage **gb);
@@ -85,8 +83,8 @@ int				harmonize_spaces(t_char_lst **lst, t_garbage **gb);
 int				add_space(t_char_lst *lst, t_position pos, t_garbage **gb);
 int				redir_is_valid(t_word_lst **lst, t_garbage **gb);
 int				check_pipe_and_redir(t_garbage **gb, t_word_lst **lst);
-//char			**reforme_d_tab_cmd(t_cmd_lst **lst, char *cmd, t_garbage **gb);
 int				ft_del_quotes(t_msh *msh);
+int				does_contain_quotes(char *str);
 int				export_error_management(t_msh *msh, t_cmd_lst *cmd,
 					int *error_code);
 int				export_print(t_msh *msh);
@@ -95,25 +93,25 @@ size_t			get_var_name_len(char *arg);
 int				ft_alloc_envp(t_msh *msh, t_cmd_lst *curr);
 size_t			get_newcmd_len(char *cmd);
 char			*modify_cmd(char *cmd, char *new_cmd, t_garbage **gb);
+
 /* redir */
 t_redir_lst		*get_redir(t_word_lst **lst, t_garbage **gb);
-void			print_redir(t_redir_lst *lst);
 void			free_error_redir(t_garbage **gb, t_redir_lst **lst);
 void			redir_add_back(t_redir_lst **lst, t_redir_lst *new);
 t_redir_lst		*redir_last(t_redir_lst *lst);
 t_redir_lst		*new_redir(t_type_redir type_red, t_garbage **gb);
+
 /* fds */
 t_fd_lst		*create_fds_list(t_redir_lst *redirs, t_garbage **gb);
-void			print_fd(t_fd_lst *lst);
-void			free_error_fds(t_garbage **gb, t_fd_lst **lst);
 t_fd_lst		*new_fds(t_garbage **gb);
-void			fds_add_back(t_fd_lst **lst, t_fd_lst *new);
 int				del_quote_filename(t_redir_lst **lst, t_garbage **gb);
+
 /* error */
 bool			is_forbidden_char(t_char_lst *lst);
 bool			unhandled_char(t_char_lst *lst);
 bool			is_bad_redir(t_char_lst *lst);
 void			free_error_word_lst(t_garbage **gb, t_word_lst **lst);
+
 /* builtins */
 int				b_pwd(t_msh *msh);
 int				b_cd(t_msh *msh);
@@ -124,7 +122,6 @@ int				b_env(t_msh *msh);
 int				b_unset(t_msh *sh);
 
 /* signal */
-void			signal_handler(int signum);
 void			signal_term(int signum);
 void			signal_heredoc(int signum);
 void			signal_exec(int signum);
@@ -132,9 +129,7 @@ void			signal_hub_term(void);
 void			signal_hub_heredoc(void);
 void			signal_hub_exec(void);
 void			signal_hub_ign(void);
-void			signal_sigquit(int signum);
-void			signal_sigint(int signum);
-void			signal_hub_default(void);
+
 /* utils */
 char			*ft_cut_var(char *str, t_garbage **gb);
 int				ft_isspace(char c);
@@ -176,18 +171,15 @@ int				verif_char_in_var(char *var);
 int				unset_tab(char **new_tab, char **old_tab, t_garbage **gb,
 					char *var);
 int				length_c_tab(char **tabi);
+
 /* list_char function */
 t_char_lst		*char_lst_new(char c, t_garbage **gb);
-t_char_lst		*char_lst_last(t_char_lst *lst);
-void			char_lst_add_back(t_char_lst **lst, t_char_lst *new);
-void			char_lst_add_front(t_char_lst **lst, t_char_lst *new);
 int				create_char_lst_with_c_inside(char *cmd_line, t_msh **sh);
 void			give_type_in_lst(t_char_lst **lst);
-void			print_lst_char(t_char_lst *lst);
 void			char_lst_delone(t_char_lst **lst, t_garbage **gb);
+
 /* lst_word function */
 int				create_word_lst(t_msh **sh);
-void			print_lst_word(t_word_lst *lst);
 t_type_word		is_a_builtin(char *word);
 t_type_word		get_cat_of_word(char *word);
 void			word_lst_delone(t_word_lst **lst, t_garbage **gb);
@@ -196,16 +188,13 @@ void			get_other_type_word(t_word_lst **lst);
 t_word_lst		*word_lst_new(char *word, t_garbage **gb);
 t_word_lst		*word_lst_add_back(t_word_lst *wlst, t_garbage **gb,
 					char *word);
-/* list command maybe not useful */
+
 t_node_lst		*lst_cmd_new(t_cmd_lst *cmds,
 					t_fd_lst *fds, t_redir_lst *redir, t_garbage **gb);
-void			lst_cmd_add_back(t_node_lst **lst, t_node_lst *new);
-void			print_lst_cmd(t_node_lst *lst);
-void			lst_clear(t_node_lst **lst);
-t_node_lst		*create_lst_cmd(t_word_lst **old_lst,
-					t_fd_lst *fds, t_redir_lst *redirs);
 int				sh_pars(t_msh **msh);
 t_builtin		builtin_or_command(char *cmd);
+void			recheck_builtin(t_msh *msh);
+
 /* lst_w_cmd function */
 t_cmd_lst		*get_cmd(t_word_lst **old_lst, t_garbage **gb);
 bool			is_amp_error(t_char_lst *lst);
@@ -217,15 +206,12 @@ bool			is_exclamation_error(t_char_lst *lst);
 bool			is_parenthesis_error(t_char_lst *lst);
 bool			is_star_error(t_char_lst *lst);
 bool			is_dot_error(t_char_lst *lst);
+
 /* heredoc */
 int				heredoc_handling(t_msh *msh);
 t_word_lst		*display_heredoc(t_word_lst *heredoc,
 					t_msh *msh, t_redir_lst *redirs);
 int				expand_heredoc(t_word_lst *heredoc, t_msh *msh);
-/* A RANGER LOL */
-char			*expand_vars(char *command, t_msh *msh);
-int				does_contain_quotes(char *str);
-void			print_tab(char **tabi);
 
 /* execution */
 
@@ -249,8 +235,6 @@ void			close_pipe(int pipe[2]);
 void			close_all(int pipe_fd[3][2], t_msh *msh);
 void			clear_mem_fds(t_msh *msh, int pipe_fd[3][2],
 					int mode, char *why);
-
-void			recheck_builtin(t_msh *msh);
 
 void			child(t_msh *msh, int pipe_fd[3][2]);
 void			parent(t_msh *msh, int pipe_fd[3][2]);
