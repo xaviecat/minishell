@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:59:51 by nfaust            #+#    #+#             */
-/*   Updated: 2023/06/14 15:52:08 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/10/04 15:29:04 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,19 @@ int	does_contain_quotes(char *str)
 			return (1);
 	}
 	return (0);
+}
+
+void	recheck_builtin(t_msh *msh)
+{
+	t_node_lst	*lst_n_cpy;
+
+	lst_n_cpy = msh->lst_n;
+	while (lst_n_cpy)
+	{
+		if (lst_n_cpy->lst_cmd)
+			if (lst_n_cpy->lst_cmd->cmd)
+				lst_n_cpy->builtin = builtin_or_command(
+						lst_n_cpy->lst_cmd->cmd);
+		lst_n_cpy = lst_n_cpy->next;
+	}
 }

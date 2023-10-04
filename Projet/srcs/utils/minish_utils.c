@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 16:59:21 by syluiset          #+#    #+#             */
-/*   Updated: 2023/10/03 16:12:41 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/10/04 15:27:42 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ int	parsing_cmd(t_msh **msh, char ***envp_sh)
 		return (free_end_loop(*msh, envp_sh), 0);
 	if (!ft_del_quotes(*msh))
 		free_and_exit_minish(*msh, *envp_sh);
+	recheck_builtin(*msh);
 	get_access(*msh);
 	(*msh)->n_node = count_command((*msh)->lst_n);
 	return (1);

@@ -250,6 +250,8 @@ void			close_all(int pipe_fd[3][2], t_msh *msh);
 void			clear_mem_fds(t_msh *msh, int pipe_fd[3][2],
 					int mode, char *why);
 
+void			recheck_builtin(t_msh *msh);
+
 void			child(t_msh *msh, int pipe_fd[3][2]);
 void			parent(t_msh *msh, int pipe_fd[3][2]);
 
