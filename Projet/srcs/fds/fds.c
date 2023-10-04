@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fds.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 17:45:12 by syluiset          #+#    #+#             */
-/*   Updated: 2023/09/21 14:49:53 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/10/04 14:40:11 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ t_fd_lst	*create_fds_list(t_redir_lst *redirs, t_garbage **gb)
 	fds = new_fds(gb);
 	if (!fds)
 		return (NULL);
-	if (!(del_quote_filename(&redirs, gb)))
+	if (redirs->redir != inin && !(del_quote_filename(&redirs, gb)))
 		return (NULL);
 	while (redirs)
 	{
