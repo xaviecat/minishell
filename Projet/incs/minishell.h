@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/09/27 12:44:59 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/10/04 15:59:52 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,6 +193,7 @@ t_node_lst		*lst_cmd_new(t_cmd_lst *cmds,
 					t_fd_lst *fds, t_redir_lst *redir, t_garbage **gb);
 int				sh_pars(t_msh **msh);
 t_builtin		builtin_or_command(char *cmd);
+void			recheck_builtin(t_msh *msh);
 
 /* lst_w_cmd function */
 t_cmd_lst		*get_cmd(t_word_lst **old_lst, t_garbage **gb);
@@ -234,8 +235,6 @@ void			close_pipe(int pipe[2]);
 void			close_all(int pipe_fd[3][2], t_msh *msh);
 void			clear_mem_fds(t_msh *msh, int pipe_fd[3][2],
 					int mode, char *why);
-
-void			recheck_builtin(t_msh *msh);
 
 void			child(t_msh *msh, int pipe_fd[3][2]);
 void			parent(t_msh *msh, int pipe_fd[3][2]);
