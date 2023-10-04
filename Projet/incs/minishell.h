@@ -74,7 +74,7 @@ int				parsing_char(t_msh **msh, char *line, char ***envp_sh);
 int				parsing_word(t_msh **msh, char ***envp_sh);
 int				parsing_cmd(t_msh **msh, char ***envp_sh);
 int				expand_commands(t_msh *msh);
-char			*expand_vars(char *command, t_msh *msh);
+char			*expand_vars(char *command, t_msh *msh, int heredoc);
 char			*set_expanded_env_var(char *env_var, t_msh *msh,
 					int double_not_closed);
 char			*cut_whitespaces(char *str, t_garbage **gb);
