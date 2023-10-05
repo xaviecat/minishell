@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:08:17 by nfaust            #+#    #+#             */
-/*   Updated: 2023/10/04 16:33:06 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/10/05 14:32:02 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,23 +35,23 @@ void	negativization(char *str)
  * @return the modified lst_cmd
  */
 static char	*modify_command(char *cmd, t_msh *msh,
-							size_t start, int double_not_closed)
+							size_t *start, int double_not_closed)
 {
 	char	*env_var;
 	char	*exp_env_v;
 	char	*m_cmd;
 
-	env_var = ft_cut_var(cmd + start, &(msh->garbage));
+	env_var = ft_cut_var(cmd + *start, &(msh->garbage));
 	if (!env_var)
 		return (NULL);
-	if (is_dollar_alone(env_var, cmd, start, double_not_closed))
-		return (ft_free(&(msh->garbage), env_var), cmd);
+	if (is_dollar_alone(env_var, cmd, *start, double_not_closed))
+		return (*start += 1, ft_free(&(msh->garbage), env_var), cmd);
 	exp_env_v = set_expanded_env_var(env_var, msh, double_not_closed);
 	if (!exp_env_v)
 		return (ft_free(&(msh->garbage), env_var),
 			ft_free(&(msh->garbage), cmd), NULL);
 	negativization(exp_env_v);
-	m_cmd = fill_mdcmd(cmd, start, exp_env_v, env_var);
+	m_cmd = fill_mdcmd(cmd, *start, exp_env_v, env_var);
 	if (add_to_garbage(&(msh->garbage), m_cmd))
 		return (free(m_cmd), NULL);
 	return (ft_free_mcmd(env_var, cmd, exp_env_v, &(msh->garbage)), m_cmd);
@@ -77,9 +77,9 @@ char	*expand_vars(char *command, t_msh *msh, int heredoc)
 		if (command[i] == '$' && command[i + 1] && !ft_isalpha(command[i + 1])
 			&& !ft_strchr("?'\"", command[i + 1]))
 			i++;
-		if (command[i] == '$')
+		while (command[i] == '$')
 		{
-			command = modify_command(command, msh, i, double_not_closed);
+			command = modify_command(command, msh, &i, double_not_closed);
 			if (!command)
 				return (NULL);
 		}
