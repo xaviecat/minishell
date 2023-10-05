@@ -104,7 +104,7 @@ LIB_H		:=	$(LIB_D)$(HEAD_D)
 
 LIB_A		:=	$(LIB_D)$(LIB)
 
-DEBUG		:= no
+DEBUG		:=	no
 
 ########################################################################################################################
 #                                                        FLAGS                                                         #
@@ -165,7 +165,7 @@ $(OBJS_D)	:
 			@mkdir -p $(OBJS_D)utils
 
 $(LIB_A)	:	$(LIB_D)
-			make -C $(LIB_D)
+			$(MAKE) -C $(LIB_D)
 
 $(IGN_LEAK)	:
 			@echo "{"								> $(IGN_LEAK)
@@ -210,11 +210,11 @@ banner		:
 
 clean		:
 			$(RM) $(OBJS) $(OBJS_D) $(OBJSB_D)
-			make clean -C $(LIB_D)
+			$(MAKE) clean -C $(LIB_D)
 
 fclean		:	clean
 			$(RM) $(NAME) $(BONUS)
-			make fclean -C $(LIB_D)
+			$(MAKE) fclean -C $(LIB_D)
 			$(RM) $(IGN_LEAK)
 
 re			:	fclean all
