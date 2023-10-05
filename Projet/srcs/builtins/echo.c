@@ -37,6 +37,10 @@ bool	is_n_param(t_cmd_lst *lst)
 	return (true);
 }
 
+/***
+ * @brief displays each user-entry in prompt wich follows 'echo'
+ * @return the corresponding exit status
+ */
 int	b_echo(t_msh *msh)
 {
 	bool	new_line;
