@@ -6,12 +6,17 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 16:10:58 by nfaust            #+#    #+#             */
-/*   Updated: 2023/10/04 15:36:00 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/10/05 18:35:12 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
+/**
+ * @brief cut the plus sign in a concatenation if the string is not ended
+ * by plus sign without next char
+ * @return a new allocated str without plus \n NULL on allocation error
+ */
 char	*trim_plus_sign(char *str, t_garbage **gb)
 {
 	size_t	i;
@@ -37,6 +42,10 @@ char	*trim_plus_sign(char *str, t_garbage **gb)
 	return (new_str[j - 1] = 0, new_str);
 }
 
+/**
+ * @brief checks if an export is a concatenation
+ * @return 1 if it's a concatenation \n else 0
+ */
 int	check_concat(char *str)
 {
 	size_t	i;
@@ -51,6 +60,11 @@ int	check_concat(char *str)
 	return (0);
 }
 
+/**
+ * @brief verify if the first part (env_var name) of the export contain
+ * errors and print it
+ * @return 0 if an error was found (or allocation error) \n else 1
+ */
 static int	verif_first_arg(t_garbage **gb, t_cmd_lst *cmd)
 {
 	char	**cmd_split;
@@ -79,9 +93,16 @@ static int	verif_first_arg(t_garbage **gb, t_cmd_lst *cmd)
 	return (ft_gbtabfree(cmd_split, gb), 1);
 }
 
+/**
+ * @brief find errors in the export line and print it
+ * @param error_code address to the error_code to be modified that
+ * can be used for exit_status
+ * @return 1 if no error was found \n else 0
+ */
 int	export_error_management(t_msh *msh, t_cmd_lst *cmd, int *error_code)
 {
-	if (ft_strncmp(cmd->cmd, "=", 1) == 0 || cmd->is_nill)
+	if (ft_strncmp(cmd->cmd, "=", 1) == 0
+		|| !ft_strncmp(cmd->cmd, "+", 1) || cmd->is_nill)
 		return (*error_code = 1,
 			ft_fdprintf(2, MSH E_EXPORT"'%s'"NT_VAL_ID, cmd->cmd), 0);
 	if (ft_strncmp(cmd->cmd, "-", 1) == 0)
