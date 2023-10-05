@@ -39,6 +39,6 @@ int	b_exit(t_msh *msh)
 			g_exit_status = ret;
 	}
 	if (msh->lst_n->pid < 0)
-		ft_fdprintf(2, "exit\n");
+		ft_fdprintf(1, "exit\n");
 	return (free_and_exit_minish(msh, NULL, g_exit_status), g_exit_status);
 }

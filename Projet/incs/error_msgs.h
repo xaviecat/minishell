@@ -14,6 +14,7 @@
 # define ERROR_MSGS_H
 
 # define MSH			"minishell: "
+
 /* custom errors */
 # define UN_QUOTE	"unexpected EOF while looking for matching `'' or `\"'\n"
 # define S_AMP		"feature not handled: '&'\n"
@@ -37,15 +38,6 @@
 # define E_PWD		"pwd: "
 # define E_ENV		"env: "
 
-# define TOO_MN_ARGS	"too many arguments\n"
-# define CMD_NOT_FOUND	": command not found\n"
-# define NT_VAL_ID		": not a valid identifier\n"
-# define NO_SFD			": No such file or directory\n"
-# define IS_DIR			": Is a directory\n"
-# define NO_PERM		": Permission denied\n"
-# define NUM_ARG		": numeric argument required\n"
-# define INVALID_OPT	": invalid option\n"
-
 /* bash errors*/
 # define S_SM_A_BRA		"syntax error near unexpected token `<'\n"
 # define D_SM_A_BRA		"syntax error near unexpected token `<<'\n"
@@ -55,5 +47,14 @@
 # define PIPE_TKN		"syntax error near unexpected token '|'\n"
 # define UN_TKN			"syntax error near unexpected token\n"
 # define INV_OPT		"invalid option\n"
+
+# define TOO_MN_ARGS	"too many arguments\n"
+# define CMD_NOT_FOUND	": command not found\n"
+# define NT_VAL_ID		": not a valid identifier\n"
+# define NO_SFD			": No such file or directory\n"
+# define IS_DIR			": Is a directory\n"
+# define NO_PERM		": Permission denied\n"
+# define NUM_ARG		": numeric argument required\n"
+# define INVALID_OPT	": invalid option\n"
 
 #endif
