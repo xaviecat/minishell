@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_msgs.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 16:53:50 by syluiset          #+#    #+#             */
-/*   Updated: 2023/09/21 16:53:50 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/10/05 18:11:42 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@
 # define D_GR_A_BRA		"syntax error near unexpected token `>>'\n"
 # define NL_TKN			"syntax error near unexpected token `newline'\n"
 # define PIPE_TKN		"syntax error near unexpected token '|'\n"
-# define UN_TKN			"syntax error near unexpected token\n"
+# define UN_TKN			"syntax error near unexpected token "
 # define INV_OPT		"invalid option\n"
 
 # define TOO_MN_ARGS	"too many arguments\n"
