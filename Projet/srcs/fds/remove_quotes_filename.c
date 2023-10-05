@@ -12,6 +12,10 @@
 
 #include "../../incs/minishell.h"
 
+/**
+ * @brief reallocates filename and deletes quote from it
+ * @return 1 on success \n 0 on allocation error
+ */
 static int	del_quote_redir(t_redir_lst **lst, t_garbage **gb)
 {
 	char	*new_filename;
@@ -25,6 +29,10 @@ static int	del_quote_redir(t_redir_lst **lst, t_garbage **gb)
 	return (1);
 }
 
+/**
+ * @brief find out if filename have quotes in it and delete them from filename
+ * @return 1 on success \n 0 on allocation error
+ */
 int	del_quote_filename(t_redir_lst **lst, t_garbage **gb)
 {
 	t_redir_lst	*first;
