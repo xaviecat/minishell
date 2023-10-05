@@ -133,6 +133,7 @@ int	line_empty_or_exit(char *line, char **envp_sh)
 		else
 		{
 			printf("exit\n");
+			rl_clear_history();
 			if (envp_sh)
 				ft_tabfree(envp_sh);
 			return (2);
