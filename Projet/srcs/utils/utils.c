@@ -77,6 +77,11 @@ char	*cut_whitespaces(char *str, t_garbage **gb)
 	return (ft_free(gb, trimed_str - trimed_len), str[j] = 0, str);
 }
 
+/**
+ * @brief browse str and return if str contain quotes
+ * @param str
+ * @return 0 if str not contains quotes, 1 otherwise
+ */
 int	does_contain_quotes(char *str)
 {
 	size_t	i;
@@ -89,6 +94,7 @@ int	does_contain_quotes(char *str)
 	}
 	return (0);
 }
+
 
 void	recheck_builtin(t_msh *msh)
 {

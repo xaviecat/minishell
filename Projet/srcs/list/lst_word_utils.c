@@ -61,6 +61,13 @@ void	word_lst_delone(t_word_lst **lst, t_garbage **gb)
 		*lst = prev;
 }
 
+/**
+ * @brief Add new in the list of type word list
+ * @param wlst
+ * @param gb
+ * @param word
+ * @return return the list with added word
+ */
 t_word_lst	*word_lst_add_back(t_word_lst *wlst, t_garbage **gb, char *word)
 {
 	if (!wlst)
@@ -76,6 +83,11 @@ t_word_lst	*word_lst_add_back(t_word_lst *wlst, t_garbage **gb, char *word)
 	return (wlst);
 }
 
+/**
+ * @brief move up the lst
+ * @param lst
+ * @return
+ */
 t_word_lst	*word_lst_first(t_word_lst *lst)
 {
 	if (!lst)
