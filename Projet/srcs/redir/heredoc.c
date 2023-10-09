@@ -6,15 +6,32 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:35:07 by nfaust            #+#    #+#             */
-/*   Updated: 2023/09/26 11:32:38 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/10/09 16:22:18 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
 /***
+ * @brief displays the heredoc
+ * @return the word list containing heredoc lines.
+ * if no lines are entered returns null
+ */
+t_word_lst	*display_heredoc(t_word_lst *heredoc,
+			t_msh *msh, t_redir_lst *redirs)
+{
+	destroy_heredoc(heredoc, &(msh->garbage));
+	g_exit_status = 0;
+	heredoc = run_heredoc(redirs->filename, &(msh->garbage));
+	if ((!heredoc && errno == ENOMEM)
+		|| (!does_contain_quotes(redirs->filename)
+			&& !expand_heredoc(heredoc, msh)))
+		return (NULL);
+	return (heredoc);
+}
+
+/**
  * @brief displays and catches heredoc content
- * @param msh
  * @return 0 on malloc issue, 2 if signals caught, 1 on success
  */
 int	heredoc_handling(t_msh *msh)

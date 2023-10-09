@@ -12,6 +12,12 @@
 
 #include "../../incs/minishell.h"
 
+/**
+ * @brief modify quotes that have been negativized so that they can
+ * be printed and count how many quotes are changed. by passing 1 in the
+ * count parameter, only counts the quotes without modify the string
+ * @return the counter of the modified quotes
+ */
 size_t	positivization(char *str, int count)
 {
 	size_t	i;
@@ -32,6 +38,10 @@ size_t	positivization(char *str, int count)
 	return (j);
 }
 
+/**
+ * @brief calculates the len of the command without unexpected quotes
+ * @return the total len of the new cmd
+ */
 size_t	get_newcmd_len(char *cmd)
 {
 	size_t	i;
@@ -57,6 +67,10 @@ size_t	get_newcmd_len(char *cmd)
 	return (counter + positivization(cmd, 1));
 }
 
+/**
+ * @brief fill new_cmd with the string cmd without quotes
+ * @return the new_cmd
+ */
 char	*modify_cmd(char *cmd, char *new_cmd, t_garbage **gb)
 {
 	size_t	i;
@@ -85,6 +99,10 @@ char	*modify_cmd(char *cmd, char *new_cmd, t_garbage **gb)
 	return (new_cmd);
 }
 
+/**
+ * @brief deletes quotes from a command
+ * @return 0 on allocation error \n 1 on sucess
+ */
 int	delete_quotes(t_cmd_lst *cmd, t_garbage **gb)
 {
 	char	*new_cmd;
@@ -98,6 +116,10 @@ int	delete_quotes(t_cmd_lst *cmd, t_garbage **gb)
 	return (1);
 }
 
+/***
+ * @brief deletes quotes from each command and parameters
+ * @return 0 on error \n 1 on sucess
+ */
 int	ft_del_quotes(t_msh *msh)
 {
 	t_node_lst		*cmds_cpy;

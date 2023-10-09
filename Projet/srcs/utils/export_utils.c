@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 13:17:59 by nfaust            #+#    #+#             */
-/*   Updated: 2023/09/21 19:37:52 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/10/05 18:18:27 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	concat_var(char *cmd, size_t var_name_len, t_garbage **gb, char **envp)
 	i = 0;
 	while (envp[i])
 	{
-		if (!ft_strncmp(envp[i], cmd, var_name_len - 1)
+		if (!ft_strncmp(envp[i], cmd, var_name_len)
 			&& (!envp[i][var_name_len] || envp[i][var_name_len] == '='))
 			break ;
 		i++;
@@ -104,7 +104,7 @@ int	is_concat(char *cmd)
 	return (0);
 }
 
-/***
+/**
  * @brief checks whether a concatenation is in env or not
  * @param envp
  * @param cmd the entire command (name+content)
@@ -121,7 +121,7 @@ int	cmp_concat(char **envp, char *cmd)
 	i = 0;
 	while (envp[i])
 	{
-		if (!ft_strncmp(cmd, envp[i], var_len - 1))
+		if (!ft_strncmp(cmd, envp[i], var_len))
 			if (!envp[i][var_len] || envp[i][var_len] == '=')
 				return (0);
 		i++;
