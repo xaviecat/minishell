@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:57:11 by nfaust            #+#    #+#             */
-/*   Updated: 2023/10/09 16:21:05 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/10/09 19:19:04 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	destroy_heredoc(t_word_lst *heredoc, t_garbage **gb)
 static int	check_line(char *line, char *delimiter, ssize_t delimiter_len)
 {
 	if (!line && errno != ENOMEM)
-		ft_fdprintf(2, "\n");
+		ft_fdprintf(2, MSH WARN_HD"(wanted '%s')\n", delimiter);
 	if (!line || !ft_strncmp(line, delimiter, delimiter_len + 1))
 		return (1);
 	return (0);
