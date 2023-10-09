@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:57:11 by nfaust            #+#    #+#             */
-/*   Updated: 2023/09/26 11:32:38 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/10/09 16:21:05 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,22 @@ void	destroy_heredoc(t_word_lst *heredoc, t_garbage **gb)
 	ft_free(gb, heredoc);
 }
 
+/**
+ * @brief checks if the inputed line matches the delimiter or
+ * if the allocation of the line has failed,
+ * and prints a \\n if a ctrl-D was sent by the user
+ * @return 0 if the input is correct and no allocation error was found \n
+ * 1 else
+ */
+static int	check_line(char *line, char *delimiter, ssize_t delimiter_len)
+{
+	if (!line && errno != ENOMEM)
+		ft_fdprintf(2, "\n");
+	if (!line || !ft_strncmp(line, delimiter, delimiter_len + 1))
+		return (1);
+	return (0);
+}
+
 /***
  * @brief executes the heredoc and displays a new line while delimiter
  * is not entered
@@ -93,7 +109,7 @@ t_word_lst	*run_heredoc(char *delimiter, t_garbage **gb)
 	while (g_exit_status != 130)
 	{
 		line = readline("> ");
-		if (!line || !ft_strncmp(line, delimiter, delimiter_len + 1))
+		if (check_line(line, delimiter, delimiter_len))
 			break ;
 		heredoc = word_lst_add_back(heredoc, gb, ft_gbstrdup(line, gb));
 		if (!heredoc)
@@ -126,25 +142,4 @@ int	expand_heredoc(t_word_lst *heredoc, t_msh *msh)
 		heredoc_cpy = heredoc_cpy->next;
 	}
 	return (1);
-}
-
-/***
- * @brief displays the heredoc
- * @param heredoc
- * @param msh
- * @param redirs
- * @return the word list containing heredoc lines.
- * if no lines are entered returns null
- */
-t_word_lst	*display_heredoc(t_word_lst *heredoc,
-							t_msh *msh, t_redir_lst *redirs)
-{
-	destroy_heredoc(heredoc, &(msh->garbage));
-	g_exit_status = 0;
-	heredoc = run_heredoc(redirs->filename, &(msh->garbage));
-	if ((!heredoc && errno == ENOMEM)
-		|| (!does_contain_quotes(redirs->filename)
-			&& !expand_heredoc(heredoc, msh)))
-		return (NULL);
-	return (heredoc);
 }
