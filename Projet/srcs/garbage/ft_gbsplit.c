@@ -13,10 +13,8 @@
 #include "../../incs/minishell.h"
 
 /**
- *
- * @param s
- * @param c
- * @return
+ * @biref count the number of string after splitting
+ * @return the total count of string + 1
  */
 static size_t	countwords(char const *s, char c)
 {
@@ -45,6 +43,9 @@ static size_t	countwords(char const *s, char c)
 	return (wcount);
 }
 
+/**
+ * @brief fills the tab with the splitted string
+ */
 static void	filltab(char *s, char c, char **tbl, t_garbage **gb)
 {
 	size_t	start;
@@ -72,6 +73,14 @@ static void	filltab(char *s, char c, char **tbl, t_garbage **gb)
 	}
 }
 
+/**
+ * @brief split a string on each char c found
+ * and allocates the new tab in garbage collector
+ * @param s the string to split
+ * @param c the char to split on
+ * @return the splitted string in a string tab on sucess \n
+ * NULL on allocation error
+ */
 char	**ft_gbsplit(char const *s, char c, t_garbage **gb)
 {
 	char	**tbl;

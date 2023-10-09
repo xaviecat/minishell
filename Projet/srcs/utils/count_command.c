@@ -12,6 +12,10 @@
 
 #include "../../incs/minishell.h"
 
+/**
+ * @brief count the number of command in the line entered by user
+ * @return the counter
+ */
 size_t	count_command(t_node_lst *lst)
 {
 	size_t	nb;

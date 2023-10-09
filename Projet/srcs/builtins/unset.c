@@ -3,15 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 13:43:43 by syluiset          #+#    #+#             */
-/*   Updated: 2023/09/21 16:59:05 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/10/05 15:57:34 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
+/***
+ * @brief reallocates an modify env without variables to be deleted
+ * @return 0 on success \n ENOMEM if allocation failed
+ */
 static int	unset_name_var(t_msh *sh)
 {
 	char	**old_envp;
@@ -32,6 +36,10 @@ static int	unset_name_var(t_msh *sh)
 	return (0);
 }
 
+/***
+ * @brief unsets environment variables by deleting them from env
+ * @return the corresponding exit status
+ */
 int	b_unset(t_msh *sh)
 {
 	int		ret_error;

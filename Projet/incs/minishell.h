@@ -209,9 +209,9 @@ bool			is_dot_error(t_char_lst *lst);
 
 /* heredoc */
 int				heredoc_handling(t_msh *msh);
-t_word_lst		*display_heredoc(t_word_lst *heredoc,
-					t_msh *msh, t_redir_lst *redirs);
+void			destroy_heredoc(t_word_lst *heredoc, t_garbage **gb);
 int				expand_heredoc(t_word_lst *heredoc, t_msh *msh);
+t_word_lst		*run_heredoc(char *delimiter, t_garbage **gb);
 
 /* execution */
 
