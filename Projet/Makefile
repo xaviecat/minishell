@@ -1,4 +1,6 @@
-#===========================VARIABLE===============================#
+########################################################################################################################
+#                                                       VARIABLE                                                       #
+########################################################################################################################
 SRCS		:=	\
 				minishell.c\
 				\
@@ -76,21 +78,19 @@ SRCS		:=	\
 				utils/ft_malloc_utils.c\
 				utils/unset_utils.c\
 
-SRCS_D		:=	srcs/
-
-OBJS_D		:=	objs/
-
-OBJS		:=	$(SRCS:%.c=$(OBJS_D)%.o)
-
-DEPS		:=	$(SRCS:%.c=$(OBJS_D)%.d)
-
 HEAD		:=	\
 				minishell.h\
 				error_msgs.h\
 				colors.h\
 				structures.h\
 
+SRCS_D		:=	srcs/
+
 HEAD_D		:=	incs/
+
+OBJS_D		:=	objs/
+
+OBJS		:=	$(SRCS:%.c=$(OBJS_D)%.o)
 
 HEAD_A		:=	$(addprefix $(HEAD_D), $(HEAD))
 
@@ -104,43 +104,53 @@ LIB_H		:=	$(LIB_D)$(HEAD_D)
 
 LIB_A		:=	$(LIB_D)$(LIB)
 
-#=========================FLAG===============================#
+DEBUG		:=	no
+
+########################################################################################################################
+#                                                        FLAGS                                                         #
+########################################################################################################################
 CC			:=	cc
 
 RM			:=	rm -rf
 
-CFLAGS		:=	-Wall -Wextra -Werror
-
-DFLAGS		:=	-MP -MMD
+CFLAGS		:=	-Wall -Wextra -Werror -g3
 
 RDL			:=	-lreadline
 
-#=========================DEBUG==============================#
-ASAN_F		:=	-g3 #-fsanitize=address
+########################################################################################################################
+#                                                        DEBUG                                                         #
+########################################################################################################################
+
+ifeq ($(DEBUG), yes)
+ASAN_F 		:=	-fsanitize=address
+endif
 
 ENV			:=	env -i
 
-IGN_TXT		:=	valgrind_ignore_leaks.txt
+IGN_LEAK	:=	valgrind_ignore_leaks.txt
 
 VALGRIND	:=	valgrind --suppressions=valgrind_ignore_leaks.txt --leak-check=full --show-leak-kinds=all\
 				--track-fds=yes --show-mismatched-frees=yes --read-var-info=yes -s
 
-#=========================COLOR==============================#
+########################################################################################################################
+#                                                        COLORS                                                        #
+########################################################################################################################
 BLUE		:=	\001\033[34m\002
 
 BOLD		:=	\001\033[1m\002
 
 RESET		:=	\001\033[0m\002
 
-#========================EXEC===============================#
-
+########################################################################################################################
+#                                                        RULES                                                         #
+########################################################################################################################
 all			:	$(NAME) banner
 
 $(NAME)		:	$(OBJS_D) $(OBJS) $(LIB_A)
 			$(CC) $(CFLAGS) $(ASAN_F) -o $(NAME) $(OBJS) $(LIB_A) $(RDL)
 
 $(OBJS)		:	$(OBJS_D)%.o: $(SRCS_D)%.c $(HEAD_A) $(LIB_H)libft.h
-			$(CC) $(CFLAGS) $(ASAN_F) $(DFLAGS) -I$(HEAD_D) -I$(LIB_H) -c $< -o $@
+			$(CC) $(CFLAGS) $(ASAN_F) -I$(HEAD_D) -I$(LIB_H) -c $< -o $@
 
 $(OBJS_D)	:
 			@mkdir -p $(OBJS_D)
@@ -155,33 +165,36 @@ $(OBJS_D)	:
 			@mkdir -p $(OBJS_D)utils
 
 $(LIB_A)	:	$(LIB_D)
-			make -C $(LIB_D)
+			$(MAKE) -C $(LIB_D)
 
-$(IGN_TXT)	:
-			@echo "{"								> $(IGN_TXT)
-			@echo "	leak readline"					>> $(IGN_TXT)
-			@echo "		Memcheck:Leak"				>> $(IGN_TXT)
-			@echo "		..."						>> $(IGN_TXT)
-			@echo "		fun:readline" 				>> $(IGN_TXT)
-			@echo "}" 								>> $(IGN_TXT)
-			@echo "{" 								>> $(IGN_TXT)
-			@echo "	leak add_history"				>> $(IGN_TXT)
-			@echo "		Memcheck:Leak"				>> $(IGN_TXT)
-			@echo "		..."						>> $(IGN_TXT)
-			@echo "		fun:add_history"			>> $(IGN_TXT)
-			@echo "}"								>> $(IGN_TXT)
-			@echo "{"								>> $(IGN_TXT)
-			@echo "	leak readline_internal_char"	>> $(IGN_TXT)
-			@echo "		Memcheck:Leak"				>> $(IGN_TXT)
-			@echo "		..."						>> $(IGN_TXT)
-			@echo "		fun:readline_internal_char"	>> $(IGN_TXT)
-			@echo "}" 								>> $(IGN_TXT)
+$(IGN_LEAK)	:
+			@echo "{"								> $(IGN_LEAK)
+			@echo "	leak readline"					>> $(IGN_LEAK)
+			@echo "		Memcheck:Leak"				>> $(IGN_LEAK)
+			@echo "		..."						>> $(IGN_LEAK)
+			@echo "		fun:readline" 				>> $(IGN_LEAK)
+			@echo "}"								>> $(IGN_LEAK)
+			@echo "{"								>> $(IGN_LEAK)
+			@echo "	leak add_history"				>> $(IGN_LEAK)
+			@echo "		Memcheck:Leak"				>> $(IGN_LEAK)
+			@echo "		..."						>> $(IGN_LEAK)
+			@echo "		fun:add_history"			>> $(IGN_LEAK)
+			@echo "}"								>> $(IGN_LEAK)
+			@echo "{"								>> $(IGN_LEAK)
+			@echo "	leak readline_internal_char"	>> $(IGN_LEAK)
+			@echo "		Memcheck:Leak"				>> $(IGN_LEAK)
+			@echo "		..."						>> $(IGN_LEAK)
+			@echo "		fun:readline_internal_char"	>> $(IGN_LEAK)
+			@echo "}"								>> $(IGN_LEAK)
 
-leaks		:	all $(IGN_TXT)
+leaks		:	all $(IGN_LEAK)
 			$(VALGRIND) ./$(NAME)
 
-env_leaks	:	all $(IGN_TXT)
-			 $(ENV) $(LEAKS) ./$(NAME)
+env_leaks	:	all $(IGN_LEAK)
+			$(ENV) $(LEAKS) ./$(NAME)
+
+fsan		:
+			$(MAKE) re DEBUG=yes
 
 banner		:
 			@echo -e '$(BLUE)'
@@ -197,13 +210,13 @@ banner		:
 
 clean		:
 			$(RM) $(OBJS) $(OBJS_D) $(OBJSB_D)
-			make clean -C $(LIB_D)
+			$(MAKE) clean -C $(LIB_D)
 
 fclean		:	clean
 			$(RM) $(NAME) $(BONUS)
-			make fclean -C $(LIB_D)
-			$(RM) $(IGN_TXT)
+			$(MAKE) fclean -C $(LIB_D)
+			$(RM) $(IGN_LEAK)
 
 re			:	fclean all
 
-.PHONY		:	all clean fclean re leaks env_leaks
+.PHONY		:	all leaks env_leaks fsan banner clean fclean re

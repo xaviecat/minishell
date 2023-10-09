@@ -28,6 +28,7 @@ void	free_and_exit_minish(t_msh *msh, char **envp_sh, int exit_code)
 void	free_end_loop(t_msh *msh, char ***envp_sh)
 {
 	*envp_sh = cp_envp_to_envp_sh(*envp_sh, msh);
+	close_all(NULL, msh);
 	ft_free_all(&msh->garbage);
 	msh->lst_n = NULL;
 	free(msh->garbage);

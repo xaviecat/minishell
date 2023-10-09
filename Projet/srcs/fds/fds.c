@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fds.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 17:45:12 by syluiset          #+#    #+#             */
-/*   Updated: 2023/10/04 14:40:11 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/10/09 16:16:40 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ t_fd_lst	*create_fds_list(t_redir_lst *redirs, t_garbage **gb)
 		return (NULL);
 	while (redirs)
 	{
-		if (fds->in != STDIN_FILENO && redirs->redir == in)
+		if (fds->in != STDIN_FILENO && (redirs->redir == in
+				|| redirs->redir == inin))
 			close(fds->in);
 		if (fds->out != STDOUT_FILENO && (redirs->redir == out
 				|| redirs->redir == outout))

@@ -58,7 +58,8 @@ void	redirect_fds_in(t_msh *msh, int pipe_fd[3][2])
 	if (msh->lst_n->redirs && msh->lst_n->redirs->redir == inin)
 	{
 		handle_heredoc(msh, pipe_fd);
-//		close(msh->lst_n->fds->in);
+////		if (msh->lst_n->fds->in > 2)
+//			close(msh->lst_n->fds->in);
 	}
 	else if (msh->lst_n->fds && msh->lst_n->fds->in < 0)
 		return (clear_mem_fds(msh, pipe_fd, EXIT_FAILURE, NULL));

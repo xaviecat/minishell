@@ -13,25 +13,6 @@
 #ifndef COLORS_H
 # define COLORS_H
 
-# define TRISHBANNER0	"                                                      \
-                                           "
-# define TRISHBANNER1	".___________..______       __  .__   __.  __       ___\
-____. __    __   _______  __       __      "
-# define TRISHBANNER2	"|           ||   _  \\     |  | |  \\ |  | |  |     / \
-      ||  |  |  | |   ____||  |     |  |     "
-# define TRISHBANNER3	"`---|  |----`|  |_)  |    |  | |   \\|  | |  |    |   \
-(----`|  |__|  | |  |__   |  |     |  |     "
-# define TRISHBANNER4	"    |  |     |      /     |  | |  . `  | |  |     \\  \
- \\    |   __   | |   __|  |  |     |  |     "
-# define TRISHBANNER5	"    |  |     |  |\\  \\----.|  | |  |\\   | |  | .----\
-)   |   |  |  |  | |  |____ |  `----.|  `----."
-# define TRISHBANNER6	"    |__|     | _| `._____||__| |__| \\__| |__| |______\
-_/    |__|  |__| |_______||_______||_______|"
-# define TRISHBANNER7	"                                                      \
-                                           "
-# define TRISHBANNER8	"                                                      \
-         🍦    by nfaust, syluiset & xcharra"
-
 # define DELLINE	"\001\033[2K\r\002"
 
 # define RESET		"\001\033[0;0;0m\002"
