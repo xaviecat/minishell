@@ -29,6 +29,7 @@
 # define STAR		"feature not handled '*'\n"
 # define DOT		"feature not handled: '.'\n"
 # define EXCL		"feature not handled: '!'\n"
+# define WARN_HD	"warning: here-document delimited by end-of-file "
 
 /* builtins error name */
 # define E_EXPORT	"export: "
