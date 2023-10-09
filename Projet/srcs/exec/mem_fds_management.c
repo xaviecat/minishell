@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 16:39:22 by xcharra           #+#    #+#             */
-/*   Updated: 2023/10/03 13:32:58 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/10/09 18:59:30 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	close_all(int pipe_fd[3][2], t_msh *msh)
 		close_pipe(pipe_fd[CURR]);
 		close_pipe(pipe_fd[HD]);
 	}
-	while (msh->lst_n->prev)
+	while (msh->lst_n && msh->lst_n->prev)
 		msh->lst_n = msh->lst_n->prev;
 	while (msh->lst_n)
 	{
