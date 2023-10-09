@@ -6,7 +6,7 @@
 /*   By: nfaust <nfaust@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 16:10:58 by nfaust            #+#    #+#             */
-/*   Updated: 2023/10/05 18:35:12 by nfaust           ###   ########.fr       */
+/*   Updated: 2023/10/09 14:35:26 by nfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,9 +105,11 @@ int	export_error_management(t_msh *msh, t_cmd_lst *cmd, int *error_code)
 		|| !ft_strncmp(cmd->cmd, "+", 1) || cmd->is_nill)
 		return (*error_code = 1,
 			ft_fdprintf(2, MSH E_EXPORT"'%s'"NT_VAL_ID, cmd->cmd), 0);
-	if (ft_strncmp(cmd->cmd, "-", 1) == 0)
+	if (ft_strncmp(cmd->cmd, "-", 1) == 0
+		&& ft_strncmp(cmd->cmd, "--", 3) && cmd->cmd[1])
 		return (*error_code = 2,
-			ft_fdprintf(2, MSH E_EXPORT"'%s'"INVALID_OPT, cmd->cmd), 0);
+			ft_fdprintf(2, MSH E_EXPORT"'%c%c'"INVALID_OPT,
+				cmd->cmd[0], cmd->cmd[1]), 0);
 	if (!verif_first_arg(&(msh->garbage), cmd))
 		return (*error_code = 1, 0);
 	return (1);

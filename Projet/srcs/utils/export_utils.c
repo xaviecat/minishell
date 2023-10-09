@@ -104,7 +104,7 @@ int	is_concat(char *cmd)
 	return (0);
 }
 
-/***
+/**
  * @brief checks whether a concatenation is in env or not
  * @param envp
  * @param cmd the entire command (name+content)
