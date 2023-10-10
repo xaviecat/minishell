@@ -12,6 +12,13 @@
 
 #include "../../incs/minishell.h"
 
+/**
+ * @param cmds
+ * @param fds
+ * @param redir
+ * @param gb
+ * @return Return new command list node
+ */
 t_node_lst	*lst_cmd_new(t_cmd_lst *cmds, t_fd_lst *fds,
 				t_redir_lst *redir, t_garbage **gb)
 {

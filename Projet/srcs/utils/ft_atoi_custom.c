@@ -60,6 +60,13 @@ bool	real_atoi(const char *nbr, int *nb_ret)
 	return (true);
 }
 
+/**
+ * @brief A custom ft_atoi the print error when exit number is not right or
+ * contains non-digit char
+ * @param nbr
+ * @param nb_ret
+ * @return False if there's an error, True otherwise
+ */
 bool	ft_atoi_custom(const char *nbr, unsigned int *nb_ret)
 {
 	if (!(verif_arg_exit((char *)nbr)))

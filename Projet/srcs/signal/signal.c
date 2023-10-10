@@ -12,6 +12,9 @@
 
 #include "../../incs/minishell.h"
 
+/**
+ * @brief The hub to get signals and interact during basic input
+ */
 void	signal_hub_term(void)
 {
 	struct sigaction	sa;
@@ -24,6 +27,9 @@ void	signal_hub_term(void)
 	sigaction(SIGQUIT, &sa, NULL);
 }
 
+/**
+ * @brief The hub to get signals and interact during heredoc
+ */
 void	signal_hub_heredoc(void)
 {
 	struct sigaction	sa;
@@ -36,6 +42,9 @@ void	signal_hub_heredoc(void)
 	sigaction(SIGQUIT, &sa, NULL);
 }
 
+/**
+ * @brief The hub to get signals and interact during execution
+ */
 void	signal_hub_exec(void)
 {
 	struct sigaction	sa;
@@ -47,6 +56,9 @@ void	signal_hub_exec(void)
 	sigaction(SIGQUIT, &sa, NULL);
 }
 
+/**
+ * @brief The hub to ignore signals we want to when we forking
+ */
 void	signal_hub_ign(void)
 {
 	struct sigaction	sa;
