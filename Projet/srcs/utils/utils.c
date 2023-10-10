@@ -95,6 +95,10 @@ int	does_contain_quotes(char *str)
 	return (0);
 }
 
+/**
+ * @brief rechecks if a command is a builtin after expand
+ * and update the corresponding member of the structure msh
+ */
 void	recheck_builtin(t_msh *msh)
 {
 	t_node_lst	*lst_n_cpy;
