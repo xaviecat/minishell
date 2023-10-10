@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 17:45:12 by syluiset          #+#    #+#             */
-/*   Updated: 2023/10/09 16:16:40 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/10/10 13:16:00 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	get_fds(t_fd_lst **fds, t_redir_lst *redirs)
 {
 	if (redirs->redir == in)
 		(*fds)->in = open(redirs->filename, O_RDONLY, 0444);
+	if (redirs->redir == inin)
+		(*fds)->in = -2;
 	if (redirs->redir == out)
 		(*fds)->out = open(redirs->filename, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (redirs->redir == outout)
@@ -62,10 +64,10 @@ t_fd_lst	*create_fds_list(t_redir_lst *redirs, t_garbage **gb)
 		return (NULL);
 	while (redirs)
 	{
-		if (fds->in != STDIN_FILENO && (redirs->redir == in
+		if (fds->in > STDIN_FILENO && (redirs->redir == in
 				|| redirs->redir == inin))
 			close(fds->in);
-		if (fds->out != STDOUT_FILENO && (redirs->redir == out
+		if (fds->out > STDOUT_FILENO && (redirs->redir == out
 				|| redirs->redir == outout))
 			close(fds->out);
 		get_fds(&fds, redirs);

@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   minish_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 16:59:21 by syluiset          #+#    #+#             */
-/*   Updated: 2023/10/04 17:49:18 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/10/10 00:21:51 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
 /**
- * @brief split all caractere in node
+* @brief split all caractere in node
  * @param msh
  * @param line
  * @return 0 if failed, 1 if it work
- */
+*/
 int	parsing_char(t_msh **msh, char *line, char ***envp_sh)
 {
 	char	*newline;
@@ -121,6 +121,12 @@ t_msh	*create_minishell(char **envp, char **envp_sh)
 	return (sh);
 }
 
+/**
+ * @brief Check if line is null because we ctrl+d or enter
+ * @param line
+ * @param envp_sh
+ * @return 1 if it's a enter, 2 is it's a ctrl+d, 0 if line is not null
+*/
 int	line_empty_or_exit(char *line, char **envp_sh)
 {
 	if (!line || *line == '\0')

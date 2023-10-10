@@ -12,6 +12,12 @@
 
 #include "../../incs/minishell.h"
 
+/**
+ *
+ * @param type_red
+ * @param gb
+ * @return return a new node of redir_lst
+ */
 t_redir_lst	*new_redir(t_type_redir type_red, t_garbage **gb)
 {
 	t_redir_lst	*red;
@@ -24,6 +30,10 @@ t_redir_lst	*new_redir(t_type_redir type_red, t_garbage **gb)
 	return (red);
 }
 
+/**
+ * @param lst
+ * @return return the last of the lst
+ */
 t_redir_lst	*redir_last(t_redir_lst *lst)
 {
 	while (lst)
@@ -35,6 +45,11 @@ t_redir_lst	*redir_last(t_redir_lst *lst)
 	return (lst);
 }
 
+/**
+ * @brief Adding new at the end of lst
+ * @param lst
+ * @param new
+ */
 void	redir_add_back(t_redir_lst **lst, t_redir_lst *new)
 {
 	t_redir_lst	*tmp;
@@ -50,6 +65,11 @@ void	redir_add_back(t_redir_lst **lst, t_redir_lst *new)
 		*lst = new;
 }
 
+/**
+ * @brief Free redirection in the redir_lst
+ * @param gb
+ * @param lst
+ */
 void	free_error_redir(t_garbage **gb, t_redir_lst **lst)
 {
 	t_redir_lst	*next;

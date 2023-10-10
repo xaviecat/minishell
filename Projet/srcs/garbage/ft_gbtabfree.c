@@ -12,6 +12,11 @@
 
 #include "../../incs/minishell.h"
 
+/**
+ * @brief ft_free all data from the tbl
+ * @param tbl
+ * @param gb
+ */
 void	ft_gbtabfree(char **tbl, t_garbage **gb)
 {
 	size_t	i;

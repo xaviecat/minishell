@@ -12,6 +12,10 @@
 
 #include "../../incs/minishell.h"
 
+/**
+ * @brief The necessary function call to get a new line in the terminal
+ * @param signum
+ */
 void	signal_term(int signum)
 {
 	if (signum == SIGINT)
@@ -24,6 +28,10 @@ void	signal_term(int signum)
 	}
 }
 
+/**
+ * @brief The necessary function call to get a new line in the heredoc
+ * @param signum
+ */
 void	signal_heredoc(int signum)
 {
 	ioctl(STDIN_FILENO, TIOCSTI, "\n");
@@ -32,6 +40,10 @@ void	signal_heredoc(int signum)
 	g_exit_status = 128 + signum;
 }
 
+/**
+ * @brief The necessary function call to get a new line during execution
+ * @param signum
+ */
 void	signal_exec(int signum)
 {
 	if (signum == SIGINT)

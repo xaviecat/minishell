@@ -12,6 +12,12 @@
 
 #include "../../incs/minishell.h"
 
+/**
+ * @param garbage
+ * @param the_size
+ * @param number
+ * @return Return a pointer of the new malloc and stock adresse on garbage
+ */
 void	*ft_malloc(t_garbage **garbage, int the_size, int number)
 {
 	t_garbage_lst	*new;
