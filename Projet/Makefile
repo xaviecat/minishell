@@ -191,7 +191,7 @@ leaks		:	all $(IGN_LEAK)
 			$(VALGRIND) ./$(NAME)
 
 env_leaks	:	all $(IGN_LEAK)
-			$(ENV) $(LEAKS) ./$(NAME)
+			$(ENV) $(VALGRIND) ./$(NAME)
 
 fsan		:
 			$(MAKE) re DEBUG=yes
