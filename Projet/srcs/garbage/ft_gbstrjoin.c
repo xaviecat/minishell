@@ -12,6 +12,12 @@
 
 #include "minishell.h"
 
+/**
+ * @brief Jooin to string and include the new stgring in the garbage
+ * @param s1 String to join
+ * @param s2 String to join
+ * @return The new joined string or NULL if there are an error
+ */
 char	*ft_gbstrjoin(char const *s1, char const *s2, t_garbage **gb)
 {
 	size_t	i;

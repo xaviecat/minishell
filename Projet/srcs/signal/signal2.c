@@ -34,7 +34,7 @@ void	signal_term(int signum)
  */
 void	signal_heredoc(int signum)
 {
-	ioctl(STDIN_FILENO, TIOCSTI, "\n");
+	ioctl(STDIN_FILENO, TIOCSTI);
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	g_exit_status = 128 + signum;

@@ -11,7 +11,11 @@
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
-
+/**
+ * @brief duplicate a string and include in the garbage
+ * @param src string to duplicate
+ * @return The duplicated string or NULL it there are an error
+ */
 char	*ft_gbstrdup(const char *src, t_garbage **gb)
 {
 	int		i;

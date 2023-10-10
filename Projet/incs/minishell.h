@@ -6,7 +6,7 @@
 /*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:53 by xcharra           #+#    #+#             */
-/*   Updated: 2023/10/04 15:59:52 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/10/10 14:33:08 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,8 +151,7 @@ char			*fill_mdcmd(char *cmd, size_t start,
 					char *exp_env_v, char *env_var);
 void			*ft_gbcalloc(size_t count, size_t size, t_garbage **gb);
 char			*ft_gbstrtrim(char const *s1, char const *set, t_garbage **gb);
-char			**ft_gbtabdup(char **dbtab, t_garbage **gb);
-void			ft_tabfree(char **tbl);
+char			**ft_gbtabdup(char **tab, t_garbage **gb);
 void			ft_gbtabfree(char **tbl, t_garbage **gb);
 char			**ft_gbtabjoin(char **tab1, char **tab2, t_garbage **gb);
 int				not_in_env(char *cmd, char **envp);
@@ -214,28 +213,20 @@ int				expand_heredoc(t_word_lst *heredoc, t_msh *msh);
 t_word_lst		*run_heredoc(char *delimiter, t_garbage **gb);
 
 /* execution */
-
 char			**get_cmdpath(char **path, char *cmd, t_garbage **gb);
-
 void			get_access(t_msh *msh);
 char			*check_access(char **cmdpaths, char *cmd, t_garbage **gb);
-
 void			builtin_execution(t_msh *msh);
 void			execution(t_msh *msh);
-
 void			redirect_fds_in(t_msh *msh, int pipe_fd[3][2]);
 void			redirect_fds_out(t_msh *msh, int pipe_fd[3][2]);
-
 void			forking(t_msh *msh);
-
 int				get_cmdtab(t_msh *msh);
-
 void			init_pipe_fd(int pipe_fd[3][2]);
 void			close_pipe(int pipe[2]);
 void			close_all(int pipe_fd[3][2], t_msh *msh);
 void			clear_mem_fds(t_msh *msh, int pipe_fd[3][2],
 					int mode, char *why);
-
 void			child(t_msh *msh, int pipe_fd[3][2]);
 void			parent(t_msh *msh, int pipe_fd[3][2]);
 
