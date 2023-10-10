@@ -95,7 +95,6 @@ int	does_contain_quotes(char *str)
 	return (0);
 }
 
-
 void	recheck_builtin(t_msh *msh)
 {
 	t_node_lst	*lst_n_cpy;

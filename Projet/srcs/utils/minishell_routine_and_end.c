@@ -48,6 +48,7 @@ void	free_end_loop(t_msh *msh, char ***envp_sh)
 	free(msh);
 	msh = NULL;
 }
+
 /**
  * @brief copy the envp stock in msh in envp_sh
  * @param envp_sh
