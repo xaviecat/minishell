@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xcharra <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: xcharra <xcharra@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:39:41 by xcharra           #+#    #+#             */
-/*   Updated: 2023/10/03 12:55:31 by xcharra          ###   ########.fr       */
+/*   Updated: 2023/10/10 13:19:33 by xcharra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	minishell(char **envp)
 	while (1)
 	{
 		signal_hub_term();
+//		printf("%d ", g_exit_status);
 		line = readline(GREEN UNDERLINE"TRI_SH $>"RESET" ");
 		ret_line = line_empty_or_exit(line, envp_sh);
 		if (ret_line == 1)
