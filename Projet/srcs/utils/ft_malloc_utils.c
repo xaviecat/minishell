@@ -13,7 +13,7 @@
 #include "../../incs/minishell.h"
 
 /**
- * @brief
+ * @brief move up the lst
  * @param lst
  */
 void	get_first_garbage(t_garbage **lst)
@@ -22,6 +22,9 @@ void	get_first_garbage(t_garbage **lst)
 		(*lst)->first = (*lst)->first->prev;
 }
 
+/**
+ * @return return a malloc pointer on a garbage_collector
+ */
 t_garbage	*create_garbage_container(void)
 {
 	t_garbage	*gb_c;
@@ -34,6 +37,11 @@ t_garbage	*create_garbage_container(void)
 	return (gb_c);
 }
 
+/**
+ *
+ * @param content
+ * @return A new node of type garbage_lst which contain content
+ */
 t_garbage_lst	*new_garbage(void *content)
 {
 	t_garbage_lst	*new;
@@ -47,6 +55,10 @@ t_garbage_lst	*new_garbage(void *content)
 	return (new);
 }
 
+/**
+ * @param lst
+ * @return return the last node of lst
+ */
 t_garbage_lst	*garbage_last(t_garbage_lst *lst)
 {
 	while (lst)
@@ -58,6 +70,12 @@ t_garbage_lst	*garbage_last(t_garbage_lst *lst)
 	return (lst);
 }
 
+/**
+ * @brief Add content in the lst either in begin or in last place
+ * @param gb
+ * @param content
+ * @return 1 if an error occurs, 0 otherwise
+ */
 int	add_to_garbage(t_garbage **gb, void *content)
 {
 	t_garbage_lst	*new;

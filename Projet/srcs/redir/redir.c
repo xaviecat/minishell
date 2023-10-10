@@ -12,6 +12,12 @@
 
 #include "../../incs/minishell.h"
 
+/**
+ * @brief create a new node of redir_list
+ * @param gb
+ * @param lst
+ * @return the new node with the type of redirection
+ */
 t_redir_lst	*create_redir(t_garbage **gb, t_word_lst *lst)
 {
 	if (lst->type == open_file)
@@ -25,6 +31,13 @@ t_redir_lst	*create_redir(t_garbage **gb, t_word_lst *lst)
 	return (NULL);
 }
 
+/**
+ * @brief Create a list of redirection, get and stock the filename
+ * after redirection
+ * @param lst
+ * @param gb
+ * @return a list of the type of the redirection and the filename
+ */
 t_redir_lst	*get_redir(t_word_lst **lst, t_garbage **gb)
 {
 	t_redir_lst	*redirs;
