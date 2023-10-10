@@ -12,6 +12,10 @@
 
 #include "../../incs/minishell.h"
 
+/**
+ * @brief checks whether a string array is lexicographically sorted
+ * @return 1 if not sorted \n 0 else
+ */
 static int	not_sorted(char **str_arr)
 {
 	size_t	i;
@@ -26,6 +30,9 @@ static int	not_sorted(char **str_arr)
 	return (0);
 }
 
+/**
+ * @brief sorts a string array lexicographically
+ */
 void	ft_sort_str_arr(char **str_arr)
 {
 	size_t	i;
