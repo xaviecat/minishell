@@ -13,8 +13,8 @@
 #include "libft.h"
 
 /**
- * @param
  * @brief free a string tab
+ * @param tab tab to free
  */
 void	ft_tabfree(char **tab)
 {

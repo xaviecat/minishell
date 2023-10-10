@@ -12,23 +12,28 @@
 
 #include "../../incs/minishell.h"
 
-char	**ft_gbtabdup(char **dbtab, t_garbage **gb)
+/**
+ * @brief Duplicate an array and include him in the garbage
+ * @param tab The array to duplicate
+ * @return The new duplicated array or NULL if there are an error
+ */
+char	**ft_gbtabdup(char **tab, t_garbage **gb)
 {
 	int		i;
 	char	**new_tab;
 
-	if (!dbtab)
+	if (!tab)
 		return (NULL);
 	i = 0;
-	while (dbtab[i])
+	while (tab[i])
 		i++;
 	new_tab = ft_malloc(gb, sizeof(char *), (i + 1));
 	if (!new_tab)
 		return (NULL);
 	i = 0;
-	while (dbtab[i])
+	while (tab[i])
 	{
-		new_tab[i] = ft_gbstrdup(dbtab[i], gb);
+		new_tab[i] = ft_gbstrdup(tab[i], gb);
 		if (!new_tab[i])
 			return (ft_gbtabfree(new_tab, gb), NULL);
 		i++;
