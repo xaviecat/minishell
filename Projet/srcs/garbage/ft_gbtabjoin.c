@@ -12,6 +12,10 @@
 
 #include "../../incs/minishell.h"
 
+/**
+ * @brief count strings in the two old tabs
+ * @return the counter
+ */
 size_t	count_char_pt(char **tab1, char **tab2)
 {
 	size_t	i;
@@ -27,6 +31,10 @@ size_t	count_char_pt(char **tab1, char **tab2)
 	return (counter);
 }
 
+/**
+ * @brief allocates the inside of the new tab
+ * @return pointer to the new tab
+ */
 int	allocate_inside(char **dst_tab, char **tab1, char **tab2, t_garbage **gb)
 {
 	size_t	i;
@@ -50,6 +58,9 @@ int	allocate_inside(char **dst_tab, char **tab1, char **tab2, t_garbage **gb)
 	return (1);
 }
 
+/**
+ * @brief fills the new allocated tab with the values of the two old tabs
+ */
 void	fill_tab(char **dst, char **tab1, char **tab2)
 {
 	size_t	i;
@@ -78,6 +89,12 @@ void	fill_tab(char **dst, char **tab1, char **tab2)
 	dst[i] = NULL;
 }
 
+/**
+ * @brief joins two string tabs in a new allocated string tab
+ * @param tab1 the first part of the new string
+ * @param tab2 the last part of the new string
+ * @return the new allocated tab \n NULL if allocation error was found
+ */
 char	**ft_gbtabjoin(char **tab1, char **tab2, t_garbage **gb)
 {
 	size_t	char_pt_count;
