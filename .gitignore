@@ -1,16 +1,4 @@
 **.o
 **.d
 **.a
-**.idea
-**.vscode
-**.nfs*
-Projet/minishell
-Projet/minishell*
-.clang-format
-valgrind*
-out
-in
-infile
-outfile
-test
-salut
+**minishell
